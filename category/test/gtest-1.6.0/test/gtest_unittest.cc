@@ -2962,6 +2962,79 @@ TEST_F(FloatTest, FloatLEFails) {
 #endif  // !GTEST_OS_SYMBIAN && !defined(__BORLANDC__)
 }
 
+// Tests the cases where FloatLE() should succeed.
+TEST_F(FloatTest, FloatLESucceeds2) {
+  EXPECT_FLOAT_LE(1.0f, 2.0f);  // When val1 < val2,
+  ASSERT_FLOAT_LE(1.0f, 1.0f);  // val1 == val2,
+
+  // or when val1 is greater than, but almost equals to, val2.
+  EXPECT_FLOAT_LE(values_.close_to_positive_zero, 0.0f);
+}
+
+// Tests the cases where FloatLE() should fail.
+TEST_F(FloatTest, FloatLEFails2) {
+  // When val1 is greater than val2 by a large margin,
+  EXPECT_NONFATAL_FAILURE(EXPECT_FLOAT_LE(2.0f, 1.0f),
+                          "(2.0f) <= (1.0f)");
+
+  // or by a small yet non-negligible margin,
+  EXPECT_NONFATAL_FAILURE({  // NOLINT
+    EXPECT_FLOAT_LE(values_.further_from_one, 1.0f);
+  }, "(values_.further_from_one) <= (1.0f)");
+
+#if !GTEST_OS_SYMBIAN && !defined(__BORLANDC__)
+  // Nokia's STLport crashes if we try to output infinity or NaN.
+  // C++Builder gives bad results for ordered comparisons involving NaNs
+  // due to compiler bugs.
+  EXPECT_NONFATAL_FAILURE({  // NOLINT
+    EXPECT_FLOAT_LE(values_.nan1, values_.infinity);
+  }, "(values_.nan1) <= (values_.infinity)");
+  EXPECT_NONFATAL_FAILURE({  // NOLINT
+    EXPECT_FLOAT_LE(-values_.infinity, values_.nan1);
+  }, "(-values_.infinity) <= (values_.nan1)");
+  EXPECT_FATAL_FAILURE({  // NOLINT
+    ASSERT_FLOAT_LE(values_.nan1, values_.nan1);
+  }, "(values_.nan1) <= (values_.nan1)");
+#endif  // !GTEST_OS_SYMBIAN && !defined(__BORLANDC__)
+}
+
+// Tests the cases where FloatGE() should succeed.
+TEST_F(FloatTest, FloatGESucceeds2) {
+  EXPECT_FLOAT_GE(2.0f, 1.0f);  // When val1 > val2,
+  ASSERT_FLOAT_GE(1.0f, 1.0f);  // val1 == val2,
+
+  // or when val1 is less than, but almost equals to, val2.
+  EXPECT_FLOAT_GE(0.0f, values_.close_to_positive_zero);
+}
+
+// Tests the cases where FloatGE() should fail.
+TEST_F(FloatTest, FloatGEFails2) {
+  // When val1 is greater than val2 by a large margin,
+  EXPECT_NONFATAL_FAILURE(EXPECT_FLOAT_GE(1.0f, 2.0f),
+                          "(1.0f) >= (2.0f)");
+
+  // or by a small yet non-negligible margin,
+  EXPECT_NONFATAL_FAILURE({  // NOLINT
+    EXPECT_FLOAT_GE(1.0f, values_.further_from_one);
+  }, "(1.0f) >= (values_.further_from_one)");
+
+#if !GTEST_OS_SYMBIAN && !defined(__BORLANDC__)
+  // Nokia's STLport crashes if we try to output infinity or NaN.
+  // C++Builder gives bad results for ordered comparisons involving NaNs
+  // due to compiler bugs.
+  EXPECT_NONFATAL_FAILURE({  // NOLINT
+    EXPECT_FLOAT_GE(values_.infinity, values_.nan1);
+  }, "(values_.infinity) >= (values_.nan1)");
+  EXPECT_NONFATAL_FAILURE({  // NOLINT
+    EXPECT_FLOAT_GE(values_.nan1, -values_.infinity);
+  }, "(values_.nan1) >= (-values_.infinity)");
+  EXPECT_FATAL_FAILURE({  // NOLINT
+    ASSERT_FLOAT_GE(values_.nan1, values_.nan1);
+  }, "(values_.nan1) >= (values_.nan1)");
+#endif  // !GTEST_OS_SYMBIAN && !defined(__BORLANDC__)
+}
+
+
 // Instantiates FloatingPointTest for testing *_DOUBLE_EQ.
 typedef FloatingPointTest<double> DoubleTest;
 
@@ -3131,6 +3204,78 @@ TEST_F(DoubleTest, DoubleLEFails) {
   EXPECT_FATAL_FAILURE({  // NOLINT
     ASSERT_PRED_FORMAT2(DoubleLE, values_.nan1, values_.nan1);
   }, "(values_.nan1) <= (values_.nan1)");
+#endif  // !GTEST_OS_SYMBIAN && !defined(__BORLANDC__)
+}
+
+// Tests the cases where DoubleLE() should succeed.
+TEST_F(DoubleTest, DoubleLESucceeds2) {
+  EXPECT_DOUBLE_LE(1.0, 2.0);  // When val1 < val2,
+  EXPECT_DOUBLE_LE(1.0, 1.0);  // val1 == val2,
+
+  // or when val1 is greater than, but almost equals to, val2.
+  EXPECT_DOUBLE_LE(values_.close_to_positive_zero, 0.0);
+}
+
+// Tests the cases where DoubleLE() should fail.
+TEST_F(DoubleTest, DoubleLEFails2) {
+  // When val1 is greater than val2 by a large margin,
+  EXPECT_NONFATAL_FAILURE(EXPECT_DOUBLE_LE(2.0, 1.0),
+                          "(2.0) <= (1.0)");
+
+  // or by a small yet non-negligible margin,
+  EXPECT_NONFATAL_FAILURE({  // NOLINT
+    EXPECT_DOUBLE_LE(values_.further_from_one, 1.0);
+  }, "(values_.further_from_one) <= (1.0)");
+
+#if !GTEST_OS_SYMBIAN && !defined(__BORLANDC__)
+  // Nokia's STLport crashes if we try to output infinity or NaN.
+  // C++Builder gives bad results for ordered comparisons involving NaNs
+  // due to compiler bugs.
+  EXPECT_NONFATAL_FAILURE({  // NOLINT
+    EXPECT_DOUBLE_LE(values_.nan1, values_.infinity);
+  }, "(values_.nan1) <= (values_.infinity)");
+  EXPECT_NONFATAL_FAILURE({  // NOLINT
+    EXPECT_DOUBLE_LE(-values_.infinity, values_.nan1);
+  }, "(-values_.infinity) <= (values_.nan1)");
+  EXPECT_FATAL_FAILURE({  // NOLINT
+    ASSERT_DOUBLE_LE(values_.nan1, values_.nan1);
+  }, "(values_.nan1) <= (values_.nan1)");
+#endif  // !GTEST_OS_SYMBIAN && !defined(__BORLANDC__)
+}
+
+// Tests the cases where DoubleGE() should succeed.
+TEST_F(DoubleTest, DoubleGESucceeds2) {
+  EXPECT_DOUBLE_GE(2.0, 1.0);  // When val1 > val2,
+  EXPECT_DOUBLE_GE(1.0, 1.0);  // val1 == val2,
+
+  // or when val1 is greater than, but almost equals to, val2.
+  EXPECT_DOUBLE_GE(values_.close_to_positive_zero, 0.0);
+}
+
+// Tests the cases where DoubleLE() should fail.
+TEST_F(DoubleTest, DoubleGEFails2) {
+  // When val1 is greater than val2 by a large margin,
+  EXPECT_NONFATAL_FAILURE(EXPECT_DOUBLE_GE(1.0, 2.0),
+                          "(1.0) >= (2.0)");
+
+  // or by a small yet non-negligible margin,
+  EXPECT_NONFATAL_FAILURE({  // NOLINT
+    EXPECT_DOUBLE_GE(1.0, values_.further_from_one);
+  }, "(1.0) >= (values_.further_from_one)");
+
+#if !GTEST_OS_SYMBIAN && !defined(__BORLANDC__)
+  // Nokia's STLport crashes if we try to output infinity or NaN.
+  // C++Builder gives bad results for ordered comparisons involving NaNs
+  // due to compiler bugs.
+  EXPECT_NONFATAL_FAILURE({  // NOLINT
+    EXPECT_DOUBLE_GE(values_.infinity, values_.nan1);
+  }, "(values_.infinity) >= (values_.nan1)");
+  EXPECT_NONFATAL_FAILURE({  // NOLINT
+    EXPECT_DOUBLE_GE(-values_.infinity, values_.nan1);
+  }, "(-values_.infinity) >= (values_.nan1)");
+  EXPECT_FATAL_FAILURE({  // NOLINT
+    ASSERT_DOUBLE_GE(values_.nan1, values_.nan1);
+  }, "(values_.nan1) >= (values_.nan1)");
 #endif  // !GTEST_OS_SYMBIAN && !defined(__BORLANDC__)
 }
 
