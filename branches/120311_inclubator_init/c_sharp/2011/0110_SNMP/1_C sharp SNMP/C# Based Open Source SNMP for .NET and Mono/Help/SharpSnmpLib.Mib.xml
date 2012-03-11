@@ -1,0 +1,364 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>SharpSnmpLib.Mib</name>
+  </assembly>
+  <members>
+    <member name="T:Lextm.SharpSnmpLib.Mib.Assembler">
+      <summary>
+            MIB assembler.
+            </summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.Assembler.#ctor(System.String)">
+      <summary>
+            Creates an instance of <see cref="T:Lextm.SharpSnmpLib.Mib.Assembler" />.
+            </summary>
+      <param name="folder">Folder.</param>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.Assembler.Assemble(System.Collections.Generic.IEnumerable{Lextm.SharpSnmpLib.IModule})">
+      <summary>
+            Assemblers modules.
+            </summary>
+      <param name="modules">Modules.</param>
+    </member>
+    <member name="P:Lextm.SharpSnmpLib.Mib.Assembler.Folder">
+      <summary>
+            Folder.
+            </summary>
+    </member>
+    <member name="P:Lextm.SharpSnmpLib.Mib.Assembler.Tree">
+      <summary>
+            Tree.
+            </summary>
+    </member>
+    <member name="T:Lextm.SharpSnmpLib.Mib.DefaultObjectRegistry">
+      <summary>
+            Default object registry.
+            </summary>
+    </member>
+    <member name="P:Lextm.SharpSnmpLib.Mib.DefaultObjectRegistry.Instance">
+      <summary>
+            Default instance.
+            </summary>
+    </member>
+    <member name="T:Lextm.SharpSnmpLib.Mib.Lexer">
+      <summary>
+            Lexer class that parses MIB files into symbol list.
+            </summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.Lexer.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Lextm.SharpSnmpLib.Mib.Lexer" /> class</summary>
+    </member>
+    <member name="P:Lextm.SharpSnmpLib.Mib.Lexer.NextNonEOLSymbol">
+      <summary>
+            Next <see cref="T:Lextm.SharpSnmpLib.Mib.Symbol" /> which is not <see cref="F:Lextm.SharpSnmpLib.Mib.Symbol.EOL" />.
+            </summary>
+    </member>
+    <member name="P:Lextm.SharpSnmpLib.Mib.Lexer.NextSymbol">
+      <summary>
+            Next <see cref="T:Lextm.SharpSnmpLib.Mib.Symbol" />.
+            </summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.Lexer.Parse(System.String,System.IO.TextReader)">
+      <summary>
+            Parses MIB file to symbol list.
+            </summary>
+      <param name="file">File</param>
+      <param name="stream">File stream</param>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.Lexer.Restore(Lextm.SharpSnmpLib.Mib.Symbol)">
+      <summary>
+        <p style="color: #dc143c; font-size: 8.5pt; font-weight: bold;">[Missing &lt;summary&gt; documentation for "M:Lextm.SharpSnmpLib.Mib.Lexer.Restore(Lextm.SharpSnmpLib.Mib.Symbol)"]</p>
+      </summary>
+      <param name="last">
+        <p style="color: #dc143c; font-size: 8.5pt; font-weight: bold;">[Missing &lt;param name="last"/&gt; documentation for "M:Lextm.SharpSnmpLib.Mib.Lexer.Restore(Lextm.SharpSnmpLib.Mib.Symbol)"]</p>
+      </param>
+      <exception cref="T:System.ArgumentException"></exception>
+    </member>
+    <member name="T:Lextm.SharpSnmpLib.Mib.MibException">
+      <summary>
+            Description of MibException.
+            </summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.MibException.#ctor">
+      <summary>
+            Creates a <see cref="T:Lextm.SharpSnmpLib.Mib.MibException" />.
+            </summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.MibException.#ctor(System.String)">
+      <summary>
+            Creates a <see cref="T:Lextm.SharpSnmpLib.SnmpException" /> instance with a specific <see cref="T:System.String" />.
+            </summary>
+      <param name="message">Message</param>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.MibException.#ctor(System.String,System.Exception)">
+      <summary>
+            Creates a <see cref="T:Lextm.SharpSnmpLib.Mib.MibException" /> instance with a specific <see cref="T:System.String" /> and an <see cref="T:System.Exception" />.
+            </summary>
+      <param name="message">Message</param>
+      <param name="inner">Inner exception</param>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.MibException.Create(System.String,Lextm.SharpSnmpLib.Mib.Symbol)">
+      <summary>
+            Creates a <see cref="T:Lextm.SharpSnmpLib.Mib.MibException" /> with a specific <see cref="P:Lextm.SharpSnmpLib.Mib.MibException.Symbol" />.
+            </summary>
+      <param name="message">Message</param>
+      <param name="symbol">Symbol</param>
+      <returns>
+        <p style="color: #dc143c; font-size: 8.5pt; font-weight: bold;">[Missing &lt;returns&gt; documentation for "M:Lextm.SharpSnmpLib.Mib.MibException.Create(System.String,Lextm.SharpSnmpLib.Mib.Symbol)"]</p>
+      </returns>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.MibException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>
+            Gets object data.
+            </summary>
+      <param name="info">Info</param>
+      <param name="context">Context</param>
+    </member>
+    <member name="P:Lextm.SharpSnmpLib.Mib.MibException.Symbol">
+      <summary>
+            Symbol.
+            </summary>
+    </member>
+    <member name="T:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase">
+      <summary>
+            Base class of object registry.
+            </summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase" /> class</summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase.Compile(System.String)">
+      <summary>
+            Loads a MIB file.
+            </summary>
+      <param name="fileName">File name</param>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase.CompileFiles(System.Collections.Generic.IEnumerable{System.String})">
+      <summary>
+            Loads MIB files.
+            </summary>
+      <param name="fileNames">File names.</param>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase.CompileFolder(System.String,System.String)">
+      <summary>
+            Loads a folder of MIB files.
+            </summary>
+      <param name="folder">Folder</param>
+      <param name="pattern">MIB file pattern</param>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase.CreateVariable(System.String)">
+      <summary>
+            Creates a variable.
+            </summary>
+      <param name="textual">The textual.</param>
+      <returns>
+        <p style="color: #dc143c; font-size: 8.5pt; font-weight: bold;">[Missing &lt;returns&gt; documentation for "M:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase.CreateVariable(System.String)"]</p>
+      </returns>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase.CreateVariable(System.String,Lextm.SharpSnmpLib.ISnmpData)">
+      <summary>
+            Creates a variable.
+            </summary>
+      <param name="textual">The textual ID.</param>
+      <param name="data">The data.</param>
+      <returns>
+        <p style="color: #dc143c; font-size: 8.5pt; font-weight: bold;">[Missing &lt;returns&gt; documentation for "M:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase.CreateVariable(System.String,Lextm.SharpSnmpLib.ISnmpData)"]</p>
+      </returns>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase.Import(System.Collections.Generic.IEnumerable{Lextm.SharpSnmpLib.IModule})">
+      <summary>
+            Imports instances of <see cref="T:Lextm.SharpSnmpLib.Mib.MibModule" />.
+            </summary>
+      <param name="modules">Modules.</param>
+    </member>
+    <member name="E:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase.OnChanged">
+      <summary>
+            This event occurs when new documents are loaded.
+            </summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase.Refresh">
+      <summary>
+            Refreshes.
+            </summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase.Translate(System.String)">
+      <summary>
+            Gets numercial form from textual form.
+            </summary>
+      <param name="textual">Textual</param>
+      <returns>
+        <p style="color: #dc143c; font-size: 8.5pt; font-weight: bold;">[Missing &lt;returns&gt; documentation for "M:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase.Translate(System.String)"]</p>
+      </returns>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase.Translate(System.String,System.String)">
+      <summary>
+            Gets numerical form from textual form.
+            </summary>
+      <param name="moduleName">Module name</param>
+      <param name="name">Object name</param>
+      <returns>
+        <p style="color: #dc143c; font-size: 8.5pt; font-weight: bold;">[Missing &lt;returns&gt; documentation for "M:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase.Translate(System.String,System.String)"]</p>
+      </returns>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase.Translate(System.UInt32[])">
+      <summary>
+            Gets textual form from numerical form.
+            </summary>
+      <param name="numerical">Numerical form</param>
+      <returns>
+        <p style="color: #dc143c; font-size: 8.5pt; font-weight: bold;">[Missing &lt;returns&gt; documentation for "M:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase.Translate(System.UInt32[])"]</p>
+      </returns>
+    </member>
+    <member name="P:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase.Tree">
+      <summary>
+            Object tree.
+            </summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase.ValidateTable(Lextm.SharpSnmpLib.ObjectIdentifier)">
+      <summary>
+            Validates if an <see cref="T:Lextm.SharpSnmpLib.ObjectIdentifier" /> is a table.
+            </summary>
+      <param name="identifier">The object identifier.</param>
+      <returns>
+        <p style="color: #dc143c; font-size: 8.5pt; font-weight: bold;">[Missing &lt;returns&gt; documentation for "M:Lextm.SharpSnmpLib.Mib.ObjectRegistryBase.ValidateTable(Lextm.SharpSnmpLib.ObjectIdentifier)"]</p>
+      </returns>
+    </member>
+    <member name="T:Lextm.SharpSnmpLib.Mib.Parser">
+      <summary>
+            Description of Parser.
+            </summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.Parser.#ctor">
+      <summary>Initializes a new instance of the <see cref="T:Lextm.SharpSnmpLib.Mib.Parser" /> class</summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.Parser.Compile(System.String)">
+      <summary>
+            Loads a MIB file.
+            </summary>
+      <param name="fileName">File name</param>
+      <returns>
+        <p style="color: #dc143c; font-size: 8.5pt; font-weight: bold;">[Missing &lt;returns&gt; documentation for "M:Lextm.SharpSnmpLib.Mib.Parser.Compile(System.String)"]</p>
+      </returns>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.Parser.ParseToModules(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{Lextm.SharpSnmpLib.Mib.MibException}@)">
+      <summary>
+            Parses MIB documents to module files (*.module).
+            </summary>
+      <param name="files">The files.</param>
+      <param name="errors">The errors.</param>
+      <returns>
+        <p style="color: #dc143c; font-size: 8.5pt; font-weight: bold;">[Missing &lt;returns&gt; documentation for "M:Lextm.SharpSnmpLib.Mib.Parser.ParseToModules(System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{Lextm.SharpSnmpLib.Mib.MibException}@)"]</p>
+      </returns>
+    </member>
+    <member name="T:Lextm.SharpSnmpLib.Mib.ReloadableObjectRegistry">
+      <summary>
+            Object registry.
+            </summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.ReloadableObjectRegistry.#ctor(System.String)">
+      <summary>
+            Initializes a new instance of the <see cref="T:Lextm.SharpSnmpLib.Mib.ReloadableObjectRegistry" /> class.
+            </summary>
+      <param name="path">The path.</param>
+    </member>
+    <member name="P:Lextm.SharpSnmpLib.Mib.ReloadableObjectRegistry.Path">
+      <summary>
+            Gets the path.
+            </summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.ReloadableObjectRegistry.Reload">
+      <summary>
+            Reloads the registry.
+            </summary>
+    </member>
+    <member name="T:Lextm.SharpSnmpLib.Mib.Symbol">
+      <summary>
+            Description of Symbol.
+            </summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.Symbol.#ctor(System.String,System.String,System.Int32,System.Int32)">
+      <summary>
+            Creates a <see cref="T:Lextm.SharpSnmpLib.Mib.Symbol" />.
+            </summary>
+      <param name="file">File</param>
+      <param name="text">Text</param>
+      <param name="row">Row number</param>
+      <param name="column">column number</param>
+    </member>
+    <member name="P:Lextm.SharpSnmpLib.Mib.Symbol.Column">
+      <summary>
+            Column number.
+            </summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.Symbol.Equals(Lextm.SharpSnmpLib.Mib.Symbol)">
+      <summary>
+            Indicates whether the current object is equal to another object of the same type.
+            </summary>
+      <param name="other">An object to compare with this object.</param>
+      <returns>
+        <value>true</value> if the current object is equal to the <paramref name="other" /> parameter; otherwise, <value>false</value>.
+            </returns>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.Symbol.Equals(Lextm.SharpSnmpLib.Mib.Symbol,Lextm.SharpSnmpLib.Mib.Symbol)">
+      <summary>
+            Determines whether the specified <see cref="T:Lextm.SharpSnmpLib.Mib.Symbol" /> is equal to the current <see cref="T:Lextm.SharpSnmpLib.Mib.Symbol" />.
+            </summary>
+      <param name="left">Left <see cref="T:Lextm.SharpSnmpLib.Mib.Symbol" /> object</param>
+      <param name="right">Right <see cref="T:Lextm.SharpSnmpLib.Mib.Symbol" /> object</param>
+      <returns>
+            Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.Symbol.Equals(System.Object)">
+      <summary>
+            Determines whether the specified <see cref="F:Lextm.SharpSnmpLib.Mib.Symbol.Object" /> is equal to the current <see cref="T:Lextm.SharpSnmpLib.Mib.Symbol" />.
+            </summary>
+      <param name="obj">The <see cref="F:Lextm.SharpSnmpLib.Mib.Symbol.Object" /> to compare with the current <see cref="T:Lextm.SharpSnmpLib.Mib.Symbol" />. </param>
+      <returns>
+        <value>true</value> if the specified <see cref="F:Lextm.SharpSnmpLib.Mib.Symbol.Object" /> is equal to the current <see cref="T:Lextm.SharpSnmpLib.Mib.Symbol" />; otherwise, <value>false</value>.
+            </returns>
+    </member>
+    <member name="P:Lextm.SharpSnmpLib.Mib.Symbol.File">
+      <summary>
+            File.
+            </summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.Symbol.GetHashCode">
+      <summary>
+            Serves as a hash function for a particular type.
+            </summary>
+      <returns>A hash code for the current <see cref="T:Lextm.SharpSnmpLib.Mib.Symbol" />.</returns>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.Symbol.op_Equality(Lextm.SharpSnmpLib.Mib.Symbol,Lextm.SharpSnmpLib.Mib.Symbol)">
+      <summary>
+            The equality operator.
+            </summary>
+      <param name="left">Left <see cref="T:Lextm.SharpSnmpLib.Mib.Symbol" /> object</param>
+      <param name="right">Right <see cref="T:Lextm.SharpSnmpLib.Mib.Symbol" /> object</param>
+      <returns>
+            Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.Symbol.op_Inequality(Lextm.SharpSnmpLib.Mib.Symbol,Lextm.SharpSnmpLib.Mib.Symbol)">
+      <summary>
+            The inequality operator.
+            </summary>
+      <param name="left">Left <see cref="T:Lextm.SharpSnmpLib.Mib.Symbol" /> object</param>
+      <param name="right">Right <see cref="T:Lextm.SharpSnmpLib.Mib.Symbol" /> object</param>
+      <returns>
+            Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
+    </member>
+    <member name="P:Lextm.SharpSnmpLib.Mib.Symbol.Row">
+      <summary>
+            Row number.
+            </summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Mib.Symbol.ToString">
+      <summary>
+            Returns a <see cref="F:Lextm.SharpSnmpLib.Mib.Symbol.String" /> that represents this <see cref="T:Lextm.SharpSnmpLib.Mib.Symbol" />.
+            </summary>
+      <returns>
+        <p style="color: #dc143c; font-size: 8.5pt; font-weight: bold;">[Missing &lt;returns&gt; documentation for "M:Lextm.SharpSnmpLib.Mib.Symbol.ToString"]</p>
+      </returns>
+    </member>
+  </members>
+</doc>

@@ -1,0 +1,15 @@
+#RFC1155-SMI,RFC-1212,
+.1.3.6.1.4.1.4,Lextm.SharpSnmpLib.Mib.OidValueAssignment,unix,enterprises
+.1.3.6.1.4.1.4.4,Lextm.SharpSnmpLib.Mib.OidValueAssignment,smux,unix
+.1.3.6.1.4.1.4.4.1,Lextm.SharpSnmpLib.Mib.ObjectType,smuxPeerTable,smux
+.1.3.6.1.4.1.4.4.1.1,Lextm.SharpSnmpLib.Mib.ObjectType,smuxPeerEntry,smuxPeerTable
+.1.3.6.1.4.1.4.4.1.1.1,Lextm.SharpSnmpLib.Mib.ObjectType,smuxPindex,smuxPeerEntry
+.1.3.6.1.4.1.4.4.1.1.2,Lextm.SharpSnmpLib.Mib.ObjectType,smuxPidentity,smuxPeerEntry
+.1.3.6.1.4.1.4.4.1.1.3,Lextm.SharpSnmpLib.Mib.ObjectType,smuxPdescription,smuxPeerEntry
+.1.3.6.1.4.1.4.4.1.1.4,Lextm.SharpSnmpLib.Mib.ObjectType,smuxPstatus,smuxPeerEntry
+.1.3.6.1.4.1.4.4.2,Lextm.SharpSnmpLib.Mib.ObjectType,smuxTreeTable,smux
+.1.3.6.1.4.1.4.4.2.1,Lextm.SharpSnmpLib.Mib.ObjectType,smuxTreeEntry,smuxTreeTable
+.1.3.6.1.4.1.4.4.2.1.1,Lextm.SharpSnmpLib.Mib.ObjectType,smuxTsubtree,smuxTreeEntry
+.1.3.6.1.4.1.4.4.2.1.2,Lextm.SharpSnmpLib.Mib.ObjectType,smuxTpriority,smuxTreeEntry
+.1.3.6.1.4.1.4.4.2.1.3,Lextm.SharpSnmpLib.Mib.ObjectType,smuxTindex,smuxTreeEntry
+.1.3.6.1.4.1.4.4.2.1.4,Lextm.SharpSnmpLib.Mib.ObjectType,smuxTstatus,smuxTreeEntry

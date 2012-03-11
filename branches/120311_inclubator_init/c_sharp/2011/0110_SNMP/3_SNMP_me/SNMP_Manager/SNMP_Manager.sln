@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASN_1", "ASN_1\ASN_1.csproj", "{6AA95B3C-F30A-40AE-808F-136793763366}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BER", "BER\BER.csproj", "{9281A146-D316-40C4-89AC-0B9C3EC9F7CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oid", "Oid\Oid.csproj", "{6223853B-0E96-46A2-BD91-B04B95F069D1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6AA95B3C-F30A-40AE-808F-136793763366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AA95B3C-F30A-40AE-808F-136793763366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AA95B3C-F30A-40AE-808F-136793763366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AA95B3C-F30A-40AE-808F-136793763366}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9281A146-D316-40C4-89AC-0B9C3EC9F7CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9281A146-D316-40C4-89AC-0B9C3EC9F7CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9281A146-D316-40C4-89AC-0B9C3EC9F7CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9281A146-D316-40C4-89AC-0B9C3EC9F7CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6223853B-0E96-46A2-BD91-B04B95F069D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6223853B-0E96-46A2-BD91-B04B95F069D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6223853B-0E96-46A2-BD91-B04B95F069D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6223853B-0E96-46A2-BD91-B04B95F069D1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

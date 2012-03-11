@@ -1,0 +1,16 @@
+#SNMPV2-SMI,SNMPV2-TC,SNMPV2-CONF,
+.1.3.6.1.6.3.10,Lextm.SharpSnmpLib.Mib.ModuleIdentity,snmpFrameworkMIB,snmpModules
+.1.3.6.1.6.3.10.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,snmpFrameworkAdmin,snmpFrameworkMIB
+.1.3.6.1.6.3.10.2,Lextm.SharpSnmpLib.Mib.OidValueAssignment,snmpFrameworkMIBObjects,snmpFrameworkMIB
+.1.3.6.1.6.3.10.3,Lextm.SharpSnmpLib.Mib.OidValueAssignment,snmpFrameworkMIBConformance,snmpFrameworkMIB
+.1.3.6.1.6.3.10.2.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,snmpEngine,snmpFrameworkMIBObjects
+.1.3.6.1.6.3.10.2.1.1,Lextm.SharpSnmpLib.Mib.ObjectType,snmpEngineID,snmpEngine
+.1.3.6.1.6.3.10.2.1.2,Lextm.SharpSnmpLib.Mib.ObjectType,snmpEngineBoots,snmpEngine
+.1.3.6.1.6.3.10.2.1.3,Lextm.SharpSnmpLib.Mib.ObjectType,snmpEngineTime,snmpEngine
+.1.3.6.1.6.3.10.2.1.4,Lextm.SharpSnmpLib.Mib.ObjectType,snmpEngineMaxMessageSize,snmpEngine
+.1.3.6.1.6.3.10.1.1,Lextm.SharpSnmpLib.Mib.ObjectIdentity,snmpAuthProtocols,snmpFrameworkAdmin
+.1.3.6.1.6.3.10.1.2,Lextm.SharpSnmpLib.Mib.ObjectIdentity,snmpPrivProtocols,snmpFrameworkAdmin
+.1.3.6.1.6.3.10.3.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,snmpFrameworkMIBCompliances,snmpFrameworkMIBConformance
+.1.3.6.1.6.3.10.3.2,Lextm.SharpSnmpLib.Mib.OidValueAssignment,snmpFrameworkMIBGroups,snmpFrameworkMIBConformance
+.1.3.6.1.6.3.10.3.1.1,Lextm.SharpSnmpLib.Mib.ModuleCompliance,snmpFrameworkMIBCompliance,snmpFrameworkMIBCompliances
+.1.3.6.1.6.3.10.3.2.1,Lextm.SharpSnmpLib.Mib.ObjectGroup,snmpEngineGroup,snmpFrameworkMIBGroups

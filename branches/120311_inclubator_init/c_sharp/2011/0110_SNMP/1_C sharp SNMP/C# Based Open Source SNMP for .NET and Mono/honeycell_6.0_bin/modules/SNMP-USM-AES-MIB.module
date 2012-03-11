@@ -1,0 +1,3 @@
+#SNMPV2-SMI,SNMP-FRAMEWORK-MIB,
+.1.3.6.1.6.3.20,Lextm.SharpSnmpLib.Mib.ModuleIdentity,snmpUsmAesMIB,snmpModules
+.1.3.6.1.6.3.10.1.2.4,Lextm.SharpSnmpLib.Mib.ObjectIdentity,usmAesCfb128Protocol,snmpPrivProtocols

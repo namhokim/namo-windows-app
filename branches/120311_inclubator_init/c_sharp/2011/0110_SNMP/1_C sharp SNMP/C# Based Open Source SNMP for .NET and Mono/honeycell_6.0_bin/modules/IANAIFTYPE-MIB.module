@@ -1,0 +1,2 @@
+#SNMPV2-SMI,SNMPV2-TC,
+.1.3.6.1.2.1.30,Lextm.SharpSnmpLib.Mib.ModuleIdentity,ianaifType,mib-2

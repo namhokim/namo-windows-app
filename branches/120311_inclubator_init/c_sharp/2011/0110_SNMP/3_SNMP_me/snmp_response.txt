@@ -1,0 +1,17 @@
+30 5E					(UDP Type:0x30[SNMP Message]/Length:0x5E=94)
+ 02 01 00				 (Type:Integer[0x02]/Length:01/Value:00[Ver.1])
+ 04 06 70 75 62 6C 69 63		 (Type:OctetString[0x04]/Length:06/Value:"public")
+ A2 51					 (PDU Type:Response/Length:51)
+  02 01 01				  (Type:Integer/Length:01/Request ID:01)
+  02 01 00				  (Type:Integer/Length:01/Error Status:00)
+  02 01 00				  (Type:Integer/Length:02/Error Index:00)
+  30 46					  (Type:SequenceOf[0x30]/Length:0x46=70)
+   30 44				   (Type:Sequence[0x30]/Length:0x44=68)
+    06 08 2B 06 01 02 01 01 01 00	    (Type:ObjectId[0x06]/Length:8/"1.3.6.1.2.1.1.1.0")
+    04 38				    (Type:OctetString[0x04]/Length:0x38 = 56/"Lexmark T652 version NJ.APS.N233 kernel 2.6.18.5 All-N-1")
+	4C 65 78 6D 61 72 6B 20 54 36
+	35 32 20 76 65 72 73 69 6F 6E
+	20 4E 4A 2E 41 50 53 2E 4E 32
+	33 33 20 6B 65 72 6E 65 6C 20
+	32 2E 36 2E 31 38 2E 35 20 41
+	6C 6C 2D 4E 2D 31

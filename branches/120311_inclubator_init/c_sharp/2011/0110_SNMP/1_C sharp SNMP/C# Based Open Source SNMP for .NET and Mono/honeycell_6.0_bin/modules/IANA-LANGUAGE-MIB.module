@@ -1,0 +1,9 @@
+#SNMPV2-SMI,
+.1.3.6.1.2.1.73,Lextm.SharpSnmpLib.Mib.ModuleIdentity,ianaLanguages,mib-2
+.1.3.6.1.2.1.73.1,Lextm.SharpSnmpLib.Mib.ObjectIdentity,ianaLangJavaByteCode,ianaLanguages
+.1.3.6.1.2.1.73.2,Lextm.SharpSnmpLib.Mib.ObjectIdentity,ianaLangTcl,ianaLanguages
+.1.3.6.1.2.1.73.3,Lextm.SharpSnmpLib.Mib.ObjectIdentity,ianaLangPerl,ianaLanguages
+.1.3.6.1.2.1.73.4,Lextm.SharpSnmpLib.Mib.ObjectIdentity,ianaLangScheme,ianaLanguages
+.1.3.6.1.2.1.73.5,Lextm.SharpSnmpLib.Mib.ObjectIdentity,ianaLangSRSL,ianaLanguages
+.1.3.6.1.2.1.73.6,Lextm.SharpSnmpLib.Mib.ObjectIdentity,ianaLangPSL,ianaLanguages
+.1.3.6.1.2.1.73.7,Lextm.SharpSnmpLib.Mib.ObjectIdentity,ianaLangSMSL,ianaLanguages
