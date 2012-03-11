@@ -1,0 +1,48 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+  <title> Test </title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+  <script type="text/javascript">
+	  $(function() {
+		$('#Button1').click(getCars);
+	  });
+	 
+	  function getCars() {
+		$.ajax({
+		  type: "POST",
+		  url: "CarService.asmx/GetAllCars",
+		  data: "{}",
+		  contentType: "application/json; charset=utf-8",
+		  dataType: "json",
+		  success: function(response) {
+			var cars = response.d;
+			$('#output').empty();
+			$.each(cars, function(index, car) {
+			  alert(car);
+			  $('#output').append('<p><strong>' + car.Make + ' ' +
+									car.Model + '</strong><br /> Year: ' +
+									car.Year + '<br />Doors: ' +
+									car.Doors + '<br />Colour: ' +
+									car.Colour + '<br />Price: £' +
+									car.Price + '</p>');
+			});
+		  },
+		  failure: function(msg) {
+			$('#output').text(msg);
+		  }
+		});
+	  }
+  </script>
+<style type="text/css">
+</style>
+ </head>
+
+ <body>
+	<form id="form1" runat="server">
+	<input type="button" id="Button1" value="Get Cars" />
+	<div id="output"></div>
+	</form>
+ </body>
+</html>
