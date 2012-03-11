@@ -2573,6 +2573,19 @@ TEST(StringAssertionTest, STRCASEEQ_Wide) {
                        "(ignoring case)");
 }
 
+// Tests ASSERT_STRCASENE.
+TEST(StringAssertionTest, STRCASENE_Wide) {
+  ASSERT_STRCASENE(L"hi1", L"Hi2");
+  ASSERT_STRCASENE(L"Hi", NULL);
+  ASSERT_STRCASENE(NULL, L"Hi");
+  ASSERT_STRCASENE(L"", NULL);
+  ASSERT_STRCASENE(NULL, L"");
+  ASSERT_STRCASENE(L"", L"Hi");
+  ASSERT_STRCASENE(L"Hi", L"");
+  EXPECT_FATAL_FAILURE(ASSERT_STRCASENE(L"Hi", L"hi"),
+                       "(ignoring case)");
+}
+
 // Tests for ::testing::IsSubstring().
 
 // Tests that IsSubstring() returns the correct result when the input

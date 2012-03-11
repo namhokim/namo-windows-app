@@ -1603,6 +1603,21 @@ AssertionResult CmpHelperSTRNE(const char* s1_expression,
                             << " vs " << String::ShowWideCStringQuoted(s2);
 }
 
+// Helper function for *_STRCASENE on wide strings.
+AssertionResult CmpHelperSTRCASENE(const char* s1_expression,
+                                   const char* s2_expression,
+                                   const wchar_t* s1,
+                                   const wchar_t* s2) {
+  if (!String::CaseInsensitiveWideCStringEquals(s1, s2)) {
+    return AssertionSuccess();
+  } else {
+    return AssertionFailure()
+        << "Expected: (" << s1_expression << ") != ("
+        << s2_expression << ") (ignoring case), actual: \""
+        << s1 << "\" vs \"" << s2 << "\"";
+  }
+}
+
 // Compares two C strings, ignoring case.  Returns true iff they have
 // the same content.
 //
