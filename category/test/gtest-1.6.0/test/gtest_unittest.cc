@@ -2563,6 +2563,16 @@ TEST(StringAssertionTest, STRNE_Wide) {
                           "abc");
 }
 
+// Tests *_STRCASEEQ on wide strings.
+TEST(StringAssertionTest, STRCASEEQ_Wide) {
+  ASSERT_STRCASEEQ(L"hi", L"Hi");
+  ASSERT_STRCASEEQ(static_cast<const wchar_t *>(NULL), NULL);
+
+  ASSERT_STRCASEEQ(L"", L"");
+  EXPECT_FATAL_FAILURE(ASSERT_STRCASEEQ(L"Hi", L"hi2"),
+                       "(ignoring case)");
+}
+
 // Tests for ::testing::IsSubstring().
 
 // Tests that IsSubstring() returns the correct result when the input
