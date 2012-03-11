@@ -2000,6 +2000,42 @@ GTEST_API_ AssertionResult FloatLE(const char* expr1, const char* expr2,
 GTEST_API_ AssertionResult DoubleLE(const char* expr1, const char* expr2,
                                     double val1, double val2);
 
+#define EXPECT_FLOAT_LE(expected, actual)\
+  EXPECT_PRED_FORMAT2(testing::FloatLE, expected, actual)
+
+#define EXPECT_DOUBLE_LE(expected, actual)\
+  EXPECT_PRED_FORMAT2(testing::DoubleLE, expected, actual)
+
+#define ASSERT_FLOAT_LE(expected, actual)\
+  ASSERT_PRED_FORMAT2(testing::FloatLE, expected, actual)
+
+#define ASSERT_DOUBLE_LE(expected, actual)\
+  ASSERT_PRED_FORMAT2(testing::DoubleLE, expected, actual)
+
+// These predicate format functions work on floating-point values, and
+// can be used in {ASSERT|EXPECT}_PRED_FORMAT2*(), e.g.
+//
+//   EXPECT_PRED_FORMAT2(testing::DoubleGE, Foo(), 5.0);
+
+// Asserts that val1 is less than, or almost equal to, val2.  Fails
+// otherwise.  In particular, it fails if either val1 or val2 is NaN.
+GTEST_API_ AssertionResult FloatGE(const char* expr1, const char* expr2,
+                                   float val1, float val2);
+GTEST_API_ AssertionResult DoubleGE(const char* expr1, const char* expr2,
+                                    double val1, double val2);
+
+#define EXPECT_FLOAT_GE(expected, actual)\
+  EXPECT_PRED_FORMAT2(testing::FloatGE, expected, actual)
+
+#define EXPECT_DOUBLE_GE(expected, actual)\
+  EXPECT_PRED_FORMAT2(testing::DoubleGE, expected, actual)
+
+#define ASSERT_FLOAT_GE(expected, actual)\
+  ASSERT_PRED_FORMAT2(testing::FloatGE, expected, actual)
+
+#define ASSERT_DOUBLE_GE(expected, actual)\
+  ASSERT_PRED_FORMAT2(testing::DoubleGE, expected, actual)
+
 
 #if GTEST_OS_WINDOWS
 
