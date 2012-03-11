@@ -1572,6 +1572,22 @@ AssertionResult CmpHelperSTREQ(const char* expected_expression,
                    false);
 }
 
+// Helper function for *_STRCASEEQ on wide strings.
+AssertionResult CmpHelperSTRCASEEQ(const char* expected_expression,
+                                   const char* actual_expression,
+                                   const wchar_t* expected,
+                                   const wchar_t* actual) {
+  if (String::CaseInsensitiveWideCStringEquals(expected, actual)) {
+    return AssertionSuccess();
+  }
+
+  return EqFailure(expected_expression,
+                   actual_expression,
+                   String::ShowWideCStringQuoted(expected),
+                   String::ShowWideCStringQuoted(actual),
+                   true);
+}
+
 // Helper function for *_STRNE on wide strings.
 AssertionResult CmpHelperSTRNE(const char* s1_expression,
                                const char* s2_expression,

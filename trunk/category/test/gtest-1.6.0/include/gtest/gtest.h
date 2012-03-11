@@ -1495,6 +1495,14 @@ GTEST_API_ AssertionResult CmpHelperSTREQ(const char* expected_expression,
                                           const wchar_t* expected,
                                           const wchar_t* actual);
 
+// Helper function for *_STRCASEEQ on wide strings.
+//
+// INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
+GTEST_API_ AssertionResult CmpHelperSTRCASEEQ(const char* expected_expression,
+                                              const char* actual_expression,
+                                              const wchar_t* expected,
+                                              const wchar_t* actual);
+
 // Helper function for *_STRNE on wide strings.
 //
 // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
