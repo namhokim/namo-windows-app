@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MinimumWinCE", "MinimumWinCE.vcproj", "{8C4C6835-CF7A-4998-9090-E03D04C839BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ELTECH (ARMV4I) = Debug|ELTECH (ARMV4I)
+		Release|ELTECH (ARMV4I) = Release|ELTECH (ARMV4I)
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C4C6835-CF7A-4998-9090-E03D04C839BF}.Debug|ELTECH (ARMV4I).ActiveCfg = Debug|ELTECH (ARMV4I)
+		{8C4C6835-CF7A-4998-9090-E03D04C839BF}.Debug|ELTECH (ARMV4I).Build.0 = Debug|ELTECH (ARMV4I)
+		{8C4C6835-CF7A-4998-9090-E03D04C839BF}.Debug|ELTECH (ARMV4I).Deploy.0 = Debug|ELTECH (ARMV4I)
+		{8C4C6835-CF7A-4998-9090-E03D04C839BF}.Release|ELTECH (ARMV4I).ActiveCfg = Release|ELTECH (ARMV4I)
+		{8C4C6835-CF7A-4998-9090-E03D04C839BF}.Release|ELTECH (ARMV4I).Build.0 = Release|ELTECH (ARMV4I)
+		{8C4C6835-CF7A-4998-9090-E03D04C839BF}.Release|ELTECH (ARMV4I).Deploy.0 = Release|ELTECH (ARMV4I)
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

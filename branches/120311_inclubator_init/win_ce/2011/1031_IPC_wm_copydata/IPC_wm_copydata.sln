@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sender", "Sender\Sender.vcproj", "{3F186A70-A7E2-4DD5-A440-3F4F0348C527}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Receiver", "Receiver\Receiver.vcproj", "{24EE1B00-CF09-40DC-B591-A283656BC136}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F186A70-A7E2-4DD5-A440-3F4F0348C527}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3F186A70-A7E2-4DD5-A440-3F4F0348C527}.Debug|Win32.Build.0 = Debug|Win32
+		{3F186A70-A7E2-4DD5-A440-3F4F0348C527}.Release|Win32.ActiveCfg = Release|Win32
+		{3F186A70-A7E2-4DD5-A440-3F4F0348C527}.Release|Win32.Build.0 = Release|Win32
+		{24EE1B00-CF09-40DC-B591-A283656BC136}.Debug|Win32.ActiveCfg = Debug|Win32
+		{24EE1B00-CF09-40DC-B591-A283656BC136}.Debug|Win32.Build.0 = Debug|Win32
+		{24EE1B00-CF09-40DC-B591-A283656BC136}.Release|Win32.ActiveCfg = Release|Win32
+		{24EE1B00-CF09-40DC-B591-A283656BC136}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
