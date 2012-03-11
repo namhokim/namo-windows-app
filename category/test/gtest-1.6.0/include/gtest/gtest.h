@@ -1511,6 +1511,14 @@ GTEST_API_ AssertionResult CmpHelperSTRNE(const char* s1_expression,
                                           const wchar_t* s1,
                                           const wchar_t* s2);
 
+// Helper function for *_STRCASENE on wide strings.
+//
+// INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
+GTEST_API_ AssertionResult CmpHelperSTRCASENE(const char* s1_expression,
+                                              const char* s2_expression,
+                                              const wchar_t* s1,
+                                              const wchar_t* s2);
+
 }  // namespace internal
 
 // IsSubstring() and IsNotSubstring() are intended to be used as the
