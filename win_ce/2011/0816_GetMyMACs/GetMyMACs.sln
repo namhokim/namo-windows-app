@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GetMyMACs", "GetMyMACs.vcproj", "{26F1CEE6-5431-455C-A2DB-37171076811F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ELTECH (ARMV4I) = Debug|ELTECH (ARMV4I)
+		Release|ELTECH (ARMV4I) = Release|ELTECH (ARMV4I)
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{26F1CEE6-5431-455C-A2DB-37171076811F}.Debug|ELTECH (ARMV4I).ActiveCfg = Debug|ELTECH (ARMV4I)
+		{26F1CEE6-5431-455C-A2DB-37171076811F}.Debug|ELTECH (ARMV4I).Build.0 = Debug|ELTECH (ARMV4I)
+		{26F1CEE6-5431-455C-A2DB-37171076811F}.Debug|ELTECH (ARMV4I).Deploy.0 = Debug|ELTECH (ARMV4I)
+		{26F1CEE6-5431-455C-A2DB-37171076811F}.Release|ELTECH (ARMV4I).ActiveCfg = Release|ELTECH (ARMV4I)
+		{26F1CEE6-5431-455C-A2DB-37171076811F}.Release|ELTECH (ARMV4I).Build.0 = Release|ELTECH (ARMV4I)
+		{26F1CEE6-5431-455C-A2DB-37171076811F}.Release|ELTECH (ARMV4I).Deploy.0 = Release|ELTECH (ARMV4I)
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

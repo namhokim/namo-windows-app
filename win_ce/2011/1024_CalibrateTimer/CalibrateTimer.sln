@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CalibrateTimer", "CalibrateTimer.vcproj", "{D1A1D168-0025-4E94-BD1E-0898DBEF69F5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ELTECH (ARMV4I) = Debug|ELTECH (ARMV4I)
+		Release|ELTECH (ARMV4I) = Release|ELTECH (ARMV4I)
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D1A1D168-0025-4E94-BD1E-0898DBEF69F5}.Debug|ELTECH (ARMV4I).ActiveCfg = Debug|ELTECH (ARMV4I)
+		{D1A1D168-0025-4E94-BD1E-0898DBEF69F5}.Debug|ELTECH (ARMV4I).Build.0 = Debug|ELTECH (ARMV4I)
+		{D1A1D168-0025-4E94-BD1E-0898DBEF69F5}.Debug|ELTECH (ARMV4I).Deploy.0 = Debug|ELTECH (ARMV4I)
+		{D1A1D168-0025-4E94-BD1E-0898DBEF69F5}.Release|ELTECH (ARMV4I).ActiveCfg = Release|ELTECH (ARMV4I)
+		{D1A1D168-0025-4E94-BD1E-0898DBEF69F5}.Release|ELTECH (ARMV4I).Build.0 = Release|ELTECH (ARMV4I)
+		{D1A1D168-0025-4E94-BD1E-0898DBEF69F5}.Release|ELTECH (ARMV4I).Deploy.0 = Release|ELTECH (ARMV4I)
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
