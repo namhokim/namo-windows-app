@@ -1,0 +1,6 @@
+http://www.chinasisa.com/member/EXC_member_login2.asp?userid=namo&password=siroot&targetURL=/comu/comu_data_view.asp?csn=292%26bsn=2254%26sn=14433
+https://www.chinasisa.com:30012/member/EXC_member_login2.asp
+
+[ez-form]
+http://www.chinasisa.com/comu/comu_data_view.asp?csn=292&bsn=2254&sn=14433
+http://www.chinasisa.com/member/EXC_member_login2.asp?targetURL=/comu/comu_data_view.asp?csn=292%26bsn=2254%26sn=14433&userid=namo&password=siroot

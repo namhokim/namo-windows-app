@@ -1,0 +1,19 @@
+특정 웹 서버의 KeepAlive 설정을 알아 낼 수 있는가?
+
+2008.08.09 업데이트
+1. 세션 시간 종료 후 연결 끊어지는 것 방지
+ - 15분마다 세션 재연결
+2. http 연결 속도 -> 화면 표시(ms)
+
+
+2008.08.08 업데이트
+ 관련 : 
+	(0808)httpGetRequest-KeepAlive(dic)
+	(0808)httpGetRequest-KeepAlive(number)
+1. 연결을 유지
+ - hInternet, hHttp를 전역변수로 이동
+ - InternetOpen()과 InternetConnect()을 이용, WinInet함수 초기화 및 HTTP 세션을 한번만 연다.
+  (기존: 열고 닫고 반복)
+ - 성능의 개선은? 잘 모르겠다.
+2. #include <iostream>
+ - cout 이용

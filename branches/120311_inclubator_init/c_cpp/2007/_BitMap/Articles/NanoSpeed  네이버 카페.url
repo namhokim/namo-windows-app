@@ -1,0 +1,8 @@
+[DEFAULT]
+BASEURL=http://cafe.naver.com/nanospeed.cafe?iframe_url=/ArticleRead.nhn%3Farticleid=130
+[DOC_cafe_main]
+BASEURL=http://cafe.naver.com/ArticleRead.nhn?clubid=12184694&menuid=27&boardtype=L&page=&articleid=127
+ORIGURL=/ArticleRead.nhn?articleid=130&sc=e0d632120d4b2e9a1a&clubid=12184694
+[InternetShortcut]
+URL=http://cafe.naver.com/nanospeed.cafe?iframe_url=/ArticleRead.nhn%3Farticleid=130
+Modified=0066B21B4DE8C6012F

@@ -1,0 +1,65 @@
+%-12345X@PJL JOB NAME = "printSource.txt"
+@PJL COMMENT NOTIFICATION = "0x00"
+@PJL SET AUTHENTICATIONUSERNAME = "abc"
+@PJL SET AUTHENTICATIONPASSWORD = ""
+@PJL SET JOBNAME = "printSource.txt"
+@PJL SET DATE = "2008/12/10"
+@PJL SET TIME = "11:16:58"
+@PJL SET JOBOFFSET = OFF
+@PJL SET COPIES = 2
+@PJL SET QTY = 1
+@PJL SET FRONTCOVERPRINT = OFF
+@PJL SET BACKCOVERPRINT = OFF
+@PJL SET SLIPSHEETPRINT = OFF
+@PJL SET IMAGEDIRECTION = NORMAL
+@PJL SET HOSTCHARSET = "CP949"
+@PJL SET DISPCHARSET = "CP949"
+@PJL SET HOSTPRINTERNAME = "RICOH Aficio MP C3000 RPCS"
+@PJL SET MEMORYSIZE = 1024
+@PJL SET AUTOTRAYCHANGE = ON
+@PJL SET TABPOSITION = OFF
+@PJL SET TABSTOCKSHIFTPRINT = OFF
+@PJL SET STAPLE = OFF
+@PJL SET PUNCH = OFF
+@PJL SET USERID = "?"
+@PJL SET USERCODE = ""
+@PJL COMMENT OTHER = "2302a90207d014"
+@PJL SET PRINTINFO = "DUPLEX_NUP=00000000/SCALING=3/OTHER=00000000"
+@PJL SET HOSTNAME = "NAMO"
+@PJL SET HOSTLOGINNAME = "namhokim"
+@PJL SET HOSTPORTNAME = "c:\temp\test.prn"
+@PJL SET TRACKID = "AUnheAAARilodBw"
+@PJL SET PAPERFEEDADJUST = ON
+@PJL SET PAPERERRORCHECK = OFF
+@PJL SET TRAY = ALL
+@PJL SET MEDIATYPE = PLAINORRECYCLED
+@PJL SET PAPERFACE = DOWN
+@PJL SET WHITEPAPERSUPPRESS = OFF
+@PJL SET DRAWLINEBOLD = OFF
+@PJL SET SMOOTHING = OFF
+@PJL SET ECONOMODE = OFF
+@PJL SET QUALITYMODE = STANDARD
+@PJL SET DATAMODE = COLOR
+@PJL SET PLANESELECTK = ON
+@PJL SET PLANESELECTC = ON
+@PJL SET PLANESELECTM = ON
+@PJL SET PLANESELECTY = ON
+@PJL SET FIRSTPAGEORDER = ON
+@PJL SET MIXEDDIRROTATION = OFF
+@PJL SET DUPLEX = OFF
+@PJL SET PAGESEPARATION = OFF
+@PJL ENTER LANGUAGE = RPCS
+?PCS driver post process version 4.6.16.0ÿ      r%-12345X@PJL SET APLPAGELAYOUT = PORTRAIT
+@PJL SET PAPER = A4
+@PJL SET APLPAGESIZE = A4
+@PJL SET RESOLUTION = 600
+@PJL SET BITSPERDOT = 1
+@PJL SET PAGEORIGINX = 100
+@PJL SET PAGEORIGINY = 100
+@PJL SET ROTATE = RIGHT
+@PJL ENTER LANGUAGE = RPCS
+"??<<??,  
+pg dwBA@  B  1  @ =   *& ‡Wÿÿ?ÿÿÿ?“POÿÿÿÿÿÿÿÿÿÿÿÿÿÿ?pkÿÉ¨ÿ€t  @ 7   '& ‡Wÿÿÿÿÿ?pkÿÉ¨!?ÿÿÿÿÿÿÿÿÿÿÿÿÎGÿÿ?T  @ =   $%¡£ÿ&¡œ?ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ??  @ *   <†Wÿÿÿÿÿÿÿÿÿÿÿÿÿÿ?/ÿÿ??  @ =   .&¤U?ÿÿ??ÿÿÿÿÿÿÿÿ?Gÿÿÿ?ÿÿÿÿÿÿÿÿ?‘Vÿÿ?  @ =   $#@???ÿÿÿÿÿÿÿÿ?_?ÿÿÿÿÿÉ¨ÿ€o  @ *   !&¤U?ÿÿ??ÿÿÿÿÿÿÿÿÿÿÿ?‘Vÿÿñþp  @ =   %#@???ÿÿÿÿÿÿÿÿÿÿÿ?_ÿ??ÿÿ?á¿øS  @ =   0&¤U?ÿÿ??ÿÿ?ÿÿÉ©`?ÿ??ÿÿÿÿÿÿ<?ÿÿ&¤U?ÿÿÇþr  @ *   *?ÿ<?_ÿÿ?ÿÿÿÿÿäÔÿ2  @ =   5&¤U?ÿÿ??ÿÿ?ƒOÿÿÿÿÿ?;ÿÿ??ÿÿ ?ÿ?ÿÿ?°ÊÿÉ¨ÿ€-  @    	"?ÿ“P<7ÿe  @ *   #&¤U?ÿÿ??ÿÿ?üð,ÿ??ÿÿäÔŠ°kÿÿÿð$  d  f	ÿÿÿÿÿÿp 0 ? ?r fA¢ž‚C ?? fA   CQ±P C? 0 =   )& Ò|2?ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿüðÿÿÿÿÿ?‘Vÿÿ?? 0 =   <?ÿÿÿÿÿÿÿÿÿÿÿ??šá¿??±P C 0 =   ,#@???ÿÿÿÿÿÿÿÿ?_??ÿÿÿÿÿÿÿÿÿÿ???V ( =   (#@?“PCÀ«ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ???@ðß?? 0 =   3<†WÿÿÀ?ÿüð?ÿÿÿÿNÿÿÿÿ?ÿÿ??ÿÿÿÿÿÿÿÿÿÿÿ?@ðß??±T C?Ão CÃu CO·t C?Ãp C?Ãu C?·t C±T CN 0 =   "?ÿ??ÿÿÿ#@???ÿÿÿ"?ÿ“P<7ÿC?±S C?±T C  ? C ? C@   =   &&?3ÿÿÿÿÿÿ?Ã??Kÿÿÿÿÿÿÿÿÿÿÿÿ'?A?Cg  0 *   #@???ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÉ¨? ? C ? C  ? C3 ? Cl ? C  0 *   !&¤U?ÿÿ??ÿÿ?ÿÿ?ÿÿÉ©`?ÿÿ? ? C     
+!?ÿÿ?_€C2 ? Ce  0 *   -<†Wÿÿ“R>?ÿÿÿÿ?ÿÿÿÿÿ?!?ÿÿùà0|2?ÿÉ¨? ? C ? C ? C ? C@  0 =   3&¤U?ÿÿ??ÿÿÿÿÿÿÿÿ?‘Vÿ??ÿÿÿÿÿÿÿ?EX5ÿÿ??s ? C ? C ? C ? CE ? Cr ? C ? C ? CJ   *   !?ÿÿ?_ÿÿÃ?ÿÿ??Cv ? C  0 =   ,& …85ÿÿ?ÿÿÿ??ÿ?ÿóÀ`?ÿÿÿÿÿÿÿÿ“R*Á¯ÿÿ?C  h f   ?¡ÿÿ??··×éd6ˆÁ€yA„N z=?7¤ßM??z??ÿÿÿÿÿ?þÚ_í¥þÚ[im¥°?%?XbY´c?³ù ðû?ÿÿÿÿ?ÿ&? jäà?@=ˆ½ðû @Ú° x6A‚Çÿÿÿ?8  h f   ?¡?á¿?!‚”0ðÞ?ÿÿÿ?_???ïášÃ¯gÃBðÂ?ÿÒúõô¾½/_KëÒ ?HÀ´ƒé3¡tÁ›?£Óô¯é¿	7????‚o?????????	?ŸÐC??_Í×ßÃùIûÖÿþ×?ÿÿÿÿk#p?žÇ‡ÃXÿÿf	   ÿÿÿh  
+ p 1    ?6?6r fA   C9P Cl. 0 *   "&¤U?ÿÿ??ÿÿ??ÿ??ÿÿÿÿäÔ?ÿ?C?. 0 =   .&¤F?ÿÿ??ÿÿÿÿÿÿÿÿÿÿ??ÿÿ ?ÿÿ<?ÿÿ&¤U?ÿÿÇþC?.e C	>1 C	?.o C	? ( =   *&¡œ?ÿÿ ?ÿÿÿÿÿ?ÿ?xÿÿÿÿÿÿÿÿÿÿÿÿÿÿ?C
+=1 f	   ÿÿÿp 1    ??r %  #%-12345X@PJL EOJ NAME = "printSource.txt"

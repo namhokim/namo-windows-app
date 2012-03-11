@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EnumDesktops", "EnumDesktops\EnumDesktops.vcproj", "{C92F4605-9496-4963-9350-7AB7BD60CB01}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreateDesktop", "CreateDesktop\CreateDesktop.vcproj", "{4C4B9E58-026F-4EE5-81AA-F8E909BBF7A6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Signal", "Signal\Signal.vcproj", "{0DD8B6FE-E0A8-4FE6-BF3C-9D8547EEA1C2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C92F4605-9496-4963-9350-7AB7BD60CB01}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C92F4605-9496-4963-9350-7AB7BD60CB01}.Debug|Win32.Build.0 = Debug|Win32
+		{C92F4605-9496-4963-9350-7AB7BD60CB01}.Release|Win32.ActiveCfg = Release|Win32
+		{C92F4605-9496-4963-9350-7AB7BD60CB01}.Release|Win32.Build.0 = Release|Win32
+		{4C4B9E58-026F-4EE5-81AA-F8E909BBF7A6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4C4B9E58-026F-4EE5-81AA-F8E909BBF7A6}.Debug|Win32.Build.0 = Debug|Win32
+		{4C4B9E58-026F-4EE5-81AA-F8E909BBF7A6}.Release|Win32.ActiveCfg = Release|Win32
+		{4C4B9E58-026F-4EE5-81AA-F8E909BBF7A6}.Release|Win32.Build.0 = Release|Win32
+		{0DD8B6FE-E0A8-4FE6-BF3C-9D8547EEA1C2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0DD8B6FE-E0A8-4FE6-BF3C-9D8547EEA1C2}.Debug|Win32.Build.0 = Debug|Win32
+		{0DD8B6FE-E0A8-4FE6-BF3C-9D8547EEA1C2}.Release|Win32.ActiveCfg = Release|Win32
+		{0DD8B6FE-E0A8-4FE6-BF3C-9D8547EEA1C2}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

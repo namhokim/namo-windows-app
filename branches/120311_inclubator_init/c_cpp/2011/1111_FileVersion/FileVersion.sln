@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicApp", "BasicApp\BasicApp.vcproj", "{2930D66C-4896-4D29-BC0C-7B57BB0DC6F1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImageHelpLib", "ImageHelpLib\ImageHelpLib.vcproj", "{E8DC2F44-531F-43B9-84CF-4269E88ABDE4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2930D66C-4896-4D29-BC0C-7B57BB0DC6F1} = {2930D66C-4896-4D29-BC0C-7B57BB0DC6F1}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2930D66C-4896-4D29-BC0C-7B57BB0DC6F1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2930D66C-4896-4D29-BC0C-7B57BB0DC6F1}.Debug|Win32.Build.0 = Debug|Win32
+		{2930D66C-4896-4D29-BC0C-7B57BB0DC6F1}.Release|Win32.ActiveCfg = Release|Win32
+		{2930D66C-4896-4D29-BC0C-7B57BB0DC6F1}.Release|Win32.Build.0 = Release|Win32
+		{E8DC2F44-531F-43B9-84CF-4269E88ABDE4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E8DC2F44-531F-43B9-84CF-4269E88ABDE4}.Debug|Win32.Build.0 = Debug|Win32
+		{E8DC2F44-531F-43B9-84CF-4269E88ABDE4}.Release|Win32.ActiveCfg = Release|Win32
+		{E8DC2F44-531F-43B9-84CF-4269E88ABDE4}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

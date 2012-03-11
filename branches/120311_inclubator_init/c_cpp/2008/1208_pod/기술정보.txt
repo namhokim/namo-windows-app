@@ -1,0 +1,11 @@
+[레지스트리]
+저장정보: 고객정보, 감지할 prn파일 경로
+저장위치:
+HKEY_CURRENT_USER
+Software\[szWindowClass: 프로젝트명]\POD\
+	clientID : 고객정보 key
+	prnPath : 감지할 prn파일 경로 key
+	
+저장시기: 프로그램 설치시 다이얼로그에서 입력됨
+검사시기: 프로그램 수행시 전역변수로 불러옴(clientID, prnPath)
+

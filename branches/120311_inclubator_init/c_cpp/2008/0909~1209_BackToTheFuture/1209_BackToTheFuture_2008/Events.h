@@ -1,0 +1,2 @@
+bool IsEventTime();
+bool DoAction();

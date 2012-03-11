@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MathFuncsLib", "MathFuncsLib\MathFuncsLib.vcproj", "{022E11F8-06E6-4B0B-8E09-A989F5A0360B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyExecRefsLib", "MyExecRefsLib\MyExecRefsLib.vcproj", "{56F6C03D-314A-48F8-BE5A-8A7F346FB4CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{022E11F8-06E6-4B0B-8E09-A989F5A0360B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{022E11F8-06E6-4B0B-8E09-A989F5A0360B}.Debug|Win32.Build.0 = Debug|Win32
+		{022E11F8-06E6-4B0B-8E09-A989F5A0360B}.Release|Win32.ActiveCfg = Release|Win32
+		{022E11F8-06E6-4B0B-8E09-A989F5A0360B}.Release|Win32.Build.0 = Release|Win32
+		{56F6C03D-314A-48F8-BE5A-8A7F346FB4CF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{56F6C03D-314A-48F8-BE5A-8A7F346FB4CF}.Debug|Win32.Build.0 = Debug|Win32
+		{56F6C03D-314A-48F8-BE5A-8A7F346FB4CF}.Release|Win32.ActiveCfg = Release|Win32
+		{56F6C03D-314A-48F8-BE5A-8A7F346FB4CF}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

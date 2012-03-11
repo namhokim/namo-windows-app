@@ -1,0 +1,19 @@
+Installation
+------------
+
+
+Installation for all platforms is straight forward. Just run 
+ qmake  
+and then 
+ make/nmake/gmake  depending on your platform
+
+
+Compiling
+---------
+
+Requirements:
+  - Qt 4.0.0 or higher. IOStreams. Put IO Streams library in the same folder as HTML parser, 
+or edit include path in build.pro file
+
+You can obtain Qt at http://www.trolltech.com/
+

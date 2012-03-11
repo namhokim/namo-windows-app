@@ -1,0 +1,649 @@
+<html>
+<head>
+<meta http-equiv='pragma' content='no-cache' />
+<meta http-equiv='cache-control' content='no-cache' />
+<meta http-equiv='Content-type' content='text/html; charset=utf-8' />
+<meta name="author" content="eoh" />
+<meta name="keywords" content="Something redo." />
+<link rel="pingback" href="http://rpc.egloos.com/rpc1" />
+<link rel="alternate" type="application/rss+xml" title="Something redo." href="http://redo.egloos.com/index.xml" />
+<title>Something redo. : [C++] 자동 형선택을 이용한 UTF 변환 (1) 개요</title>
+	<script type="text/javascript" src="http://md.egloos.com/js/ap.js?ver=1.007"></script>
+	<script type="text/javascript" src="http://md.egloos.com/js/gd.js?ver=1.002"></script>
+	<script type="text/javascript" src="http://md.egloos.com/js/eg.js?ver=1.005"></script>
+    <script type="text/javascript" src="http://md.egloos.com/js/page/ins.js?ver=1.2"></script>
+
+	<script type="text/javascript" src="http://md.egloos.com/js/lib/prototype_v1511.js"></script>
+	<script type="text/javascript" src="http://md.egloos.com/js/control/Control.js"></script>
+	<script type="text/javascript" src="http://md.egloos.com/js/control/Control.ImgModal.js?ver=1.004"></script>
+	<script type="text/javascript" src="http://md.egloos.com/js/page/blog/compatible.js"></script>	
+	<script type="text/javascript" src="http://md.egloos.com/js/lib/swfobject.js"></script>	
+<link type="text/css" rel="stylesheet" href="http://md.egloos.com/css/egloos_template.css?ver=1.000" media="screen" />
+<style type="text/css">
+/* A01021 CSS 1번 */
+
+.keyword {color:#335DDD;}
+.comment {color:#E07575;}
+.pp {color:#335DDD;}
+
+BODY		{ BACKGROUND : #FFFFFF ; MARGIN : 0;PADDING : 0; }
+BODY,TD,DIV,LI	{ FONT-FAMILY : APPLEGOTHIC,굴림,SANS-SERIF; FONT-SIZE : 9PT; COLOR : #000; LINE-HEIGHT : 160%;}
+
+A:LINK		{ COLOR: #5D4F19; TEXT-DECORATION: NONE }
+A:VISITED	{ COLOR: #5D4F19; TEXT-DECORATION: NONE }
+A:ACTIVE	{ COLOR: #5D4F19;  } 
+A:HOVER		{ COLOR: #B6AA7B; TEXT-DECORATION: UNDERLINE }
+
+TD.TOP {
+	BACKGROUND-IMAGE : URL(http://md.egloos.com/skn/img/a/01/02/1/top_1.gif);
+	HEIGHT : 76PX;
+	}
+
+DIV#TOP {
+	BACKGROUND-IMAGE : URL(http://md.egloos.com/skn/img/a/01/02/1/top_left_1.gif);
+	BACKGROUND-REPEAT : NO-REPEAT;
+	PADDING-TOP : 1PX;
+	HEIGHT : 75PX;
+	}
+
+DIV#LEFT {
+	WIDTH : 100%;
+	PADDING : 40PX 0PX 50PX;
+	MARGIN-BOTTOM : 50PX;
+	TEXT-ALIGN : RIGHT;
+	}
+	
+DIV#RIGHT {
+	WIDTH : 180PX;
+	MARGIN : 0PX 0PX 40PX 40PX;
+	}
+
+DIV.HEADER {
+	FONT-FAMILY : TAHOMA,돋움,HY견고딕;
+	FONT-SIZE : 14PT;
+	FONT-WEIGHT : BOLD;
+	MARGIN : 23PX 140PX 0PX;
+	LINE-HEIGHT : 100%;
+	}
+	
+DIV.HEADER A:LINK {COLOR: #000; TEXT-DECORATION: NONE}
+DIV.HEADER A:VISITED {COLOR: #000; TEXT-DECORATION: NONE}
+DIV.HEADER A:HOVER {COLOR: #FFF; TEXT-DECORATION: NONE}
+
+DIV.URL {
+	FONT-FAMILY : VERDANA,TAHOMA ;
+	FONT-SIZE : 8PT;
+	MARGIN : 0PX 140PX;
+	}
+	
+DIV.URL A:LINK {COLOR: #555; TEXT-DECORATION: NONE}
+DIV.URL A:VISITED {COLOR: #555; TEXT-DECORATION: NONE}
+DIV.URL A:HOVER {COLOR: #FFF; TEXT-DECORATION: NONE}
+	
+DIV.USERMENU {
+	FONT-FAMILY : VERDANA, 돋움;
+	FONT-SIZE : 8PT;
+	TEXT-ALIGN : CENTER;
+	PADDING : 35PX 10PX 10PX 0PX;
+	}
+	
+DIV.USERMENU A:LINK {COLOR: #727272; TEXT-DECORATION: NONE}
+DIV.USERMENU A:VISITED {COLOR: #727272; TEXT-DECORATION: NONE}
+DIV.USERMENU A:HOVER {COLOR: #98A6E4; TEXT-DECORATION: UNDERLINE}
+	
+DIV.MN_TOP {
+	BACKGROUND-IMAGE : URL(http://md.egloos.com/skn/img/a/01/02/1/mn_top_1.gif);
+	BACKGROUND-REPEAT : NO-REPEAT;
+	WIDTH : 180PX;
+	HEIGHT : 15PX;
+	}
+	
+DIV.MN_BODY {
+	BACKGROUND-IMAGE : URL(http://md.egloos.com/skn/img/a/01/02/1/mn_body_1.gif);
+	WIDTH : 150PX;
+	PADDING : 0PX 20PX 15PX 10PX;
+	}
+	
+DIV.MN_BOTTOM {
+	BACKGROUND-IMAGE : URL(http://md.egloos.com/skn/img/a/01/02/1/mn_bottom_1.gif);
+	BACKGROUND-REPEAT : NO-REPEAT;
+	WIDTH : 180PX;
+	HEIGHT : 15PX;
+	}
+
+DIV.PROFILE {
+	WIDTH : 150PX;
+	PADDING : 0PX 0PX 10PX;
+	LINE-HEIGHT : 150%;
+	OVERFLOW : HIDDEN;
+	}
+	
+DIV.MN {
+	WIDTH : 150PX;
+	LINE-HEIGHT : 150%;
+	}	
+	
+DIV.MNTTL {
+	WIDTH : 150PX;
+	BORDER-BOTTOM : 1PX #AAA SOLID;
+        FONT-SIZE : 9PT;
+        FONT-FAMILY : 굴림,VERDANA;
+        PADDING : 2PX 0PX 0PX;
+        MARGIN : 25PX 0PX 10PX;
+        COLOR : #000;
+        }
+
+DIV.MEMOBODY {
+	WIDTH : 150PX;
+	OVERFLOW : HIDDEN;
+	}
+	
+DIV.POST {
+	WIDTH : 100%;
+	PADDING : 0PX 0PX 20PX;
+	}
+
+DIV.POST_HEAD {
+	MARGIN-BOTTOM : 15PX;
+	PADDING-TOP : 15PX;
+	BORDER-TOP : 1PX #BBB DASHED;
+	}
+	
+DIV.POST_BODY {
+	WIDTH : 100%;
+	TEXT-ALIGN : LEFT;
+	MARGIN: 3PX 0PX 30PX;
+	LINE-HEIGHT : 150%;
+	OVERFLOW : HIDDEN;
+	}
+	
+DIV.POST_BODY A:LINK	{ COLOR: #5990BF; TEXT-DECORATION: UNDERLINE }
+DIV.POST_BODY A:VISITED	{ COLOR: #5990BF; TEXT-DECORATION: UNDERLINE }
+DIV.POST_BODY A:ACTIVE	{ COLOR: #5990BF;  } 
+DIV.POST_BODY A:HOVER	{ COLOR: #0B226D; TEXT-DECORATION: UNDERLINE }
+
+DIV.POST_TTL {
+	FONT-SIZE : 9PT;
+	COLOR : #692409;
+	FONT-WEIGHT : BOLD;
+	}
+	
+DIV.POST_TAIL {
+	FONT-FAMILY : VERDANA, TAHOMA, 돋움;
+	FONT-SIZE : 11PX;
+	MARGIN-TOP : 10PX;
+	TEXT-ALIGN : RIGHT;
+	}
+
+DIV.COMMENT {
+	TEXT-ALIGN : LEFT;
+	BORDER : 1PX #D3D3D3 SOLID;
+	BACKGROUND : #F1F1F1;
+	PADDING : 10PX 15PX;
+	MARGIN : 20PX 0PX 20PX;
+	}
+
+DIV.COMMENT_BODY {
+	MARGIN : 6PX 0PX 20PX;
+	LINE-HEIGHT : 140%;
+	}
+
+DIV.COMMENT_TAIL {
+	MARGIN : 8PX 0PX 5PX;
+	FONT-FAMILY : VERDANA, TAHOMA, 돋움;
+	FONT-SIZE : 8PT;
+	COLOR : #777;
+	}
+	
+DIV.COMMENT_INPUT {
+	MARGIN-TOP : 20PX;
+	BORDER-TOP : 1PX #AAA DOTTED;
+	PADDING-TOP : 20PX;
+	}
+
+DIV.COMMENT_LINE {
+	BORDER-TOP : 1PX #AAA DOTTED;
+	MARGIN : 10PX 0PX 15PX;
+	}
+
+DIV.TRACK_TOP {
+	LINE-HEIGHT : 170%;
+	}
+	
+DIV.ARCHIVE_HEAD {
+	FONT-WEIGHT : BOLD;
+	MARGIN-BOTTOM : 10PX;
+	}
+	
+DIV.ARCHIVE_BODY {
+	MARGIN : 20PX 0PX;
+	LINE-HEIGHT : 160%;
+	PADDING-BOTTOM : 100PX;
+	}	
+
+IMG.IMAGE_TOP {
+	MARGIN-BOTTOM : 15PX;
+	}
+	
+IMG.IMAGE_LEFT {
+	MARGIN-RIGHT : 15PX;
+	MARGIN-BOTTOM : 15PX;
+	}	
+	
+IMG.IMAGE_MID {
+	MARGIN-TOP : 15PX;
+	MARGIN-BOTTOM : 15PX;
+	}
+
+IMG.IMAGE_RIGHT {
+	MARGIN-LEFT : 15PX;
+	MARGIN-BOTTOM : 15PX;
+	}	
+
+IMG.BOOKMK {
+	MARGIN : 10PX;
+	BORDER : 0PX;
+	}
+	
+IMG.USERMENU {
+	MARGIN-LEFT : 8PX;
+	}	
+	
+IMG.LOGO {
+	MARGIN-BOTTOM : 10PX;
+	}
+
+DIV.BANNER {
+	MARGIN : 30PX 10PX 10px 0PX;
+	}
+	
+DIV.BANNER_WIK {
+	MARGIN : 20PX 10PX 20PX 0PX;
+	}
+	
+.SMALL {
+	FONT-SIZE : 11PX;
+	}
+
+.DATE {
+	FONT-FAMILY : VERDANA, TAHOMA, 돋움;
+	FONT-SIZE : 8PT;
+	FONT-WEIGHT : BOLD;
+	}
+
+.TIME {
+	FONT-FAMILY : VERDANA, TAHOMA, 돋움;
+	FONT-SIZE : 8PT;
+	TEXT-ALIGN : LEFT;
+	}
+	
+.AUTHOR {
+	FONT-SIZE : 9PT;
+	FONT-WEIGHT : BOLD;
+	}
+
+.TXTFLD	{FONT-SIZE:9PT;COLOR:#000; BORDER:1PX SOLID #666678; BACKGROUND:WHITE}
+
+
+.QUOTE {
+	BORDER : 1PX SOLID #664444;
+	MARGIN : 10PX;
+	PADDING : 10PX;
+	BACKGROUND : #FFF9F9;
+}
+
+DIV.CAL_TOP {
+	}
+        
+DIV.CAL {
+	MARGIN : 20PX 0PX 20PX;
+        WIDTH : 150PX;
+	TEXT-ALIGN : CENTER;
+        }
+        
+DIV.CAL_HEAD {
+	WIDTH : 150PX;
+        FONT-SIZE : 8PT;
+        FONT-FAMILY : VERDANA;
+        TEXT-ALIGN : CENTER;
+        PADDING-TOP : 4PX;
+        PADDING-BOTTOM : 4PX;
+        MARGIN-BOTTOM : 10PX;
+        }
+        
+DIV.CAL_BODY {
+        WIDTH : 140PX;
+        TEXT-ALIGN : CENTER;
+        BACKGROUND : #EFEBDE;
+        }
+
+DIV.CAL_BOTTOM {
+        }
+
+.CAL {
+        FONT-FAMILY : VERDANA, 돋움;
+        FONT-SIZE : 7PT;
+        TEXT-ALIGN : CENTER;
+        LINE-HEIGHT : 170%;
+        }
+
+.CAL_DAY {
+        FONT-FAMILY : VERDANA, 돋움;
+        FONT-SIZE : 7PT;
+        FONT-WEIGHT : BOLD;
+        TEXT-ALIGN : CENTER;
+        LINE-HEIGHT : 170%;
+        }
+
+.CAL_SUN {
+        FONT-FAMILY : VERDANA, 돋움;
+        FONT-SIZE : 7PT;
+        FONT-WEIGHT : BOLD;
+        COLOR : #D36654;
+        TEXT-ALIGN : CENTER;
+        LINE-HEIGHT : 170%;
+        }
+        
+.CAL_SAT {
+        FONT-FAMILY : VERDANA, 돋움;
+        FONT-SIZE : 7PT;
+        FONT-WEIGHT : BOLD;
+        COLOR : #3572A1;
+        TEXT-ALIGN : CENTER;
+        LINE-HEIGHT : 170%;
+        }
+        
+.CAL_TODAY {
+        FONT-FAMILY : VERDANA, 돋움;
+        FONT-SIZE : 7PT;
+        FONT-WEIGHT : BOLD;
+        BACKGROUND : #DAD1B4;
+        COLOR : #3D5586;
+        TEXT-ALIGN : CENTER;
+        }
+
+.CAL_TR {BACKGROUND : #EFEBDE;}
+
+DIV.XML {
+	TEXT-ALIGN : CENTER;
+	FONT-SIZE : 8PT;
+	FONT-FAMILY : VERDANA;
+	MARGIN-BOTTOM : 80PX;
+	}
+   div.memobody {
+       width : 150px;
+       overflow : hidden;
+       }
+   </style>
+<style type="text/css">
+#e4c_list {
+    margin: 0 0 10px 0;
+    padding: 0;
+}
+
+#e4c_list p.rtitle {
+    padding: 1px 5px 4px 15px;
+    margin: 0;
+    background: url("http://md.egloos.com/img/eg/icon_li2.gif") 0 3px no-repeat;
+    }
+
+
+#e4c_list ul {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    clear:both;
+    }
+
+#e4c_list ul li {
+    margin: 0 15px;
+    padding: 0;
+    list-style-type: none;
+    list-style-image: none;
+    background:none;
+    }
+
+#e4c_list ul li a. { text-decoration: underline;}
+
+#e4c_help {
+    position:absolute;
+	margin: 0;
+	width: 340px;
+    background: #F3F3EF url("http://md.egloos.com/img/eg/recom_info_bg.gif") repeat-x;
+	border: 1px solid #ddd;
+	line-height: 140%;
+    z-index: 10;
+}
+#e4c_help #e4c_help_head {
+    height: 15px;
+    text-align:left;
+}
+#e4c_help #e4c_help_body {
+	padding: 0px 20px 15px 20px;
+    font-family: "돋움", Helvetica, sans-serif;
+    font-size: 9pt;
+	line-height: 140%;
+	color: #666;
+    text-align:left;
+}
+#e4c_help span.point {
+    color: #FF4E00;
+    }
+#e4c_help span.close {
+    position: relative;
+    top: 4px;
+    left: 322px;
+    margin: 0;
+    padding: 0;
+    }
+
+
+</style>
+<script language="javascript" type="text/javascript">
+<!--
+function e4c_count(tgurl) {
+    var url = "/stat/pt.php";
+    var data = "u="+encodeURI(tgurl);
+    XMLHttpConnectPost(url, data, "empty");
+}
+function open_e4c_help(e)
+{
+    var e4c_layer = document.getElementById('e4c_help');
+    var e4c_qmark = document.getElementById('e4c_qmark');
+    bpos = Position.cumulativeOffset(e4c_qmark);
+    bpos[0] = bpos[0] + 10;
+    bpos[1] = bpos[1] + 10;
+
+    e4c_layer.style.left = bpos[0] + 'px';
+    e4c_layer.style.top  = bpos[1] + 'px';
+    e4c_layer.style.display = '';
+
+    document.onmousedown=close_e4c_help;
+}
+
+function close_e4c_help()
+{
+    var e4c_layer = document.getElementById('e4c_help');
+    e4c_layer.style.display = 'none';
+    document.onmousedown=null;
+}
+function e4c_close_register (chk)
+{
+    if (chk)
+        document.onmousedown=close_e4c_help;
+    else
+        document.onmousedown=null;
+}
+function makeEgloosAdTag()
+{
+    var stat_tag = '<img width="0" height="0" border="0" src="http://st.egloos.com/logger/adcheck.php'
+        +'?pbl=e0017324&amp;rfr=&amp;rdc=bd291cfe8782a3ee846f1100b6347f1c" alt="" />';
+    document.write(stat_tag);
+}
+//-->
+</script>
+<link type="text/css" rel="stylesheet" href="http://md.egloos.com/css/common/popup.css" />
+<link type="text/css" rel="stylesheet" href="http://md.egloos.com/css/common/button.css" />
+<script type="text/javascript" src="http://md.egloos.com/js/modal/Modal.js"></script>
+<script type="text/javascript" src="http://md.egloos.com/js/modal/Modal.Center.js"></script>
+<script type="text/javascript" src="http://md.egloos.com/js/page/blog/Modal.BookmarkDlg.js?ver=1.002"></script>
+<script type="text/javascript">
+<!--
+Event.observe(window, 'load', function() {
+    new Modal.BookmarkDlg('egloo_bookmark', {overlay: true,
+                'groupURL'     : "/exec/egloo_bookmark_group.php",
+                'remoteURL'    : "/exec/egloo_insbookmark_exec.php"});
+});
+//-->
+</script></head>
+<body>
+<div id="e4c_help" style="display:none;" onmouseover="e4c_close_register(false)" onmouseout="e4c_close_register(true);">
+    <div id="e4c_help_head"><span class="close"><a href="#" onclick="close_e4c_help();return false;"><img src="http://md.egloos.com/img/valley/bt_close.gif" border="0"></a></span></div>
+    <div id="e4c_help_body">이 글의 문맥을 분석하여 이글루스에 있는 많은 글 중에서 관련성이 높은 글을 자동으로 검색해 낸 결과입니다.</div>
+</div>
+<iframe name="cmtviewfrm" id="cmtviewfrm" src="about:blank" width="0" height="0" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" style="display:block;border:0px;"></iframe>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 ALIGN=CENTER WIDTH=100%>
+<TR><TD VALIGN=TOP WIDTH=100% HEIGHT=76 CLASS=TOP>
+<DIV ID=TOP>
+	<DIV CLASS=HEADER><a href="http://redo.egloos.com">Something redo.</a></DIV>
+	<DIV CLASS=URL><a href="http://redo.egloos.com">redo.egloos.com</a></DIV>
+</DIV>
+</TD></TR></TABLE>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 ALIGN=CENTER WIDTH=100%>
+<TR><TD WIDTH=5%></TD>
+	<TD VALIGN=TOP WIDTH=74%>
+<DIV ID=LEFT>
+<!-- egloos content start -->
+<DIV CLASS=POST>			
+	<DIV CLASS=POST_HEAD>
+	<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH=100%>
+	<TR><TD WIDTH=80%><DIV CLASS=POST_TTL><a name="318502" title="[C++] 자동 형선택을 이용한 UTF 변환 (1) 개요">[C++] 자동 형선택을 이용한 UTF 변환 (1) 개요</a></DIV></TD>
+		<TD WIDTH=20% ALIGN=RIGHT></TD></TR>
+	</TABLE>
+	</DIV>
+	<DIV CLASS=POST_BODY>
+	&nbsp; MS 에서는 윈도우용 어플리케이션을 만들때 유니코드로 만들기를 권장하고 있다. 개인적으로도 일본어와 한국어를 병행해서 사용해야 하는 일이 많은 관계로, 윈도우에서의 비 유니코드 프로그램을 실행하는것은 상당히 귀찮기 때문에, 그 필요성을 절실히 느껴왔다. 특히나 파일이름에 있어서 여러 언어의 혼용과 병용은 파일을 읽지 못하거나, 아예 프로그램이 동작하지 않는 사태에 까지 이르게 하기 때문이다. <br/><br/>&nbsp; 윈도우에서 프로그램을 만들며 생기는 한가지 문제는 UTF-8 과 UTF-16 으로 씌여진 소스파일에 대한 처리이다. 현재 GCC MingW 3.4.5 에서는 <a href="http://en.wikipedia.org/wiki/Byte_Order_Mark">BOM</a>이 존재하지 않는 UTF-8 형식의 소스파일을 잘 인식한다. 반면 Visual C++ 에서는 BOM이 포함되어야 한다. 또다른 점으로서 C++ 에서는 int 와 마찬가지로 wchar_t 라는 사이즈 미정의 정체 불명의  자료형이 사용되어진다. 주로 unsigned 16 비트 정수형으로 정의되어지는듯 하기도 하지만, 일부에서는 32 비트 정수형으로 정의되어 지기도 한다. 따라서 배열로 선언된 wchar_t 의 크기는 실제로 코드가 UTF-16 으로 되어있다 하더라도, 0x0000 과 같은 2 바이트가 중간에 포함될 가능성도 배제할 수 없다.<br/><br/>&nbsp; 많은 문제속에서, 개인적인 프로젝트인 Islbazi 와 GLAN 에서는 개별적이고 일관적인 형태로 처리하기로 했다. 하나의 프로그램속에서는 외부의 API 가 어떤 형태를 필요로 하던간에, UTF-16 으로 처리를 하고, 상수문자열의 경우 UTF-8 로부터 UTF-16 으로 변환하여 처리를 하는것이다. 프로그램 소스 파일이 UTF-8 인 관계로 프로그램에서도 내부적으로 UTF-8 을 사용하면 되기도 하지만, 한글처리에 있어서 1 글자가 3 바이트라는 애매한 간격으로 구분이 되기때문에, UTF-16 을 사용함으로서 한글 1 글자를 2 바이트로 처리하는것이 개별적인 글자에 대한 처리가 훨씬 간편했기 때문이다. 어차피 API 와의 호환성을 고려하면, UTF 간의 변환은 반드시 필요하다고 여겨지는것이기 때문에, 실행시 UTF 간의 변환을 위한 처리가 필요하다는 단점을 제외하면 크게 문제될것은 없었다. 이 단점 때문에 컴파일 시간에 상수문자열의 UTF 변환을 시도해보기도 하였으나, 좋은 성과를 거두지는 못하였다. 상수시간에는 문자열 변환을 실패하였지만, 실행시간의 변환을 자료형에 의존하여 편하게 하기 위한 도구 - [<a href="http://en.wikipedia.org/wiki/Comparison_of_Unicode_encodings">유니코드의 표현형식</a>에 대한 변환]을 직접 구현해 볼까 한다. UTF 자체에 대한 자세한 정보는 앞의 링크를 참조하기 바란다. 실제 변환에 대해서는 <a href="http://czyborra.com/utf/">이곳</a>을 참조하면 도움이 될것이다. 한편, <a href="http://www.boost.org/">boost</a> 는 사용하고 있지 않으므로, boost 에서 현재 관련 기능을 제공하고 있는지의 여부는 알지 못한다.<br/><br/>&nbsp; C++ 의 표준 템플릿 라이브러리에는 std::codecvt [주1] 라는 코드 변환을 위한 템플릿 객체가 존재한다. 각종 문자열 엔코딩 형식 변환을 위해 사용하기에 적합한 객체이다. 따라서, 구현할 객체의 인터페이스는 이 std::codecvt 를 모방하기로 한다. 그렇게 만들면, std::codecvt 의 인터페이스를 갖는 객체를 템플릿 인자로 받는 코드들에 대해서, 쉽게 전환 가능한 이점이 있기 때문이다. 실제 구현에서는 표준 라이브러리에서는 codecvt 라는 이름에 전문화를 통해 이용될 가능성이 높지만, 사실 이는 비포인터 문자열에 대한 처리가 곤란한 문제가 있다. 모두 같은 구현자가 라이브러리를 같은 형태로 만들면 상관없지만, 앞으로 구현할 maid::codecvt 의 경우에는 외부에서 덧붙이는 형태로 구현되기 때문에, std::string 같은 객체에서 얻어온 포인터를 직접 탐색하는 일은 껄그럽다. 특히 대입에 있어서 언제나 char* 같은 포인터형을 이용해야만 한다면 더욱 그러하다. std::string 으로 대입을 시키기 위해서는, 우선 임시로 메모리공간을 할당하고, 그 공간에 변환된 문자열을 일단 저장한뒤에, 그 문자열을 다시 std::string 에 복사해 넣는 과정이 필요로 해지기 때문이다. 그렇기 때문에, 템플릿 인자로서 char 와 같은 문자 자료형을 직접 받는것이 아니고, 문자열 그 자체의 자료형을 받음으로서 std::string 이든, 사용자 정의 문자열 자료형이든 관계없이, 같은 인터페이스라면, 일관적으로 처리 하도록 만드는것이 더 낫다고 판단된다. 따라서, 실제로 구현된 maid::codecvt 는 다음과 같은 템플릿 인자를 받는다.<br/><br/>&nbsp;&nbsp;&nbsp; template &lt;class internAT_, class externAT_, class stateT_&gt;<br/>&nbsp;&nbsp;&nbsp; class codecvt;<br/><br/><ul><li>internAT_ : Internal array type, 즉 내부 표현을 위한 문자열 자료형. std::codecvt 의 첫번째 템플릿 인자가 내부에서 사용되는 문자 자료형이라는 점에 주의하자.</li><li>externAT_ : External array type, 외부 표현을 위한 문자열 자료형. 이것도 std::codecvt 의 두번째 템플릿 인자와 대응된다.</li><li>stateT_ : State type, 변환과정에서 상태를 저장하기 위한 자료형. 유니코드 버전 4의 경우[주2] unsigned 32 비트 자료형의 범위내에서 표현 할 수 있다. 따라서, 임의의 1글자를 저장하기 위한 자료형으로서 uint32 정도면 충분할것이다. 물론, 나중에 필요에 의해 더 큰 자료형으로 교체함으로서 확장이 가능하다.<br/></li></ul>[주1] 앞으로 구현할 객체의 이름도 namespace 가 다른 codecvt 라는 이름으로 만들어질것이므로, 앞으로 표준 라이브러리에포함된 객체를 namespace std 안의 객체라는 의미로서 std::codecvt 로 사용하기로 하자. 앞으로 만들 객체의 이름은 maid::codecvt 로 구분할 것이다. 예전에도 언급하였지만, maid 는 metaprogrammed aid 의 의미로 사용하고 있다.<br/><br/>[주2] 현재 유니코드 버전 5 가 나와있지만, maid::codecvt 가 만들어질 당시의 버전은 4 였다. 버전 5 에서 추가된 글자들이 있지만, 그역시 32 비트의 범위내에서 표현 가능할것이라 생각된다. 만일 표현번위가 더 커진다면, 더 큰 크기를 갖는 자료형으로 교체함으로서 문제는 없을것이다.<br/><br/>&nbsp; 또한 임의의 유니코드 엔코딩 형식간의 변환에 있어서 일단 1글자를 읽은뒤, 1글자를 쓰는 형태를 취하기로 한다. 특히 임의의 엔코딩 형식에 대해서, UTF-32 로 표현된 1글자를 읽고 쓰는것만 구현하면, 모든 변환에 대해서 중간에 UTF-32 로 변환하는 과정을 통해 임의의 엔코딩 형식에서 다른 엔코딩 형식으로 변환하는것이 가능해진다. 즉 UTF-8 에서 UTF-16 으로 직접 변환하는것이 아니고, UTF-8 ↔ UTF-32 ↔ UTF-16 의 과정을 거쳐 변환하는것이다. 혹시 UTF-7 을 구현했다고 하면, UTF-7 ↔ UTF-8, UTF-7 ↔ UTF-16 을 직접 구현하는것이 아니고, UTF-7 ↔ UTF-32 만을 구현함으로서, UTF-7 ↔ UTF-32 ↔ UTF-8, UTF-16 의 과정을 통해 기존에 정의된 형식과의 변환이 가능해진다.<br/><br/>&nbsp; 앞으로 여유가 되는대로 UTF 의 변환과 그 구현의 템플릿 라이브러리화를 구체적으로 다루어 가도록 하겠다. □<br/><br/>
+       <!--
+       <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+		    xmlns:dc="http://purl.org/dc/elements/1.1/"
+		    xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+       <rdf:Description
+	        rdf:about="http://redo.egloos.com/318502"
+	        dc:identifier="http://redo.egloos.com/318502"
+	        dc:title="[C++] 자동 형선택을 이용한 UTF 변환 (1) 개요"
+	        trackback:ping="http://redo.egloos.com/tb/318502"/>
+       </rdf:RDF>
+       -->
+
+	</DIV>
+	<DIV CLASS=POST_TAIL><span class="TIME"> <a href="/318502" class="permalink" title="[C++] 자동 형선택을 이용한 UTF 변환 (1) 개요" rel="bookmark">#</a> by <span class="AUTHOR">eoh</span> | <a href="/318502" class="time"  title="[C++] 자동 형선택을 이용한 UTF 변환 (1) 개요" rel="bookmark">2007/06/18 00:10</a></span> | <a href="/category/C%2B%2B" class="category">C++</a> | <span class="linkback">트랙백<span id="trbcnt318502"></span></span> | <span class="linkback">덧글(<span id="cmtcnt318502">0</span>)</span></DIV>
+<div id="cmt318502">
+	<div class="COMMENT">
+    	<div class="TRACK_TOP">
+		트랙백 주소 : <span class="TIME hand" onclick="copy_trackback(this);">http://redo.egloos.com/tb/318502</span><br/> ☞ 내 이글루에 이 글과 관련된 글 쓰기 (트랙백 보내기) [<strong><a href="http://help.egloos.com/182/" target="_new">도움말</a></strong>]
+		</div>
+
+    
+    <div class="COMMENT_INPUT">
+<form id="cmtform318502" name="cmtform318502" target="cmtviewfrm" action="http://redo.egloos.com/exec/egloo_comment_exec.php" method="post" style="margin:0px;" onsubmit="return runComment(document.cmtform318502,5);">
+<input type="hidden" name="eid" value="e0017324" />
+<input type="hidden" name="srl" value="318502" />
+<input type="hidden" name="xhtml" value="0" />
+<input type="hidden" name="adview" value="0" />
+<input type="hidden" name="tid" value="" />
+<input type="hidden" name="subject" value="[C++] 자동 형선택을 이용한 UTF 변환 (1) 개요" /><input type="hidden" name="cmtsrl" value="" />
+<input type="hidden" name="ismenu" value="0" />
+	<p style="margin:3px;"><label for="name">이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름</label> : <input type="text" id="name"  name="name" size="10" maxlength="10" style="width:100px;vertical-align:middle;font-size:12px;" value="" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="passwd">비밀번호</label> : <input type="password" id="passwd" name="passwd" size="10" maxlength="10" style="width:80px;vertical-align:middle;font-size:12px;" value="" onfocus="document.cmtform318502.tid.value='RHA1ZFz3E5s-LvUQO29iM3douSb8OjP5LG2y6upRmKM.'" /></p>
+	<div style="display:none;"><input type="text" id="realname"  name="realname" size="10" maxlength="10" style="width:100px;vertical-align:middle;font-size:12px;" value="" readonly="readonly" /></div>
+<p style="margin:3px;"><label for="homepage">홈페이지</label> : <input type="text" id="homepage" name="homepage" value="http://" size="20" style="width:280px;vertical-align:middle;font-size:12px;" /></p>
+<div style="width:95%; margin-right:5px">
+<p style="margin:0px;">
+<textarea id="comment" name="comment" cols="60" rows="6" style="width:100%;height:100px;margin-top:3px;font-size:12px;font-family:돋움,sans-serif;"></textarea>
+</p>
+	<p style="margin:0px 0;"><input type="checkbox" name="security" value="0" style="vertical-align:middle;" /> 비공개 덧글</p>
+<p style="margin:0px;color:#333;text-align:right;margin:-15px 0px 0px 0px; padding:0px;"><input type="image" src="http://md.egloos.com/img/eg/btn_comment.gif" style="vertical-align:top;" width="76" height="19" /></p>
+</div>
+</form>
+<form id="replyform318502" name="replyform318502" target="cmtviewfrm" action="http://redo.egloos.com/exec/egloo_comment_exec.php" method="post" style="margin:0px;">
+<input type="hidden" name="eid" value="e0017324" /><input type="hidden" name="srl" value="318502" /><input type="hidden" name="xhtml" value="0" /><input type="hidden" name="adview" value="0" /><input type="hidden" name="tid" value="RHA1ZFz3E5s-LvUQO29iM3douSb8OjP5LG2y6upRmKM." /><input type="hidden" name="subject" value="[C++] 자동 형선택을 이용한 UTF 변환 (1) 개요" /><input type="hidden" name="cmtsrl" value="" /><input type="hidden" name="name" value="" /><input type="hidden" name="homepage" value="" /><input type="hidden" name="passwd" value="" /><input type="checkbox" name="security" value="" style="display:none;" /><input type="hidden" name="comment" value="" /><input type="hidden" name="ismenu" value="0" /></form>
+</div>
+
+    </div>
+</div>
+
+</DIV>
+<!-- egloos content end -->
+	<BR><BR>
+	<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH=100%> 
+	<TR><TD ALIGN=RIGHT WIDTH=48%><a href="http://redo.egloos.com/319154">< 이전페이지</a></TD> 
+		<TD WIDTH=4%></TD>
+		<TD ALIGN=LEFT WIDTH=48%><a href="http://redo.egloos.com/318450">다음페이지 ></a></TD></TR>
+	</TABLE>
+	<BR><BR>
+</DIV>
+</TD>
+<TD VALIGN=TOP WDITH=17%>
+<DIV ID=RIGHT>
+	<DIV CLASS=USERMENU><a href="http://www.egloos.com">Egloos</a> | <a href="http://www.egloos.com/login.php?returnurl=http%3A%2F%2Fredo.egloos.com%2F318502">Log-in</a></DIV>
+	<DIV CLASS=MN_TOP></DIV>
+	<DIV CLASS=MN_BODY>
+		<DIV CLASS=PROFILE><CENTER><a href="#" onclick="Control.Modal.openDialog(this, event, 'http://pds4.egloos.com/logo/200704/28/24/e0017324.png');"><img src="http://pds4.egloos.com/logo/200704/28/24/e0017324.png" width="111" height="111" border="0" class="LOGO" alt="" /></a><br/></CENTER>L5, 중2병말기, 열짤.
+<br /> by eoh</DIV>
+	
+		<DIV CLASS=MN><div style="border: 0px; margin: 10px;"></div>
+<div class=mnbody><form id="finder" style="margin:0;" name="finder" method="get" action="http://finder.egloos.com/per_finder.php" onsubmit="return go_finder(document.finder);"><input type="hidden" id="tid" name="tid" value="e0017324" /><input type="text" id="kwd" name="kwd" size="10" style="vertical-align: middle;width: 100px;font-size:12px;" /><input type="image" style="vertical-align: middle;margin-left:3px;" src="http://md.egloos.com/img/fnd/searchb.gif" /></form>
+</div>
+<DIV CLASS=MNTTL>카테고리</DIV>
+<DIV CLASS=MNBODY>
+<a href="/">전체</a><br/><a href="/category/About...">About...</a><br/><a href="/category/Diary">Diary</a><br/><a href="/category/C%2B%2B">C++</a><br/><a href="/category/song">song</a><br/><a href="/category/vom%20kriege">vom kriege</a><br/><a href="/category/%EB%AF%B8%EB%B6%84%EB%A5%98">미분류</a><br/>
+</DIV>
+<DIV CLASS=MNTTL>みっく</DIV>
+<DIV CLASS=MNBODY><div class="MEMOBODY"><embed src="http://818nc.jp/mikumiku/miku_player2.swf" quality="high" wmode="transparent" bgcolor="#ffffff" width="150" height="250" name="miku_player2" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" /></div></DIV>
+<DIV CLASS=MNTTL>최근 등록된 덧글</DIV>
+<DIV CLASS=MNBODY>
+<a href="http://redo.egloos.com/2164782#3092540.01">옙</a><br/><span class="SMALL">by eoh at 12/04</span><br/><div style="margin:12px;"></div><a href="http://redo.egloos.com/2039445#2834158.01">몬헌컵 안왔으니 샘샘</a><br/><span class="SMALL">by eoh at 11/13</span><br/><div style="margin:12px;"></div><a href="http://redo.egloos.com/2039445#2834158">하악 나의 소중한 마비컵..</a><br/><span class="SMALL">by 미스즈 at 09/21</span><br/><div style="margin:12px;"></div>
+</DIV>
+
+
+
+
+
+
+
+</DIV>
+	</DIV>
+	<DIV CLASS=MN_BOTTOM></DIV>
+	<CENTER>
+	<div class="BANNER"><a href="http://www.egloos.com"><img src="http://md.egloos.com/img/edt/banner_ffffff.gif" width="150" height="50" border="0" alt="Powered by egloos" /></a></div>
+	</CENTER>
+<div class="XML"><a href="http://redo.egloos.com/index.xml" target="_new"><img src="http://md.egloos.com/img/skn/rss.gif" alt="rss" border="0" /></a><br /><br /> skin by <a href="http://skins.egloos.com">이글루스</a></div>
+</DIV>
+</TD>
+<TD WIDTH=4%></TD></TR>
+</TABLE>
+</CENTER>
+<!-- egloos stat --><script type="text/javascript">setndr();setpcid();</script><img src="http://stategloos.egloos.com/stat/stat.tiff?cp_url=[egloo_ndr.egloos.com/permalink/]" width="0" height="0" border="0" alt="" /><!-- egloos stat -->
+<img width="0" height="0" border="0" src="http://st.egloos.com/logger/egs.gif?pbl=e0017324&amp;uid=&amp;gdr=&amp;age=&amp;rfr=&amp;rdc=23ab4a2c8bd42837fecc6f59f303a789" alt="" /><form id="trackfrom" name="trackfrom" method="post" action="">
+<input type="hidden" name="url" value="" />
+<input type="hidden" name="title" value="" />
+<input type="hidden" name="trburl" value="" />
+</form>
+<div style="z-index:9901;top:764px;left:169px;display:none;" id="egloo_bookmark" class="popupWrap">
+    <div class="popupTitle">이글루링크 추가하기</div>
+    <dl class="popupBody">
+        <dt class="no-arrow" style="background:none;font-size:12px;text-align:center;">
+            <span id="egloo-bookmark-url" style="color:#0F71A1;"></span>
+            (<span id="egloo-bookmark-name"></span>)을(를)</dt>
+        <dd class="notice" style="margin:0;padding:0 0 0 8px;line-height:1.8em;color:#000;font-size:12px;text-align:center;">이글루링크로 추가하시겠습니까? 추가하시려면 그룹선택을 하세요.</dd>
+        <dd class="notice weak" style="margin:0;padding:0 0 0 8px;line-height:1.8em;font-size:11px;color:#666666;text-align:center;">(그룹선택 하지 않는 경우, 최상단 목록에 추가됩니다.)</dd>
+        <dd class="egloo-bookmark-group" style="margin:0;padding:10px 0 8px;line-height:1.8em;text-align:center;color:#333;font-size:12px;text-align:center;">그룹선택 :
+            <select name="groupID" id="egloo-bookmark-groupID" style="font-family:'돋움','dotum','Trebuchet MS',Sans-serif;margin-left:10px;"><option value="000">그룹선택없음</option></select></dd>
+        <dd class="buttons">
+            <input type="button" value="지금 확인" onfocus="blur();" onclick="Modal.insertBookmark(true);" class="button btn24 btn_bold"/>
+            <input type="button" value="나중에 확인" onfocus="blur();" onclick="Modal.insertBookmark(false);" class="button btn24 btn_weak"/>
+        </dd>
+        <dd class="close" onclick="Modal.close();"><img alt="닫기" src="http://md.egloos.com/img/www/btn/button_popup_close.gif" alt="이글루링크 취소" title="이글루링크 취소" /></dd>
+    </dl>
+</div>
+</body>
+</html>

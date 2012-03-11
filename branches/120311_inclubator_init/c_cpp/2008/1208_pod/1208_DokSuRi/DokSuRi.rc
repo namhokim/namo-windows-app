@@ -1,0 +1,229 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#ifndef APSTUDIO_INVOKED
+#include "targetver.h"
+#endif
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 한국어 resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_KOR)
+#ifdef _WIN32
+LANGUAGE LANG_KOREAN, SUBLANG_DEFAULT
+#pragma code_page(949)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_DOKSURI             ICON                    "DokSuRi.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_DOKSURI MENU 
+BEGIN
+    POPUP "파일(&F)"
+    BEGIN
+        MENUITEM "끝내기(&X)",                     IDM_EXIT
+    END
+    POPUP "도움말(&H)"
+    BEGIN
+        MENUITEM "정보(&A)",                      IDM_ABOUT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG_MAIN DIALOGEX 0, 0, 370, 206
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_MINIMIZEBOX | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "확인",IDOK,242,185,50,14
+    PUSHBUTTON      "취소",IDCANCEL,296,185,50,14
+    LTEXT           "시간 :",IDC_STATIC,17,22,22,8
+    EDITTEXT        IDC_EDIT_PJL_TIME,43,21,50,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PJL_DATE,43,35,50,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PJL_FRONTCOVERPRINT,82,60,40,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PJL_BACKCOVERPRINT,82,74,40,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PJL_SLIPSHEETPRINT,82,87,40,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PJL_CHAPTERPRINT,82,100,40,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PJL_DATAMODE,311,95,40,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PJL_APLPAGELAYOUT,188,20,40,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PJL_DUPLEX,188,39,40,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PJL_RESOLUTION,188,57,40,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PJL_EDGETOEDGE,188,73,40,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PJL_STAPLE,188,90,40,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PJL_PUNCH,188,106,40,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PJL_PAPER,311,112,40,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PJL_COPIES,311,21,40,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PJL_QTY,311,36,40,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PJL_AUTOTRAYCHANGE,311,55,40,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PJL_LANGUAGE,311,76,40,12,ES_AUTOHSCROLL
+    LTEXT           "날짜 :",IDC_STATIC,17,36,22,8
+    LTEXT           "표지 :",IDC_STATIC,17,62,22,8
+    LTEXT           "앞뒤 표지 :",IDC_STATIC,17,75,40,8
+    LTEXT           "간지 :",IDC_STATIC,17,88,22,8
+    LTEXT           "장분류 :",IDC_STATIC,17,101,30,8
+    LTEXT           "회전 :",IDC_STATIC,139,23,22,8
+    LTEXT           "컬러/흑백 :",IDC_STATIC,248,98,40,8
+    LTEXT           "양면 :",IDC_STATIC,139,42,22,8
+    LTEXT           "해상도 :",IDC_STATIC,139,59,30,8
+    LTEXT           "Edge to edge :",IDC_STATIC,139,75,48,8
+    LTEXT           "스테이플 :",IDC_STATIC,139,92,38,8
+    LTEXT           "펀치처리 :",IDC_STATIC,139,108,38,8
+    LTEXT           "용지 :",IDC_STATIC,248,113,22,8
+    LTEXT           "페이지 수 :",IDC_STATIC,248,24,40,8
+    LTEXT           "부수 :",IDC_STATIC,248,39,22,8
+    LTEXT           "자동 급지대:",IDC_STATIC,248,57,46,8
+    LTEXT           "프린트 언어 :",IDC_STATIC,248,80,48,8
+    GROUPBOX        "PJL Info",IDC_STATIC,7,7,356,135
+    GROUPBOX        "User Input",IDC_STATIC,7,146,356,32
+    LTEXT           "요청납기 :",IDC_STATIC,27,161,38,8
+    CONTROL         "",IDC_DATEPICKER,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,69,158,59,15
+    CONTROL         "",IDC_TIMEPICKER,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_UPDOWN | WS_TABSTOP | 0x8,134,158,72,15
+    CONTROL         "",IDC_PROGRESS_TRANSFER,"msctls_progress32",PBS_SMOOTH | PBS_SMOOTHREVERSE | PBS_MARQUEE | NOT WS_VISIBLE | WS_BORDER,48,187,184,8
+    LTEXT           "문서이름 :",IDC_STATIC,17,127,38,8
+    EDITTEXT        IDC_EDIT_PJL_JOBNAME,58,126,295,12,ES_AUTOHSCROLL
+END
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "DokSuRi 정보"
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    ICON            IDI_DOKSURI,IDC_STATIC,14,14,20,20
+    LTEXT           "DokSuRi, 버전 1.0",IDC_STATIC,42,14,114,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2008",IDC_STATIC,42,26,114,8
+    DEFPUSHBUTTON   "확인",IDOK,113,41,50,14,WS_GROUP
+END
+
+IDD_DIALOG_INPUT_ID DIALOGEX 0, 0, 172, 71
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Input Box"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "확인",IDOK,58,47,50,14
+    PUSHBUTTON      "취소",IDCANCEL,115,47,50,14
+    EDITTEXT        IDC_EDIT_CLIENT_ID,44,11,111,13,ES_AUTOHSCROLL
+    LTEXT           "ID : ",IDC_STATIC,25,14,15,8
+    LTEXT           "Password :",IDC_STATIC,7,30,36,8
+    EDITTEXT        IDC_EDIT_CLIENT_PWD,43,28,109,14,ES_PASSWORD | ES_AUTOHSCROLL
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_DIALOG_MAIN, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 363
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 199
+    END
+
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        TOPMARGIN, 7
+    END
+
+    IDD_DIALOG_INPUT_ID, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 165
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 64
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#ifndef APSTUDIO_INVOKED\r\n"
+    "#include ""targetver.h""\r\n"
+    "#endif\r\n"
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_APP_TITLE           "Project Dok-Su-Ri build 2102"
+    IDC_DOKSURI             "DokSuRi"
+END
+
+#endif    // 한국어 resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
