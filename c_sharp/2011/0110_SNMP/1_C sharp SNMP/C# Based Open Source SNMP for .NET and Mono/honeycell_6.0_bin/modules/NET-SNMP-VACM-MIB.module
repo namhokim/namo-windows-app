@@ -1,0 +1,9 @@
+#SNMP-FRAMEWORK-MIB,NET-SNMP-MIB,SNMP-VIEW-BASED-ACM-MIB,SNMPV2-SMI,SNMPV2-CONF,SNMPV2-TC,
+.1.3.6.1.4.1.8072.1.9,Lextm.SharpSnmpLib.Mib.ModuleIdentity,netSnmpVacmMIB,netSnmpObjects
+.1.3.6.1.4.1.8072.1.9.1,Lextm.SharpSnmpLib.Mib.ObjectType,nsVacmAccessTable,netSnmpVacmMIB
+.1.3.6.1.4.1.8072.1.9.1.1,Lextm.SharpSnmpLib.Mib.ObjectType,nsVacmAccessEntry,nsVacmAccessTable
+.1.3.6.1.4.1.8072.1.9.1.1.1,Lextm.SharpSnmpLib.Mib.ObjectType,nsVacmAuthType,nsVacmAccessEntry
+.1.3.6.1.4.1.8072.1.9.1.1.2,Lextm.SharpSnmpLib.Mib.ObjectType,nsVacmContextMatch,nsVacmAccessEntry
+.1.3.6.1.4.1.8072.1.9.1.1.3,Lextm.SharpSnmpLib.Mib.ObjectType,nsVacmViewName,nsVacmAccessEntry
+.1.3.6.1.4.1.8072.1.9.1.1.4,Lextm.SharpSnmpLib.Mib.ObjectType,nsVacmStorageType,nsVacmAccessEntry
+.1.3.6.1.4.1.8072.1.9.1.1.5,Lextm.SharpSnmpLib.Mib.ObjectType,nsVacmStatus,nsVacmAccessEntry

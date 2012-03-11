@@ -1,0 +1,13 @@
+#SNMPV2-CONF,SNMPV2-SMI,
+.1.3.6.1.6.3.11,Lextm.SharpSnmpLib.Mib.ModuleIdentity,snmpMPDMIB,snmpModules
+.1.3.6.1.6.3.11.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,snmpMPDAdmin,snmpMPDMIB
+.1.3.6.1.6.3.11.2,Lextm.SharpSnmpLib.Mib.OidValueAssignment,snmpMPDMIBObjects,snmpMPDMIB
+.1.3.6.1.6.3.11.3,Lextm.SharpSnmpLib.Mib.OidValueAssignment,snmpMPDMIBConformance,snmpMPDMIB
+.1.3.6.1.6.3.11.2.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,snmpMPDStats,snmpMPDMIBObjects
+.1.3.6.1.6.3.11.2.1.1,Lextm.SharpSnmpLib.Mib.ObjectType,snmpUnknownSecurityModels,snmpMPDStats
+.1.3.6.1.6.3.11.2.1.2,Lextm.SharpSnmpLib.Mib.ObjectType,snmpInvalidMsgs,snmpMPDStats
+.1.3.6.1.6.3.11.2.1.3,Lextm.SharpSnmpLib.Mib.ObjectType,snmpUnknownPDUHandlers,snmpMPDStats
+.1.3.6.1.6.3.11.3.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,snmpMPDMIBCompliances,snmpMPDMIBConformance
+.1.3.6.1.6.3.11.3.2,Lextm.SharpSnmpLib.Mib.OidValueAssignment,snmpMPDMIBGroups,snmpMPDMIBConformance
+.1.3.6.1.6.3.11.3.1.1,Lextm.SharpSnmpLib.Mib.ModuleCompliance,snmpMPDCompliance,snmpMPDMIBCompliances
+.1.3.6.1.6.3.11.3.2.1,Lextm.SharpSnmpLib.Mib.ObjectGroup,snmpMPDGroup,snmpMPDMIBGroups

@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delegate_Event", "Delegate_Event.csproj", "{0EC5F269-919D-453D-8C8C-049779E231EE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0EC5F269-919D-453D-8C8C-049779E231EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EC5F269-919D-453D-8C8C-049779E231EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EC5F269-919D-453D-8C8C-049779E231EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EC5F269-919D-453D-8C8C-049779E231EE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

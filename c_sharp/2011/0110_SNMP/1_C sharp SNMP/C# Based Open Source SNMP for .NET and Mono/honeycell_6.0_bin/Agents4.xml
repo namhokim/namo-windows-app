@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<agents defaultAgent="83adabd3-b4c2-4270-80e2-7971d602ee5a">
+  <add id="00000000-0000-0000-0000-000000000000" name="localhost" binding="127.0.0.1:161" version="0" getCommunity="public" setCommunity="private" authenticationPassphrase="" privacyPassphrase="" authenticationMethod="" privacyMethod="" userName="" timeout="1000" />
+  <add id="83adabd3-b4c2-4270-80e2-7971d602ee5a" name="10.16.11.25" binding="10.16.11.25:161" version="1" getCommunity="public" setCommunity="private" authenticationPassphrase="" privacyPassphrase="" authenticationMethod="" privacyMethod="" userName="" timeout="1000" />
+</agents>

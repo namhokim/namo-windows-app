@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="LoginInfo" xmlns="http://ibatis.apache.org/mapping"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+  
+  <!--Type aliases allow you to use a shorter name for long fully qualified class names.-->
+  <!--
+  <alias>
+    <typeAlias alias="LineItem" type="NPetshop.Domain.Billing.LineItem, NPetshop.Domain" />
+  </alias>
+  -->
+
+  <cacheModels>
+    <cacheModel id="loginCache" implementation="LRU">
+      <flushInterval hours="24"/>
+      <property name="CacheSize" value="1000" />
+    </cacheModel>
+  </cacheModels>
+  
+  <statements>
+    <select id="GetLoginInfo" resultClass="String" cacheModel="loginCache">
+      select emp_id from login_info
+    </select>
+  </statements>
+  
+</sqlMap>

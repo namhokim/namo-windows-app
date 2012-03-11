@@ -1,0 +1,13 @@
+#SNMPV2-CONF,SNMPV2-SMI,IPV6-TC,
+.1.3.6.1.3.87,Lextm.SharpSnmpLib.Mib.ModuleIdentity,ipv6UdpMIB,experimental
+.1.3.6.1.2.1.7,Lextm.SharpSnmpLib.Mib.OidValueAssignment,udp,mib-2
+.1.3.6.1.2.1.7.6,Lextm.SharpSnmpLib.Mib.ObjectType,ipv6UdpTable,udp
+.1.3.6.1.2.1.7.6.1,Lextm.SharpSnmpLib.Mib.ObjectType,ipv6UdpEntry,ipv6UdpTable
+.1.3.6.1.2.1.7.6.1.1,Lextm.SharpSnmpLib.Mib.ObjectType,ipv6UdpLocalAddress,ipv6UdpEntry
+.1.3.6.1.2.1.7.6.1.2,Lextm.SharpSnmpLib.Mib.ObjectType,ipv6UdpLocalPort,ipv6UdpEntry
+.1.3.6.1.2.1.7.6.1.3,Lextm.SharpSnmpLib.Mib.ObjectType,ipv6UdpIfIndex,ipv6UdpEntry
+.1.3.6.1.3.87.2,Lextm.SharpSnmpLib.Mib.OidValueAssignment,ipv6UdpConformance,ipv6UdpMIB
+.1.3.6.1.3.87.2.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,ipv6UdpCompliances,ipv6UdpConformance
+.1.3.6.1.3.87.2.2,Lextm.SharpSnmpLib.Mib.OidValueAssignment,ipv6UdpGroups,ipv6UdpConformance
+.1.3.6.1.3.87.2.1.1,Lextm.SharpSnmpLib.Mib.ModuleCompliance,ipv6UdpCompliance,ipv6UdpCompliances
+.1.3.6.1.3.87.2.2.1,Lextm.SharpSnmpLib.Mib.ObjectGroup,ipv6UdpGroup,ipv6UdpGroups

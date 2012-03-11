@@ -1,0 +1,15 @@
+#SNMPV2-SMI,
+.1.3.6.1.4.1.8072,Lextm.SharpSnmpLib.Mib.ModuleIdentity,netSnmp,enterprises
+.1.3.6.1.4.1.8072.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,netSnmpObjects,netSnmp
+.1.3.6.1.4.1.8072.3,Lextm.SharpSnmpLib.Mib.OidValueAssignment,netSnmpEnumerations,netSnmp
+.1.3.6.1.4.1.8072.3.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,netSnmpModuleIDs,netSnmpEnumerations
+.1.3.6.1.4.1.8072.3.2,Lextm.SharpSnmpLib.Mib.OidValueAssignment,netSnmpAgentOIDs,netSnmpEnumerations
+.1.3.6.1.4.1.8072.3.3,Lextm.SharpSnmpLib.Mib.OidValueAssignment,netSnmpDomains,netSnmpEnumerations
+.1.3.6.1.4.1.8072.9999,Lextm.SharpSnmpLib.Mib.OidValueAssignment,netSnmpExperimental,netSnmp
+.1.3.6.1.4.1.8072.9999.9999,Lextm.SharpSnmpLib.Mib.OidValueAssignment,netSnmpPlaypen,netSnmpExperimental
+.1.3.6.1.4.1.8072.4,Lextm.SharpSnmpLib.Mib.OidValueAssignment,netSnmpNotificationPrefix,netSnmp
+.1.3.6.1.4.1.8072.4.0,Lextm.SharpSnmpLib.Mib.OidValueAssignment,netSnmpNotifications,netSnmpNotificationPrefix
+.1.3.6.1.4.1.8072.4.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,netSnmpNotificationObjects,netSnmpNotificationPrefix
+.1.3.6.1.4.1.8072.5,Lextm.SharpSnmpLib.Mib.OidValueAssignment,netSnmpConformance,netSnmp
+.1.3.6.1.4.1.8072.5.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,netSnmpCompliances,netSnmpConformance
+.1.3.6.1.4.1.8072.5.2,Lextm.SharpSnmpLib.Mib.OidValueAssignment,netSnmpGroups,netSnmpConformance

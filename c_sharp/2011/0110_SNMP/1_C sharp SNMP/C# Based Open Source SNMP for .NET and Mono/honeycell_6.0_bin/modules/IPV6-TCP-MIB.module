@@ -1,0 +1,16 @@
+#SNMPV2-CONF,SNMPV2-SMI,IPV6-TC,
+.1.3.6.1.3.86,Lextm.SharpSnmpLib.Mib.ModuleIdentity,ipv6TcpMIB,experimental
+.1.3.6.1.2.1.6,Lextm.SharpSnmpLib.Mib.OidValueAssignment,tcp,mib-2
+.1.3.6.1.2.1.6.16,Lextm.SharpSnmpLib.Mib.ObjectType,ipv6TcpConnTable,tcp
+.1.3.6.1.2.1.6.16.1,Lextm.SharpSnmpLib.Mib.ObjectType,ipv6TcpConnEntry,ipv6TcpConnTable
+.1.3.6.1.2.1.6.16.1.1,Lextm.SharpSnmpLib.Mib.ObjectType,ipv6TcpConnLocalAddress,ipv6TcpConnEntry
+.1.3.6.1.2.1.6.16.1.2,Lextm.SharpSnmpLib.Mib.ObjectType,ipv6TcpConnLocalPort,ipv6TcpConnEntry
+.1.3.6.1.2.1.6.16.1.3,Lextm.SharpSnmpLib.Mib.ObjectType,ipv6TcpConnRemAddress,ipv6TcpConnEntry
+.1.3.6.1.2.1.6.16.1.4,Lextm.SharpSnmpLib.Mib.ObjectType,ipv6TcpConnRemPort,ipv6TcpConnEntry
+.1.3.6.1.2.1.6.16.1.5,Lextm.SharpSnmpLib.Mib.ObjectType,ipv6TcpConnIfIndex,ipv6TcpConnEntry
+.1.3.6.1.2.1.6.16.1.6,Lextm.SharpSnmpLib.Mib.ObjectType,ipv6TcpConnState,ipv6TcpConnEntry
+.1.3.6.1.3.86.2,Lextm.SharpSnmpLib.Mib.OidValueAssignment,ipv6TcpConformance,ipv6TcpMIB
+.1.3.6.1.3.86.2.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,ipv6TcpCompliances,ipv6TcpConformance
+.1.3.6.1.3.86.2.2,Lextm.SharpSnmpLib.Mib.OidValueAssignment,ipv6TcpGroups,ipv6TcpConformance
+.1.3.6.1.3.86.2.1.1,Lextm.SharpSnmpLib.Mib.ModuleCompliance,ipv6TcpCompliance,ipv6TcpCompliances
+.1.3.6.1.3.86.2.2.1,Lextm.SharpSnmpLib.Mib.ObjectGroup,ipv6TcpGroup,ipv6TcpGroups

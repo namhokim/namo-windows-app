@@ -1,0 +1,7 @@
+#
+.1.3.6.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,internet,dod
+.1.3.6.1.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,directory,internet
+.1.3.6.1.2,Lextm.SharpSnmpLib.Mib.OidValueAssignment,mgmt,internet
+.1.3.6.1.3,Lextm.SharpSnmpLib.Mib.OidValueAssignment,experimental,internet
+.1.3.6.1.4,Lextm.SharpSnmpLib.Mib.OidValueAssignment,private,internet
+.1.3.6.1.4.1,Lextm.SharpSnmpLib.Mib.OidValueAssignment,enterprises,private

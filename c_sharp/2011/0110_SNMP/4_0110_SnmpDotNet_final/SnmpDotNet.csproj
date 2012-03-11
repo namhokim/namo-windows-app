@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CC53CC03-6934-4C73-8DDD-8748D361C2C4}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SnmpDotNet</RootNamespace>
+    <AssemblyName>SnmpDotNet</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="lib\Utilities\ByteTool.cs" />
+    <Compile Include="lib\Header.cs" />
+    <Compile Include="lib\Interfaces\ISegment.cs" />
+    <Compile Include="lib\PDU\MalformedPdu.cs" />
+    <Compile Include="lib\Messaging\AgentFoundEventArgs.cs" />
+    <Compile Include="lib\Messaging\Discoverer.cs" />
+    <Compile Include="lib\Messaging\Discovery.cs" />
+    <Compile Include="lib\Messaging\EndPointExtension.cs" />
+    <Compile Include="lib\Messaging\Exceptions\ErrorException.cs" />
+    <Compile Include="lib\Messaging\ExceptionRaisedEventArgs.cs" />
+    <Compile Include="lib\Messaging\Messages\GetBulkRequestMessage.cs" />
+    <Compile Include="lib\Messaging\Messages\GetNextRequestMessage.cs" />
+    <Compile Include="lib\Messaging\Messages\GetRequestMessage.cs" />
+    <Compile Include="lib\Messaging\Interfaces\IListenerBinding.cs" />
+    <Compile Include="lib\Messaging\Messages\InformRequestMessage.cs" />
+    <Compile Include="lib\Messaging\Interfaces\ISnmpMessage.cs" />
+    <Compile Include="lib\Messaging\Listener.cs" />
+    <Compile Include="lib\Messaging\ListenerBinding.cs" />
+    <Compile Include="lib\Messaging\Messages\MalformedMessage.cs" />
+    <Compile Include="lib\Messaging\Manager.cs" />
+    <Compile Include="lib\Messaging\Messages\MessageFactory.cs" />
+    <Compile Include="lib\Messaging\Exceptions\MessageFactoryException.cs" />
+    <Compile Include="lib\Messaging\Messages\MessageParams.cs" />
+    <Compile Include="lib\Messaging\Messages\MessageReceivedEventArgs.cs" />
+    <Compile Include="lib\Messaging\Messenger.cs" />
+    <Compile Include="lib\Messaging\NumberGenerator.cs" />
+    <Compile Include="lib\Messaging\Exceptions\PortInUseException.cs" />
+    <Compile Include="lib\Messaging\Messages\ReportMessage.cs" />
+    <Compile Include="lib\Messaging\Messages\ResponseMessage.cs" />
+    <Compile Include="lib\Messaging\Messages\SetRequestMessage.cs" />
+    <Compile Include="lib\Messaging\SnmpMessageExtension.cs" />
+    <Compile Include="lib\Messaging\Exceptions\TimeoutException.cs" />
+    <Compile Include="lib\Messaging\Messages\TrapV1Message.cs" />
+    <Compile Include="lib\Messaging\Messages\TrapV2Message.cs" />
+    <Compile Include="lib\Messaging\WalkMode.cs" />
+    <Compile Include="lib\Exceptions\OperationException.cs" />
+    <Compile Include="lib\Scope.cs" />
+    <Compile Include="lib\SecurityParameters.cs" />
+    <Compile Include="lib\Security\AESPrivacyProvider.cs" />
+    <Compile Include="lib\Security\AuthenticationProviderExtension.cs" />
+    <Compile Include="lib\Security\DecryptionException.cs" />
+    <Compile Include="lib\Security\DefaultAuthenticationProvider.cs" />
+    <Compile Include="lib\Security\DefaultPrivacyProvider.cs" />
+    <Compile Include="lib\Security\DESPrivacyProvider.cs" />
+    <Compile Include="lib\Security\IAuthenticationProvider.cs" />
+    <Compile Include="lib\Security\IPrivacyProvider.cs" />
+    <Compile Include="lib\Security\MD5AuthenticationProvider.cs" />
+    <Compile Include="lib\Security\PrivacyProviderExtension.cs" />
+    <Compile Include="lib\Security\SaltGenerator.cs" />
+    <Compile Include="lib\Security\SHA1AuthenticationProvider.cs" />
+    <Compile Include="lib\Security\User.cs" />
+    <Compile Include="lib\Security\UserRegistry.cs" />
+    <Compile Include="lib\SnmpData\Counter32.cs" />
+    <Compile Include="lib\SnmpData\Counter64.cs" />
+    <Compile Include="lib\SnmpData\DataFactory.cs" />
+    <Compile Include="lib\DefinitionType.cs" />
+    <Compile Include="lib\EndOfMibView.cs" />
+    <Compile Include="lib\ErrorCode.cs" />
+    <Compile Include="lib\SnmpData\Gauge32.cs" />
+    <Compile Include="lib\GenericCode.cs" />
+    <Compile Include="lib\PDU\GetBulkRequestPdu.cs" />
+    <Compile Include="lib\PDU\GetNextRequestPdu.cs" />
+    <Compile Include="lib\PDU\GetRequestPdu.cs" />
+    <Compile Include="lib\Interfaces\IConstruct.cs" />
+    <Compile Include="lib\Interfaces\IDefinition.cs" />
+    <Compile Include="lib\Interfaces\IEntity.cs" />
+    <Compile Include="lib\Interfaces\IModule.cs" />
+    <Compile Include="lib\Interfaces\InformRequestPdu.cs" />
+    <Compile Include="lib\SnmpData\Integer32.cs" />
+    <Compile Include="lib\Interfaces\IObjectRegistry.cs" />
+    <Compile Include="lib\Interfaces\IObjectTree.cs" />
+    <Compile Include="lib\SnmpData\IP.cs" />
+    <Compile Include="lib\Interfaces\ISnmpData.cs" />
+    <Compile Include="lib\Interfaces\ISnmpPdu.cs" />
+    <Compile Include="lib\Levels.cs" />
+    <Compile Include="lib\SnmpData\NoSuchInstance.cs" />
+    <Compile Include="lib\SnmpData\NoSuchObject.cs" />
+    <Compile Include="lib\SnmpData\Null.cs" />
+    <Compile Include="lib\SnmpData\ObjectIdentifier.cs" />
+    <Compile Include="lib\Utilities\ObjectIdentifierConverter.cs" />
+    <Compile Include="lib\SnmpData\OctetString.cs" />
+    <Compile Include="lib\PDU\ReportPdu.cs" />
+    <Compile Include="lib\PDU\ResponsePdu.cs" />
+    <Compile Include="lib\SearchResult.cs" />
+    <Compile Include="lib\SnmpData\Sequence.cs" />
+    <Compile Include="lib\PDU\SetRequestPdu.cs" />
+    <Compile Include="lib\SnmpData\SnmpDataExtension.cs" />
+    <Compile Include="lib\Exceptions\SnmpException.cs" />
+    <Compile Include="lib\SnmpData\SnmpType.cs" />
+    <Compile Include="lib\StreamExtension.cs" />
+    <Compile Include="lib\SnmpData\TimeTicks.cs" />
+    <Compile Include="lib\PDU\TrapV1Pdu.cs" />
+    <Compile Include="lib\PDU\TrapV2Pdu.cs" />
+    <Compile Include="lib\SnmpData\Variable.cs" />
+    <Compile Include="lib\VersionCode.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

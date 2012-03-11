@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>SharpSnmpLib.Optional</name>
+  </assembly>
+  <members>
+    <member name="T:Lextm.SharpSnmpLib.Security.AESPrivacyProvider">
+      <summary>
+            Privacy provider for AES.
+            </summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Security.AESPrivacyProvider.#ctor(Lextm.SharpSnmpLib.OctetString,Lextm.SharpSnmpLib.Security.IAuthenticationProvider)">
+      <summary>
+            Initializes a new instance of the <see cref="T:Lextm.SharpSnmpLib.Security.AESPrivacyProvider" /> class.
+            </summary>
+      <param name="phrase">The phrase.</param>
+      <param name="auth">The auth.</param>
+    </member>
+    <member name="P:Lextm.SharpSnmpLib.Security.AESPrivacyProvider.AuthenticationProvider">
+      <summary>
+            Corresponding <see cref="T:Lextm.SharpSnmpLib.Security.IAuthenticationProvider" />.
+            </summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Security.AESPrivacyProvider.Decrypt(Lextm.SharpSnmpLib.ISnmpData,Lextm.SharpSnmpLib.SecurityParameters)">
+      <summary>
+            Decrypts the specified data.
+            </summary>
+      <param name="data">The data.</param>
+      <param name="parameters">The parameters.</param>
+      <returns>
+        <p style="color: #dc143c; font-size: 8.5pt; font-weight: bold;">[Missing &lt;returns&gt; documentation for "M:Lextm.SharpSnmpLib.Security.AESPrivacyProvider.Decrypt(Lextm.SharpSnmpLib.ISnmpData,Lextm.SharpSnmpLib.SecurityParameters)"]</p>
+      </returns>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Security.AESPrivacyProvider.Encrypt(Lextm.SharpSnmpLib.ISnmpData,Lextm.SharpSnmpLib.SecurityParameters)">
+      <summary>
+            Encrypts the specified scope.
+            </summary>
+      <param name="data">The scope data.</param>
+      <param name="parameters">The parameters.</param>
+      <returns>
+        <p style="color: #dc143c; font-size: 8.5pt; font-weight: bold;">[Missing &lt;returns&gt; documentation for "M:Lextm.SharpSnmpLib.Security.AESPrivacyProvider.Encrypt(Lextm.SharpSnmpLib.ISnmpData,Lextm.SharpSnmpLib.SecurityParameters)"]</p>
+      </returns>
+    </member>
+    <member name="P:Lextm.SharpSnmpLib.Security.AESPrivacyProvider.MaximumKeyLength">
+      <summary>
+            Return maximum encryption/decryption key length. For DES, returned value is 16
+            
+            DES protocol itself requires an 8 byte key. Additional 8 bytes are used for generating the
+            encryption IV. For encryption itself, first 8 bytes of the key are used.
+            </summary>
+    </member>
+    <member name="P:Lextm.SharpSnmpLib.Security.AESPrivacyProvider.Salt">
+      <summary>
+            Gets the salt.
+            </summary>
+    </member>
+    <member name="M:Lextm.SharpSnmpLib.Security.AESPrivacyProvider.ToString">
+      <summary>
+            Returns a string that represents this object.
+            </summary>
+      <returns>
+        <p style="color: #dc143c; font-size: 8.5pt; font-weight: bold;">[Missing &lt;returns&gt; documentation for "M:Lextm.SharpSnmpLib.Security.AESPrivacyProvider.ToString"]</p>
+      </returns>
+    </member>
+  </members>
+</doc>
