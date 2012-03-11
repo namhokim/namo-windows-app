@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Body>
+    <CallCJW_USER_MASTERTResponse xmlns="http://CJSEAI.schema.com">
+      <CJW_USER_MASTERT_WS_Response>
+        <RLT_RCNT xmlns="">50510</RLT_RCNT>
+        <CJW_USER_MASTERT_WS_Rsp xmlns="">
+          <USER_ID>8601182149137</USER_ID>
+          <EMAIL_ALIAS>riskypink</EMAIL_ALIAS>
+          <USER_NAME>박하나님</USER_NAME>
+          <USER_ENG_NAME>NiNa</USER_ENG_NAME>
+          <COMP_CODE>B40</COMP_CODE>
+          <COMP_NAME>CJ푸드빌</COMP_NAME>
+          <DEPT_CODE>B400004442</DEPT_CODE>
+          <DEPT_NAME>투썸플레이스 강남대륭타워점</DEPT_NAME>
+          <SECURITY_LEVEL>4</SECURITY_LEVEL>
+          <USER_TYPE>N</USER_TYPE>
+          <USER_STATUS>E</USER_STATUS>
+          <POSITION_CODE>MM1</POSITION_CODE>
+          <POSITION_NAME>M1</POSITION_NAME>
+          <PLURAL_OFFICE_ENABLE>0</PLURAL_OFFICE_ENABLE>
+          <INS_DT>2010-10-01</INS_DT>
+          <MOD_DT>2011-01-02</MOD_DT>
+          <DEL_DT />
+          <EMPNO>996172</EMPNO>
+          <GROUP_EMPLOYED_DATE>20101001</GROUP_EMPLOYED_DATE>
+          <COMP_EMPLOYED_DATE>20101001</COMP_EMPLOYED_DATE>
+          <IMSI_FLAG>N</IMSI_FLAG>
+          <IN_COMP_CODE>B40</IN_COMP_CODE>
+          <JOB_CODE>IDSM102</JOB_CODE>
+          <JOB_NAME>프)운영 Manager</JOB_NAME>
+          <KOSTL_CODE />
+          <KOSTL_NAME />
+          <MNGRES1 />
+          <MNGRES2 />
+          <CHIEF_FLAG>N</CHIEF_FLAG>
+          <LUNAR_ENABLE>0</LUNAR_ENABLE>
+          <BIRTH_DAT>19860118</BIRTH_DAT>
+          <WED_DAT />
+          <PATH />
+        </CJW_USER_MASTERT_WS_Rsp>
+      </CJW_USER_MASTERT_WS_Response>
+    </CallCJW_USER_MASTERTResponse>
+  </soap:Body>
+</soap:Envelope>

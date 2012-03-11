@@ -1,0 +1,364 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\Demo.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 223, 59
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About Demo"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            IDI_NEKTRA,IDC_STATIC,11,5,21,20
+    LTEXT           "OE interfaces demo",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2006",IDC_STATIC,39,44,71,8
+    DEFPUSHBUTTON   "OK",IDOK,166,7,50,14,WS_GROUP
+    LTEXT           "by Pablo Yabo",IDC_STATIC,40,22,124,13
+    PUSHBUTTON      "",IDC_LINK,38,32,59,11,BS_NOTIFY | BS_FLAT,
+                    WS_EX_ACCEPTFILES
+END
+
+IDD_DEMO_DIALOG DIALOGEX 0, 0, 211, 246
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "Demo"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    LISTBOX         IDC_LIST_FOLDER,7,14,126,224,LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "View Msgs",IDC_BUTTON_PRI,139,72,65,15
+    PUSHBUTTON      "Rename Folder",IDC_BUTTON_REN,139,15,65,15
+    PUSHBUTTON      "Create Sub Folder",IDC_BUTTON_CRE,139,34,65,15
+    PUSHBUTTON      "Delete Folder",IDC_BUTTON_REM,139,53,65,15
+    LTEXT           "Local Folders:",IDC_STATIC,7,1,85,12
+    PUSHBUTTON      "About",IDC_ABOUT,139,224,65,15
+END
+
+IDD_INPUT_DIALOG DIALOG DISCARDABLE  0, 0, 186, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_EDIT_FOLDER_NAME,58,7,121,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,129,34,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,75,34,50,14
+    LTEXT           "Folder Name",IDC_STATIC,7,9,46,12
+END
+
+IDD_MSG_DIALOG DIALOG DISCARDABLE  0, 0, 327, 215
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LISTBOX         IDC_LIST_MSG,7,7,241,201,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Delete",IDC_BUTTON_DELETE,256,79,64,15
+    PUSHBUTTON      "Create",IDC_BUTTON_CREATE,255,61,65,15
+    PUSHBUTTON      "Mark as Read",IDC_BUTTON_READ,255,7,65,15
+    PUSHBUTTON      "Mark as Unread",IDC_BUTTON_UNREAD,255,25,65,15
+    PUSHBUTTON      "View",IDC_BUTTON_VIEW,255,43,65,15
+    PUSHBUTTON      "Copy",IDC_BUTTON_COPY,255,97,65,15
+    PUSHBUTTON      "Move",IDC_BUTTON_MOVE,255,115,65,15
+    PUSHBUTTON      "View Bodies",IDC_BUTTON_VIEW_BODIES,255,132,65,15
+END
+
+IDD_FOLDER_SEL_DIALOG DIALOG DISCARDABLE  0, 0, 186, 210
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Select Folder"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,73,189,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,129,189,50,14
+    LISTBOX         IDC_FOLDER_LIST,7,7,172,175,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_MSG_SRC_DIALOG DIALOG DISCARDABLE  0, 0, 274, 266
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Message Source"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,217,245,50,14
+    EDITTEXT        IDC_EDIT_MSG_SRC,7,7,260,230,ES_MULTILINE | 
+                    ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL
+END
+
+IDD_CREATE_MSG_DIALOG DIALOG DISCARDABLE  0, 0, 242, 263
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Create Message"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_EDIT_FROM,47,7,188,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_TO,47,23,188,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_SUBJECT,47,39,188,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_BODY,7,57,228,179,ES_MULTILINE | ES_AUTOVSCROLL | 
+                    ES_AUTOHSCROLL | ES_WANTRETURN
+    PUSHBUTTON      "OK",IDOK,185,242,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,129,242,50,14
+    LTEXT           "From:",IDC_STATIC,7,9,26,9
+    LTEXT           "To:",IDC_STATIC,7,25,30,10
+    LTEXT           "Subject:",IDC_STATIC,7,42,31,10
+END
+
+IDD_MESSAGE_TREE DIALOG DISCARDABLE  0, 0, 273, 281
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Message Tree"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_EDIT_DISPLAY_NAME,62,15,93,14,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    LTEXT           "Display Name:",IDC_STATIC,12,17,47,9
+    PUSHBUTTON      "Parent Body",IDC_BUTTON_GO_PARENT,168,15,45,16
+    PUSHBUTTON      "Child Body",IDC_BUTTON_GO_CHILD,217,15,45,16
+    PUSHBUTTON      "Next Body",IDC_BUTTON_GO_NEXT,168,34,45,16
+    PUSHBUTTON      "Prev Body",IDC_BUTTON_GO_PREV,217,34,45,16
+    GROUPBOX        "Browse Bodies",IDC_STATIC,163,4,103,50
+    PUSHBUTTON      "Insert Child",IDC_BUTTON_INS_CHILD,168,71,45,16,
+                    BS_MULTILINE
+    GROUPBOX        "Edit Bodies",IDC_STATIC,163,60,103,50
+    PUSHBUTTON      "Insert Next",IDC_BUTTON_INS_NEXT,217,71,45,16
+    PUSHBUTTON      "Delete",IDC_BUTTON_DEL_BODY,194,90,45,16
+    GROUPBOX        "Body Properties",IDC_STATIC,7,4,153,106
+    LTEXT           "Property Name:",IDC_STATIC,12,38,49,9
+    EDITTEXT        IDC_EDIT_PROP_VALUE,11,64,110,40,ES_AUTOHSCROLL
+    LTEXT           "Value:",IDC_STATIC,12,55,48,8
+    PUSHBUTTON      "Set",IDC_BUTTON_SET_PROP_VALUE,124,65,31,17
+    PUSHBUTTON      "Remove",IDC_BUTTON_REM_PROP,124,86,31,17
+    GROUPBOX        "Body Content",IDC_STATIC,7,113,153,137
+    EDITTEXT        IDC_EDIT_CONTENT,11,124,146,103,ES_MULTILINE | 
+                    ES_AUTOHSCROLL
+    PUSHBUTTON      "Set Content",IDC_BUTTON_SET_CONTENT,11,230,57,16
+    PUSHBUTTON      "Save Changes",IDC_BUTTON_SAVE_CHANGES,176,256,90,18
+    COMBOBOX        IDC_COMBO_PROP_NAME,62,35,93,89,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Attachments",IDC_STATIC,163,113,103,137
+    LISTBOX         IDC_LIST_ATTACHS,166,124,97,103,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Add",IDC_ADD_ATTACH,168,231,39,15
+    PUSHBUTTON      "Remove",IDC_REM_ATTACH,222,231,39,15
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "Demo MFC Application\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "Demo\0"
+            VALUE "LegalCopyright", "Copyright (C) 2004\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "Demo.EXE\0"
+            VALUE "ProductName", "Demo Application\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 216
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 52
+    END
+
+    IDD_DEMO_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 204
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 239
+    END
+
+    IDD_INPUT_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_MSG_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 320
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 208
+    END
+
+    IDD_FOLDER_SEL_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 203
+    END
+
+    IDD_MSG_SRC_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 267
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 259
+    END
+
+    IDD_CREATE_MSG_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 235
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 256
+    END
+
+    IDD_MESSAGE_TREE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 266
+        BOTTOMMARGIN, 274
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_NEKTRA              ICON    DISCARDABLE     "res\\Demo.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "&About Demo..."
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\Demo.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,54 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: BMPDraw - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\namo\LOCALS~1\Temp\RSP5B2.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /Fp"Debug/BMPDraw.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Documents and Settings\namo\πŸ≈¡ »≠∏È\namo\My Documents\_Programs(exe)\BMPDraw\BMPDraw.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\namo\LOCALS~1\Temp\RSP5B2.tmp" 
+Creating temporary file "C:\DOCUME~1\namo\LOCALS~1\Temp\RSP5B3.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/BMPDraw.pdb" /debug /machine:I386 /out:"Debug/BMPDraw.exe" /pdbtype:sept 
+".\Debug\BMPDraw.obj"
+]
+Creating command line "link.exe @C:\DOCUME~1\namo\LOCALS~1\Temp\RSP5B3.tmp"
+<h3>Output Window</h3>
+Compiling...
+BMPDraw.cpp
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(43) : error C2065: 'WindowProc' : undeclared identifier
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(43) : error C2440: '=' : cannot convert from 'int' to 'long (__stdcall *)(struct HWND__ *,unsigned int,unsigned int,long)'
+        Conversion from integral type to pointer type requires reinterpret_cast, C-style cast or function-style cast
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(77) : error C2065: 'ProcessHere' : undeclared identifier
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(93) : error C2065: 'ReleaseObject' : undeclared identifier
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(99) : error C2373: 'WindowProc' : redefinition; different type modifiers
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(128) : error C2373: 'ProcessHere' : redefinition; different type modifiers
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(129) : error C2065: 'DDSURFACEDESC2' : undeclared identifier
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(129) : error C2146: syntax error : missing ';' before identifier 'ddsd'
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(129) : error C2065: 'ddsd' : undeclared identifier
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(133) : error C2065: 'DirectDrawCreateEx' : undeclared identifier
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(134) : error C2065: 'IID_IDirectDraw7' : undeclared identifier
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(147) : error C2660: 'SetDisplayMode' : function does not take 5 parameters
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(153) : error C2228: left of '.dwSize' must have class/struct/union type
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(154) : error C2228: left of '.dwFlags' must have class/struct/union type
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(157) : error C2228: left of '.ddsCaps' must have class/struct/union type
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(157) : error C2228: left of '.dwCaps' must have class/struct/union type
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(187) : error C2065: 'LoadBmp' : undeclared identifier
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(199) : error C2228: left of '.lpSurface' must have class/struct/union type
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(207) : error C2228: left of '.lPitch' must have class/struct/union type
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(224) : error C2373: 'LoadBmp' : redefinition; different type modifiers
+c:\documents and settings\namo\πŸ≈¡ »≠∏È\namo\my documents\_programs(exe)\bmpdraw\bmpdraw.cpp(300) : error C2373: 'ReleaseObject' : redefinition; different type modifiers
+Error executing cl.exe.
+
+
+
+<h3>Results</h3>
+BMPDraw.exe - 21 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

@@ -1,0 +1,557 @@
+<html>
+
+<head>
+<title>CSNTPClient v1.01</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<p align="left"><img src="csntp.gif" width="32" height="32" alt="csntp.gif (362 bytes)"><font
+face="Arial"><big><big><big><big><strong>CSNTPClient v1.01</strong></big></big></big></big></font></p>
+
+<p><font face="Arial">Welcome to <strong>CSNTPClient</strong>, a collection of freeware
+MFC classes to encapsulate the SNTP protocol. </font></p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<table>
+  <tr>
+    <td><font face="Arial"><a href="#Features">Features</a></font></td>
+  </tr>
+  <tr>
+    <td><font face="Arial"><a href="#Usage">Usage</a></font></td>
+  </tr>
+  <tr>
+    <td><font face="Arial"><a href="#History">History</a></font></td>
+  </tr>
+  <tr>
+    <td><font face="Arial"><a href="#APIReference">API Reference</a></font></td>
+  </tr>
+  <tr>
+    <td><font face="Arial"><a href="#Enhancements">Planned Enhancements</a></font></td>
+  </tr>
+  <tr>
+    <td><font face="Arial"><a href="#Contact">Contacting the Author</a></font></td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><font face="Arial"><a name="Features"></a><big><strong><big>Features</big></strong></big>
+</font>
+
+<ul>
+  <li><font color="#000000" size="3" face="Arial">Simple and clean C++ interface.</font></li>
+  <li><font color="#000000" size="3" face="Arial">The interface provided is synchronous which
+    provides an easier programming model than using asynchronous sockets.</font></li>
+  <li><font color="#000000" size="3" face="Arial">Raw sockets are used instead of MFC sockets.
+    This means that the code will work in a console application without any problems</font></li>
+  <li><font color="#000000" size="3" face="Arial">A configurable timeout for the connection
+    can be set through the class API.</font></li>
+  <li><font color="#000000" size="3" face="Arial">The classes are fully Unicode compliant and
+    include Unicode built options in the workspace file.</font></li>
+</ul>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><font face="Arial"><a name="Usage"></a><big><big><strong>Usage</strong></big></big> </font>
+
+<ul>
+  <li><font color="#000000" size="3" face="Arial">To use the class in your code simply include
+    sntp.cpp in your project and #include sntp.h in which ever of your modules needs to make
+    calls to the class. </font></li>
+  <li><font face="Arial">Your code will need to include MFC either statically or dynamically.</font></li>
+  <li><font face="Arial">You will need to have a functioning winsock stack installed as the
+    code links to winsock.dll.</font></li>
+  <li><font face="Arial">You will also need to have winsock.h or afxsock.h and afxpriv.h in
+    your precompiled header. The code should also work in a multithreaded application,
+    although it has not be explicitly tested in this scenario.</font></li>
+</ul>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><font face="Arial"><big><a name="History"></a></big><font color="#000000" size="5"><strong>History</strong></font></font></p>
+
+<p><font face="Arial"><font color="#000000" size="3"><strong>V1.0 (8th August 1998)</strong></font>
+</font>
+
+<ul>
+  <li><font face="Arial"><font size="3"><font color="#000000">Initial public release.</font></font><big>
+    </big></font></li>
+</ul>
+
+<p><strong><font color="#000000" size="3" face="Arial">V1.01 (1</font><font face="Arial"><font
+size="3"><font color="#000000">6</font></font><font color="#000000" size="3">th </font></font><font
+face="Arial" color="#000000" size="3">November 1998)</font></strong><font face="Arial"> </font>
+
+<ul>
+  <li><font face="Arial">m_nOriginateTime was getting set incorrectly in the SNTP response.
+    Has now been fixed.</font></li>
+  <li><font face="Arial">GetLastError now works when a timeout occurs.</font></li>
+</ul>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p class="crt"><font face="Arial"><a name="APIReference"></a><big><big><strong>API
+Reference</strong></big></big></font></p>
+
+<p><font face="Arial">The API consists of the the classes:</font></p>
+
+<p>&nbsp;</p>
+
+<p><strong><font face="Arial">CNtpTime</font></strong></p>
+
+<p><font face="Arial">This is an encapsulation of a time instance as used in the SNTP
+protocol. This consists of a 64 bit unsigned integer with the top 32 bits containing the
+number of seconds since 1st January 1900 and the lower 32 bits contain the fraction of
+seconds.</font></p>
+
+<p>&nbsp;</p>
+
+<p><strong><font face="Arial"><a href="#CNtpTime">CNtpTime</a><br>
+<a href="#operator=">operator=</a><br>
+<a href="#operator-">operator-</a><br>
+<a href="#operator+">operator+</a><br>
+<a href="#operator SYSTEMTIME">operator SYSTEMTIME</a><br>
+<a href="#operator CNtpTimePacket">operator CNtpTimePacket</a><br>
+<a href="#operator unsigned __int64">operator unsigned __int64</a><br>
+<a href="#Seconds">Seconds</a><br>
+<a href="#Fraction">Fraction</a><br>
+<a href="#GetCurrentTime">GetCurrentTime</a><br>
+<a href="#MsToNtpFraction">MsToNtpFraction</a><br>
+<a href="#NtpFractionToMs">NtpFractionToMs</a><br>
+<a href="#NtpFractionToSecond">NtpFractionToSecond</a></font></strong></p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><strong><font face="Arial">NtpServerResponse</font></strong></p>
+
+<p><font face="Arial">This is a simple encapsulation of the information retrieved from the
+SNTP server. It contains:</font></p>
+
+<p>&nbsp;</p>
+
+<p><font face="Arial"><strong><a href="#m_nLeapIndicator">m_nLeapIndicator<br>
+</a><a href="#m_nStratum">m_nStratum</a><br>
+<a href="#m_nOriginateTime">m_OriginateTime</a><br>
+<a href="#m_ReceiveTime">m_ReceiveTime</a><br>
+<a href="#m_TransmitTime">m_TransmitTime</a><br>
+<a href="#m_DestinationTime">m_DestinationTime</a><br>
+<a href="#m_RoundTripDelay">m_RoundTripDelay</a><br>
+<a href="#m_LocalClockOffset">m_LocalClockOffset</a><br>
+</strong></font></p>
+
+<p>&nbsp;</p>
+
+<p><strong><font face="Arial">CSNTPClient</font></strong></p>
+
+<p><font face="Arial">The actual class to call to perform a time lookup is CSNTPClient and
+it consists of:</font></p>
+
+<p>&nbsp;</p>
+
+<p><font face="Arial"><strong><a href="#CSNTPClient">CSNTPClient<br>
+</a><a href="#GetServerTime">GetServerTime</a><br>
+<a href="#GetTimeout">GetTimeout</a><br>
+<a href="#SetTimeout">SetTimeout</a><br>
+<a href="#SetClientTime">SetClientTime</a><br>
+</strong></font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="CNtpTime"></a><font face="Arial"><big><strong>CNtpTime::CNtpTime</strong></big></font></p>
+
+<p><font face="Arial"><strong>CNtpTime();<br>
+CNtpTime(const CNtpTime&amp; </strong><em>time</em><strong>);<br>
+CNtpTime(CNtpTimePacket&amp; </strong><em>packet</em><strong>);<br>
+CNtpTime(const SYSTEMTIME&amp; </strong><em>st</em><strong>);</strong></font></p>
+
+<p><font face="Arial"><strong>Parameters</strong></font></p>
+
+<p><font face="Arial"><em>time</em> Another CNtpTime instance.</font></p>
+
+<p><font face="Arial"><em>packet</em> An CNtpTimePacket instance. This is a simple struct
+representing the data as sent over the wire.</font></p>
+
+<p><font face="Arial"><em>st</em> A Win32 SDK SYSTEMTIME instance.</font></p>
+
+<p><font face="Arial"><strong>Remarks</strong></font></p>
+
+<p><font face="Arial">Standard C++ constructor.</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="operator="></a><font face="Arial"><big><strong>CNtpTime::operator=</strong></big></font></p>
+
+<p><strong><font face="Arial">CNtpTime&amp; operator=(const CNtpTime&amp; time);</font></strong></p>
+
+<p><font face="Arial"><strong>Remarks</strong></font></p>
+
+<p><font face="Arial">Standard operator= for the class.</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="operator-"></a><big><strong><font face="Arial">CNtpTime::operator-</font></strong></big></p>
+
+<p><font face="Arial"><strong>double operator-(const CNtpTime&amp; </strong><em>time</em><strong>)
+const;</strong></font></p>
+
+<p><font face="Arial"><strong>Remarks</strong></font></p>
+
+<p><font face="Arial">Standard operator- for the class.</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="operator+"></a><strong><font face="Arial">CNtpTime::operator+</font></strong></p>
+
+<p><font face="Arial"><strong>CNtpTime operator+(const double&amp; </strong><em>timespan</em><strong>)
+const;</strong></font></p>
+
+<p><font face="Arial"><strong>Remarks</strong></font></p>
+
+<p><font face="Arial">Standard operator+ for the class.</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="operator SYSTEMTIME"></a><big><strong><font face="Arial">CNtpTime::operator
+SYSTEMTIME</font></strong></big></p>
+
+<p><strong><font face="Arial">operator SYSTEMTIME() const;</font></strong></p>
+
+<p><font face="Arial"><strong>Remarks</strong></font></p>
+
+<p><font face="Arial">operator method which returns a SDK SYSTEMTIME representation of the
+Ntp time.</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="operator CNtpTimePacket"></a><big><strong><font face="Arial">CNtpTime::operator
+CNtpTimePacket</font></strong></big></p>
+
+<p><strong><font face="Arial">operator CNtpTimePacket() const;</font></strong></p>
+
+<p><font face="Arial"><strong>Remarks</strong></font></p>
+
+<p><font face="Arial">Returns a CNtpTimePacket representation of an Ntp time. This
+structure is the actual value which gets transmitted to the SNTP server.</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="operator unsigned __int64"></a><big><strong><font face="Arial">CNtpTime::operator
+unsigned __int64</font></strong></big></p>
+
+<p><strong><font face="Arial">operator unsigned __int64() const;</font></strong></p>
+
+<p><font face="Arial"><strong>Remarks</strong></font></p>
+
+<p><font face="Arial">Returns an unsigned int64 representation of the Ntp time.</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="Seconds"></a><big><strong><font face="Arial">CNtpTime::Seconds</font></strong></big></p>
+
+<p><strong><font face="Arial">DWORD Seconds() const;</font></strong></p>
+
+<p><font face="Arial"><strong>Remarks</strong></font></p>
+
+<p><font face="Arial">Returns the total number of seconds which this Ntp time represents</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="Fraction"></a><big><strong><font face="Arial">CNtpTime::Fraction</font></strong></big></p>
+
+<p><strong><font face="Arial">DWORD Fraction() const;</font></strong></p>
+
+<p><font face="Arial"><strong>Remarks</strong></font></p>
+
+<p><font face="Arial">Returns the fractional part of seconds which this Ntp time
+represents.</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="GetCurrentTime"></a><big><strong><font face="Arial">CNtpTime::GetCurrentTime</font></strong></big></p>
+
+<p><strong><font face="Arial">static CNtpTime GetCurrentTime();</font></strong></p>
+
+<p><font face="Arial"><strong>Remarks</strong></font></p>
+
+<p><font face="Arial">Constructs an NtpTime instance which represents the current UTC time
+of the machine.</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="MsToNtpFraction"></a><big><strong><font face="Arial">CNtpTime::MsToNtpFraction</font></strong></big></p>
+
+<p><font face="Arial"><strong>static DWORD MsToNtpFraction(WORD </strong><em>wMilliSeconds</em><strong>);</strong></font></p>
+
+<p><font face="Arial"><strong>Remarks</strong></font></p>
+
+<p><font face="Arial">Converts a count of milliseconds to an Ntp fractional.</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="NtpFractionToMs"></a><big><strong><font face="Arial">CNtpTime::NtpFractionToMs</font></strong></big></p>
+
+<p><font face="Arial"><strong>static WORD NtpFractionToMs(DWORD </strong><em>dwFraction</em><strong>);</strong></font></p>
+
+<p><font face="Arial"><strong>Remarks</strong></font></p>
+
+<p><font face="Arial">Converts an Ntp fractional to a count of milliseconds.</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="NtpFractionToSecond"></a><big><strong><font face="Arial">CNtpTime::NtpFractionToSecond</font></strong></big></p>
+
+<p><font face="Arial"><strong>static double NtpFractionToSecond(DWORD </strong><em>dwFraction</em><strong>);</strong></font></p>
+
+<p><font face="Arial"><strong>Remarks</strong></font></p>
+
+<p><font face="Arial">Converts an Ntp fractional to a fraction of a second as a floating
+point value.</font></p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><a name="m_nLeapIndicator"></a><big><strong><font face="Arial">NtpServerResponse::m_nLeapIndicator</font></strong></big></p>
+
+<p><strong><font face="Arial">int m_nLeapIndicator; </font></strong></p>
+
+<p><font face="Arial"><strong>Remarks</strong></font></p>
+
+<p><font face="Arial">This value will contain one of the following values:</font></p>
+
+<p><font face="Arial">0: no warning<br>
+1: last minute in day has 61 seconds<br>
+2: last minute has 59 seconds<br>
+3: clock not synchronized<br>
+</font></p>
+
+<p><a name="m_nStratum"></a><big><strong><font face="Arial">NtpServerResponse::m_nStratum</font></strong></big></p>
+
+<p><strong><font face="Arial">int m_nStratum; </font></strong></p>
+
+<p><font face="Arial"><strong>Remarks</strong></font></p>
+
+<p><font face="Arial">This value will contain the stratum level of the server. It will be
+one of the following values:</font></p>
+
+<p><font face="Arial">0: unspecified or unavailable<br>
+1: primary reference (e.g., radio clock)<br>
+2-15: secondary reference (via NTP or SNTP)<br>
+16-255: reserved<br>
+</font></p>
+
+<p><a name="m_nOriginateTime"></a><big><strong><font face="Arial">NtpServerResponse::m_nOriginateTime</font></strong></big></p>
+
+<p><strong><font face="Arial">CNtpTime m_OriginateTime; </font></strong></p>
+
+<p><strong><font face="Arial">Remarks</font></strong></p>
+
+<p><font face="Arial">This is the client time when the request was sent from the client to
+the SNTP server.</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="m_ReceiveTime"></a><big><strong><font face="Arial">NtpServerResponse::m_ReceiveTime</font></strong></big></p>
+
+<p><strong><font face="Arial">CNtpTime m_ReceiveTime; </font></strong></p>
+
+<p><strong><font face="Arial">Remarks</font></strong></p>
+
+<p><font face="Arial">This is the server time when the request was received by the SNTP
+server from the client.</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="m_TransmitTime"></a><big><strong><font face="Arial">NtpServerResponse::m_TransmitTime</font></strong></big></p>
+
+<p><strong><font face="Arial">CNtpTime m_TransmitTime; </font></strong></p>
+
+<p><strong><font face="Arial">Remarks</font></strong></p>
+
+<p><font face="Arial">This is the server time when the server sent the request back to the
+client.</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="m_DestinationTime"></a><big><strong><font face="Arial">NtpServerResponse::m_DestinationTime</font></strong></big></p>
+
+<p><strong><font face="Arial">CNtpTime m_DestinationTime; </font></strong></p>
+
+<p><strong><font face="Arial">Remarks</font></strong></p>
+
+<p><font face="Arial">This is the client time when the reply was received by the client.</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="m_RoundTripDelay"></a><big><strong><font face="Arial">NtpServerResponse::m_RoundTripDelay</font></strong></big></p>
+
+<p><strong><font face="Arial">double m_RoundTripDelay; </font></strong></p>
+
+<p><strong><font face="Arial">Remarks</font></strong></p>
+
+<p><font face="Arial">This is the round trip time in seconds for the Ntp request. It is
+calculated as:</font></p>
+
+<p><em><font face="Arial">m_RoundTripDelay = (m_DestinationTime - m_OriginateTime) -
+(m_ReceiveTime - m_TransmitTime);</font></em></p>
+
+<p>&nbsp;</p>
+
+<p><a name="m_LocalClockOffset"></a><big><strong><font face="Arial">NtpServerResponse::m_LocalClockOffset</font></strong></big></p>
+
+<p><strong><font face="Arial">double m_LocalClockOffset; </font></strong></p>
+
+<p><strong><font face="Arial">Remarks</font></strong></p>
+
+<p><font face="Arial">This is the local clock offset relative to the server. This is
+calculated as:</font></p>
+
+<p><em><font face="Arial">LocalClockOffset = ((m_ReceiveTime - m_OriginateTime) +
+(m_TransmitTime - m_DestinationTime)) / 2.</font></em></p>
+
+<p><font face="Arial">This value can then be used to set the local time by a simple call
+as follows:</font></p>
+
+<p><font face="Arial">CNtpTime newSynchronizedTime(CNtpTime::GetCurrentTime() +
+m_LocalClockOffset);<br>
+</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="CSNTPClient"></a><big><strong><font face="Arial">CSNTPClient::CSNTPClient</font></strong></big></p>
+
+<p><strong><font face="Arial">CSNTPClient();</font></strong></p>
+
+<p><font face="Arial"><strong>Remarks</strong></font></p>
+
+<p><font face="Arial">Standard C++ constructor which initializes the timeout to a default
+value of 5 seconds.</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="GetServerTime"></a><big><strong><font face="Arial">CSNTPClient::GetServerTime</font></strong></big></p>
+
+<p><font face="Arial"><strong>BOOL GetServerTime(LPCTSTR </strong><em>pszHostName</em><strong>,
+NtpServerResponse&amp; </strong><em>response</em><strong>, int </strong><em>nPort</em><strong>
+= 123);</strong></font></p>
+
+<p><strong><font face="Arial">Parameters</font></strong></p>
+
+<p><font face="Arial"><em>pszHostName</em> The network address of the SNTP server to
+connect to: a machine name such as &#147;ntp.maths.tcd.ie&#148;, or a dotted number such
+as &#147;128.56.22.8&#148; will both work.</font></p>
+
+<p><font face="Arial"><em>response</em> Upon a successful call to this function, this will
+contain all the information relating to the SNTP server.</font></p>
+
+<p><font face="Arial"><em>nPort</em> This is the port number of which to make a SNTP
+request. The default value is 123.</font></p>
+
+<p><strong><font face="Arial">Return Value</font></strong></p>
+
+<p><font face="Arial">If the function succeeds, the return value is nonzero. If the
+function fails, the return value is zero. To get extended error information, call <b>GetLastError</b>.
+</font></p>
+
+<p><font face="Arial"><strong>Remarks</strong></font></p>
+
+<p><font face="Arial">This performs the actual SNTP query and returns the relevant
+information back in the response structure. You are then free to decide if you want to set
+the local time using the values retrieved.</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="GetTimeout"></a><big><strong><font face="Arial">CSNTPClient::GetTimeout</font></strong></big></p>
+
+<p><strong><font face="Arial">DWORD GetTimeout() const;</font></strong></p>
+
+<p><strong><font face="Arial">Return Value</font></strong></p>
+
+<p><font face="Arial">The current timeout to use for socket calls which will block while
+doing the SNTP query.</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="SetTimeout"></a><big><strong><font face="Arial">CSNTPClient::SetTimeout</font></strong></big></p>
+
+<p><font face="Arial"><strong>void SetTimeout(DWORD </strong><em>dwTimeout</em><strong>);</strong></font></p>
+
+<p><strong><font face="Arial">Parameters</font></strong></p>
+
+<p><font face="Arial"><em>dwTimeout</em> The new timeout to use for socket calls which
+will block while doing the SNTP query.</font></p>
+
+<p>&nbsp;</p>
+
+<p><a name="SetClientTime"></a><big><strong><font face="Arial">CSNTPClient::SetClientTime</font></strong></big></p>
+
+<p><font face="Arial"><strong>BOOL SetClientTime(const CNtpTime&amp; </strong><em>NewTime</em><strong>);</strong></font></p>
+
+<p><strong><font face="Arial">Parameters</font></strong></p>
+
+<p><font face="Arial"><em>NewTime</em> An Ntp time representation of the time to be use to
+set the client time.</font></p>
+
+<p><strong><font face="Arial">Return Value</font></strong></p>
+
+<p><font face="Arial">If the function succeeds, the return value is nonzero. If the
+function fails, the return value is zero. To get extended error information, call <b>GetLastError</b>.
+</font></p>
+
+<p><font face="Arial"><strong>Remarks</strong></font></p>
+
+<p><font face="Arial">Given a time, this function will set the client system time.
+Internally it looks after setting privileges which is required on NT because of its
+security mode..</font></p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><font face="Arial"><big><a name="Enhancements"></a></big><font color="#000000" size="4"><strong>PLANNED
+ENHANCEMENTS</strong></font> </font>
+
+<ul>
+  <li><font color="#000000" size="3" face="Arial">If you have any other suggested
+    improvements, please let me know so that I can incorporate them into the next release.</font></li>
+</ul>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p><font face="Arial"><a name="Contact"></a><font color="#000000" size="4"><strong>CONTACTING
+THE AUTHOR</strong></font></font></p>
+
+<p><font color="#000000" size="3" face="Arial">PJ Naughter<br>
+Email: <a href="mailto:pjn@indigo..ie">pjn@indigo.ie</a><br>
+Web: <a href="http://indigo.ie/~pjn">http://indigo.ie/~pjn</a><br>
+16th November 1998</font></p>
+</body>
+</html>

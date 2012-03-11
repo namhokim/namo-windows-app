@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="ks_c_5601-1987"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="9.00"
+	Name="xml"
+	ProjectGUID="{C07E61BB-F264-46D8-A6A3-66FD9FA005A9}"
+	RootNamespace="xml"
+	Keyword="Win32Proj"
+	TargetFrameworkVersion="196613"
+	>
+	<Platforms>
+		<Platform
+			Name="Win32"
+		/>
+	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="1"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="C:\Program Files\Expat 2.0.1\Source\lib;"
+				PreprocessorDefinitions="_DEBUG;COMPILED_FROM_DSP;WIN32;_WINDOWS;_USRDLL"
+				MinimalRebuild="true"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="1"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="4"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				LinkIncremental="2"
+				GenerateManifest="false"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="1"
+			CharacterSet="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="2"
+				EnableIntrinsicFunctions="true"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				RuntimeLibrary="0"
+				EnableFunctionLevelLinking="true"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				LinkIncremental="1"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<Filter
+			Name="소스 파일"
+			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\libexpat.def"
+				>
+			</File>
+			<File
+				RelativePath=".\main.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\xmlparse.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\xmlrole.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						PreprocessorDefinitions="_DEBUG;COMPILED_FROM_DSP;WIN32;_WINDOWS;_USRDLL"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\xmltok.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\xmltok_impl.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\xmltok_ns.c"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="헤더 파일"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\amigaconfig.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\ascii.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\asciitab.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\expat.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\expat_external.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\iasciitab.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\internal.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\latin1tab.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\macconfig.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\nametab.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\utf8tab.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\watcomconfig.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\winconfig.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\xmlrole.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\xmltok.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\Program Files\Expat 2.0.1\Source\lib\xmltok_impl.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="리소스 파일"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
+			>
+		</Filter>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

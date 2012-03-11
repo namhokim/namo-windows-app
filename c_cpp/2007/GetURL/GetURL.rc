@@ -1,0 +1,173 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 한국어 resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_KOR)
+#ifdef _WIN32
+LANGUAGE LANG_KOREAN, SUBLANG_DEFAULT
+#pragma code_page(949)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG_MAIN DIALOGEX 0, 0, 316, 295
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | 
+    WS_CAPTION | WS_SYSMENU
+CAPTION "GetURL"
+MENU IDR_MENU_MAIN
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "종료(&X)",IDOK,259,7,50,14
+    LTEXT           "카테고리(&C) :",IDC_STATIC,27,54,48,8
+    LTEXT           "주소(&D) : ",IDC_STATIC,27,38,34,8
+    EDITTEXT        IDC_EDIT_KW,80,50,64,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_ADDR,69,34,181,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "키워드 도움말",IDC_BUTTON_KEYWORD,234,51,58,11
+    DEFPUSHBUTTON   "&Go",IDC_BUTTON_GO,258,33,34,13
+    GROUPBOX        "검색제약",IDC_STATIC,7,91,302,61
+    EDITTEXT        IDC_EDIT_LV,70,101,60,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_NUM,70,115,60,12,ES_AUTOHSCROLL
+    LTEXT           "레벨로 제한.",IDC_STATIC,132,105,46,8
+    LTEXT           "개로 제한.",IDC_STATIC,133,119,38,8
+    EDITTEXT        IDC_EDIT5,70,128,97,12,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_EXT,183,128,48,30,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           ".",IDC_STATIC,173,117,8,8
+    CONTROL         "",IDC_LIST_RES,"SysListView32",LVS_REPORT | 
+                    LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,168,302,120
+    CONTROL         "",IDC_PROGRESS_V,"msctls_progress32",NOT WS_VISIBLE | 
+                    WS_BORDER,26,13,223,8
+    CONTROL         "",IDC_LIST_DATA,"SysListView32",LVS_REPORT | 
+                    LVS_ALIGNLEFT | NOT WS_VISIBLE | WS_BORDER | WS_TABSTOP,
+                    136,157,173,27
+    LTEXT           "검색 깊이를",IDC_STATIC,20,105,43,8
+    LTEXT           "검색 개수를",IDC_STATIC,20,119,43,8
+    LTEXT           "파일 이름을",IDC_STATIC,20,132,43,8
+    CONTROL         "같은 도메인네에서만",IDC_CHECK_DOMAIN,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,194,103,90,10
+    CONTROL         "Google을 통해 다음 키워드로 : ",IDC_CHECK_GOOGLE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,27,71,123,10
+    EDITTEXT        IDC_EDIT_GOOGLE,152,67,140,14,ES_AUTOHSCROLL
+END
+
+IDD_DIALOG_KEYWORD DIALOGEX 0, 0, 186, 95
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "키워드 도움말"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "확인",IDOK,129,74,50,14
+    LTEXT           "키워드 정보\n\n이미지\t: .jpg, .gif, .bmp, .pcx, .wmf, .png\n문서\t: .doc, .hwp, txt, pdf\n음악\t: .mp3, .wma, .wav, .mid\n슬라이드 : .ppt\n압축\t: .zip, .rar, .arj, .lzh, .gz",
+                    IDC_STATIC,7,7,172,66,0,WS_EX_TRANSPARENT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_DIALOG_MAIN, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 288
+    END
+
+    IDD_DIALOG_KEYWORD, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON_INIT           ICON                    "init.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU_MAIN MENU 
+BEGIN
+    POPUP "파일(&F)"
+    BEGIN
+        MENUITEM "저장(&S)",                    110
+        MENUITEM "다른 이름으로 저장(&A)",      ID_FILE_SAVEAS
+        MENUITEM SEPARATOR
+        MENUITEM "끝내기(&X)",                  ID_FILE_EXIT
+    END
+END
+
+#endif    // 한국어 resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

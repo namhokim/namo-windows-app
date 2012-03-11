@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StringCchPrintfTest", "StringCchPrintfTest.vcproj", "{169D178D-636D-4650-BD62-FAE0C757853B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{169D178D-636D-4650-BD62-FAE0C757853B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{169D178D-636D-4650-BD62-FAE0C757853B}.Debug|Win32.Build.0 = Debug|Win32
+		{169D178D-636D-4650-BD62-FAE0C757853B}.Release|Win32.ActiveCfg = Release|Win32
+		{169D178D-636D-4650-BD62-FAE0C757853B}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

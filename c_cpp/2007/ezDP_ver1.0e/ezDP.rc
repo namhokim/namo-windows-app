@@ -1,0 +1,229 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 한국어 resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_KOR)
+#ifdef _WIN32
+LANGUAGE LANG_KOREAN, SUBLANG_DEFAULT
+#pragma code_page(949)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG1 DIALOGEX 0, 0, 325, 110
+STYLE DS_LOCALEDIT | DS_SETFONT | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | 
+    WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_ACCEPTFILES | WS_EX_STATICEDGE
+CAPTION "ezDP(easy Downloading Processor)"
+MENU IDR_MENU2
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    RTEXT           "",IDC_STATUS,112,66,194,15
+    LTEXT           "filename :",IDC_STATIC,7,26,32,8
+    LTEXT           "",IDC_STATICFI,51,27,257,26
+    LTEXT           "Target Folder :",IDC_STATIC,7,56,49,8
+    LTEXT           "",IDC_STATICTA,67,57,250,8
+    PUSHBUTTON      "다운로드 시작(&D)",IDC_DNBTN,164,7,87,14,WS_DISABLED
+    PUSHBUTTON      "▼",IDC_BUTTON_EXT,295,89,22,14
+    PUSHBUTTON      "종료(&X)",IDC_EXIT,267,7,50,14
+END
+
+IDD_DIALOG2 DIALOGEX 0, 0, 186, 95
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "HongDa ver.1.0 정보"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "확인",IDOK,121,65,50,14
+    LTEXT           "ezDP(Easy Downloading Processor) ver1.0e",IDC_STATIC,18,
+                    15,151,13
+    LTEXT           "Programmer : 月白-namo",IDC_STATIC,80,47,90,8
+    LTEXT           "Release Date : 2003/10/8",IDC_STATIC,79,38,84,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_DIALOG1, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 317
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 103
+    END
+
+    IDD_DIALOG2, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON_INIT           ICON                    "init.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU2 MENU 
+BEGIN
+    POPUP "파일(&F)"
+    BEGIN
+        MENUITEM "새로 만들기(&N)",             ID_FILENEW
+        MENUITEM "열기(&O)",                    ID_FILEOPEN
+        MENUITEM "저장(&S)",                    ID_FILESAVE
+        MENUITEM "다른 이름으로 저장(&A)",      ID_FILESAVEAS
+        MENUITEM SEPARATOR
+        MENUITEM "끝내기(&X)",                  ID_FILE_QUIT
+    END
+    POPUP "보기(&V)"
+    BEGIN
+        POPUP "사용자 인터페이스"
+        BEGIN
+            MENUITEM "한국어",                      ID_USERINTERFACE_KOREAN
+            , CHECKED
+            MENUITEM "영어",                        ID_USERINTERFACE_ENGLISH
+        END
+    END
+    POPUP "동작(&A)"
+    BEGIN
+        MENUITEM "저장받을 폴더 지정(&S)",      ID_ACTION_SETDIRECTORYSAVEDFILES
+
+        MENUITEM "현재 경로로 저장받기",        ID_ACTION_SETDIRECTORYCF
+        MENUITEM SEPARATOR
+        MENUITEM "다운로드 시작(&D)",           ID_ACTION_DOWNLOADNOW
+    END
+    POPUP "도움말(&H)"
+    BEGIN
+        MENUITEM "eZDP 정보",                   ID_HELP_INFO
+    END
+END
+
+#endif    // 한국어 resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// 영어(미국) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU1 MENU 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New",                        ID_FILENEW
+        MENUITEM "&Open",                       ID_FILEOPEN
+        MENUITEM "&Save",                       ID_FILESAVE
+        MENUITEM "Save &As",                    ID_FILESAVEAS
+        MENUITEM SEPARATOR
+        MENUITEM "&Exit",                       ID_FILE_QUIT
+    END
+    POPUP "&View"
+    BEGIN
+        POPUP "User Interface"
+        BEGIN
+            MENUITEM "Korean",                      ID_USERINTERFACE_KOREAN
+            MENUITEM "English",                     ID_USERINTERFACE_ENGLISH
+            , CHECKED
+        END
+    END
+    POPUP "&Action"
+    BEGIN
+        MENUITEM "&Set Directory for saving files", 
+                                                ID_ACTION_SETDIRECTORYSAVEDFILES
+
+        MENUITEM "Set Directory by Current Folder", ID_ACTION_SETDIRECTORYCF
+        MENUITEM SEPARATOR
+        MENUITEM "&Download Now !!!",           ID_ACTION_DOWNLOADNOW
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "eZDP Info",                   ID_HELP_INFO
+    END
+END
+
+#endif    // 영어(미국) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,1 @@
+void stdinEntry(char * id);

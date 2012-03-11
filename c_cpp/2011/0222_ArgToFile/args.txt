@@ -1,0 +1,2 @@
+arguments : 1
+argv[0] : d:\Archive\3_°³ÇÁ\_2011\0222_ArgToFile\Debug\ArgToFile.exe

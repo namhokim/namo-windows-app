@@ -1,0 +1,2 @@
+void InstallService();
+void UnInstallService();

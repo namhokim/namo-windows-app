@@ -1,0 +1,50 @@
+#include <winver.h>
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_MAINICO             ICON                    "221.ico"
+/////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,0
+ PRODUCTVERSION 1,0,0,0
+ FILEFLAGSMASK 0x17L
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "041b04b0"
+        BEGIN
+            VALUE "Comments", "Sets the state of the display. The display is being shut off."
+            VALUE "CompanyName", "eraser"
+            VALUE "FileDescription", "Monitor Power Off Application"
+            VALUE "FileVersion", "1, 0, 0, 0"
+            VALUE "InternalName", "MONITOR POWER OFF"
+            VALUE "LegalCopyright", "Copyright © 2004"
+            VALUE "OriginalFilename", "monitoroff.exe"
+            VALUE "ProductName", "MONITORPOWER Application"
+            VALUE "ProductVersion", "1, 0, 0, 0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x41b, 1200
+    END
+END

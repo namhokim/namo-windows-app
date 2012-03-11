@@ -1,0 +1,48 @@
+int getSuc(){
+	_STRING reqObject(_T("/ScanBox/showListServlet?filename=/hdd/ts/sdk/dsdk/xlet/285475081/home/Scan_Box/신애"));
+	HttpRequest hr;
+	hr.open("10.15.102.17", 8080);
+	std::string resText;
+	//text = hr.requestText(reqObject, "POST");
+	//const char* str = text.c_str();
+	//std::cout << str << std::endl;
+
+	resText = hr.requestText(reqObject, _T("POST"));
+	char *token;
+	const char delimiters[] = "#"; 
+	const char* str = resText.c_str();
+	token = strtok(const_cast<char*>(str), delimiters);
+	std::cout << token << std::endl;
+	int i=0;
+	bool option = false;
+	while(!option){
+		i = i+1;
+		token = strtok (NULL, delimiters);
+		trim(token);
+		if(token==NULL){
+			std::cout <<i<<": "<< "error1" << std::endl;
+			break;
+		}else{
+			ostringstream ostr;
+			string str2;
+			std::cout <<i<<": "<< token << std::endl;
+			std::string abc = token;
+			std::string abc1;
+			std::string abc2;
+			abc1 = "/ScanBox/down?filepath=/hdd/ts/sdk/dsdk/xlet/285475081/home/Scan_Box/신애/&imageName="+abc;		
+			ostr << i;
+			str2 = abc;//ostr.str()+".txt";
+			abc2 = "c:\\fileTest\\"+abc;
+			//std::cout <<abc<<std::endl;
+			//_STRING reqObject(_T(abc));
+			_mkdir("c:\\fileTest");
+			bool res = hr.requestSaveToFile(abc1,abc2);
+			std::string errorMsg;
+			if(!res) errorMsg = hr.getLastErrorMsg();
+		}	
+	}
+	//_mkdir("c:\\fileTest");
+	//hr.requestSaveToFile("/ScanBox/down?filepath=/hdd/ts/sdk/dsdk/xlet/285475081/home/Scan_Box/신애/&imageName=20090102155228750_C_1_A4.tif","C:\\fileTest\\test22.tif");
+	hr.close();
+	return i;
+}

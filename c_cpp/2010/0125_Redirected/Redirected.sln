@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Redirected", "Redirected.vcproj", "{76FDF256-D359-41FE-93B8-958B3BD5DA84}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Child", "..\Child\Child.vcproj", "{55D96839-662F-40B3-830B-C1C8758D11E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{76FDF256-D359-41FE-93B8-958B3BD5DA84}.Debug|Win32.ActiveCfg = Debug|Win32
+		{76FDF256-D359-41FE-93B8-958B3BD5DA84}.Debug|Win32.Build.0 = Debug|Win32
+		{76FDF256-D359-41FE-93B8-958B3BD5DA84}.Release|Win32.ActiveCfg = Release|Win32
+		{76FDF256-D359-41FE-93B8-958B3BD5DA84}.Release|Win32.Build.0 = Release|Win32
+		{55D96839-662F-40B3-830B-C1C8758D11E4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{55D96839-662F-40B3-830B-C1C8758D11E4}.Debug|Win32.Build.0 = Debug|Win32
+		{55D96839-662F-40B3-830B-C1C8758D11E4}.Release|Win32.ActiveCfg = Release|Win32
+		{55D96839-662F-40B3-830B-C1C8758D11E4}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
