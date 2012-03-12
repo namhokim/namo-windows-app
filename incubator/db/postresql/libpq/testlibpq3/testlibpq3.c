@@ -30,8 +30,14 @@
 #include <libpq-fe.h>
 
 /* for ntohl/htonl */
+#ifdef WIN32
+typedef unsigned __int32 uint32_t;
+#include <Winsock2.h>
+#pragma comment(lib, "Ws2_32.lib")
+#else
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#endif
 
 static void
 exit_nicely(PGconn *conn)
