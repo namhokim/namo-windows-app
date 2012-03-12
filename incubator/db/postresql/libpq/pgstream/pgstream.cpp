@@ -16,6 +16,8 @@
 #include <string.h>
 #include <ctype.h>
 
+#pragma warning( push )
+#pragma warning( disable : 4996 )
 
 //static
 const char* sql_bind_param::m_type_names[] = {
@@ -28,6 +30,8 @@ const char* sql_bind_param::m_type_names[] = {
   "text",
   "varchar"  
 };
+
+const int PQgetisnullTrue = 1;
 
 //static
 int sql_bind_param::m_oids[] = {
@@ -521,7 +525,11 @@ pg_stream::operator<<(double d)
 {
   check_binds();
   char buf[100];
+#ifdef WIN32
+  sprintf_s(buf, sizeof(buf), "%g", d);
+#else
   snprintf(buf, sizeof(buf), "%g", d);
+#endif
   m_vars[m_argpos].set_type(sql_bind_param::oid_numeric);
   replace_placeholder(m_argpos, buf, strlen(buf));
   next_bind();
@@ -687,10 +695,10 @@ pg_stream::execute()
 
   if (!m_inline_params) {
     unsigned int sz=m_vars.size();
-    Oid param_types[sz];
-    const char* param_values[sz];
-    int param_lengths[sz];
-    int param_formats[sz];
+    std::vector<Oid> param_types(sz);
+    std::vector<const char*> param_values(sz);
+    std::vector<int> param_lengths(sz);
+    std::vector<int> param_formats(sz);
     std::vector<sql_bind_param>::iterator it = m_vars.begin();
     unsigned int i=0;
     for (;it != m_vars.end(); ++it, ++i) {
@@ -722,15 +730,15 @@ pg_stream::execute()
     }
     if (m_prepare_name.empty()) {
       fprintf(stderr, "PQexecParams query_buf=%s\n", m_query_buf);
-      m_pg_res = PQexecParams(m_db.conn(), m_query_buf, sz, param_types,
-			     param_values, param_lengths, param_formats,
+      m_pg_res = PQexecParams(m_db.conn(), m_query_buf, sz, &param_types[0],
+			     &param_values[0], &param_lengths[0], &param_formats[0],
 			     0);	// output in text format
       //      fprintf(stderr,"execute: %s\n", m_query_buf);
     }
     else {
       m_pg_res = PQexecPrepared(m_db.conn(), m_prepare_name.c_str(),
-			       sz, param_values, param_lengths,
-			       param_formats,
+			       sz, &param_values[0], &param_lengths[0],
+			       &param_formats[0],
 			       0);	// output in text format
     }
   }
@@ -823,7 +831,7 @@ pg_stream::operator>>(pg_bytea& b)
   check_eof();
   if (PQftype(m_pg_res, m_col_number) != 17)
     throw pg_excpt("pgstream", "Type mismatch: bytea type expected");
-  m_val_null = PQgetisnull(m_pg_res, m_row_number, m_col_number);
+  m_val_null = (PQgetisnull(m_pg_res, m_row_number, m_col_number) == PQgetisnullTrue);
   if (!m_val_null) {
     b.m_data_len=PQgetlength(m_pg_res, m_row_number, m_col_number);
     size_t to_len;
@@ -844,7 +852,7 @@ pg_stream&
 pg_stream::operator>>(short& s)
 {
   check_eof();
-  m_val_null = PQgetisnull(m_pg_res, m_row_number, m_col_number);
+  m_val_null = (PQgetisnull(m_pg_res, m_row_number, m_col_number) == PQgetisnullTrue);
   if (!m_val_null)
     // check for overflow??
     s=atoi(PQgetvalue(m_pg_res, m_row_number, m_col_number));
@@ -858,7 +866,7 @@ pg_stream&
 pg_stream::operator>>(unsigned short& s)
 {
   check_eof();
-  m_val_null = PQgetisnull(m_pg_res, m_row_number, m_col_number);
+  m_val_null = (PQgetisnull(m_pg_res, m_row_number, m_col_number) == PQgetisnullTrue);
   if (!m_val_null)
     // check for overflow??
     s=atoi(PQgetvalue(m_pg_res, m_row_number, m_col_number));
@@ -872,7 +880,7 @@ pg_stream&
 pg_stream::operator>>(int& i)
 {
   check_eof();
-  m_val_null = PQgetisnull(m_pg_res, m_row_number, m_col_number);
+  m_val_null = (PQgetisnull(m_pg_res, m_row_number, m_col_number) == PQgetisnullTrue);
   if (!m_val_null)
     i=atoi(PQgetvalue(m_pg_res, m_row_number, m_col_number));
   else
@@ -887,7 +895,7 @@ pg_stream::operator>>(unsigned int& i)
   check_eof();
   unsigned long ul=strtoul(PQgetvalue(m_pg_res, m_row_number, m_col_number),
 			   NULL, 10);
-  m_val_null = PQgetisnull(m_pg_res, m_row_number, m_col_number);
+  m_val_null = (PQgetisnull(m_pg_res, m_row_number, m_col_number) == PQgetisnullTrue);
   if (!m_val_null)
     i=(unsigned int)ul;
   else
@@ -900,7 +908,7 @@ pg_stream&
 pg_stream::operator>>(double& d)
 {
   check_eof();
-  m_val_null = PQgetisnull(m_pg_res, m_row_number, m_col_number);
+  m_val_null = (PQgetisnull(m_pg_res, m_row_number, m_col_number) == PQgetisnullTrue);
   if (!m_val_null)
     d=atof(PQgetvalue(m_pg_res, m_row_number, m_col_number));
   else
@@ -913,7 +921,7 @@ pg_stream&
 pg_stream::operator>>(bool& b)
 {
   check_eof();
-  m_val_null = PQgetisnull(m_pg_res, m_row_number, m_col_number);
+  m_val_null = (PQgetisnull(m_pg_res, m_row_number, m_col_number) == PQgetisnullTrue);
   if (!m_val_null) {
     const char* p=PQgetvalue(m_pg_res, m_row_number, m_col_number);
     if (p && *p=='t')
@@ -931,7 +939,7 @@ pg_stream&
 pg_stream::operator>>(char* p)
 {
   check_eof();
-  m_val_null = PQgetisnull(m_pg_res, m_row_number, m_col_number);
+  m_val_null = (PQgetisnull(m_pg_res, m_row_number, m_col_number) == PQgetisnullTrue);
   if (m_val_null)
     *p='\0';
   else {
@@ -948,7 +956,7 @@ pg_stream::operator>>(std::string& s)
 {
   check_eof();
   s=PQgetvalue(m_pg_res, m_row_number, m_col_number);
-  m_val_null = PQgetisnull(m_pg_res, m_row_number, m_col_number);
+  m_val_null = (PQgetisnull(m_pg_res, m_row_number, m_col_number) == PQgetisnullTrue);
   next_result();
   return *this;
 }
@@ -1225,3 +1233,4 @@ int main(int argc, char** argv)
 }
 #endif // STANDALONE
 
+#pragma warning( pop )
