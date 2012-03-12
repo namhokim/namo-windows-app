@@ -25,7 +25,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#ifdef WIN32
+#include <Winsock2.h>
+#pragma comment(lib, "Ws2_32.lib")
+// refs. http://msdn.microsoft.com/en-us/library/51sah927(v=vs.90).aspx
+// Your string message can be, at most, 94 characters long.
+#define ERRMSGLEN	94	// user_string
+#else
 #include <sys/time.h>
+#endif
 #include <libpq-fe.h>
 static void
 exit_nicely(PGconn *conn)
@@ -92,7 +100,13 @@ main(int argc, char **argv)
 		FD_SET(sock, &input_mask);
 		if (select(sock + 1, &input_mask, NULL, NULL, NULL) < 0)
 		{
+#ifdef WIN32
+			char buf[_ERRMSGLEN_];
+			strerror_s(buf, ERRMSGLEN, errno);
+			fprintf(stderr, "select() failed: %s\n", buf);
+#else
 			fprintf(stderr, "select() failed: %s\n", strerror(errno));
+#endif
 			exit_nicely(conn);
 		}
 		/* Now check for input */
