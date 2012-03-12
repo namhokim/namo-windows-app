@@ -1,7 +1,37 @@
 #include <iostream>
+#include <Windows.h>
 #include "pgstream.h"
 
+#pragma comment(lib, "ws2_32.lib")
+
+int winsock_init();
+void repeat();
+
 int main() {
+	//winsock_init();
+	unsigned int c = 0;
+	while(1) {
+		std::cout << ++c << ">\n";
+		if(c%1000==0) Sleep(10000);
+		repeat();
+	}
+
+	return 0;
+}
+
+int winsock_init()
+{
+	WORD wVersionRequested;
+	WSADATA wsaData;
+
+	/* Use the MAKEWORD(lowbyte, highbyte) macro declared in Windef.h */
+    wVersionRequested = MAKEWORD(2, 2);
+
+	return WSAStartup(wVersionRequested, &wsaData);
+}
+
+void repeat()
+{
 	pg_cnx cnx;
 	std::string subject;
 	try {
@@ -24,6 +54,4 @@ int main() {
 			std::cerr << "(ERR=" << p.errcode() << ")" << std::endl;
 		}
 	}
-
-	return 0;
 }
