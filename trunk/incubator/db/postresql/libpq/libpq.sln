@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testlibpq2", "testlibpq2\te
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testlibpq3", "testlibpq3\testlibpq3.vcproj", "{7752B65E-81FD-461D-9AE7-898547333DE1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pgstream", "pgstream\pgstream.vcproj", "{F6393071-95CF-46E7-A81A-27A4EC6EF2FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -25,6 +27,10 @@ Global
 		{7752B65E-81FD-461D-9AE7-898547333DE1}.Debug|Win32.Build.0 = Debug|Win32
 		{7752B65E-81FD-461D-9AE7-898547333DE1}.Release|Win32.ActiveCfg = Release|Win32
 		{7752B65E-81FD-461D-9AE7-898547333DE1}.Release|Win32.Build.0 = Release|Win32
+		{F6393071-95CF-46E7-A81A-27A4EC6EF2FD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F6393071-95CF-46E7-A81A-27A4EC6EF2FD}.Debug|Win32.Build.0 = Debug|Win32
+		{F6393071-95CF-46E7-A81A-27A4EC6EF2FD}.Release|Win32.ActiveCfg = Release|Win32
+		{F6393071-95CF-46E7-A81A-27A4EC6EF2FD}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
