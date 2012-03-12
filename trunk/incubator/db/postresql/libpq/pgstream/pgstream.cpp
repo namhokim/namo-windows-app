@@ -16,8 +16,10 @@
 #include <string.h>
 #include <ctype.h>
 
+#ifdef WIN32
 #pragma warning( push )
 #pragma warning( disable : 4996 )
+#endif
 
 //static
 const char* sql_bind_param::m_type_names[] = {
@@ -1233,4 +1235,6 @@ int main(int argc, char** argv)
 }
 #endif // STANDALONE
 
+#ifdef WIN32
 #pragma warning( pop )
+#endif
