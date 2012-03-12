@@ -101,7 +101,7 @@ main(int argc, char **argv)
 		if (select(sock + 1, &input_mask, NULL, NULL, NULL) < 0)
 		{
 #ifdef WIN32
-			char buf[_ERRMSGLEN_];
+			char buf[ERRMSGLEN];
 			strerror_s(buf, ERRMSGLEN, errno);
 			fprintf(stderr, "select() failed: %s\n", buf);
 #else
