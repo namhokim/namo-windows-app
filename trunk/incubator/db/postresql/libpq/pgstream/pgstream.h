@@ -1,6 +1,6 @@
-/*
+ï»¿/*
   pgstream.h: include file for the pgstream library.
-  Copyright (c) 2004, Daniel Vérité.
+  Copyright (c) 2004, Daniel VÃ©ritÃ©
   See COPYING file for license terms.
   http://www.manitou-mail.org/pgstream
 */
