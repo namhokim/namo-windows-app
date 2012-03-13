@@ -1,0 +1,1 @@
+IF NOT EXIST "$(TargetDir)libpq.dll" COPY "$(InputDir)dll\*.dll" "$(TargetDir)"
