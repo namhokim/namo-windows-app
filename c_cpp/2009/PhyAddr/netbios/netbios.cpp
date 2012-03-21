@@ -64,6 +64,9 @@ bool GetAdapterInfo(int adapter_num, string &mac_addr)
 int main()
 {
 	// Get adapter list
+	// refs. http://msdn.microsoft.com/en-us/library/bb870898(v=vs.85).aspx
+	//  Netbios is not supported on Windows Vista, Windows Server 2008,
+	// and subsequent versions of the operating system]
 	LANA_ENUM AdapterList;
 	NCB Ncb;
 	memset(&Ncb, 0, sizeof(NCB));
