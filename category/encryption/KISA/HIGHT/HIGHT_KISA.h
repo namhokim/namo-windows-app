@@ -17,6 +17,8 @@
 #define CT_LITTLE_ENDIAN
 
 /*************** Constants ************************************************/
+#define KISA_HIGHT_USER_KEY_LEN		16
+#define KISA_HIGHT_ROUND_KEY_LEN	136
 
 /*************** Macros ***************************************************/
 ////
@@ -61,6 +63,11 @@
 #define WORD    unsigned short int  //  2-byte data type
 #define DWORD   unsigned int        //  4-byte data type
 /*************** Prototypes ***********************************************/
+
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 void    HIGHT_KeySched(
             BYTE    *UserKey,       
             DWORD   UserKeyLen,     
@@ -73,6 +80,8 @@ void    HIGHT_Decrypt(
             BYTE    *RoundKey,      
             BYTE    *Data);         
                                     
-
+#ifdef  __cplusplus
+}       /* end of extern "C" */
+#endif
 
 #endif  /* _HIGHT_H_ */
