@@ -7,7 +7,7 @@ void enc(
 			 BYTE    *Data)
 {
 	BYTE szRoundKey[KISA_HIGHT_ROUND_KEY_LEN] = {0};
-	HIGHT_KeySched(UserKey, 0, szRoundKey);
+	HIGHT_KeySched(UserKey, szRoundKey);
 	HIGHT_Encrypt(szRoundKey, Data);
 }
 
@@ -16,7 +16,7 @@ void enc_dec(
 			 BYTE    *Data)
 {
 	BYTE szRoundKey[KISA_HIGHT_ROUND_KEY_LEN] = {0};
-	HIGHT_KeySched(UserKey, 0, szRoundKey);
+	HIGHT_KeySched(UserKey, szRoundKey);
 	HIGHT_Encrypt(szRoundKey, Data);
 	HIGHT_Decrypt(szRoundKey, Data);
 }

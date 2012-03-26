@@ -70,7 +70,6 @@ extern "C" {
 
 void    HIGHT_KeySched(
             BYTE    *UserKey,       
-            DWORD   UserKeyLen,     
             BYTE    *RoundKey);     
 void    HIGHT_Encrypt(
             BYTE    *RoundKey,      
