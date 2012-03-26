@@ -108,7 +108,6 @@ extern "C" {
 
 void    HIGHT_KeySched(
             BYTE    *UserKey,       
-            DWORD   UserKeyLen,     
             BYTE    *RoundKey)      
 {
     int     i, j;
