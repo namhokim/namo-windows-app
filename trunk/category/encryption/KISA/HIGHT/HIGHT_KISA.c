@@ -102,6 +102,10 @@ static BYTE HIGHT_F1[256] = {
 
 /*************** Function *************************************************/
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 void    HIGHT_KeySched(
             BYTE    *UserKey,       
             DWORD   UserKeyLen,     
@@ -267,5 +271,9 @@ void    HIGHT_Decrypt(
     Data[4] = (BYTE) (XX[4] - RoundKey[2]);
     Data[6] = (BYTE) (XX[6] ^ RoundKey[3]);
 }
+
+#ifdef  __cplusplus
+}       /* end of extern "C" */
+#endif
 
 /*************** END OF FILE **********************************************/
