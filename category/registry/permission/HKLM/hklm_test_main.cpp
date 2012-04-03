@@ -11,6 +11,7 @@ int main()
 	OpenTest(hKey, lsSubkey);	// 2: ERROR_FILE_NOT_FOUND (키가 없기 때문에 발생)
 								// 6: ERROR_INVALID_HANDLE (키를 열지 못했기 때문에 발생)
 	CreateTest(hKey, lsSubkey);	// 5: ERROR_SUCCESS (키가 없기 때문에, 생성->권한부족)
+	OpenTest(hKey, lsSubkey);
 	DeleteTest(hKey, lsSubkey);	// 2: ERROR_FILE_NOT_FOUND (키가 없기 때문에 발생)
 	system("pause");			// 관리자 권한창이 떴다가 사라짐
 	return 0;
