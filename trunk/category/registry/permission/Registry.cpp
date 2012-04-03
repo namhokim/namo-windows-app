@@ -10,7 +10,7 @@ void OpenTest(HKEY hKey, LPCTSTR lsSubkey)
 
 	// RegOpenKeyEx function
 	// refs. http://msdn.microsoft.com/en-us/library/windows/desktop/ms724897(v=vs.85).aspx
-	lRet = RegOpenKeyEx(hKey, lsSubkey, 0, KEY_QUERY_VALUE, &hkResult);
+	lRet = RegOpenKeyEx(hKey, lsSubkey, 0, KEY_QUERY_VALUE | KEY_WOW64_32KEY, &hkResult);
 	printf("OpenTest - RegOpenKeyEx : %u\n", lRet);
 	lRet = RegQueryValueEx(hkResult, lpValueName, NULL, &type, NULL, &cbData);
 	printf("OpenTest- RegQueryValueEx : %u\n", lRet);
@@ -26,8 +26,8 @@ void CreateTest(HKEY hKey, LPCTSTR lsSubkey)
 	// RegCreateKeyEx function
 	// refs. http://msdn.microsoft.com/en-us/library/windows/desktop/ms724844(v=vs.85).aspx
 	lRet = RegCreateKeyEx(hKey, lsSubkey, 0, NULL, REG_OPTION_NON_VOLATILE,
-		KEY_READ, NULL, &hkResult, &dwDisposition);
-
+		KEY_READ | KEY_WOW64_32KEY , NULL, &hkResult, &dwDisposition);
+	// 87(KEY_WOW64_32KEY | KEY_WOW64_64KEY): 매개 변수가 틀립니다. 
 	printf("CreateTest : %u\n", lRet);
 	if(ERROR_SUCCESS==lRet) RegCloseKey(hkResult);
 
@@ -39,6 +39,6 @@ void DeleteTest(HKEY hKey, LPCTSTR lsSubkey)
 
 	// RegDeleteKeyEx function
 	// refs. http://msdn.microsoft.com/en-us/library/windows/desktop/ms724847(v=vs.85).aspx
-	lRet = RegDeleteKeyEx(hKey, lsSubkey, 0, 0);
+	lRet = RegDeleteKeyEx(hKey, lsSubkey, KEY_WOW64_32KEY, 0);
 	printf("DeteteTest : %u\n", lRet);
 }
