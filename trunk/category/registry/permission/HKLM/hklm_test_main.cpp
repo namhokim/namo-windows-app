@@ -6,7 +6,7 @@
 int main()
 {
 	HKEY hKey = HKEY_LOCAL_MACHINE;
-	LPCTSTR lsSubkey = TEXT("SOFTWARE\\SINDOH\\TEST");
+	LPCTSTR lsSubkey = TEXT("SOFTWARE\\COMPANY\\TEST");
 
 	OpenTest(hKey, lsSubkey);	// 2: ERROR_FILE_NOT_FOUND (키가 없기 때문에 발생)
 								// 6: ERROR_INVALID_HANDLE (키를 열지 못했기 때문에 발생)
