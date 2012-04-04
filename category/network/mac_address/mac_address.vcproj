@@ -175,7 +175,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\pyhAddr.cpp"
+				RelativePath=".\phyAddr.cpp"
 				>
 			</File>
 		</Filter>
@@ -185,7 +185,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\pyhAddr.h"
+				RelativePath=".\phyAddr.h"
 				>
 			</File>
 		</Filter>
