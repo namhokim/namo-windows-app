@@ -13,6 +13,8 @@
 
 namespace Network
 {
+	const size_t buf_size = 5;
+
 	DWORD GetBestInterfaceIdx()
 	{
 		IPAddr in;
@@ -80,16 +82,16 @@ namespace Network
 	{
 		std::vector<BYTE> mac;
 		if(GetBestInterfaceAddress(mac)) {
-			char buf[5];
+			char buf[buf_size];
 			std::vector<BYTE>::size_type pos, size=mac.size();
 			for (pos=0; pos<size; ++pos) {
 				BYTE b = mac[pos];
 				if (pos == (size - 1)) {
-					StringCchPrintfA(buf, 5, "%.2X", (int) b );
+					StringCchPrintfA(buf, buf_size, "%.2X", (int) b );
 					out.append(buf);
 				}
 				else {
-					StringCchPrintfA(buf, 5, "%.2X-", (int) b );
+					StringCchPrintfA(buf, buf_size, "%.2X-", (int) b );
 					out.append(buf);
 				}
 			}
@@ -103,16 +105,16 @@ namespace Network
 	{
 		std::vector<BYTE> mac;
 		if(GetBestInterfaceAddress(mac)) {
-			wchar_t buf[5];
+			wchar_t buf[buf_size];
 			std::vector<BYTE>::size_type pos, size=mac.size();
 			for (pos=0; pos<size; ++pos) {
 				BYTE b = mac[pos];
 				if (pos == (size - 1)) {
-					StringCchPrintfW(buf, 5, L"%.2X", (int) b );
+					StringCchPrintfW(buf, buf_size, L"%.2X", (int) b );
 					out.append(buf);
 				}
 				else {
-					StringCchPrintfW(buf, 5, L"%.2X-", (int) b );
+					StringCchPrintfW(buf, buf_size, L"%.2X-", (int) b );
 					out.append(buf);
 				}
 			}
