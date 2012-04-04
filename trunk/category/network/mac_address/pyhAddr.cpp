@@ -74,25 +74,6 @@ namespace Network
 		} else {
 			return false;
 		}
-
-		/*if(isSuccess) {
-			char buf[5];
-			std::vector<BYTE>::size_type pos;
-			for (pos=0; pos<mac.size(); ++pos) {
-				BYTE b = mac[pos];
-				if (pos == (mac.size() - 1)) {
-					sprintf(buf, "%.2X", (int) b );
-					out.append(buf);
-				}
-				else {
-					sprintf(buf, "%.2X-", (int) b );
-					out.append(buf);
-				}
-			}
-			return true;
-		} else {
-			return false;
-		}*/
 	}
 
 	bool GetBasicMacAddress(std::string& out)
