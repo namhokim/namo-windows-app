@@ -5,7 +5,8 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #include <tchar.h>		// for _tcscat_s, _tcschr, _tcslen
-#include <Iphlpapi.h>	// Requirements: Windows 2000 Professional
+//#include <IPExport.h>	// for IPAddr (Iphlpapi.h also included)
+#include <Iphlpapi.h>	// for GetBestInterface, GetAdaptersInfo, PIP_ADAPTER_INFO
 
 #pragma comment(lib, "Iphlpapi.lib")
 
