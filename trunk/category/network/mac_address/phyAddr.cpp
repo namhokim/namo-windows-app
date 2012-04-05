@@ -1,4 +1,4 @@
-#include "phyAddr.h"
+ï»¿#include "phyAddr.h"
 
 #include <vector>
 
@@ -15,11 +15,11 @@ namespace Network
 {
 	const size_t buf_size = 5;
 
-	// ÇÔ¼ö Àü¹æ ¼±¾ğ
+	// í•¨ìˆ˜ ì „ë°© ì„ ì–¸
 	DWORD GetBestInterfaceIdx();
 	BOOL SetMacAddressByIndex(const DWORD dwIf, std::vector<BYTE>& out);
 
-	// ¿ÜºÎ ³ëÃâµÈ ÇÔ¼ö ±¸Çö
+	// ì™¸ë¶€ ë…¸ì¶œëœ í•¨ìˆ˜ êµ¬í˜„
 	bool GetBestInterfaceAddress(std::vector<BYTE>& out)
 	{
 		DWORD dwIf = Network::GetBestInterfaceIdx();
@@ -35,7 +35,7 @@ namespace Network
 	}
 
 
-	// Àü¹æ ¼±¾ğµÈ ÇÔ¼ö ±¸Çö
+	// ì „ë°© ì„ ì–¸ëœ í•¨ìˆ˜ êµ¬í˜„
 	DWORD GetBestInterfaceIdx()
 	{
 		IPAddr in;
@@ -54,15 +54,15 @@ namespace Network
 		// GetAdaptersInfo function
 		// refs. http://msdn.microsoft.com/en-us/library/windows/desktop/aa365917(v=vs.85).aspx
 
-		// µ¿Àû ÇÒ´ç Å©±â ±¸ÇÔ(1Â÷ ½Ãµµ)
-		ULONG ulOutBufLen = 0;	// ERROR_BUFFER_OVERFLOW À¯µµ
+		// ë™ì  í• ë‹¹ í¬ê¸° êµ¬í•¨(1ì°¨ ì‹œë„)
+		ULONG ulOutBufLen = 0;	// ERROR_BUFFER_OVERFLOW ìœ ë„
 		if (::GetAdaptersInfo(NULL, &ulOutBufLen) == ERROR_BUFFER_OVERFLOW) {
 			PIP_ADAPTER_INFO pAdapterInfo;
 
 			std::vector<BYTE> alloc(ulOutBufLen);
 			pAdapterInfo = (PIP_ADAPTER_INFO)&alloc[0];
 
-			// ½ÇÁ¦ °ªÀ» ¹Ş¾Æ¿È(2Â÷ ½Ãµµ)
+			// ì‹¤ì œ ê°’ì„ ë°›ì•„ì˜´(2ì°¨ ì‹œë„)
 			if (::GetAdaptersInfo(pAdapterInfo, &ulOutBufLen) == ERROR_SUCCESS) {
 				PIP_ADAPTER_INFO pAdapter = pAdapterInfo;
 				while (pAdapter) {
