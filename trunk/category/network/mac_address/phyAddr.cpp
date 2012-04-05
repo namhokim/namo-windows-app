@@ -79,48 +79,4 @@ namespace Network
 		return FALSE;
 	}
 
-	bool GetBasicMacAddress(std::string& out)
-	{
-		const size_t first = 0;
-		const char   sep = '-';
-
-		std::vector<BYTE> mac;
-		if(GetBestInterfaceAddress(mac)) {
-			char buf[buf_size];
-			std::vector<BYTE>::size_type pos, size=mac.size();
-			for (pos=first; pos<size; ++pos) {
-				if(first!=pos) out.push_back(sep);
-
-				StringCchPrintfA(buf, buf_size, "%02X", mac[pos]);
-				out.append(buf);
-			}
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	bool GetBasicMacAddress(std::wstring& out)
-	{
-		std::vector<BYTE> mac;
-		if(GetBestInterfaceAddress(mac)) {
-			wchar_t buf[buf_size];
-			std::vector<BYTE>::size_type pos, size=mac.size();
-			for (pos=0; pos<size; ++pos) {
-				BYTE b = mac[pos];
-				if (pos == (size - 1)) {
-					StringCchPrintfW(buf, buf_size, L"%02X", (int) b );
-					out.append(buf);
-				}
-				else {
-					StringCchPrintfW(buf, buf_size, L"%02X-", (int) b );
-					out.append(buf);
-				}
-			}
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 } // end of namespace Network
