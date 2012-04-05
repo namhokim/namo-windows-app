@@ -1,4 +1,4 @@
-#pragma once 
+ï»¿#pragma once 
 
 #ifndef _PHY_ADDR_H_
 #define _PHY_ADDR_H_
@@ -16,31 +16,31 @@ namespace Network
 		ByLower,
 	};
 
-	// ±â´É  : Default Gateway°¡ Á¸ÀçÇÏ´Â NICÁß
-	//         ¸ŞÆ®¸¯ÀÌ °¡Àå ÀÛÀº MAC ÁÖ¼Ò¸¦ º¤ÅÍ·Î ¹İÈ¯
-	// ¹İÈ¯°ª: true - ¼º°ø
-	//         false - ½ÇÆĞ(MAC ÁÖ¼Ò È¹µæ¿¡ ½ÇÆĞ)
+	// ê¸°ëŠ¥  : Default Gatewayê°€ ì¡´ì¬í•˜ëŠ” NICì¤‘
+	//         ë©”íŠ¸ë¦­ì´ ê°€ì¥ ì‘ì€ MAC ì£¼ì†Œë¥¼ ë²¡í„°ë¡œ ë°˜í™˜
+	// ë°˜í™˜ê°’: true - ì„±ê³µ
+	//         false - ì‹¤íŒ¨(MAC ì£¼ì†Œ íšë“ì— ì‹¤íŒ¨)
 	bool GetBestInterfaceAddress(std::vector<unsigned char>& out);
 
 
-	// Route table Áß MetricÀÌ °¡Àå ÀûÀº ÀÎÅÍÆäÀÌ½ºÀÇ MACÁÖ¼Ò¸¦ ¹İÈ¯
-	// ÇÑ¹ø ¼öÇàÈÄ¿¡´Â ·¹Áö½ºÆ®¸®¿¡¼­ °¡Á®¿À¹Ç·Î º¯È­°¡ ¾ø´Ù.
-	// ¹İÈ¯°ª: true - ¼º°ø
-	//		   false - ½ÇÆĞ(MAC ÁÖ¼Ò È¹µæ¿¡ ½ÇÆĞ)
-	// ¿¹:
-	// 1) ±âº»È£Ãâ -> F0-DE-F1-D9-FD-15 (±¸ºĞÀÚ '-', ´ë¹®ÀÚ)
+	// Route table ì¤‘ Metricì´ ê°€ì¥ ì ì€ ì¸í„°í˜ì´ìŠ¤ì˜ MACì£¼ì†Œë¥¼ ë°˜í™˜
+	// í•œë²ˆ ìˆ˜í–‰í›„ì—ëŠ” ë ˆì§€ìŠ¤íŠ¸ë¦¬ì—ì„œ ê°€ì ¸ì˜¤ë¯€ë¡œ ë³€í™”ê°€ ì—†ë‹¤.
+	// ë°˜í™˜ê°’: true - ì„±ê³µ
+	//		   false - ì‹¤íŒ¨(MAC ì£¼ì†Œ íšë“ì— ì‹¤íŒ¨)
+	// ì˜ˆ:
+	// 1) ê¸°ë³¸í˜¸ì¶œ -> F0-DE-F1-D9-FD-15 (êµ¬ë¶„ì '-', ëŒ€ë¬¸ì)
 	// std::string mac;
 	// std::wstring mac_w;
 	// Network::GetBasicMacAddress(mac);
 	// Network::GetBasicMacAddress(mac_w);
 	//
-	// 2) ±¸ºĞÀÚ º¯°æÈ£Ãâ(2¹øÂ° ÀÎÀÚ¿¡ char ³ª wchar_t ÀÇ °ª ÀÔ·Â)
+	// 2) êµ¬ë¶„ì ë³€ê²½í˜¸ì¶œ(2ë²ˆì§¸ ì¸ìì— char ë‚˜ wchar_t ì˜ ê°’ ì…ë ¥)
 	//
-	//   ±¸ºĞÀÚ¸¦ ¾ø¾Ö·Á¸é °ª 0 ÀÌ³ª '\0'(È¤Àº L'\0')À» ³ÖÀ½
+	//   êµ¬ë¶„ìë¥¼ ì—†ì• ë ¤ë©´ ê°’ 0 ì´ë‚˜ '\0'(í˜¹ì€ L'\0')ì„ ë„£ìŒ
 	// string mac;
 	// Network::GetBasicMacAddress(mac, '\0');
 	//
-	// 3) ¼Ò¹®ÀÚ·Î ÀÛ¼º(2¹øÂ° ÀÎÀÚ¿¡ '-'(È¤Àº L'-')À» ÁÖ°í, 3¹øÂ° ÀÎÀÚ¿¡ Network::ByUpper ÁöÁ¤
+	// 3) ì†Œë¬¸ìë¡œ ì‘ì„±(2ë²ˆì§¸ ì¸ìì— '-'(í˜¹ì€ L'-')ì„ ì£¼ê³ , 3ë²ˆì§¸ ì¸ìì— Network::ByUpper ì§€ì •
 	// string mac;
 	// Network::GetBasicMacAddress(mac, '-', Network::ByLower);
 	//
