@@ -15,6 +15,27 @@ namespace Network
 {
 	const size_t buf_size = 5;
 
+	// 함수 전방 선언
+	DWORD GetBestInterfaceIdx();
+	BOOL SetMacAddressByIndex(const DWORD dwIf, std::vector<BYTE>& out);
+
+	// 외부 노출된 함수 구현
+	bool GetBestInterfaceAddress(std::vector<BYTE>& out)
+	{
+		DWORD dwIf = Network::GetBestInterfaceIdx();
+		if(NO_INTERFACE==dwIf) {
+			return false;
+		}
+
+		if(Network::SetMacAddressByIndex(dwIf, out)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+	// 전방 선언된 함수 구현
 	DWORD GetBestInterfaceIdx()
 	{
 		IPAddr in;
@@ -58,42 +79,20 @@ namespace Network
 		return FALSE;
 	}
 
-	// TESTED
-	// Microsoft Windows 2000 [Version 5.00.2195]
-	// Microsoft Windows XP [Version 5.1.2600] ; Professional K SP3 (32bit)
-	// Microsoft Windows [Version 5.2.3790] ; Windows Server 2003 R2 Standard Edition SP2 (32bit)
-	// Microsoft Windows [Version 6.1.7601] ; Windows Server 2008 R2 Standard SP1 (64bit)
-	// Microsoft Windows [Version 6.1.7601] ; Windows 7 Professional K SP1 (64bit)
-	bool GetBestInterfaceAddress(std::vector<BYTE>& out)
-	{
-		DWORD dwIf = Network::GetBestInterfaceIdx();
-		if(NO_INTERFACE==dwIf) {
-			return false;
-		}
-
-		if(Network::SetMacAddressByIndex(dwIf, out)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	bool GetBasicMacAddress(std::string& out)
 	{
+		const size_t first = 0;
+		const char   sep = '-';
+
 		std::vector<BYTE> mac;
 		if(GetBestInterfaceAddress(mac)) {
 			char buf[buf_size];
 			std::vector<BYTE>::size_type pos, size=mac.size();
-			for (pos=0; pos<size; ++pos) {
-				BYTE b = mac[pos];
-				if (pos == (size - 1)) {
-					StringCchPrintfA(buf, buf_size, "%.2X", (int) b );
-					out.append(buf);
-				}
-				else {
-					StringCchPrintfA(buf, buf_size, "%.2X-", (int) b );
-					out.append(buf);
-				}
+			for (pos=first; pos<size; ++pos) {
+				if(first!=pos) out.push_back(sep);
+
+				StringCchPrintfA(buf, buf_size, "%02X", mac[pos]);
+				out.append(buf);
 			}
 			return true;
 		} else {
@@ -110,11 +109,11 @@ namespace Network
 			for (pos=0; pos<size; ++pos) {
 				BYTE b = mac[pos];
 				if (pos == (size - 1)) {
-					StringCchPrintfW(buf, buf_size, L"%.2X", (int) b );
+					StringCchPrintfW(buf, buf_size, L"%02X", (int) b );
 					out.append(buf);
 				}
 				else {
-					StringCchPrintfW(buf, buf_size, L"%.2X-", (int) b );
+					StringCchPrintfW(buf, buf_size, L"%02X-", (int) b );
 					out.append(buf);
 				}
 			}
