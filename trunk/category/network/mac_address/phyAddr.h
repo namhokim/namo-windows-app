@@ -59,8 +59,8 @@ namespace Network
 			for (pos=first; pos<size; ++pos) {
 				if(first!=pos && seperator) out.push_back(seperator);
 				
-				std::basic_stringstream<_Elem, char_traits<_Elem>, allocator<_Elem> > ss;
-				if(ByUpper==char_case) ss.setf(ios_base::uppercase);
+				std::basic_stringstream<_Elem, std::char_traits<_Elem>, std::allocator<_Elem> > ss;
+				if(ByUpper==char_case) ss.setf(std::ios_base::uppercase);
 				ss << std::setw(2) << std::setfill(pad) << std::hex << static_cast<short>(mac[pos]);
 				out.append(ss.str());
 			}
