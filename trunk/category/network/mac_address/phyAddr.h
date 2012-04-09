@@ -56,6 +56,8 @@ namespace Network
 		std::vector<unsigned char> mac;
 		if(GetBestInterfaceAddress(mac)) {
 			std::vector<unsigned char>::size_type pos, size=mac.size();
+			out.clear();
+
 			for (pos=first; pos<size; ++pos) {
 				if(first!=pos && seperator) out.push_back(seperator);
 				
