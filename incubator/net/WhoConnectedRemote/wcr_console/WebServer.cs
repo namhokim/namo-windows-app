@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Web.UI;
 
 namespace wcr_console
 {
@@ -36,19 +38,78 @@ namespace wcr_console
             HttpListener listener = (HttpListener)result.AsyncState;
             // Call EndGetContext to complete the asynchronous operation.
             HttpListenerContext context = listener.EndGetContext(result);
+
+            // Obtain a request & response object.
             HttpListenerRequest request = context.Request;
-            // Obtain a response object.
             HttpListenerResponse response = context.Response;
-            // Construct a response.
-            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(RemoteDesktopFinder.WhoWithHtml());
-            // Get a response stream and write the response to it.
-            response.ContentLength64 = buffer.Length;
-            System.IO.Stream output = response.OutputStream;
-            output.Write(buffer, 0, buffer.Length);
-            // You must close the output stream.
-            output.Close();
+
+            // Routing
+            switch (request.RawUrl)
+            {
+                case "/":
+                    RemoteDesktopContent(response);
+                    break;
+                default:
+                    NotFound(response);
+                    break;
+            }
 
             m_listener.BeginGetContext(new AsyncCallback(ListenerCallback), m_listener);
+        }
+
+        private void RemoteDesktopContent(HttpListenerResponse response)
+        {
+            response.ContentType = "text/html";
+
+            StreamWriter textWriter = new StreamWriter(response.OutputStream, Encoding.UTF8);
+            HtmlTextWriter writer = new HtmlTextWriter(textWriter);
+            writer.RenderBeginTag(HtmlTextWriterTag.Html);
+
+            writer.RenderBeginTag(HtmlTextWriterTag.Head);
+            writer.AddAttribute("http-equiv", "Content-Type");
+            writer.AddAttribute("content", "text/html; charset=utf-8");
+            writer.RenderBeginTag(HtmlTextWriterTag.Meta);
+            writer.RenderEndTag();    // </Meta>
+            writer.RenderBeginTag(HtmlTextWriterTag.Title);
+            writer.WriteEncodedText("누가 원격데스크탑을 하고 있나?");
+            writer.RenderEndTag();    // </Title>
+            writer.RenderEndTag();    // </Head>
+
+            writer.RenderBeginTag(HtmlTextWriterTag.Body);
+            writer.RenderBeginTag(HtmlTextWriterTag.H1);
+            writer.WriteEncodedText("원격데스크탑 접속자");
+            writer.RenderEndTag();    // </H1>
+
+            writer.RenderBeginTag(HtmlTextWriterTag.Ol);
+            List<string> list = RemoteDesktopFinder.Who();
+            foreach (string li in list)
+            {
+                writer.RenderBeginTag(HtmlTextWriterTag.Li);
+                writer.WriteEncodedText(li);
+                writer.RenderEndTag();    // </Li>
+            }
+            writer.RenderEndTag();    // </Ol>
+
+            writer.RenderEndTag();    // </Body>
+            writer.RenderEndTag();    // </html>
+
+            writer.EndRender();
+            writer.Flush();
+            writer.Close();
+        }
+
+        private void NotFound(HttpListenerResponse response)
+        {
+            response.StatusCode = 404;
+
+            // refs. http://www.simpleisbest.net/archive/2007/01/08/1527.aspx
+            StreamWriter textWriter = new StreamWriter(response.OutputStream, Encoding.UTF8);
+            HtmlTextWriter writer = new HtmlTextWriter(textWriter);
+            writer.RenderBeginTag(HtmlTextWriterTag.Html);
+            writer.RenderEndTag();    // </html>
+            writer.EndRender();
+            writer.Flush();
+            writer.Close();
         }
     }
 }
