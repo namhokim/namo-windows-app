@@ -10,6 +10,7 @@ using wcr_console;
 
 namespace wcr
 {
+    // refs. http://msdn.microsoft.com/ko-kr/library/zt39148a(VS.80).aspx
     public partial class WebService : ServiceBase
     {
         private WebServer m_ws;
@@ -17,6 +18,7 @@ namespace wcr
         public WebService()
         {
             InitializeComponent();
+            this.ServiceName = "WhoConnRemote";
             m_ws = new WebServer();
         }
 
