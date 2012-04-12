@@ -26,7 +26,7 @@ namespace wcr_console
                 {
                     if (port != 0
                         && !info.LocalEndPoint.Port.Equals(port)
-                        && !info.RemoteEndPoint.Port.Equals(port))
+                        /*&& !info.RemoteEndPoint.Port.Equals(port)*/)  // 내가 접속하고 있는 포트
                     {
                         continue;
                     }
@@ -41,6 +41,19 @@ namespace wcr_console
             {
                 return r;
             }  
+        }
+
+        public static string WhoWithHtml()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<html>\n<title>누가 원격데스크탑을 하고 있나?</title>\n<body>\n<ol>");
+            List<string> lists = Who();
+            foreach (string li in lists)
+            {
+                sb.AppendFormat("<li>{0}</li>\n", li);
+            }
+            sb.Append("</ol>\n</body>\n</html>");
+            return sb.ToString();
         }
     }
 }
