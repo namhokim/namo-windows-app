@@ -8,9 +8,14 @@
 #ifndef INC_PGSTREAM_H
 #define INC_PGSTREAM_H
 
-#include <libpq-fe.h>
+#include "libpq-fe.h"
 #include <string>
 #include <vector>
+
+namespace convert {
+	std::wstring UTF82W(const std::string& utf8);
+	std::string W2UTF8(const std::wstring& utf16le);
+} // end of namespace convert
 
 class sql_null
 {
@@ -39,6 +44,11 @@ public:
   std::string errmsg() const { return m_err_msg; }
   std::string errcode() const { return m_err_code; }
   std::string full_error_txt() const;
+
+  std::wstring queryW() const { return convert::UTF82W(m_query); }
+  std::wstring errmsgW() const { return convert::UTF82W(m_err_msg); }
+  std::wstring errcodeW() const { return convert::UTF82W(m_err_code); }
+  std::wstring full_error_txtW() const;
 
   static pg_excpt mk_excpt(PGresult *r, const char* query=NULL);
 private:
@@ -212,6 +222,7 @@ public:
   /// assign a char* parameter
   pg_stream& operator<<(const char*);
   pg_stream& operator<<(const std::string&);
+  pg_stream& operator<<(const std::wstring&);	// utf16le
   /// assign an int parameter
   pg_stream& operator<<(int);
   pg_stream& operator<<(unsigned int);
@@ -232,6 +243,7 @@ public:
   pg_stream& operator>>(unsigned int&);
   pg_stream& operator>>(char*);
   pg_stream& operator>>(std::string&);
+  pg_stream& operator>>(std::wstring&);
   pg_stream& operator>>(pg_bytea&);
   pg_stream& operator>>(double&);
   pg_stream& operator>>(bool&);
