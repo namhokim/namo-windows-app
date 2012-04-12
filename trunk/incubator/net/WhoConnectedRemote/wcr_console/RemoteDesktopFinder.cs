@@ -11,6 +11,11 @@ namespace wcr_console
     {
         private const int port = 3389;
 
+        private static Dictionary<string, string> IP_MAP = new Dictionary<string, string>() {
+            {"10.17.1.133", "김남호"},
+            {"10.17.1.182", "박성웅"},
+        };
+
         // refs. http://social.msdn.microsoft.com/Forums/eu/netfxnetcom/thread/bb587794-f0a0-432e-a8b9-8d37cbf5b140
         public static List<string> Who()
         {
@@ -32,7 +37,12 @@ namespace wcr_console
                     }
                     else
                     {
-                        r.Add(info.RemoteEndPoint.Address.ToString());
+                        string ip = info.RemoteEndPoint.Address.ToString();
+                        if (IP_MAP.ContainsKey(ip))
+                        {
+                            ip = string.Format("{0} ({1})", ip, IP_MAP[ip]);
+                        }
+                        r.Add(ip);
                     }
                 }   //foreach
                 return r;
