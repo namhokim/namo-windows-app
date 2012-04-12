@@ -9,11 +9,7 @@ namespace wcr_console
     {
         static void Main(string[] args)
         {
-            List<string> lists = RemoteDesktopFinder.Who();
-            foreach (string li in lists)
-            {
-                Console.WriteLine(li);
-            }
+            Console.WriteLine(RemoteDesktopFinder.WhoWithHtml());
         }
     }
 }
