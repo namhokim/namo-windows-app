@@ -18,7 +18,6 @@ namespace wcr
         public WebService()
         {
             InitializeComponent();
-            this.ServiceName = "WhoConnRemote";
             m_ws = new WebServer();
         }
 

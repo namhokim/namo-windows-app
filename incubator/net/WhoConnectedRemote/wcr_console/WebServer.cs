@@ -30,6 +30,7 @@ namespace wcr_console
 
         public void Stop()
         {
+            m_listener.Stop();
             m_listener.Close();
         }
 
