@@ -174,6 +174,19 @@ pg_stream::pg_stream(const char *query, pg_cnx& db, int prepare_mode) :
   init(query, prepare_mode, 0);
 }
 
+pg_stream::pg_stream(const std::wstring query, pg_cnx& db, int prepare_mode) :
+  m_db(db)
+{
+  init(convert::W2UTF8(query).c_str(), prepare_mode, 0);
+}
+
+pg_stream::pg_stream(const wchar_t *query, pg_cnx& db, int prepare_mode) :
+  m_db(db)
+{
+	std::wstring q(query);
+	init(convert::W2UTF8(q).c_str(), prepare_mode, 0);
+}
+
 void
 pg_stream::init(const char *query, int prepare_mode, unsigned int cursor_step)
 {
@@ -1142,6 +1155,13 @@ pg_cnx::connect(const char* cnx_string)
   if (PQstatus(m_conn) == CONNECTION_BAD) {
     throw pg_excpt("connect", PQerrorMessage(m_conn));
   }
+}
+
+void
+pg_cnx::connect(const wchar_t* cnx_string)
+{
+	std::wstring conn(cnx_string);
+	connect(convert::W2UTF8(conn).c_str());
 }
 
 pg_trans::pg_trans(pg_cnx& cnx) : m_cnx(cnx), m_trans_done(false)

@@ -69,6 +69,8 @@ public:
     return m_conn;
   }
   void connect(const char* cnx_string);
+  void connect(const wchar_t* cnx_string);
+
   void set_option(const char* param, bool bvalue);
   bool get_option(const char* param) const;
 private:
@@ -217,6 +219,8 @@ public:
   // the current default for the db connection
   pg_stream(const char* query, pg_cnx& db,int prepare_mode=2);
   pg_stream(const std::string query, pg_cnx& db,int prepare_mode=2);
+  pg_stream(const wchar_t* query, pg_cnx& db,int prepare_mode=2);
+  pg_stream(const std::wstring query, pg_cnx& db,int prepare_mode=2);
   virtual ~pg_stream();
 
   /// assign a char* parameter
