@@ -23,6 +23,8 @@ namespace wcr_console
 
              //Look for established connections
             IPGlobalProperties ipProperties = IPGlobalProperties.GetIPGlobalProperties();
+            // GetExtendedTcpTable function
+            // refs. http://msdn.microsoft.com/en-us/library/windows/desktop/aa365928(v=vs.85).aspx
             TcpConnectionInformation[] connections = ipProperties.GetActiveTcpConnections();
 
             try
