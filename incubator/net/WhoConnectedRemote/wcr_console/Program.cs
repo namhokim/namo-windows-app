@@ -9,7 +9,6 @@ namespace wcr_console
     {
         static void Main(string[] args)
         {
-            //Console.WriteLine(RemoteDesktopFinder.WhoWithHtml());
             WebServer ws = new WebServer();
             Console.WriteLine("Start the service");
             ws.Start();
