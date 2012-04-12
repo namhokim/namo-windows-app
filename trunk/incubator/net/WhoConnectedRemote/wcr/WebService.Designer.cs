@@ -1,6 +1,6 @@
 ﻿namespace wcr
 {
-    partial class Service1
+    partial class WebService
     {
         /// <summary> 
         /// 필수 디자이너 변수입니다.
