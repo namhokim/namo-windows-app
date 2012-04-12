@@ -46,7 +46,8 @@ namespace wcr_console
         public static string WhoWithHtml()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("<html>\n<title>누가 원격데스크탑을 하고 있나?</title>\n<body>\n<ol>");
+            sb.Append("<html>\n<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n");
+            sb.Append("<title>누가 원격데스크탑을 하고 있나?</title></head>\n<body>\n<ol>");
             List<string> lists = Who();
             foreach (string li in lists)
             {
