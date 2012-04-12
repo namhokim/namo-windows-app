@@ -47,6 +47,68 @@ int sql_bind_param::m_oids[] = {
   oid_varchar
 };
 
+namespace convert {
+	std::wstring UTF82W(const std::string& utf8)
+	{
+		std::wstring out;
+
+		// refs. http://snowdeer.egloos.com/2401298
+		size_t size = utf8.size();
+		try {
+			out.reserve(size);		// for prevent re-allocation
+			for(size_t i=0; i<size; ++i) {
+				wchar_t ch;
+				short sh = (unsigned char)utf8[i];
+				if (sh < 0x80) {
+					ch = sh;
+				} else if (sh  < 0xE0) {
+					short sh_next = (unsigned char)utf8.at(i+1);	// can be exception
+					ch = ((sh & 0x1F) << 6) | (sh_next & 0x3F);
+					i = i + 1;
+				} else {
+					short sh_next = (unsigned char)utf8[i+1];
+					short sh_next_next = (unsigned char)utf8.at(i+2);	// can be exception
+					ch = ((sh & 0x0F) << 12) | ((sh_next & 0x3F) << 6) | sh_next_next & 0x3F;
+					i = i + 2;
+				}
+				out.push_back(ch);
+			}
+		} catch(std::out_of_range) {
+			out.clear();
+		}
+		return out;
+	}
+
+	std::string W2UTF8(const std::wstring& utf16le)
+	{	
+		std::string out;
+
+		// refs. http://support.microsoft.com/kb/601368/ko
+		size_t size = utf16le.size();
+		out.reserve(size);
+		for(size_t i=0; i<size; ++i) {
+			wchar_t uc = utf16le[i];
+
+			if(uc <= 0x7f) {
+				out.push_back((char)uc);
+			} else if (uc <= 0x7ff) {
+				char utf8[3];
+				utf8[0] = (char) 0xc0 + uc / (wchar_t) (2 ^ 6);
+				utf8[1] = (char) 0x80 + uc % (wchar_t) (2 ^ 6);
+				utf8[2] = (char) '\0';
+				out.append(utf8);
+			} else if (uc <= 0xffff) {
+				char utf8[4];
+				utf8[0] = (char) 0xe0 + uc / (wchar_t) (2 ^ 12);
+				utf8[1] = (char) 0x80 + uc / (wchar_t) (2 ^ 6) % (wchar_t) (2 ^ 6);
+				utf8[2] = (char) 0x80 + uc % (wchar_t) (2 ^ 6);
+				utf8[3] = (char) '\0';
+			}
+		}
+		return out;
+	}
+} // end of namespace convert
+
 void
 sql_bind_param::set_type(const char* t)
 {
@@ -403,6 +465,13 @@ pg_stream&
 pg_stream::operator<<(const std::string& s)
 {
   return operator<<(s.c_str());
+}
+
+pg_stream&
+pg_stream::operator<<(const std::wstring& s)
+{
+  // utf16le to utf8
+  return operator<<(convert::W2UTF8(s).c_str());
 }
 
 pg_stream&
@@ -963,6 +1032,15 @@ pg_stream::operator>>(std::string& s)
   return *this;
 }
 
+pg_stream&
+pg_stream::operator>>(std::wstring& s)
+{
+	std::string utf8;
+	operator>>(utf8);
+	s.assign(convert::UTF82W(utf8));	// utf8 to utf16le
+	return *this;
+}
+
 
 #if 0
 int write_bytea(char* buf, int size)
@@ -1144,6 +1222,13 @@ pg_excpt::full_error_txt() const
     txt.append(")\n");
   }
   return txt;
+}
+
+std::wstring
+pg_excpt::full_error_txtW() const
+{
+	std::wstring out(convert::UTF82W(full_error_txt()));
+	return out;
 }
 
 pg_cursor::pg_cursor(unsigned int step, const char* query, pg_cnx& cnx):
