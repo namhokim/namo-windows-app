@@ -16,8 +16,10 @@
 #include <string.h>
 #include <ctype.h>
 
-#ifdef WIN32
-#pragma warning( push )
+#ifdef _MSC_VER
+#define sprintf sprintf_s
+#define snprintf _snprintf
+#pragma warning( push)
 #pragma warning( disable : 4996 )
 #endif
 
@@ -607,11 +609,7 @@ pg_stream::operator<<(double d)
 {
   check_binds();
   char buf[100];
-#ifdef WIN32
-  sprintf_s(buf, sizeof(buf), "%g", d);
-#else
   snprintf(buf, sizeof(buf), "%g", d);
-#endif
   m_vars[m_argpos].set_type(sql_bind_param::oid_numeric);
   replace_placeholder(m_argpos, buf, strlen(buf));
   next_bind();
