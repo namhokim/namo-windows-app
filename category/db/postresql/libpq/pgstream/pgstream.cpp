@@ -1,8 +1,8 @@
-﻿//#define STANDALONE
+//#define STANDALONE
 
 /*
-  pg_stream.cpp: main file for the pg_stream library.
-  Copyright (c) 2004, Daniel Vérité
+  pgstream.cpp: main file for the pgstream library.
+  Copyright (c) 2004-2012, Daniel Verite.
   See COPYING file for license terms.
   http://www.manitou-mail.org/pgstream
 */
