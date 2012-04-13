@@ -7,9 +7,6 @@
   http://www.manitou-mail.org/pgstream
 */
 
-#include "pgstream.h"
-
-#include <iostream>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -23,6 +20,8 @@
 #pragma warning( push)
 #pragma warning( disable : 4996 )
 #endif
+
+#include "pgstream.h"
 
 //static
 const char* sql_bind_param::m_type_names[] = {
@@ -311,7 +310,6 @@ pg_stream::do_prepare()
     args = std::string("(") + args + ")";
   std::string q = std::string("PREPARE  ") + 
     m_prepare_name + args + std::string(" AS ") + m_query_buf;
-  fprintf(stderr,"prepare execute: %s\n", q.c_str());
   PGresult* r = PQexec(m_db.conn(), q.c_str());
   if (!r || PQresultStatus(r) != PGRES_COMMAND_OK) {
     m_prepare_name.clear();
@@ -786,10 +784,8 @@ pg_stream::execute()
     unsigned int i=0;
     for (;it != m_vars.end(); ++it, ++i) {
       param_types[i] = it->pg_type();
-      //      fprintf(stderr, "param_type=%d\n", (int)param_types[i]);
       if (param_types[i]==(int)sql_bind_param::oid_bytea) {	// binary
 	param_formats[i] = 1;
-	//	fprintf(stderr, "binary: buf=0x%p, len=%d\n");
 	if (!it->null()) {
 	  param_values[i] = (const char*)it->data_ptr();
 	  param_lengths[i] = it->data_size();
@@ -812,11 +808,9 @@ pg_stream::execute()
       }
     }
     if (m_prepare_name.empty()) {
-      fprintf(stderr, "PQexecParams query_buf=%s\n", m_query_buf);
       m_pg_res = PQexecParams(m_db.conn(), m_query_buf, sz, param_types,
 			     param_values, param_lengths, param_formats,
 			     0);	// output in text format
-      //      fprintf(stderr,"execute: %s\n", m_query_buf);
     }
     else {
       m_pg_res = PQexecPrepared(m_db.conn(), m_prepare_name.c_str(),
@@ -826,7 +820,6 @@ pg_stream::execute()
     }
   }
   else {
-    //    fprintf(stderr,"execute: %s\n", m_query_buf);
     if (m_cursor_step > 0)
       cursor_fetch();
     else
