@@ -261,7 +261,9 @@ public:
   void use_bind_variables(bool u=true) {
     m_inline_params = !u;
   }
+#if 0
   void print();
+#endif
 
   /** returns true if there are no more results to read from the stream,
       or false otherwise */
