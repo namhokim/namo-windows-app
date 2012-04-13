@@ -1333,6 +1333,6 @@ int main(int argc, char** argv)
 }
 #endif // STANDALONE
 
-#ifdef WIN32
-#pragma warning( pop )
+#ifdef _MSC_VER
+#pragma warning( pop)
 #endif
