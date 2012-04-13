@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <malloc.h>
 
 #ifdef _MSC_VER
 #define sprintf sprintf_s
@@ -777,10 +778,10 @@ pg_stream::execute()
 
   if (!m_inline_params) {
     unsigned int sz=m_vars.size();
-    std::vector<Oid> param_types(sz);
-    std::vector<const char*> param_values(sz);
-    std::vector<int> param_lengths(sz);
-    std::vector<int> param_formats(sz);
+    Oid* param_types = (Oid*)alloca(sz*sizeof(Oid));
+    const char** param_values = (const char**)alloca(sz*sizeof(const char*));
+    int* param_lengths = (int*)alloca(sz*sizeof(int));
+    int* param_formats = (int*)alloca(sz*sizeof(param_formats));
     std::vector<sql_bind_param>::iterator it = m_vars.begin();
     unsigned int i=0;
     for (;it != m_vars.end(); ++it, ++i) {
@@ -812,15 +813,15 @@ pg_stream::execute()
     }
     if (m_prepare_name.empty()) {
       fprintf(stderr, "PQexecParams query_buf=%s\n", m_query_buf);
-      m_pg_res = PQexecParams(m_db.conn(), m_query_buf, sz, &param_types[0],
-			     &param_values[0], &param_lengths[0], &param_formats[0],
+      m_pg_res = PQexecParams(m_db.conn(), m_query_buf, sz, param_types,
+			     param_values, param_lengths, param_formats,
 			     0);	// output in text format
       //      fprintf(stderr,"execute: %s\n", m_query_buf);
     }
     else {
       m_pg_res = PQexecPrepared(m_db.conn(), m_prepare_name.c_str(),
-			       sz, &param_values[0], &param_lengths[0],
-			       &param_formats[0],
+			       sz, param_values, param_lengths,
+			       param_formats,
 			       0);	// output in text format
     }
   }
