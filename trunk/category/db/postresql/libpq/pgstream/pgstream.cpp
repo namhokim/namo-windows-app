@@ -716,6 +716,7 @@ pg_stream::check_binds()
     throw pg_excpt("pg_stream", "Mismatch between bound variables and query");
 }
 
+#if 0
 void
 pg_stream::print()		// DEBUG
 {
@@ -727,6 +728,7 @@ pg_stream::print()		// DEBUG
     std::cout << v.name() << " => pos=" << v.pos() << " value=" << v.value() << "\n";
   }
 }
+#endif
 
 void
 pg_stmt::execute(const char* stmt, pg_cnx& db)
