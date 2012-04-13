@@ -33,8 +33,6 @@ const char* sql_bind_param::m_type_names[] = {
   "varchar"  
 };
 
-const int PQgetisnullTrue = 1;
-
 //static
 int sql_bind_param::m_oids[] = {
   oid_int8,
@@ -904,6 +902,13 @@ pg_stream::next_result()
     m_row_number++;
 }
 
+bool
+pg_stream::check_null()
+{
+  m_val_null = PQgetisnull(m_pg_res, m_row_number, m_col_number)?true:false;
+  return m_val_null;
+}
+
 void
 pg_stream::check_eof()
 {
@@ -917,7 +922,7 @@ pg_stream::operator>>(pg_bytea& b)
   check_eof();
   if (PQftype(m_pg_res, m_col_number) != 17)
     throw pg_excpt("pgstream", "Type mismatch: bytea type expected");
-  m_val_null = (PQgetisnull(m_pg_res, m_row_number, m_col_number) == PQgetisnullTrue);
+  m_val_null = PQgetisnull(m_pg_res, m_row_number, m_col_number)?true:false;
   if (!m_val_null) {
     b.m_data_len=PQgetlength(m_pg_res, m_row_number, m_col_number);
     size_t to_len;
@@ -938,7 +943,7 @@ pg_stream&
 pg_stream::operator>>(short& s)
 {
   check_eof();
-  m_val_null = (PQgetisnull(m_pg_res, m_row_number, m_col_number) == PQgetisnullTrue);
+  m_val_null = PQgetisnull(m_pg_res, m_row_number, m_col_number)?true:false;
   if (!m_val_null)
     // check for overflow??
     s=atoi(PQgetvalue(m_pg_res, m_row_number, m_col_number));
@@ -952,8 +957,7 @@ pg_stream&
 pg_stream::operator>>(unsigned short& s)
 {
   check_eof();
-  m_val_null = (PQgetisnull(m_pg_res, m_row_number, m_col_number) == PQgetisnullTrue);
-  if (!m_val_null)
+  if (!check_null())
     // check for overflow??
     s=atoi(PQgetvalue(m_pg_res, m_row_number, m_col_number));
   else
@@ -966,8 +970,7 @@ pg_stream&
 pg_stream::operator>>(int& i)
 {
   check_eof();
-  m_val_null = (PQgetisnull(m_pg_res, m_row_number, m_col_number) == PQgetisnullTrue);
-  if (!m_val_null)
+  if (!check_null())
     i=atoi(PQgetvalue(m_pg_res, m_row_number, m_col_number));
   else
     i=0;
@@ -981,8 +984,7 @@ pg_stream::operator>>(unsigned int& i)
   check_eof();
   unsigned long ul=strtoul(PQgetvalue(m_pg_res, m_row_number, m_col_number),
 			   NULL, 10);
-  m_val_null = (PQgetisnull(m_pg_res, m_row_number, m_col_number) == PQgetisnullTrue);
-  if (!m_val_null)
+  if (!check_null())
     i=(unsigned int)ul;
   else
     i=0;
@@ -994,8 +996,7 @@ pg_stream&
 pg_stream::operator>>(double& d)
 {
   check_eof();
-  m_val_null = (PQgetisnull(m_pg_res, m_row_number, m_col_number) == PQgetisnullTrue);
-  if (!m_val_null)
+  if (!check_null())
     d=atof(PQgetvalue(m_pg_res, m_row_number, m_col_number));
   else
     d=0.0;
@@ -1007,8 +1008,7 @@ pg_stream&
 pg_stream::operator>>(bool& b)
 {
   check_eof();
-  m_val_null = (PQgetisnull(m_pg_res, m_row_number, m_col_number) == PQgetisnullTrue);
-  if (!m_val_null) {
+  if (!check_null()) {
     const char* p=PQgetvalue(m_pg_res, m_row_number, m_col_number);
     if (p && *p=='t')
       b=true;
@@ -1025,8 +1025,7 @@ pg_stream&
 pg_stream::operator>>(char* p)
 {
   check_eof();
-  m_val_null = (PQgetisnull(m_pg_res, m_row_number, m_col_number) == PQgetisnullTrue);
-  if (m_val_null)
+  if (check_null())
     *p='\0';
   else {
     // pretty dangerous if the buffer is not big enough, but
@@ -1042,7 +1041,7 @@ pg_stream::operator>>(std::string& s)
 {
   check_eof();
   s=PQgetvalue(m_pg_res, m_row_number, m_col_number);
-  m_val_null = (PQgetisnull(m_pg_res, m_row_number, m_col_number) == PQgetisnullTrue);
+  check_null();
   next_result();
   return *this;
 }

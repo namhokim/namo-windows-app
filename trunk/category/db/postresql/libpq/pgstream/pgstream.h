@@ -294,6 +294,7 @@ private:
   void query_make_space(int len);
   void replace_placeholder(unsigned int argpos, const char* buf, int size, bool binary=false);
   void next_bind();
+  bool check_null();
 
   unsigned int m_argpos;
   char* m_query_buf;
