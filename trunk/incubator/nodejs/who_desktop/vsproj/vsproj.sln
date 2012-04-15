@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sqlite3", "sqlite3.vcproj", "{ED0323AA-02E8-4FF0-863B-80D75D9959A2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "whoConnect", "whoConnect.vcproj", "{4CF70F71-75DE-4F18-9AFA-BAF45230CB2D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED0323AA-02E8-4FF0-863B-80D75D9959A2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{ED0323AA-02E8-4FF0-863B-80D75D9959A2}.Debug|Win32.Build.0 = Debug|Win32
+		{ED0323AA-02E8-4FF0-863B-80D75D9959A2}.Release|Win32.ActiveCfg = Release|Win32
+		{ED0323AA-02E8-4FF0-863B-80D75D9959A2}.Release|Win32.Build.0 = Release|Win32
+		{4CF70F71-75DE-4F18-9AFA-BAF45230CB2D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4CF70F71-75DE-4F18-9AFA-BAF45230CB2D}.Debug|Win32.Build.0 = Debug|Win32
+		{4CF70F71-75DE-4F18-9AFA-BAF45230CB2D}.Release|Win32.ActiveCfg = Release|Win32
+		{4CF70F71-75DE-4F18-9AFA-BAF45230CB2D}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
