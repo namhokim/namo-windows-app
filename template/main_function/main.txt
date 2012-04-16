@@ -1,8 +1,0 @@
-#include <stdio.h>
-
-int main(int argc, char* argv[])
-{
-	printf("¾È³ç World\n");
-
-	return 0;
-}
