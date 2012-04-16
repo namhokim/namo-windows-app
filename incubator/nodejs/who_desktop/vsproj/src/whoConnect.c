@@ -136,7 +136,7 @@ int OpenDB(sqlite3 **ppDb, sqlite3_stmt **ppStmt)
 		return rc;
 	}
 
-	rc = sqlite3_prepare_v2(*ppDb, SELECT_NAME, strlen(SELECT_NAME), ppStmt, NULL);
+	rc = sqlite3_prepare_v2(*ppDb, SELECT_NAME, (int)strlen(SELECT_NAME), ppStmt, NULL);
 	if( rc ) {
 		const char* errmsg = sqlite3_errmsg(*ppDb);
 		if ( 0==strcmp(MSG_NO_TABLE, errmsg) ) {	// if not created table
@@ -163,7 +163,7 @@ void PrintIfMatch(sqlite3_stmt *pStmt, const char*ip, int repeatCount)
 		return;
 	}
 
-	rc = sqlite3_bind_text(pStmt, 1, ip, strlen(ip), NULL);
+	rc = sqlite3_bind_text(pStmt, 1, ip, (int)strlen(ip), NULL);
 	if( rc ) {	// if not SQLITE_OK
 		fprintf(stderr, "Can't bind to query: %d\n", rc);
 		return;
@@ -202,7 +202,7 @@ int GetWhoIsIP(const char*ip)
 		return rc;
 	}
 
-	rc = sqlite3_prepare(db, SELECT_NAME, strlen(SELECT_NAME), &stmt, NULL);
+	rc = sqlite3_prepare(db, SELECT_NAME, (int)strlen(SELECT_NAME), &stmt, NULL);
 	if( rc ) {
 		fprintf(stderr, "Can't prepare database: %s\n", sqlite3_errmsg(db));
 		sqlite3_close(db);
@@ -210,7 +210,7 @@ int GetWhoIsIP(const char*ip)
 	}
 
 	//
-	rc = sqlite3_bind_text(stmt, 1, ip, strlen(ip), NULL);
+	rc = sqlite3_bind_text(stmt, 1, ip, (int)strlen(ip), NULL);
 	rc = sqlite3_step(stmt);	// SQLITE_DONE (no data), SQLITE_ROW(exist data)
 	if(SQLITE_ROW==rc) {
 		fprintf(stdout, "name: %s\n", sqlite3_column_text(stmt, 0));
