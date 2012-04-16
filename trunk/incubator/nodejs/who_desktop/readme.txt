@@ -22,5 +22,5 @@
 5. Make Service
  refs. http://blog.tatham.oddie.com.au/2011/03/16/node-js-on-windows/
   Download : http://nssm.cc/download/?page=download
- > nssm.exe install sydjs-node c:\where-i-put-node-standalone\node.exe c:\code\SydJS\server.js  
+ > nssm install whoDesktop C:\who_desktop\node.exe C:\who_desktop\index.js
  > net start sydjs-node 
