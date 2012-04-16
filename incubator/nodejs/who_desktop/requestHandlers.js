@@ -2,7 +2,7 @@ var MONITOR_PORT = 3389;
 
 var fs = require("fs"),
     spawn = require('child_process').spawn,
-    jade = require('jade'),
+    jade = require('jade')
 	url = require('url');
 
 var jadefile = fs.readFileSync(__dirname + '/start.jade');
@@ -17,8 +17,8 @@ function start(response) {
     
     cspr.stdout.setEncoding('utf8');
     cspr.stdout.on('data', function(data) {
-		console.log(bin);
-        var str = data.toString(), lines = str.split(",");
+		console.log("whoConnect");
+        var str = data.toString(), lines = str.split("|");
         var html = fn({"lines":lines});
         response.writeHead(200, {"Content-Type": "text/html"});
         response.write(html);
@@ -49,6 +49,7 @@ function favicon(response) {
     }
   });
 }
+
 
 // http://www.shinstudio.com/blog/programming/pulling-query-string-in-node-js/
 function arp(response, request) {

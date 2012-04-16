@@ -6,9 +6,13 @@
 #include <iphlpapi.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "sqlite3.h"	// for SQLite3
 
 #pragma comment(lib, "iphlpapi.lib")
 #pragma comment(lib, "ws2_32.lib")
+
+int FindAndPrint(const char*mac);
+int IfExistDBThenCreate();
 
 void usage(char *pname)
 {
@@ -16,6 +20,9 @@ void usage(char *pname)
 	fprintf(stderr, "\t -h \t\thelp\n");
 	fprintf(stderr, "\t -l length \tMAC physical address length to set\n");
 	fprintf(stderr, "\t -s src-ip \tsource IP address\n");
+
+	IfExistDBThenCreate();
+
 	exit(1);
 }
 
@@ -62,19 +69,24 @@ int __cdecl main(int argc, char **argv)
 
 	memset(&MacAddr, 0xff, sizeof (MacAddr));
 
-	//printf("Sending ARP request for IP address: %s\n", DestIpString);
-
 	dwRetVal = SendARP(DestIp, SrcIp, &MacAddr, &PhysAddrLen);
 
 	if (dwRetVal == NO_ERROR) {
 		bPhysAddr = (BYTE *) & MacAddr;
 		if (PhysAddrLen) {
+			char mac[128] = {0};
 			for (i = 0; i < (int) PhysAddrLen; i++) {
-				if (i == (PhysAddrLen - 1))
-					fprintf(stdout,"%.2X", (int) bPhysAddr[i]);
-				else
-					fprintf(stdout,"%.2X-", (int) bPhysAddr[i]);
+				char m[4] = {0};
+				if (i == (PhysAddrLen - 1)) {
+					sprintf_s(m, 4, "%.2X", (int) bPhysAddr[i]);
+					strcat_s(mac, 128, m);
+				}
+				else {
+					sprintf_s(m, 4, "%.2X-", (int) bPhysAddr[i]);
+					strcat_s(mac, 128, m);
+				}
 			}
+			FindAndPrint(mac);
 		} else
 			fprintf(stderr,
 			"Warning: SendArp completed successfully, but returned length=0\n");
@@ -107,4 +119,83 @@ int __cdecl main(int argc, char **argv)
 	}
 
 	return 0;
+}
+
+const char* TABLE_NAME = "mac_map.db";
+const char* MSG_NO_TABLE = "no such table: map";
+const char* CREATE_TABLE = "CREATE TABLE IF NOT EXISTS map(mac TEXT PRIMARY KEY ASC, name TEXT)";
+const char* SELECT_NAME = "SELECT name FROM map WHERE mac = ?";
+
+int FindAndPrint(const char*mac)
+{
+	sqlite3 *pDb;
+	sqlite3_stmt *pStmt;
+	char *zErrMsg = 0;
+	int rc;
+
+	rc = sqlite3_open(TABLE_NAME, &pDb);
+	if( rc ) {	// not SQLITE_OK
+		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(pDb));
+		sqlite3_close(pDb);
+		return rc;
+	}
+
+	rc = sqlite3_prepare_v2(pDb, SELECT_NAME, (int)strlen(SELECT_NAME), &pStmt, NULL);
+	if( rc ) {
+		const char* errmsg = sqlite3_errmsg(pDb);
+		if ( 0==strcmp(MSG_NO_TABLE, errmsg) ) {	// if not created table
+			rc = sqlite3_exec(pDb, CREATE_TABLE , NULL, 0, &zErrMsg);
+			if( rc!=SQLITE_OK ){
+				fprintf(stderr, "SQL error: %s\n", zErrMsg);
+				sqlite3_free(zErrMsg);
+			}
+		} else {
+			fprintf(stderr, "Can't prepare database: %s\n", sqlite3_errmsg(pDb));
+		}
+		sqlite3_close(pDb);
+		fprintf(stdout, "%s", mac);	// no data (cause created right now)
+		return rc;
+	}
+
+	rc = sqlite3_bind_text(pStmt, 1, mac, (int)strlen(mac), NULL);
+	if( rc ) {	// if not SQLITE_OK
+		fprintf(stderr, "Can't bind to query: %d\n", rc);
+		return rc;
+	}
+	rc = sqlite3_step(pStmt);	// SQLITE_ROW(exist data)
+	if(SQLITE_ROW==rc) {
+		fprintf(stdout, "%s (%s)", sqlite3_column_text(pStmt, 0), mac);
+	} else if(SQLITE_DONE==rc) {// SQLITE_DONE (no data)
+		fprintf(stdout, "%s", mac);
+	} else {
+		fprintf(stderr, "Can't step database: %d\n", rc);
+	}
+	sqlite3_reset(pStmt);
+
+	sqlite3_finalize(pStmt);
+	rc = sqlite3_close(pDb);
+	return rc;
+}
+
+int IfExistDBThenCreate()
+{
+	sqlite3 *db;
+	char *zErrMsg = 0;
+	int rc;
+
+	rc = sqlite3_open(TABLE_NAME, &db);
+	if( rc ) {	// not SQLITE_OK
+		fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+		sqlite3_close(db);
+		return rc;
+	}
+
+	rc = sqlite3_exec(db, CREATE_TABLE , NULL, 0, &zErrMsg);
+	if( rc!=SQLITE_OK ){
+		fprintf(stderr, "SQL error: %s\n", zErrMsg);
+		sqlite3_free(zErrMsg);
+	}
+	sqlite3_close(db);
+
+	return rc;
 }

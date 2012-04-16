@@ -7,6 +7,9 @@ void CloseDB(sqlite3 *pDb, sqlite3_stmt *pStmt);
 int GetWhoIsIP(const char*ip);
 int IfExistDBThenCreate();
 
+const char* BaseResolveForm = "http://10.17.1.157:8282/arp?q=%s";
+void ResolveIP(const char*ip, int repeatCount);
+
 #ifdef _MSC_VER
 // GetTcpTable function 
 // refs. http://msdn.microsoft.com/en-us/library/windows/desktop/aa366026(v=vs.85).aspx
@@ -14,10 +17,12 @@ int IfExistDBThenCreate();
 // Need to link with Iphlpapi.lib and Ws2_32.lib
 #include <winsock2.h>	// for UCHAR, USHORT, Word
 #include <iphlpapi.h>	// for PMIB_TCPTABLE, MIB_TCPTABLE
+#include <Wininet.h>	// for HTTP Client
 #include <stdio.h>		// for fprint, stdout, stderr
 
 #pragma comment(lib, "iphlpapi.lib")	// for GetTcpTable
 #pragma comment(lib, "ws2_32.lib")		// for ntohs, inet_ntoa
+#pragma comment(lib, "Wininet.lib")
 
 /* Note: could also use malloc() and free() */
 #define MALLOC(x) HeapAlloc(GetProcessHeap(), 0, (x))
@@ -30,7 +35,7 @@ int IfExistDBThenCreate();
 
 void showUsageAndExit(int code)
 {
-	IfExistDBThenCreate();
+	//IfExistDBThenCreate();
 	fprintf(stderr, "whoConnect.exe [my port]\n");
 	exit(code);
 }
@@ -74,9 +79,9 @@ int main(int argc, char* argv[])
 	// Make a second call to GetTcpTable to get
 	// the actual data we require
 	if ((dwRetVal = GetTcpTable(pTcpTable, &dwSize, TRUE)) == NO_ERROR) {
-		sqlite3			*db;
-		sqlite3_stmt	*stmt;
-		OpenDB(&db, &stmt);
+		//sqlite3			*db;
+		//sqlite3_stmt	*stmt;
+		//OpenDB(&db, &stmt);
 		for (i = 0, c = 0; i < (int) pTcpTable->dwNumEntries; i++) {
 			PMIB_TCPROW row = &(pTcpTable->table[i]);
 
@@ -86,13 +91,13 @@ int main(int argc, char* argv[])
 				char* remoteIP;
 				IpAddr.S_un.S_addr = (u_long) row->dwRemoteAddr;
 				remoteIP = inet_ntoa(IpAddr);
-				
-				PrintIfMatch(stmt, remoteIP, c);
+
+				ResolveIP(remoteIP, c);
 
 				c++;
 			}
 		}
-		CloseDB(db, stmt);
+		//CloseDB(db, stmt);
 	} else {
 		fprintf(stderr, "\tGetTcpTable failed with %d\n", dwRetVal);
 		FREE(pTcpTable);
@@ -112,9 +117,9 @@ int main(int argc, char* argv[])
 #include <unistd.h>
 
 int main() {
-    sleep(1);
-    printf("127.0.0.1\n");
-    return 0;
+	sleep(1);
+	printf("127.0.0.1\n");
+	return 0;
 }
 
 #endif	// _MSC_VER
@@ -244,4 +249,41 @@ int IfExistDBThenCreate()
 	sqlite3_close(db);
 
 	return rc;
+}
+
+void ResolveIP(const char*ip, int repeatCount)
+{
+	HINTERNET hInternet;
+	HINTERNET hFile;
+	char URL[INTERNET_MAX_URL_LENGTH];
+	char pData[100];
+    DWORD dwBytesRead = 1;
+
+	hInternet = InternetOpenA("MAC Resolver", INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0);
+	if(NULL==hInternet) {
+		if(repeatCount) fprintf(stdout, "|");
+		fprintf(stdout, "%s", ip);
+		return;
+	}
+
+	sprintf_s(URL, INTERNET_MAX_URL_LENGTH, BaseResolveForm, ip);
+	hFile = InternetOpenUrlA(hInternet, URL, NULL, 0, INTERNET_FLAG_RELOAD, 0);
+	if(NULL==hFile) {
+		InternetCloseHandle(hInternet);
+		if(repeatCount) fprintf(stdout, "|");
+		fprintf(stdout, "%s", ip);
+		return;
+	}
+
+	if(repeatCount) fprintf(stdout, "|");
+	fprintf(stdout, "%s (", ip);
+	while (dwBytesRead) {
+		InternetReadFile(hFile, pData, 99, &dwBytesRead);
+		pData[dwBytesRead] = 0;
+		fprintf(stdout, "%s", pData);
+	}
+	fprintf(stdout, ")");
+
+	InternetCloseHandle(hFile);  
+	InternetCloseHandle(hInternet);
 }
