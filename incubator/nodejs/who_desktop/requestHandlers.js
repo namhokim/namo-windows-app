@@ -15,14 +15,23 @@ function start(response) {
     var cspr = spawn(bin, args);
     
     cspr.stdout.setEncoding('utf8');
-    cspr.stdout.on('data', function(data) {  
+    cspr.stdout.on('data', function(data) {
+		console.log("whoConnect");
         var str = data.toString(), lines = str.split(",");
         var html = fn({"lines":lines});
         response.writeHead(200, {"Content-Type": "text/html"});
         response.write(html);
         response.end();
     });
-
+	cspr.stderr.on('data', function(data) {
+		console.log("whoConnect stderr: " + data);
+	});
+	cspr.on('exit', function (data) {
+		var html = fn({"lines":['사용자가 없습니다']});
+		response.writeHead(200, {"Content-Type": "text/html"});
+        response.write(html);
+        response.end();
+	});
 }
 
 function favicon(response) {
