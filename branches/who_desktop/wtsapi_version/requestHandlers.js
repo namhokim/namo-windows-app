@@ -17,7 +17,6 @@ function start(response) {
     cspr.stdout.on('data', function(data) {
 		console.log("whoConnect");
 		var json_data = eval('(' + data + ')');
-//		console.log(data);	console.log(json_data);
         var html = fn(json_data);
         response.writeHead(200, {"Content-Type": "text/html"});
         response.write(html);
