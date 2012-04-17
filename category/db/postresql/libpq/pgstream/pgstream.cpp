@@ -48,6 +48,9 @@ int sql_bind_param::m_oids[] = {
 };
 
 namespace convert {
+	const wchar_t Pow2_6 = 64;
+	const wchar_t Pow2_12 = 4096;
+
 	std::wstring UTF82W(const std::string& utf8)
 	{
 		std::wstring out;
@@ -93,16 +96,17 @@ namespace convert {
 				out.push_back((char)uc);
 			} else if (uc <= 0x7ff) {
 				char utf8[3];
-				utf8[0] = (char) 0xc0 + uc / (wchar_t) (2 ^ 6);
-				utf8[1] = (char) 0x80 + uc % (wchar_t) (2 ^ 6);
+				utf8[0] = (char) 0xc0 + uc / Pow2_6;
+				utf8[1] = (char) 0x80 + uc % Pow2_6;
 				utf8[2] = (char) '\0';
 				out.append(utf8);
 			} else if (uc <= 0xffff) {
-				char utf8[4];
-				utf8[0] = (char) 0xe0 + uc / (wchar_t) (2 ^ 12);
-				utf8[1] = (char) 0x80 + uc / (wchar_t) (2 ^ 6) % (wchar_t) (2 ^ 6);
-				utf8[2] = (char) 0x80 + uc % (wchar_t) (2 ^ 6);
+				unsigned char utf8[4];
+				utf8[0] = (unsigned char) 0xe0 + uc / Pow2_12;
+				utf8[1] = (unsigned char) 0x80 + uc / Pow2_6 % Pow2_6;
+				utf8[2] = (unsigned char) 0x80 + uc % Pow2_6;
 				utf8[3] = (char) '\0';
+				out.append((char*)utf8);
 			}
 		}
 		return out;
