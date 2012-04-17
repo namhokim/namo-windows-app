@@ -5,7 +5,6 @@
 #include <stdio.h>		// for fprint, stdout, stderr
 #include <stdlib.h>		// for exit
 #include <string>		// for std::string
-#include <vector>		// for convert
 #include <sstream>		// for std::stringstream
 #include "json/json.h"
 
@@ -70,7 +69,7 @@ void GetDetailInfo(DWORD SessionId, Json::Value& item_out)
 	bRes = WTSQuerySessionInformationW(WTS_CURRENT_SERVER_HANDLE, SessionId,
 		WTSClientName, &pBuffer, &dwBytesReturned);
 	if(bRes && dwBytesReturned>0) {
-		std::string h(convert::W2UTF8(std::wstring(pBuffer)));
+		std::string h(convert::W2UTF8(pBuffer));
 		if(h.size()) item_out["host"] = h;
 		else item_out["host"] = "-";
 		WTSFreeMemory(pBuffer);
@@ -115,17 +114,37 @@ void GetAddressInfo(PWTS_CLIENT_ADDRESS address, std::string& address_str)
 }
 
 namespace convert {
+
+	wchar_t Pow2_6 = 64;
+	wchar_t Pow2_12 = 4096;
+
 	std::string W2UTF8(const std::wstring& utf16le)
 	{	
-		int needBuf = WideCharToMultiByte(CP_UTF8, 0, utf16le.c_str(), (int)utf16le.size(), NULL, 0, NULL, NULL);
-		if(needBuf > 0) {
-			std::vector<BYTE> buf(needBuf+1);
-			WideCharToMultiByte(CP_UTF8, 0, utf16le.c_str(), (int)utf16le.size(), (LPSTR)&buf[0], (int)buf.size(), NULL, NULL);
-			std::string out(buf.begin(), buf.end());
-			return out;
+		std::string out;
+
+		// refs. http://support.microsoft.com/kb/601368/ko
+		size_t size = utf16le.size();
+		out.reserve(size);
+		for(size_t i=0; i<size; ++i) {
+			wchar_t uc = utf16le[i];
+
+			if(uc <= 0x7f) {
+				out.push_back((char)uc);
+			} else if (uc <= 0x7ff) {
+				char utf8[3];
+				utf8[0] = (char) 0xc0 + uc / Pow2_6;
+				utf8[1] = (char) 0x80 + uc % Pow2_6;
+				utf8[2] = (char) '\0';
+				out.append(utf8);
+			} else if (uc <= 0xffff) {
+				unsigned char utf8[4];
+				utf8[0] = (unsigned char) 0xe0 + uc / Pow2_12;
+				utf8[1] = (unsigned char) 0x80 + uc / Pow2_6 % Pow2_6;
+				utf8[2] = (unsigned char) 0x80 + uc % Pow2_6;
+				utf8[3] = (char) '\0';
+				out.append((char*)utf8);
+			}
 		}
-		else {
-			return "";
-		}
+		return out;
 	}
 } // namespace convert
