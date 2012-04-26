@@ -61,9 +61,6 @@ LRESULT CMainFrame::OnCreate(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/
 	pLoop->AddMessageFilter(this);
 	pLoop->AddIdleHandler(this);
 
-	// Lock the workstation 타이머 가동
-	m_hTimer = SetTimer(ID_TIMER_LOCK_WORKSTATION, START_LOCK_DELAY*1000);
-
 	return 0;
 }
 
@@ -105,25 +102,12 @@ LRESULT CMainFrame::OnQueryEndSession(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /
 // 트레이 관련 이벤트처리
 LRESULT CMainFrame::OnTray(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& bHandled)
 {
-	SetAndKillTimer();
-
 	switch (lParam)
 	{
 	case WM_LBUTTONUP:	// @@@ 수정 by Namho Kim 2008.05.28 (<- WM_LBUTTONDOWN)
 	case WM_RBUTTONUP:	// @@@ 수정 by Namho Kim 2008.05.28 (<- WM_RBUTTONDOWN)
 		SetTray(this->m_hWnd, NULL, NIM_DELETE);
 		break;
-	}
-
-	return 0;
-}
-
-LRESULT CMainFrame::OnTimer(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& /*bHandled*/)
-{
-	switch(wParam) {
-		case ID_TIMER_LOCK_WORKSTATION:
-			SetAndKillTimer(TRUE);
-			break;
 	}
 
 	return 0;
@@ -221,8 +205,6 @@ LRESULT CMainFrame::OnFileExit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCt
 
 LRESULT CMainFrame::OnStateAdd(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 {
-	SetAndKillTimer();
-
 	CAddStateDlg dlg(&m_view);
 	return dlg.DoModal();
 }
@@ -237,9 +219,6 @@ LRESULT CMainFrame::OnStateAdd(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCt
 #include <StrSafe.h>
 LRESULT CMainFrame::OnSetToTray(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 {
-	// 타이머 제거
-	SetAndKillTimer();
-
 	// tray용 icon (16x16 아이콘만 트레이에 제대로 표시된다)
 	HICON hIcon16 = WTL::AtlLoadIcon(IDI_ICON_TRAY);
 
@@ -316,16 +295,6 @@ VOID CMainFrame::InitStatusBar()
 
     // Pane 2: Display the time
     m_status.SetPaneText(IDR_SUM_TIME, TEXT(""));
-}
-
-VOID CMainFrame::SetAndKillTimer(BOOL isLockWorkStation)
-{
-	if(m_hTimer==ID_TIMER_LOCK_WORKSTATION) {
-		KillTimer(ID_TIMER_LOCK_WORKSTATION);
-		m_hTimer = ID_TIMER_NO_HAS;
-
-		if(isLockWorkStation) LockWorkStation();
-	}
 }
 
 // [리스트뷰]-[추가정보 편집] : 리스트뷰 터블클릭 or 팝업메뉴
