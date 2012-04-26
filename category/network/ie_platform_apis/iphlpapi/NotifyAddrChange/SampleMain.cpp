@@ -11,20 +11,25 @@ void main()
 	OVERLAPPED overlap;
 	DWORD ret;
 
-	HANDLE hand = NULL;
+	HANDLE hand = NULL;	//  Do not close this handle
 	overlap.hEvent = WSACreateEvent();
 
-	ret = NotifyAddrChange(&hand, &overlap);
+	while(1) {
+		ret = NotifyAddrChange(&hand, &overlap);
 
-	if (ret != NO_ERROR)
-	{
-		if (WSAGetLastError() != WSA_IO_PENDING)
+		if (ret != NO_ERROR)
 		{
-			printf("NotifyAddrChange error...%d\n", WSAGetLastError());            
-			return;
+			if (WSAGetLastError() != WSA_IO_PENDING)
+			{
+				printf("NotifyAddrChange error...%d\n", WSAGetLastError());            
+				return;
+			}
 		}
-	}
 
-	if ( WaitForSingleObject(overlap.hEvent, INFINITE) == WAIT_OBJECT_0 )
-		printf("IP Address table changed..\n");
+		printf("Monitoring...\n");
+		if ( WaitForSingleObject(overlap.hEvent, INFINITE) == WAIT_OBJECT_0 )
+			printf("IP Address table changed..\n");
+		WSAResetEvent(overlap.hEvent);
+	}
+	WSACloseEvent(overlap.hEvent);
 }
