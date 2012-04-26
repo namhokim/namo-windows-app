@@ -1,0 +1,5 @@
+Windows Internet Explorer platform APIs (Developer Center)
+http://msdn.microsoft.com/en-us/library/ie/hh828809(v=vs.85).aspx
+
+Windows Internet Explorer Platform APIs
+http://msdn.microsoft.com/en-us/library/hh772402(v=vs.85).aspx
