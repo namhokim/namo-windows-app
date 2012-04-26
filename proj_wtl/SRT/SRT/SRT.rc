@@ -100,8 +100,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,4,1,0
- PRODUCTVERSION 2,4,1,0
+ FILEVERSION 2,4,2,0
+ PRODUCTVERSION 2,4,2,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -116,13 +116,14 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
-            VALUE "FileDescription", "SRT Module"
-            VALUE "FileVersion", "2, 4, 1, 0"
+            VALUE "Comments", "It's FREEware."
+            VALUE "FileDescription", "Smart Recording Time"
+            VALUE "FileVersion", "2, 4, 2, 0"
             VALUE "InternalName", "SRT"
             VALUE "LegalCopyright", "Copyright 2010"
             VALUE "OriginalFilename", "SRT.exe"
             VALUE "ProductName", "SRT Module"
-            VALUE "ProductVersion", "2, 4, 1, 0"
+            VALUE "ProductVersion", "2, 4, 2, 0"
         END
     END
     BLOCK "VarFileInfo"
@@ -163,7 +164,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDR_MAINFRAME           "SRT 2.4.1"
+    IDR_MAINFRAME           "SRT 2.4.2"
 END
 
 STRINGTABLE 
