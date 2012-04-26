@@ -17,3 +17,6 @@ FlushIpNetTable 함수
 ===========================================================================
 ...
  △ 부분이 인터페이스 인덱스임
+ 
+ 
+refs. http://msdn.microsoft.com/en-us/library/windows/desktop/aa365905(v=vs.85).aspx
