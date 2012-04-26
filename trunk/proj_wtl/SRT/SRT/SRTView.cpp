@@ -129,7 +129,7 @@ DWORD ReadFileByLine(__in HANDLE hFile, __out std::wstring& line)
 		line.push_back(wch);
 	}	
 
-	return line.size();
+	return (DWORD)line.size();
 }
 
 // tokenize
@@ -431,7 +431,7 @@ void CSRTView::SaveWithUnicode(HANDLE hFile)
 			BSTR bstrText = NULL;
 			this->GetItemText(i, j, bstrText);
 			if(NULL!=bstrText) {
-				::WriteFile(hFile, bstrText, wcslen(bstrText)*sizeof(OLECHAR), &dwWritten, NULL);
+				::WriteFile(hFile, bstrText, DWORD(wcslen(bstrText))*sizeof(OLECHAR), &dwWritten, NULL);
 				::SysFreeString(bstrText);
 			}
 		}	
