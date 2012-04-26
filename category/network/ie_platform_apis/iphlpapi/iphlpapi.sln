@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FlushIpNetTable", "FlushIpNetTable\FlushIpNetTable.vcproj", "{01E4AF0D-024E-411D-ADBF-AC26F4A15F46}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GetIpAddrTable", "GetIpAddrTable\GetIpAddrTable.vcproj", "{744801AE-1D1C-4E41-AFFE-5895CFF3061B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +15,10 @@ Global
 		{01E4AF0D-024E-411D-ADBF-AC26F4A15F46}.Debug|Win32.Build.0 = Debug|Win32
 		{01E4AF0D-024E-411D-ADBF-AC26F4A15F46}.Release|Win32.ActiveCfg = Release|Win32
 		{01E4AF0D-024E-411D-ADBF-AC26F4A15F46}.Release|Win32.Build.0 = Release|Win32
+		{744801AE-1D1C-4E41-AFFE-5895CFF3061B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{744801AE-1D1C-4E41-AFFE-5895CFF3061B}.Debug|Win32.Build.0 = Debug|Win32
+		{744801AE-1D1C-4E41-AFFE-5895CFF3061B}.Release|Win32.ActiveCfg = Release|Win32
+		{744801AE-1D1C-4E41-AFFE-5895CFF3061B}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
