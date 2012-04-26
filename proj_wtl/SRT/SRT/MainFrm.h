@@ -22,8 +22,6 @@ class CMainFrame : public CFrameWindowImpl<CMainFrame>, public CUpdateUI<CMainFr
 {
 private:
 	VOID InitStatusBar();
-	UINT_PTR m_hTimer;
-	VOID SetAndKillTimer(BOOL isLockWorkStation=FALSE);
 public:
 	DECLARE_FRAME_WND_CLASS(App_GUID, IDR_MAINFRAME)
 
@@ -55,7 +53,6 @@ public:
 		MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
 		MESSAGE_HANDLER(WM_QUERYENDSESSION, OnQueryEndSession)	// 다른 종료요청 메시지
 		MESSAGE_HANDLER(TRAY_NOTIFY, OnTray)			// 트레이 관련 이벤트 핸들러
-		MESSAGE_HANDLER(WM_TIMER, OnTimer)
 
 		COMMAND_ID_HANDLER(ID_FILE_EXPLORE_OPEN, OnOpenExplore)
 		COMMAND_ID_HANDLER(ID_FILE_MODIFY, OnModifyByNotepad)
@@ -81,7 +78,6 @@ public:
 	LRESULT OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled);
 	LRESULT OnQueryEndSession(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled);
 	LRESULT OnTray(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM lParam, BOOL& bHandled);
-	LRESULT OnTimer(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& /*bHandled*/);
 
 	LRESULT OnOpenExplore(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
 	LRESULT OnModifyByNotepad(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/);
