@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GetAdaptersAddresses", "Get
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GetIcmpStatistics", "GetIcmpStatistics\GetIcmpStatistics.vcproj", "{E4E15267-152C-47BE-B23E-16ECA10D7F35}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NotifyAddrChange", "NotifyAddrChange\NotifyAddrChange.vcproj", "{D488C93C-CB14-4F55-A7F4-94AB4D2EFE5B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,6 +33,10 @@ Global
 		{E4E15267-152C-47BE-B23E-16ECA10D7F35}.Debug|Win32.Build.0 = Debug|Win32
 		{E4E15267-152C-47BE-B23E-16ECA10D7F35}.Release|Win32.ActiveCfg = Release|Win32
 		{E4E15267-152C-47BE-B23E-16ECA10D7F35}.Release|Win32.Build.0 = Release|Win32
+		{D488C93C-CB14-4F55-A7F4-94AB4D2EFE5B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D488C93C-CB14-4F55-A7F4-94AB4D2EFE5B}.Debug|Win32.Build.0 = Debug|Win32
+		{D488C93C-CB14-4F55-A7F4-94AB4D2EFE5B}.Release|Win32.ActiveCfg = Release|Win32
+		{D488C93C-CB14-4F55-A7F4-94AB4D2EFE5B}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
