@@ -1,5 +1,6 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
+#include <tchar.h>		// for _tcscat_s, _tcschr, _tcslen
 #include <Wtsapi32.h>	// for WTSEnumerateSessions, WTSQuerySessionInformationA
 #include <Ws2def.h>		// for AF_INET
 #include <stdio.h>		// for fprint, stdout, stderr
@@ -11,19 +12,30 @@
 #pragma comment(lib, "Wtsapi32.lib")
 
 const int ArgNone	= 1;
+const int ArgTwo	= 3;
 const char* JSON_NO_DATA = "{number:0,data:null}";
 
 int ShowCurrentConnectedUser();
 void GetDetailInfo(DWORD SessionId, Json::Value& item_out);
 void GetAddressInfo(PWTS_CLIENT_ADDRESS address, std::string& address_str);
+int SendMessageToSesstionID(DWORD SessionId, LPCWSTR message);
+int GetMessageTitle(LPWSTR title);
 
 namespace convert {
+	std::wstring UTF82W(const std::string& utf8);
 	std::string W2UTF8(const std::wstring& utf16le);
 }
 
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
 	switch(argc) {
+		case ArgTwo:
+			{
+				DWORD sessionId = atoi(argv[1]);
+				std::wstring msg( convert::UTF82W(argv[2]) );
+				LPCWSTR szMsg = msg.c_str();
+				return SendMessageToSesstionID(sessionId, szMsg);
+			}
 		case ArgNone:
 		default:
 			return ShowCurrentConnectedUser();
@@ -126,9 +138,84 @@ void GetAddressInfo(PWTS_CLIENT_ADDRESS address, std::string& address_str)
 	}
 }
 
+int SendMessageToSesstionID(DWORD SessionId, LPCWSTR message)
+{
+	DWORD dwTimeout = 60;	// 60 seconds
+	DWORD dwTimeoutIndefinitely = 0;	// 
+	DWORD Response = 0;
+
+	WCHAR szTitle[1024] = {0};
+	WCHAR szMessage[1024] = {0};
+	GetMessageTitle(szTitle);
+	wsprintfW(szMessage, message);
+
+	// http://msdn.microsoft.com/en-us/library/windows/desktop/aa383842(v=vs.85).aspx
+	BOOL bRes = WTSSendMessage(
+		WTS_CURRENT_SERVER_HANDLE,
+		SessionId,
+		szTitle, static_cast<DWORD>(wcslen(szTitle)*sizeof(WCHAR)),
+		szMessage, static_cast<DWORD>(wcslen(szMessage)*sizeof(WCHAR)),
+		MB_OK, dwTimeoutIndefinitely, &Response, FALSE);
+
+	//MessageBox(NULL, message, L"알림", MB_OK);
+	return 0;
+}
+
+int GetMessageTitle(LPWSTR title)
+{
+	SYSTEMTIME st;
+	LPCWSTR MessageFormat = L"8282 서비스 - %s의 메시지";
+	
+	WCHAR szTime[256] = {0};
+
+	// 지역시간
+	GetLocalTime(&st);
+
+	// 쓸 문자열 작성
+	GetDateFormatW(LOCALE_USER_DEFAULT, DATE_LONGDATE,
+		&st, NULL, szTime, _countof(szTime));
+	_tcscat_s(szTime, _countof(szTime), TEXT(" "));	// 공백
+	GetTimeFormatW(LOCALE_USER_DEFAULT, 0,
+		&st, NULL, _tcschr(szTime, TEXT('\0')), (int)(_countof(szTime) - _tcslen(szTime)));
+
+	// 메시지 생성
+	return wsprintfW(title, MessageFormat, szTime);
+}
+
 namespace convert {
 	const wchar_t Pow2_6 = 64;
 	const wchar_t Pow2_12 = 4096;
+
+	std::wstring UTF82W(const std::string& utf8)
+	{
+		std::wstring out;
+
+		// refs. http://snowdeer.egloos.com/2401298
+		size_t size = utf8.size();
+		try {
+			out.reserve(size);		// for prevent re-allocation
+			for(size_t i=0; i<size; ++i) {
+				wchar_t ch;
+				short sh = (unsigned char)utf8[i];
+				if (sh < 0x80) {
+					ch = sh;
+				} else if (sh  < 0xE0) {
+					short sh_next = (unsigned char)utf8.at(i+1);	// can be exception
+					ch = ((sh & 0x1F) << 6) | (sh_next & 0x3F);
+					i = i + 1;
+				} else {
+					short sh_next = (unsigned char)utf8[i+1];
+					short sh_next_next = (unsigned char)utf8.at(i+2);	// can be exception
+					ch = ((sh & 0x0F) << 12) | ((sh_next & 0x3F) << 6) | sh_next_next & 0x3F;
+					i = i + 2;
+				}
+				out.push_back(ch);
+			}
+		} catch(std::out_of_range) {
+			out.clear();
+		}
+		return out;
+	}
 
 	std::string W2UTF8(const std::wstring& utf16le)
 	{	
