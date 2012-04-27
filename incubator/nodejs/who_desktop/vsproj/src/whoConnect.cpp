@@ -26,15 +26,14 @@ namespace convert {
 	std::string W2UTF8(const std::wstring& utf16le);
 }
 
-int main(int argc, char *argv[])
+int wmain(int argc, wchar_t *argv[])
 {
 	switch(argc) {
 		case ArgTwo:
 			{
-				DWORD sessionId = atoi(argv[1]);
-				std::wstring msg( convert::UTF82W(argv[2]) );
-				LPCWSTR szMsg = msg.c_str();
-				return SendMessageToSesstionID(sessionId, szMsg);
+				DWORD sessionId = _wtoi(argv[1]);
+				std::wstring msg( argv[2] );
+				return SendMessageToSesstionID(sessionId, msg.c_str());
 			}
 		case ArgNone:
 		default:
@@ -157,8 +156,7 @@ int SendMessageToSesstionID(DWORD SessionId, LPCWSTR message)
 		szMessage, static_cast<DWORD>(wcslen(szMessage)*sizeof(WCHAR)),
 		MB_OK, dwTimeoutIndefinitely, &Response, FALSE);
 
-	//MessageBox(NULL, message, L"¾Ë¸²", MB_OK);
-	return 0;
+	return (0!=bRes);
 }
 
 int GetMessageTitle(LPWSTR title)
