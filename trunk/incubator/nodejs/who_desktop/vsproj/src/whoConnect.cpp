@@ -40,6 +40,7 @@ int main(int argc, char **argv)
 		if( WTSActive == (s->State) ) {
 			Json::Value item;
 			item["rdp"] = convert::W2UTF8(s->pWinStationName);
+			item["SessionId"] = Json::Int(s->SessionId);
 			GetDetailInfo(s->SessionId, item);
 			data.append(item);
 			c++;
