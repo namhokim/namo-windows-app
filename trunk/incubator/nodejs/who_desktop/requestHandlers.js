@@ -44,5 +44,44 @@ function favicon(response) {
   });
 }
 
+function message(response, request) {
+	// refs. http://nodejs.org/docs/v0.6.15/api/url.html
+	var urlObj = url.parse(request.url, true);
+	var q = urlObj.query;
+	var to = q["to"];
+	var msg = q["msg"];
+//	console.log("Request for " + to + " received.");
+
+	console.log("Request handler 'message' was called.");
+    
+    var bin = "whoConnect.exe";
+    var args = [to, msg];
+    var cspr = spawn(bin, args);
+    
+    cspr.stdout.setEncoding('utf8');
+    cspr.stdout.on('data', function(data) {
+		console.log("whoConnect");
+		var json_data = eval('(' + data + ')');
+        var html = fn(json_data);
+        response.writeHead(200, {"Content-Type": "text/html"});
+        response.write('stdout - OK');
+        response.end();
+    });
+	cspr.stderr.on('data', function(data) {
+		response.writeHead(200, {"Content-Type": "text/html"});
+		console.log("whoConnect stderr: " + data);
+		response.write('stderr - OK');
+		response.end();
+	});
+	cspr.on('exit', function(code) {
+		console.log("child process exited with code " + code);
+
+		response.writeHead(200, {"Content-Type": "text/html"});
+		response.write('exit - OK');
+		response.end();
+	});
+}
+
 exports.start = start;
 exports.favicon = favicon;
+exports.message = message;
