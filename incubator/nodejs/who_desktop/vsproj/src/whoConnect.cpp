@@ -10,8 +10,10 @@
 
 #pragma comment(lib, "Wtsapi32.lib")
 
+const int ArgNone	= 1;
 const char* JSON_NO_DATA = "{number:0,data:null}";
 
+int ShowCurrentConnectedUser();
 void GetDetailInfo(DWORD SessionId, Json::Value& item_out);
 void GetAddressInfo(PWTS_CLIENT_ADDRESS address, std::string& address_str);
 
@@ -20,6 +22,17 @@ namespace convert {
 }
 
 int main(int argc, char **argv)
+{
+	switch(argc) {
+		case ArgNone:
+		default:
+			return ShowCurrentConnectedUser();
+	}
+
+	return EXIT_SUCCESS;
+};
+
+int ShowCurrentConnectedUser()
 {
 	PWTS_SESSION_INFOW pSes;
 	DWORD dwCount, i, c;
@@ -54,9 +67,8 @@ int main(int argc, char **argv)
 
 	Json::FastWriter w;
 	printf(w.write(root).c_str());
-
 	return EXIT_SUCCESS;
-};
+}
 
 void GetDetailInfo(DWORD SessionId, Json::Value& item_out)
 {
