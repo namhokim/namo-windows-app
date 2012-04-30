@@ -1,3 +1,5 @@
+// refs. node.js HTTPS (SSL) Server Example
+//       http://silas.sewell.org/blog/2010/06/03/node-js-https-ssl-server-example/
 fs = require("fs");
 var privateKey = fs.readFileSync('privatekey.pem').toString();
 var certificate = fs.readFileSync('certificate.pem').toString();
