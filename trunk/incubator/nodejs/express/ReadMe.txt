@@ -9,3 +9,9 @@
 
 4. 애플리케이션 실행
  > node app.js
+
+
+---
+
+1. HTTP 서버 만들기
+ > node http_server.js
