@@ -1,7 +1,7 @@
 1. install nod.js
  http://www.nodejs.org/#download
-  x86: http://nodejs.org/dist/v0.6.15/
-  x64: http://nodejs.org/dist/v0.6.15/x64/
+  x86: http://nodejs.org/dist/v0.6.17/
+  x64: http://nodejs.org/dist/v0.6.17/x64/
 2. install dependenced jade module
  (if not install, you meet "Error: Cannot find module 'jade'")
  > npm install jade
