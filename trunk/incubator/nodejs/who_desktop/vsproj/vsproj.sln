@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "whoConnect", "whoConnect.vcproj", "{4CF70F71-75DE-4F18-9AFA-BAF45230CB2D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "native", "native.vcproj", "{01C8A02D-3D73-4277-B5A8-90713B9E8B2A}"
+EndProject
 Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Debug|x64 = Debug|x64
@@ -19,6 +25,14 @@ Global
 		{4CF70F71-75DE-4F18-9AFA-BAF45230CB2D}.Release|Win32.Build.0 = Release|Win32
 		{4CF70F71-75DE-4F18-9AFA-BAF45230CB2D}.Release|x64.ActiveCfg = Release|x64
 		{4CF70F71-75DE-4F18-9AFA-BAF45230CB2D}.Release|x64.Build.0 = Release|x64
+		{01C8A02D-3D73-4277-B5A8-90713B9E8B2A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{01C8A02D-3D73-4277-B5A8-90713B9E8B2A}.Debug|Win32.Build.0 = Debug|Win32
+		{01C8A02D-3D73-4277-B5A8-90713B9E8B2A}.Debug|x64.ActiveCfg = Debug|x64
+		{01C8A02D-3D73-4277-B5A8-90713B9E8B2A}.Debug|x64.Build.0 = Debug|x64
+		{01C8A02D-3D73-4277-B5A8-90713B9E8B2A}.Release|Win32.ActiveCfg = Release|Win32
+		{01C8A02D-3D73-4277-B5A8-90713B9E8B2A}.Release|Win32.Build.0 = Release|Win32
+		{01C8A02D-3D73-4277-B5A8-90713B9E8B2A}.Release|x64.ActiveCfg = Release|x64
+		{01C8A02D-3D73-4277-B5A8-90713B9E8B2A}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
