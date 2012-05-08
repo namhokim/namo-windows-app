@@ -1,0 +1,1 @@
+http://nodejs.org/dist/v0.6.17/node-v0.6.17.tar.gz
