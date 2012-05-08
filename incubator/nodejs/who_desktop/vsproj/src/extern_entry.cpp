@@ -8,8 +8,19 @@ using namespace v8;
 #pragma comment(lib, "lib/x86/node.lib")
 #endif
 
-extern "C" void NODE_EXTERN init (Handle<Object> target)
-{
+Handle<Value> EnumHandler(const Arguments& args) {
    HandleScope scope;
-   target->Set(String::New("hello"), String::New("world"));
+   return scope.Close(String::New("enum handler"));
 }
+
+Handle<Value> MsgHandler(const Arguments& args) {
+   HandleScope scope;
+   return scope.Close(String::New("message handler"));
+}
+
+void init(Handle<Object> target) {
+	NODE_SET_METHOD(target, "enum", EnumHandler);
+	NODE_SET_METHOD(target, "message", MsgHandler);
+}
+
+NODE_MODULE(wts, init)
