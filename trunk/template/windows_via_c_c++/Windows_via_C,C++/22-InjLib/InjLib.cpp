@@ -67,7 +67,11 @@ BOOL WINAPI InjectLibW(DWORD dwProcessId, PCWSTR pszLibFile) {
       // Create a remote thread that calls LoadLibraryW(DLLPathname)
       hThread = CreateRemoteThread(hProcess, NULL, 0, 
          pfnThreadRtn, pszLibFileRemote, 0, NULL);
-      if (hThread == NULL) __leave;
+	  DWORD dwLastError;
+	  if (hThread == NULL) {
+		  dwLastError = GetLastError();
+		  __leave;
+	  }
 
       // Wait for the remote thread to terminate
       WaitForSingleObject(hThread, INFINITE);
