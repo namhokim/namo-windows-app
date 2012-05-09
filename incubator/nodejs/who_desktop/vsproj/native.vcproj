@@ -26,7 +26,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
@@ -99,7 +99,7 @@
 		<Configuration
 			Name="Debug|x64"
 			OutputDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			>
@@ -173,7 +173,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -249,7 +249,7 @@
 		<Configuration
 			Name="Release|x64"
 			OutputDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)\$(ProjectName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -363,6 +363,10 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\resource.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\whoConnect.h"
 				>
 			</File>
@@ -372,6 +376,10 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath=".\wts.rc"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"

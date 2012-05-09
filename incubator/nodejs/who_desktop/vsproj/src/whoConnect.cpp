@@ -157,7 +157,7 @@ int GetMessageTitle(LPWSTR title)
 	SYSTEMTIME st;
 	LPCWSTR MessageFormat = L"8282 서비스 - %s의 메시지";
 	
-	WCHAR szTime[256] = {0};
+	TCHAR szTime[256] = {0};
 
 	// 지역시간
 	GetLocalTime(&st);
