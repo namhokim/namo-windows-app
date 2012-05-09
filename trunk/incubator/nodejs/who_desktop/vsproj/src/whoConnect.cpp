@@ -4,9 +4,9 @@
 #include <Wtsapi32.h>	// for WTSEnumerateSessions, WTSQuerySessionInformationA
 #include <Ws2def.h>		// for AF_INET
 #include <stdlib.h>		// for EXIT_SUCCESS, EXIT_FAILURE
-#include <string>		// for std::string
 #include <sstream>		// for std::stringstream
 #include "json/json.h"
+//#include "whoConnect.h"
 
 #pragma comment(lib, "Wtsapi32.lib")
 
@@ -23,9 +23,11 @@ int GetMessageTitle(LPWSTR title);
 namespace convert {
 	std::wstring UTF82W(const std::string& utf8);
 	std::string W2UTF8(const std::wstring& utf16le);
-}
+} // end of namespace convert
 
 ///////////////////////////////////////////////////////////////////////////////
+
+namespace wts {
 
 // inner call GetDetailInfo -> GetAddressInfo
 int ShowCurrentConnectedUser(Json::Value& out)
@@ -87,6 +89,8 @@ int SendMessageToSesstionID(unsigned int SessionId, const wchar_t* message)
 
 	return (0!=bRes);
 }
+
+} // end of namespace wts
 
 ///////////////////////////////////////////////////////////////////////////////
 

@@ -23,14 +23,14 @@ int wmain(int argc, wchar_t *argv[])
 
 int StdoutSendMessage(unsigned int SessionId, const wchar_t* message)
 {
-	SendMessageToSesstionID(SessionId, message);
+	wts::SendMessageToSesstionID(SessionId, message);
 	return EXIT_SUCCESS;
 }
 
 int StdoutCurrentUsers()
 {
 	Json::Value out;
-	int ret = ShowCurrentConnectedUser(out);
+	int ret = wts::ShowCurrentConnectedUser(out);
 
 	// out
 	Json::FastWriter w;

@@ -336,12 +336,36 @@
 				RelativePath=".\src\extern_entry.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\src\whoConnect.cpp"
+				>
+			</File>
+			<Filter
+				Name="Json"
+				>
+				<File
+					RelativePath=".\src\json\json_reader.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\json\json_value.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\src\json\json_writer.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="헤더 파일"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\src\whoConnect.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="리소스 파일"
@@ -349,6 +373,10 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 		</Filter>
+		<File
+			RelativePath=".\ReadMe.txt"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
