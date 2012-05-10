@@ -10,4 +10,4 @@ html
 		else
 			ol
 				each d in data
-					li #{d.address} : #{d.host} [#{d.rdp}]
+					li(id=d.SessionId) #{d.address} : #{d.host} [#{d.rdp}]
