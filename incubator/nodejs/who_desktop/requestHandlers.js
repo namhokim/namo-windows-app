@@ -38,14 +38,20 @@ function message(response, request) {
 	var q = urlObj.query;
 	var to = q["to"];
 	var msg = q["msg"];
-//	console.log("Request for " + to + " received.");
 
 	console.log("Request handler 'message' was called.");
 
-	var res = wts.message(parseInt(to, 10), msg);
-	response.writeHead(200, { "Content-Type": "text/html" });
-	response.write(res);
-	response.end();
+	try {
+	    var res = wts.message(parseInt(to, 10), msg);
+	    response.writeHead(200, { "Content-Type": "text/html" });
+	    response.write(res);
+	    response.end();
+	} catch (e) {
+	    response.writeHead(200, { "Content-Type": "text/html" });
+	    response.write('<html><body><h1>Insufficien Parameter</h1>'
+	        + '<p>example: /message?to={number}&msg="{message}"</p></body>');
+	    response.end();
+	}
 }
 
 exports.start = start;
