@@ -69,7 +69,7 @@ Handle<Value> MsgHandler(const Arguments& args)
 
 void init(Handle<Object> target)
 {
-	NODE_SET_METHOD(target, "enum", EnumHandler);
+	NODE_SET_METHOD(target, "enumerate", EnumHandler);
 	NODE_SET_METHOD(target, "message", MsgHandler);
 }
 

@@ -1,32 +1,21 @@
 var fs = require("fs"),
     spawn = require('child_process').spawn,
-    jade = require('jade')
-	url = require('url');
+    jade = require('jade'),
+	url = require('url'),
+	wts = require('./wts');
 
 var jadefile = fs.readFileSync(__dirname + '/start.jade');
 var fn = jade.compile(jadefile.toString('utf8'));
 
 function start(response) {
     console.log("Request handler 'start' was called.");
-    
-    var bin = "whoConnect.exe";
-    var args = [];
-    var cspr = spawn(bin, args);
-    
-    cspr.stdout.setEncoding('utf8');
-    cspr.stdout.on('data', function(data) {
-		console.log("whoConnect");
-		var json_data = eval('(' + data + ')');
-        var html = fn(json_data);
-        response.writeHead(200, {"Content-Type": "text/html"});
-        response.write(html);
-        response.end();
-    });
-	cspr.stderr.on('data', function(data) {
-		response.writeHead(200, {"Content-Type": "text/text"});
-		console.log("whoConnect stderr: " + data);
-		response.end();
-	});
+
+    var data = wts.enumerate();
+    var json_data = eval('(' + data + ')');
+    var html = fn(json_data);
+    response.writeHead(200, {"Content-Type": "text/html"});
+    response.write(html);
+    response.end();
 }
 
 function favicon(response) {
@@ -53,33 +42,11 @@ function message(response, request) {
 //	console.log("Request for " + to + " received.");
 
 	console.log("Request handler 'message' was called.");
-    
-    var bin = "whoConnect.exe";
-    var args = [to, msg];
-    var cspr = spawn(bin, args);
-    
-    cspr.stdout.setEncoding('utf8');
-    cspr.stdout.on('data', function(data) {
-		console.log("whoConnect");
-		var json_data = eval('(' + data + ')');
-        var html = fn(json_data);
-        response.writeHead(200, {"Content-Type": "text/html"});
-        response.write('stdout - OK');
-        response.end();
-    });
-	cspr.stderr.on('data', function(data) {
-		response.writeHead(200, {"Content-Type": "text/html"});
-		console.log("whoConnect stderr: " + data);
-		response.write('stderr - OK');
-		response.end();
-	});
-	cspr.on('exit', function(code) {
-		console.log("child process exited with code " + code);
 
-		response.writeHead(200, {"Content-Type": "text/html"});
-		response.write('exit - OK');
-		response.end();
-	});
+	var res = wts.message(parseInt(to, 10), msg);
+	response.writeHead(200, { "Content-Type": "text/html" });
+	response.write(res);
+	response.end();
 }
 
 exports.start = start;
