@@ -1,5 +1,4 @@
 var fs = require("fs"),
-    spawn = require('child_process').spawn,
     jade = require('jade'),
 	url = require('url'),
 	wts = require('./wts');
