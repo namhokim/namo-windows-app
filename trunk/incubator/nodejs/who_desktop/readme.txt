@@ -8,21 +8,15 @@
  > npm install socket.io
    (To install WS with blazing fast native extensions, use)
     > npm install ws --ws:native
-2. C plugin build - whoConnect.exe , sqlite3(option, if using ip:name map)
- Copy 'whoConnect.exe' file into directory of same as 'requestHandlers.js'.
-3. Add map table to mapping name (option)
- Make mapping data with CSV format with utf8 encoding without BOM. (eg. map.csv)
-  [map.data]
-  192.168.1.1|Arthor
-  192.168.1.2|James
-  ...
- > whoConnect.exe
-  then created file as ip_map.db
- > sqlite3 ip_map.db
- > .import map.data map
-4. Run Node.js
+3. Module patch
+ - node_modules\socket.io\node_modules\socket.io-client\lib\socket.js
+ - find "xhr.withCredentials = true;"
+ - comment the line (it's not work in IE6.0)
+4. V8 Addons node module build - wts.node
+ Copy 'wts.node' file into directory of same as 'requestHandlers.js'.
+5. Run Node.js
  > node index.js
-5. Make Service
+6. Make Service
  refs. http://blog.tatham.oddie.com.au/2011/03/16/node-js-on-windows/
   Download : http://nssm.cc/download/?page=download
  > nssm install whoDesktop C:\who_desktop\node.exe C:\who_desktop\index.js
