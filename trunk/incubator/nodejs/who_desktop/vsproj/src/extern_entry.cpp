@@ -30,6 +30,7 @@ Handle<Value> EnumHandler(const Arguments& args)
 
 	Json::Value out;
 	Json::FastWriter w;
+	// execute C++ user function
 	wts::ShowCurrentConnectedUser(out);
 
 	return scope.Close(String::New(w.write(out).c_str()));
