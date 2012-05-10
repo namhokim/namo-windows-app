@@ -5,10 +5,13 @@
 #include <Ws2def.h>		// for AF_INET
 #include <stdlib.h>		// for EXIT_SUCCESS, EXIT_FAILURE
 #include <sstream>		// for std::stringstream
+#include <Strsafe.h>	// for StringCchPrintf
 #include "json/json.h"
 //#include "whoConnect.h"
 
 #pragma comment(lib, "Wtsapi32.lib")
+
+#define MAX_MESSAGE	1024
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -74,10 +77,10 @@ int SendMessageToSesstionID(unsigned int SessionId, const wchar_t* message)
 	DWORD dwTimeoutIndefinitely = 0;	// 
 	DWORD Response = 0;
 
-	WCHAR szTitle[1024] = {0};
-	WCHAR szMessage[1024] = {0};
+	WCHAR szTitle[MAX_MESSAGE+1] = {0};
+	WCHAR szMessage[MAX_MESSAGE+1] = {0};
 	GetMessageTitle(szTitle);
-	wsprintfW(szMessage, message);
+	StringCchPrintfW(szMessage, MAX_MESSAGE, L"[답장은 http://localhost:8282/ 에서 가능합니다]\n\n%s", message);
 
 	// http://msdn.microsoft.com/en-us/library/windows/desktop/aa383842(v=vs.85).aspx
 	BOOL bRes = WTSSendMessage(
@@ -165,12 +168,12 @@ int GetMessageTitle(LPWSTR title)
 	// 쓸 문자열 작성
 	GetDateFormatW(LOCALE_USER_DEFAULT, DATE_LONGDATE,
 		&st, NULL, szTime, _countof(szTime));
-	_tcscat_s(szTime, _countof(szTime), TEXT(" "));	// 공백
+	wcscat_s(szTime, _countof(szTime), TEXT(" "));	// 공백
 	GetTimeFormatW(LOCALE_USER_DEFAULT, 0,
-		&st, NULL, _tcschr(szTime, TEXT('\0')), (int)(_countof(szTime) - _tcslen(szTime)));
+		&st, NULL, wcschr(szTime, TEXT('\0')), (int)(_countof(szTime) - wcslen(szTime)));
 
 	// 메시지 생성
-	return wsprintfW(title, MessageFormat, szTime);
+	return StringCchPrintfW(title, MAX_MESSAGE, MessageFormat, szTime);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
