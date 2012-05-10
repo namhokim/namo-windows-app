@@ -1,10 +1,13 @@
-1. install nod.js
+1. install node.js
  http://www.nodejs.org/#download
   x86: http://nodejs.org/dist/v0.6.17/
   x64: http://nodejs.org/dist/v0.6.17/x64/
 2. install dependenced jade module
  (if not install, you meet "Error: Cannot find module 'jade'")
  > npm install jade
+ > npm install socket.io
+   (To install WS with blazing fast native extensions, use)
+    > npm install ws --ws:native
 2. C plugin build - whoConnect.exe , sqlite3(option, if using ip:name map)
  Copy 'whoConnect.exe' file into directory of same as 'requestHandlers.js'.
 3. Add map table to mapping name (option)
