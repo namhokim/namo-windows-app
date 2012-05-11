@@ -2,6 +2,7 @@ html
 	head
 		meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
 		title 원격 데스트탑 접속자
+		link(rel='stylesheet', href='/stylesheets/style.css')
 		script(src='/javascripts/jquery-1.7.2.min.js')
 		script(src='/socket.io/socket.io.js')
 		script(type='text/javascript')
@@ -26,11 +27,11 @@ html
 						+ data.date + ' [' + data.name + '] - ' + data.message
 						+ '</li>';
 					
-					$(output).prependTo('#content');
+					$(output).prependTo('#chat_content');
 				});
 				socket.on('users_count', function (data) {
 					$('#chat').text(chatHeading + '(' + data.number + ')');
-					if(typeof data.id !="undefined") $('#name').val(data.id);
+					if(typeof data.id !="undefined") $('#name').val(data.id.substring(0, 9));
 				});
 				
 				$('#send').click(function() {
@@ -63,19 +64,22 @@ html
 				});
 			});
 	body
-		h1 아래의 사용자가 접속해있습니다
-		if number < 1
-			ul
-				li 사용자가 없습니다
-		else
-			ol
-				each d in data
-					li
-						input(type="checkbox", id=d.SessionId, class="session_user")
-						check #{d.address} : #{d.host} [#{d.rdp}]
-					
-		h2(id="chat") 대화
-		input(id="name")
-		input(id="message")
-		button(id="send") Send
-		ul(id="content")
+		div(id="content")
+			h1 아래의 사용자가 접속해있습니다
+			div(id="user_section")
+				if number < 1
+					ul
+						li 사용자가 없습니다
+				else
+					ol
+						each d in data
+							li
+								input(type="checkbox", id=d.SessionId, class="session_user")
+								check #{d.address} : #{d.host} [#{d.rdp}]
+						
+			h2(id="chat") 대화
+			div(id="chat_section")
+				input(id="name")
+				input(id="message")
+				button(id="send") 전송
+				ul(id="chat_content")
