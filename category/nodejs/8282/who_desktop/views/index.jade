@@ -1,0 +1,81 @@
+html
+	head
+		meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+		title 원격 데스트탑 접속자
+		script(src='/javascripts/jquery-1.7.2.min.js')
+		script(src='/socket.io/socket.io.js')
+		script(type='text/javascript')
+			function pad2(number) {  
+				return (number < 10 ? '0' : '') + number
+			}
+			function getCurrentTime() {
+				now = new Date();
+				
+				hour = now.getHours();
+				min = now.getMinutes();
+				sec = now.getSeconds();
+				
+				return pad2(hour) + ':' + pad2(min) + ':' + pad2(sec);
+			}
+			
+			$(function () {		// same as $(document).ready
+				var socket = io.connect();
+				var chatHeading = '대화';
+				socket.on('message', function (data) {
+					var output = '<li>'
+						+ data.date + ' [' + data.name + '] - ' + data.message
+						+ '</li>';
+					
+					$(output).prependTo('#content');
+				});
+				socket.on('users_count', function (data) {
+					$('#chat').text(chatHeading + '(' + data.number + ')');
+					if(typeof data.id !="undefined") $('#name').val(data.id);
+				});
+				
+				$('#send').click(function() {
+					// WTS Message
+					$('input.session_user:checked').each(function() {
+						var sid = $(this).attr('id');
+						var url = '/message';
+						var param = {to: sid, msg: $('#message').val()};
+						$.post(url, param);
+						$(this).attr('checked', false);	// uncheck
+					});
+					// Chat Message
+					socket.emit('message', {
+						name: $('#name').val(), message: $('#message').val(),
+						date: getCurrentTime()
+					});
+					$('#message').select().focus();
+				});
+				
+				$('#message').keydown(function(event) {
+					if (event.which == 13) {
+						$('#send').click();
+					}
+				}).click(function() {
+					$(this).select();
+				}).focus();
+				
+				$('#name').click(function() {
+					$(this).select();
+				});
+			});
+	body
+		h1 아래의 사용자가 접속해있습니다
+		if number < 1
+			ul
+				li 사용자가 없습니다
+		else
+			ol
+				each d in data
+					li
+						input(type="checkbox", id=d.SessionId, class="session_user")
+						check #{d.address} : #{d.host} [#{d.rdp}]
+					
+		h2(id="chat") 대화
+		input(id="name")
+		input(id="message")
+		button(id="send") Send
+		ul(id="content")
