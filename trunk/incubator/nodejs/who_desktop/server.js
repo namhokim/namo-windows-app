@@ -18,6 +18,9 @@ function start(route, handle) {
     var io = socketio.listen(server);
     var clients = 0;    // http://stackoverflow.com/questions/7352164/update-all-clients-using-socket-io
     io.set('log level', 2); // https://github.com/LearnBoost/Socket.IO/wiki/Configuring-Socket.IO
+	io.set('transports', [
+		'websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling'
+	  ]);
     io.sockets.on('connection', function(socket) {
         ++clients;
         socket.broadcast.emit('users_count', { number: clients });
