@@ -16,4 +16,9 @@ namespace wts {
 		const wchar_t* message
 		);
 
+	// 특정 세션ID의 접속을 끊음
+	int DisconnectSession(
+		unsigned int SessionId
+		);
+
 } // end of namespace wts

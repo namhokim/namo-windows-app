@@ -3,6 +3,7 @@
 #include "whoConnect.h"
 
 const int ArgNone	= 1;
+const int ArgOne	= 2;
 const int ArgTwo	= 3;
 
 int StdoutSendMessage(unsigned int SessionId, const wchar_t* message);
@@ -11,6 +12,8 @@ int StdoutCurrentUsers();
 int wmain(int argc, wchar_t *argv[])
 {
 	switch(argc) {
+		case ArgOne:
+			return wts::DisconnectSession(_wtoi(argv[1]));
 		case ArgTwo:
 			return StdoutSendMessage(_wtoi(argv[1]), argv[2]);
 		case ArgNone:

@@ -93,6 +93,18 @@ int SendMessageToSesstionID(unsigned int SessionId, const wchar_t* message)
 	return (0!=bRes);
 }
 
+int DisconnectSession(unsigned int SessionId)
+{
+	// refs. http://msdn.microsoft.com/en-us/library/windows/desktop/aa383830(v=vs.85).aspx
+	return
+		(0 != WTSDisconnectSession(
+				WTS_CURRENT_SERVER_HANDLE,
+				SessionId,
+				FALSE	// whether the operation is synchronous
+				)
+			);
+}
+
 } // end of namespace wts
 
 ///////////////////////////////////////////////////////////////////////////////
