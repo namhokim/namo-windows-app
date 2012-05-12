@@ -1,4 +1,4 @@
-var wts = require('./wts');
+var wts = require('wts');
 
 /*
  * GET home page.
