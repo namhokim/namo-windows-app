@@ -27,7 +27,24 @@ const int	ONE_PARAMETERS = 1;
 const int	TWO_PARAMETERS = 2;
 
 ///////////////////////////////////////////////////////////////////////////////
+// Structure for Async
+struct Baton {
+    uv_work_t request;
+    Persistent<Function> callback;
+    int error_code;
+    std::string error_message;
 
+    // Custom data
+    uint32_t result;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+// define for Async functions
+void AsyncWork(uv_work_t* req);
+void AsyncAfter(uv_work_t* req);
+
+
+///////////////////////////////////////////////////////////////////////////////
 Handle<Value> EnumHandler(const Arguments& args)
 {
 	HandleScope scope;
@@ -92,6 +109,25 @@ Handle<Value> DisConnHandler(const Arguments& args)
 	return scope.Close(String::New("OK"));
 }
 
+Handle<Value> CallbackHandler(const Arguments& args) {
+    HandleScope scope;
+
+    if (!args[0]->IsFunction()) {
+        return ThrowException(Exception::TypeError(
+            String::New("Callback function required")));
+    }
+    Local<Function> callback = Local<Function>::Cast(args[0]);
+
+    Baton* baton = new Baton();
+    baton->request.data = baton;
+    baton->callback = Persistent<Function>::New(callback);
+
+    uv_queue_work(uv_default_loop(), &baton->request,
+        AsyncWork, AsyncAfter);
+
+    return scope.Close(Undefined());
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 
 void init(Handle<Object> target)
@@ -99,6 +135,50 @@ void init(Handle<Object> target)
 	NODE_SET_METHOD(target, "enumerate", EnumHandler);
 	NODE_SET_METHOD(target, "message", MsgHandler);
 	NODE_SET_METHOD(target, "disconnect", DisConnHandler);
+	NODE_SET_METHOD(target, "monitor", CallbackHandler);
 }
 
 NODE_MODULE(wts, init)
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Async handlers
+
+void AsyncWork(uv_work_t* req) {
+    // No HandleScope!
+
+    Baton* baton = static_cast<Baton*>(req->data);
+
+    // Do work in threadpool here.
+    // Set baton->error_code/message on failures.
+	baton->error_code = wts::WaitForEvent(&baton->result, baton->error_message);
+}
+
+void AsyncAfter(uv_work_t* req) {
+    HandleScope scope;
+    Baton* baton = static_cast<Baton*>(req->data);
+
+	if (baton->error_code) {
+		Local<Value> err = Exception::Error(
+			String::New(baton->error_message.c_str()));
+		Local<Value> argv[] = { err };
+
+		TryCatch try_catch;
+		baton->callback->Call(
+			Context::GetCurrent()->Global(), 1, argv);
+
+		if (try_catch.HasCaught()) {
+			node::FatalException(try_catch);
+		}
+    } else {
+        // Call baton->callback with results.
+		const unsigned argc = 1;
+		Local<Value> argv[argc] = { Local<Value>::New(Uint32::New(baton->result)) };
+
+		baton->callback->Call(
+			Context::GetCurrent()->Global(), argc, argv);
+    }
+
+    baton->callback.Dispose();
+    delete baton;
+}

@@ -21,4 +21,7 @@ namespace wts {
 		unsigned int SessionId
 		);
 
+	// 접속 이벤트(연결,연결끊김) 콜백함수(블록함수)
+	unsigned int WaitForEvent(unsigned int* pStausCode, std::string& errorMsg);
+
 } // end of namespace wts
