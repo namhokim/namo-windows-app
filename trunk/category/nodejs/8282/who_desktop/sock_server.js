@@ -7,6 +7,7 @@ exports.start = function(server) {
     io.set('transports', [
 	    'websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling'
       ]);
+
     io.sockets.on('connection', function(socket) {
         ++clients;
         socket.broadcast.emit('users_count', { number: clients });
@@ -23,4 +24,5 @@ exports.start = function(server) {
 
         io.sockets.sockets[socket.id].emit('users_count', { number: clients, id: socket.id }); // to self
     });
+
 };
