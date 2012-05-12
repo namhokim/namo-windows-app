@@ -19,9 +19,11 @@ using namespace v8;	// internal included <v8.h>
 ///////////////////////////////////////////////////////////////////////////////
 // Constants
 
-const char* ERR_PARAM_LEN = "message function must be with two argument";
+const char* ERR_PARAM_LEN_MESSAGE = "message function must be with two argument";
+const char* ERR_PARAM_LEN_DISCONN = "disconnect function must be with two argument";
 const char* ERR_PARAM_ONE = "1st Argument must be an unsigned integer";
 const char* ERR_PARAM_TWO = "2st Argument must be an string";
+const int	ONE_PARAMETERS = 1;
 const int	TWO_PARAMETERS = 2;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -44,7 +46,7 @@ Handle<Value> MsgHandler(const Arguments& args)
 
 	// check the param
 	if(args.Length() != TWO_PARAMETERS) {
-		ThrowException( Exception::TypeError(String::New(ERR_PARAM_LEN)) );
+		ThrowException( Exception::TypeError(String::New(ERR_PARAM_LEN_MESSAGE)) );
 		return scope.Close(Undefined());
 	}
 	if(!args[0]->IsUint32()) {
@@ -67,12 +69,36 @@ Handle<Value> MsgHandler(const Arguments& args)
 	return scope.Close(String::New("OK"));
 }
 
+Handle<Value> DisConnHandler(const Arguments& args)
+{
+	HandleScope scope;
+
+	// check the param
+	if(args.Length() != ONE_PARAMETERS) {
+		ThrowException( Exception::TypeError(String::New(ERR_PARAM_LEN_DISCONN)) );
+		return scope.Close(Undefined());
+	}
+	if(!args[0]->IsUint32()) {
+		ThrowException( Exception::TypeError(String::New(ERR_PARAM_ONE)) );
+		return scope.Close(Undefined());
+	}
+
+	// get the param
+	uint32_t		sid = args[0]->Uint32Value();
+
+	// execute C++ user function
+	wts::DisconnectSession(sid);
+
+	return scope.Close(String::New("OK"));
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 
 void init(Handle<Object> target)
 {
 	NODE_SET_METHOD(target, "enumerate", EnumHandler);
 	NODE_SET_METHOD(target, "message", MsgHandler);
+	NODE_SET_METHOD(target, "disconnect", DisConnHandler);
 }
 
 NODE_MODULE(wts, init)
