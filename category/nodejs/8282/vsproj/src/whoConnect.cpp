@@ -116,8 +116,14 @@ void GetDetailInfo(DWORD SessionId, Json::Value& item_out)
 		WTSClientName, &pBuffer, &dwBytesReturned);
 	if(bRes && dwBytesReturned>0) {
 		std::string h(convert::W2UTF8(pBuffer));
-		if(h.size()) item_out["host"] = h;
-		else item_out["host"] = "-";
+		if(h.size()) {
+			item_out["host"] = h;
+		} else {
+			WCHAR szName[MAX_COMPUTERNAME_LENGTH+1];
+			DWORD dwSize = MAX_COMPUTERNAME_LENGTH;
+			GetComputerName(szName, &dwSize);
+			item_out["host"] = convert::W2UTF8(szName);
+		}
 		WTSFreeMemory(pBuffer);
 	}
 
@@ -154,7 +160,7 @@ void GetAddressInfo(PWTS_CLIENT_ADDRESS address, std::string& address_str)
 			break;
 		case AF_UNSPEC:
 		default:
-			address_str.assign("-");
+			address_str.assign("localhost");
 			break;
 	}
 }
