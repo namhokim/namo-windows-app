@@ -35,6 +35,7 @@ app.configure('production', function(){
 
 app.get('/', routes.index);
 app.post('/message', routes.message);
+app.post('/disconnect/:sid', routes.disconnect);
 
 app.listen(8282, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

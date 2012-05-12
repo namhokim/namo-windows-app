@@ -28,3 +28,23 @@ exports.message = function(req, res){
         res.end();
     }
 };
+
+
+/*
+* POST disconnect page.
+*/
+exports.disconnect = function(req, res) {
+    var sid = req.param('sid');
+
+    try {
+        var r = wts.disconnect(parseInt(sid, 10));
+        res.writeHead(200, { "Content-Type": "text/html" });
+        res.write(r);
+        res.end();
+    } catch (e) {
+        res.writeHead(200, { "Content-Type": "text/html" });
+        res.write('<html><body><h1>Insufficien Parameter</h1>'
+            + '<p>example: /disconnect/{session idnumber}');
+        res.end();
+    }
+};
