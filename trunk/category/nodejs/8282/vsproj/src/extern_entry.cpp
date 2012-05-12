@@ -2,6 +2,8 @@
 
 #pragma warning(disable : 4251)	// Prevent warning message "node::ObjectWrap::handle_"
 								// It's not important, because we just provide functions
+// refs. http://nodejs.org/api/addons.html
+#define BUILDING_NODE_EXTENSION
 #include <node.h>
 #include <v8.h>
 using namespace v8;	// internal included <v8.h>
@@ -41,7 +43,6 @@ Handle<Value> MsgHandler(const Arguments& args)
 	HandleScope scope;
 
 	// check the param
-	// refs. http://nodejs.org/api/addons.html
 	if(args.Length() != TWO_PARAMETERS) {
 		ThrowException( Exception::TypeError(String::New(ERR_PARAM_LEN)) );
 		return scope.Close(Undefined());
