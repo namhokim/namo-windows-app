@@ -28,6 +28,8 @@ namespace convert {
 	std::string W2UTF8(const std::wstring& utf16le);
 } // end of namespace convert
 
+void ErrorExit(DWORD dwCode, std::string& errorString);
+
 ///////////////////////////////////////////////////////////////////////////////
 
 namespace wts {
@@ -97,6 +99,21 @@ int DisconnectSession(unsigned int SessionId)
 {
 	// refs. http://msdn.microsoft.com/en-us/library/windows/desktop/aa383830(v=vs.85).aspx
 	return WTSDisconnectSession(WTS_CURRENT_SERVER_HANDLE,SessionId, FALSE);
+}
+
+unsigned int WaitForEvent(unsigned int* pStausCode, std::string& errorMsg)
+{
+	DWORD dwEventFlags;
+	BOOL bRes;
+	bRes = WTSWaitSystemEvent(WTS_CURRENT_SERVER_HANDLE,
+		WTS_EVENT_CONNECT | WTS_EVENT_DISCONNECT, &dwEventFlags);
+	(*pStausCode) = dwEventFlags;
+	if(bRes) return NO_ERROR;
+	else {
+		DWORD dw = GetLastError();
+		ErrorExit(dw, errorMsg);
+		return dw;
+	}
 }
 
 } // end of namespace wts
@@ -255,3 +272,23 @@ namespace convert {
 		return out;
 	}
 } // namespace convert
+
+// refs. http://msdn.microsoft.com/en-us/library/windows/desktop/ms680582(v=vs.85).aspx
+void ErrorExit(DWORD dwCode, std::string& errorString)
+{
+	LPVOID lpMsgBuf;
+
+	FormatMessageW(
+        FORMAT_MESSAGE_ALLOCATE_BUFFER | 
+        FORMAT_MESSAGE_FROM_SYSTEM |
+        FORMAT_MESSAGE_IGNORE_INSERTS,
+        NULL,
+        dwCode,
+        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+        (LPWSTR) &lpMsgBuf,
+        0, NULL );
+
+	errorString.assign(convert::W2UTF8((LPWSTR)lpMsgBuf));
+
+	LocalFree(lpMsgBuf);
+}
