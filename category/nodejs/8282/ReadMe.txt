@@ -6,7 +6,7 @@
 2. 추가 모듈(V8 C++ Addons)
  - vsproj/native 프로젝트 빌드
  - 빌드 결과 파일: wts.node
- - who_desktop/routes 에 복사(64,32비트 구분!)
+ - who_desktop/node_modules 에 복사(64,32비트 구분!)
 3. IE 6.0 패치(socket.io)
  - module_patch/socket.js 를 \node_modules\socket.io\node_modules\socket.io-client\lib\ 로 덮어씌움
 4. 실행(테스트)
