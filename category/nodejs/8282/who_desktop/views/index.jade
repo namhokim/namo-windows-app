@@ -45,6 +45,7 @@ html
 						var param = {to: sid, msg: $('#message').val()};
 						$.post(url, param);
 						$(this).attr('checked', false);	// uncheck
+						$(this).parent().append($('<button class="disconn_user hide">X</button>'));
 					});
 					// Chat Message
 					var msg_data = {
@@ -88,7 +89,6 @@ html
 							li
 								input(type="checkbox", id=d.SessionId, class="session_user")
 								check #{d.address} : #{d.host} [#{d.rdp}]
-								button(class="disconn_user") X
 						
 			h2(id="chat") 대화
 			div(id="chat_section")
