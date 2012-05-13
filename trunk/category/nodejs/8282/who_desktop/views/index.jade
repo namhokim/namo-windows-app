@@ -69,6 +69,11 @@ html
 				$('#name').click(function() {
 					$(this).select();
 				});
+				
+				$(document).delegate('button.disconn_user', 'click', null, (function() {
+					var sid = $(this).parent().find('.session_user').attr('id');
+					$.post('/disconnect/'+sid);
+				}));
 			});
 	body
 		div(id="content")
@@ -83,6 +88,7 @@ html
 							li
 								input(type="checkbox", id=d.SessionId, class="session_user")
 								check #{d.address} : #{d.host} [#{d.rdp}]
+								button(class="disconn_user") X
 						
 			h2(id="chat") 대화
 			div(id="chat_section")
