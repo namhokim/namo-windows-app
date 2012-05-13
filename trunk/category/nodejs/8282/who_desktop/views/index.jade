@@ -1,7 +1,10 @@
+doctype html
 html
 	head
 		meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
 		title 원격 데스트탑 접속자
+		//if lte IE 8
+			script(src='/javascripts/html5forIE.js')
 		link(rel='stylesheet', href='/stylesheets/style.css')
 		script(src='/javascripts/jquery-1.7.2.min.js')
 		script(src='/socket.io/socket.io.js')
