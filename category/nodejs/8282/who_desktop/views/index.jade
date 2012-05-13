@@ -33,6 +33,9 @@ html
 					$('#chat').text(chatHeading + '(' + data.number + ')');
 					if(typeof data.id !="undefined") $('#name').val(data.id.substring(0, 9));
 				});
+				socket.on('refresh_connection', function (data) {
+					$('#user_section').empty().append($(data));
+				});
 				
 				$('#send').click(function() {
 					// WTS Message

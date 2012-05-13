@@ -3,7 +3,7 @@ var wts = require('wts');
 /*
  * GET home page.
  */
-exports.index = function(req, res){
+exports.index = function(req, res) {
   var data = wts.enumerate();
   var json_data = eval('(' + data + ')');
   res.render('index', json_data)
@@ -12,7 +12,7 @@ exports.index = function(req, res){
 /*
  * POST message page.
  */
-exports.message = function(req, res){
+exports.message = function(req, res) {
     var to = req.param('to');
     var msg = req.param('msg');
     
