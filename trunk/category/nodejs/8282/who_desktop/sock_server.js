@@ -1,4 +1,20 @@
 var socketio = require("socket.io");
+var wts = require('wts');
+var fs = require('fs');
+var jade = require('jade');
+
+var conn_list_template = fs.readFileSync('./views/conn_list.jade', 'utf8');
+var fn = jade.compile(conn_list_template);
+
+function connection_mon(io) {
+    wts.monitor(function(code) {
+        var data = wts.enumerate();
+        var json_data = eval('(' + data + ')');
+        var html = fn(json_data);
+        io.sockets.emit('refresh_connection', html);
+        connection_mon(io);   // repeat
+    });
+}
 
 exports.start = function(server) {
     var io = socketio.listen(server);
@@ -24,5 +40,8 @@ exports.start = function(server) {
 
         io.sockets.sockets[socket.id].emit('users_count', { number: clients, id: socket.id }); // to self
     });
+
+    //monitoring connection & disconnection
+    connection_mon(io);
 
 };
