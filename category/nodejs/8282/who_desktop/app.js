@@ -36,6 +36,7 @@ app.configure('production', function(){
 app.get('/', routes.index);
 app.post('/message', routes.message);
 app.post('/disconnect/:sid', routes.disconnect);
+app.post('/chat', routes.chat);
 
 app.listen(8282, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
@@ -43,4 +44,4 @@ app.listen(8282, function(){
 
 
 // Create: Socket Server
-sock_server.start(app);
+routes.setSocketIO(sock_server.start(app));
