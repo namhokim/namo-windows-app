@@ -112,3 +112,8 @@ table {
 #chat_content li {
 	margin: 5px;
 }
+
+button {
+	padding: 3px;
+	margin: 2px;
+}
