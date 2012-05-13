@@ -94,7 +94,7 @@ table {
 	padding: 12px 10px;
 }
 
-#name {
+input#name {
 	width: 70px;
 	margin: 5px 5px 5px 5px;
 }
@@ -114,6 +114,6 @@ table {
 }
 
 button {
-	padding: 3px;
+	padding: 5px;
 	margin: 2px;
 }
