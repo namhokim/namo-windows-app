@@ -7,43 +7,44 @@ html
 		script(src='/socket.io/socket.io.js')
 		script(type='text/javascript')
 			function pad2(number) {  
-				return (number < 10 ? '0' : '') + number
+				return (number < 10 ? '0' : '') + number;
 			}
 			function getCurrentTime() {
-				now = new Date();
-				
-				hour = now.getHours();
-				min = now.getMinutes();
-				sec = now.getSeconds();
-				
-				return pad2(hour) + ':' + pad2(min) + ':' + pad2(sec);
+				var now = new Date();
+				return pad2(now.getHours()) + ':' + pad2(now.getMinutes()) + ':' + pad2(now.getSeconds());
 			}
 			
 			$(function () {		// same as $(document).ready
+			
+				// socket.io /////////////////////////////////////////////////////
 				var socket = io.connect();
-				var chatHeading = '대화';
-				socket.on('message', function (data) {
+
+				socket.on('message', function (data) {	// when message in from server
 					var output = '<li>'
-						+ data.date + ' [' + data.name + '] - ' + data.message
-						+ '</li>';
+									+ data.date + ' [' + data.name + '] - ' + data.message
+								+ '</li>';
 					
 					$(output).prependTo('#chat_content');
 				});
-				socket.on('users_count', function (data) {
+				
+				socket.on('users_count', function (data) {	// when change number of user in page
+					var chatHeading = '대화';
 					$('#chat').text(chatHeading + '(' + data.number + ')');
 					if(typeof data.id !="undefined") $('#name').val(data.id.substring(0, 9));
 				});
+				
 				socket.on('refresh_connection', function (data) {
 					$('#user_section').empty().append($(data));
 				});
+				
+				// event /////////////////////////////////////////////////////
 				
 				$('#send').click(function() {
 					// WTS Message
 					$('input.session_user:checked').each(function() {
 						var sid = $(this).attr('id');
-						var url = '/message';
 						var param = {to: sid, msg: $('#message').val()};
-						$.post(url, param);
+						$.post('/message', param);
 						$(this).attr('checked', false);	// uncheck
 						$(this).parent().append($('<button class="disconn_user hide">X</button>'));
 					});
@@ -60,9 +61,7 @@ html
 				});
 				
 				$('#message').keydown(function(event) {
-					if (event.which == 13) {
-						$('#send').click();
-					}
+					if (event.which == 13) $('#send').click();
 				}).click(function() {
 					$(this).select();
 				}).focus();
