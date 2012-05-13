@@ -46,7 +46,10 @@ html
 						var param = {to: sid, msg: $('#message').val()};
 						$.post('/message', param);
 						$(this).attr('checked', false);	// uncheck
-						$(this).parent().append($('<button class="disconn_user hide">X</button>'));
+						$list = $(this).parent();
+						if( 0 == $list.find('.disconn_user').length ) {
+							$list.append($('<button class="disconn_user">X</button>'));
+						}
 					});
 					// Chat Message
 					var msg_data = {
