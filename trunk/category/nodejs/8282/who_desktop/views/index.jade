@@ -80,15 +80,7 @@ html
 		div(id="content")
 			h1 아래의 사용자가 접속해있습니다
 			div(id="user_section")
-				if number < 1
-					ul
-						li 사용자가 없습니다
-				else
-					ol
-						each d in data
-							li
-								input(type="checkbox", id=d.SessionId, class="session_user")
-								check #{d.address} : #{d.host} [#{d.rdp}]
+				include conn_list.jade
 						
 			h2(id="chat") 대화
 			div(id="chat_section")
