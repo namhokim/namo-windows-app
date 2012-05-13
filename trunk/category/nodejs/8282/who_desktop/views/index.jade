@@ -47,10 +47,14 @@ html
 						$(this).attr('checked', false);	// uncheck
 					});
 					// Chat Message
-					socket.emit('message', {
-						name: $('#name').val(), message: $('#message').val(),
-						date: getCurrentTime()
-					});
+					var msg_data = {
+							name: $('#name').val(), message: $('#message').val(),
+							date: getCurrentTime() 	};
+					if ( $.browser.msie && parseInt($.browser.version, 10) < 8) {
+						$.post('chat', msg_data);
+					} else {
+						socket.emit('message', msg_data);
+					}
 					$('#message').select().focus();
 				});
 				

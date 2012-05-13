@@ -1,4 +1,9 @@
 var wts = require('wts');
+var io = null;
+
+exports.setSocketIO = function(sio) {
+    io = sio;
+};
 
 /*
  * GET home page.
@@ -25,6 +30,28 @@ exports.message = function(req, res) {
         res.writeHead(200, { "Content-Type": "text/html" });
         res.write('<html><body><h1>Insufficien Parameter</h1>'
             + '<p>example: /message?to={number}&msg="{message}"</p></body>');
+        res.end();
+    }
+};
+
+/*
+* POST chat page.
+*/
+exports.chat = function(req, res) {
+    var name = req.param('name');
+    var message = req.param('message');
+    var date = req.param('date');
+    var json = {'name': name, 'message': message, 'date': date};
+
+    try {
+        io.sockets.emit('message', json);
+        res.writeHead(200, { "Content-Type": "text/html" });
+        res.write('OK');
+        res.end();
+    } catch (e) {
+        res.writeHead(200, { "Content-Type": "text/html" });
+        res.write('<html><body><h1>Insufficien Parameter</h1>'
+            + '<p>io.sockets.emit error</p></body>');
         res.end();
     }
 };

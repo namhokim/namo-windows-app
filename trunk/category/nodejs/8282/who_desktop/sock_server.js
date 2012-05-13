@@ -44,4 +44,5 @@ exports.start = function(server) {
     //monitoring connection & disconnection
     connection_mon(io);
 
+    return io;
 };
