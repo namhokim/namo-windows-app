@@ -105,8 +105,10 @@ unsigned int WaitForEvent(unsigned int* pStausCode, std::string& errorMsg)
 {
 	DWORD dwEventFlags;
 	BOOL bRes;
-	bRes = WTSWaitSystemEvent(WTS_CURRENT_SERVER_HANDLE,
-		WTS_EVENT_CONNECT | WTS_EVENT_DISCONNECT, &dwEventFlags);
+	bRes = WTSWaitSystemEvent(
+		WTS_CURRENT_SERVER_HANDLE,
+		WTS_EVENT_CONNECT | WTS_EVENT_DISCONNECT | WTS_EVENT_LOGON | WTS_EVENT_LOGOFF,
+		&dwEventFlags);
 	(*pStausCode) = dwEventFlags;
 	if(bRes) return NO_ERROR;
 	else {
