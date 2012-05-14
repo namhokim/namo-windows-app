@@ -14,8 +14,11 @@
 5. 서비스화
  refs. http://blog.tatham.oddie.com.au/2011/03/16/node-js-on-windows/
   Download : http://nssm.cc/download/?page=download
- > nssm install whoDesktop C:\who_desktop\node.exe C:\who_desktop\index.js
+ > nssm install whoDesktop C:\who_desktop\node.exe C:\who_desktop\app.js
  > net start whoDesktop
+
+ 제거
+ > nssm remove whoDesktop
 6. install node.js (standalone)
  - node.exe를 얻음
  http://www.nodejs.org/#download
