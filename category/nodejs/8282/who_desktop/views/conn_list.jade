@@ -6,4 +6,4 @@ else
 		each d in data
 			li(class="connect_list")
 				input(type="checkbox", id=d.SessionId, class="session_user")
-				check #{d.address} : #{d.host} [#{d.rdp}]
+				check(title="체크하면 원격 데스크탑 사용자에게도 메세지를 보낼 수 있습니다") #{d.address} : #{d.host} [#{d.rdp}]
