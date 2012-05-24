@@ -223,7 +223,7 @@ void CSRTView::SaveToFile(LPCTSTR filename)
 {
 	// 파일의 핸들을 연다.(핸들은 자동으로 닫힘)
 	CEnsureCloseFile hFile = ::CreateFile(filename, GENERIC_WRITE,
-		FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_HIDDEN, NULL);
+		FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	if(INVALID_HANDLE_VALUE == hFile) {		// 파일 핸들 에러
 		TCHAR ErrMsg[1024] = {0,};
 		Win::TranslateErrorCode(GetLastError(), ErrMsg, 1024);
