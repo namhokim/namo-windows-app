@@ -19,5 +19,5 @@
 6. Make Service
  refs. http://blog.tatham.oddie.com.au/2011/03/16/node-js-on-windows/
   Download : http://nssm.cc/download/?page=download
- > nssm install whoDesktop C:\who_desktop\node.exe C:\who_desktop\index.js
+ > nssm install whoDesktop C:\who_desktop\node.exe C:\who_desktop\app.js
  > net start whoDesktop
