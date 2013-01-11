@@ -72,13 +72,6 @@ namespace SQLServerNDT.Forms
 
                     // Resize the DataGridView columns to fit the newly loaded content.
                     this.dataGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-                    // Fit with Windows
-                    //this.dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
-                    // you can make it grid readonly.
-                    this.dataGridView.ReadOnly = true;
-
-                    this.dataGridView.BackgroundColor = SystemColors.ControlDark;
                 }
             }
             catch (Exception ex)
