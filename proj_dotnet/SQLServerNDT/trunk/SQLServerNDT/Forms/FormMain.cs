@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace SQLServerNDT.Forms
@@ -42,9 +37,6 @@ namespace SQLServerNDT.Forms
             // http://stackoverflow.com/questions/7430933/datagridview-remove-all-columns
             this.dataGridView.Columns.Clear();
             this.dataGridView.DataSource = null;
-            //this.dataGridView.AutoGenerateColumns = false;
-            //DataGridViewTextBoxColumn col = new DataGridViewTextBoxColumn();
-            //this.dataGridView.Columns.Add(col);
         }
 
         private void buttonConnInfo_Click(object sender, EventArgs e)
