@@ -18,10 +18,11 @@ namespace SQLServerNDT.Forms
     public partial class FormConnection : Form
     {
         #region Properties
-        public SqlConnection Connection { get { return _connection; } }
+        public string ConnectionString { get; private set;}
         public bool IsWindowsAuthentication
         {
-            get{
+            get
+            {
                 return comboBoxAuthenticationType.SelectedIndex == 0;
             }
         }
@@ -40,8 +41,6 @@ namespace SQLServerNDT.Forms
             }
         }
         #endregion
-
-        SqlConnection _connection = null;
 
         public FormConnection()
         {
@@ -127,7 +126,7 @@ namespace SQLServerNDT.Forms
 
             LockUI(true);
 
-            _connection = new SqlConnection(MakeConnectionString());
+            ConnectionString = MakeConnectionString();
             //MessageBox.Show(_connection.ConnectionString + "=>" + _connection.ConnectionTimeout
             //    + "," + _connection.Database);
             backgroundWorker.RunWorkerAsync();
@@ -173,24 +172,23 @@ namespace SQLServerNDT.Forms
         {
             try
             {
-                _connection.Open();
+                using (SqlConnection _connection = new SqlConnection(ConnectionString))
+                {
+                    _connection.Open();
+                }
             }
             catch (Exception ex)
             {
                 progressBar.Visible = false;
                 MessageBox.Show(this, ex.Message, "서버에 연결", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                _connection = null;
             }
         }
 
         private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             LockUI(false);
-            if (_connection!=null && _connection.State == ConnectionState.Open)
-            {
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-            }
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
 
         void LockUI(bool bLock)
