@@ -16,15 +16,8 @@ namespace SQLServerNDT.Forms
             InitializeComponent();
         }
 
-        private void FormMain_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void buttonConnectLocal_Click(object sender, EventArgs e)
         {
-            //ConnectionDialog dialog = new ConnectionDialog();
-            //dialog.ShowDialog();
             FormConnection conn = new FormConnection();
             conn.ShowDialog();
         }

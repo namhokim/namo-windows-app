@@ -97,6 +97,7 @@
             this.buttonOK.TabIndex = 5;
             this.buttonOK.Text = "연결(&C)";
             this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
             // buttonCancel
             // 
@@ -111,8 +112,6 @@
             // comboBoxServerName
             // 
             this.comboBoxServerName.FormattingEnabled = true;
-            this.comboBoxServerName.Items.AddRange(new object[] {
-            "localhost"});
             this.comboBoxServerName.Location = new System.Drawing.Point(209, 12);
             this.comboBoxServerName.Name = "comboBoxServerName";
             this.comboBoxServerName.Size = new System.Drawing.Size(300, 20);
