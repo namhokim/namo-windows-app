@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\ComboBoxExt.cs" />
+    <Compile Include="Extensions\StringCollectionExt.cs" />
     <Compile Include="Forms\FormConnection.cs">
       <SubType>Form</SubType>
     </Compile>
