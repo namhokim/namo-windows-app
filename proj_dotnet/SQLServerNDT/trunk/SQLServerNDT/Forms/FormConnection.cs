@@ -128,15 +128,18 @@ namespace SQLServerNDT.Forms
             LockUI(true);
 
             _connection = new SqlConnection(MakeConnectionString());
-            MessageBox.Show(_connection.ConnectionString);
+            MessageBox.Show(_connection.ConnectionString + "=>" + _connection.ConnectionTimeout
+                + "," + _connection.Database);
             backgroundWorker.RunWorkerAsync();
         }
 
         private string MakeConnectionString()
         {
-            const string ConnFormat = @"Data Source={0};Persist Security Info=True;User ID={1};Password={2}";
+            const string ConnFormat = @"Data Source={0};Initial Catalog=master;"
+                + "Persist Security Info=True;User ID={1};Password={2};Connection Timeout={3}";
+            int timeout = 3;
             string connStr = string.Format(ConnFormat,
-                comboBoxServerName.Text, comboBoxID.Text, textBoxPassword.Text);
+                comboBoxServerName.Text, comboBoxID.Text, textBoxPassword.Text, timeout);
             return connStr;
         }
 
@@ -169,7 +172,7 @@ namespace SQLServerNDT.Forms
             catch (Exception ex)
             {
                 progressBar.Visible = false;
-                MessageBox.Show(ex.Message, "서버에 연결");
+                MessageBox.Show(this, ex.Message, "서버에 연결", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 _connection = null;
             }
         }
