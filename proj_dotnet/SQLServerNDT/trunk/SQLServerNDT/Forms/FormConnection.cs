@@ -54,7 +54,6 @@ namespace SQLServerNDT.Forms
         {
             base.OnShown(e);
 
-            //comboBoxServerName.SelectedIndex = 0;
             comboBoxAuthenticationType.SelectedIndex =
                 Settings.Default.IsWindowsAuthentication ? 0 : 1;
         }
@@ -70,6 +69,7 @@ namespace SQLServerNDT.Forms
         {
             if (e.KeyCode == Keys.Escape)
             {
+                this.DialogResult = DialogResult.Cancel;
                 this.Close();
             }
         }
@@ -128,8 +128,8 @@ namespace SQLServerNDT.Forms
             LockUI(true);
 
             _connection = new SqlConnection(MakeConnectionString());
-            MessageBox.Show(_connection.ConnectionString + "=>" + _connection.ConnectionTimeout
-                + "," + _connection.Database);
+            //MessageBox.Show(_connection.ConnectionString + "=>" + _connection.ConnectionTimeout
+            //    + "," + _connection.Database);
             backgroundWorker.RunWorkerAsync();
         }
 
@@ -154,13 +154,6 @@ namespace SQLServerNDT.Forms
                 this.DialogResult = DialogResult.Cancel;
                 this.Close();
             }
-            //if (backgroundWorker.IsBusy && backgroundWorker.WorkerSupportsCancellation)
-            //{
-            //    if (_connection.State == ConnectionState.Connecting)
-            //    {
-            //        _connection.Close();
-            //    }
-            //}
         }
 
         private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -180,6 +173,11 @@ namespace SQLServerNDT.Forms
         private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             LockUI(false);
+            if(_connection.State==ConnectionState.Open)
+            {
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
         }
 
         void LockUI(bool bLock)

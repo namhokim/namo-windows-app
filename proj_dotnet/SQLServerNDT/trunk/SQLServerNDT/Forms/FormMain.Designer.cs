@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.buttonConnect = new System.Windows.Forms.Button();
+            this.buttonConnInfo = new System.Windows.Forms.Button();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonConnect
@@ -42,15 +45,41 @@
             this.buttonConnect.UseVisualStyleBackColor = true;
             this.buttonConnect.Click += new System.EventHandler(this.buttonConnectLocal_Click);
             // 
+            // buttonConnInfo
+            // 
+            this.buttonConnInfo.Enabled = false;
+            this.buttonConnInfo.Location = new System.Drawing.Point(92, 13);
+            this.buttonConnInfo.Name = "buttonConnInfo";
+            this.buttonConnInfo.Size = new System.Drawing.Size(100, 23);
+            this.buttonConnInfo.TabIndex = 1;
+            this.buttonConnInfo.Text = "연결정보보기";
+            this.buttonConnInfo.UseVisualStyleBackColor = true;
+            this.buttonConnInfo.Click += new System.EventHandler(this.buttonConnInfo_Click);
+            // 
+            // dataGridView
+            // 
+            this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.Location = new System.Drawing.Point(13, 43);
+            this.dataGridView.Name = "dataGridView";
+            this.dataGridView.RowTemplate.Height = 23;
+            this.dataGridView.Size = new System.Drawing.Size(455, 176);
+            this.dataGridView.TabIndex = 2;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(480, 231);
+            this.Controls.Add(this.dataGridView);
+            this.Controls.Add(this.buttonConnInfo);
             this.Controls.Add(this.buttonConnect);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormMain";
             this.Text = "SQL Server 나모진단도구";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -58,6 +87,8 @@
         #endregion
 
         private System.Windows.Forms.Button buttonConnect;
+        private System.Windows.Forms.Button buttonConnInfo;
+        private System.Windows.Forms.DataGridView dataGridView;
     }
 }
 
