@@ -12,9 +12,7 @@ namespace SQLServerNDT.Forms
 {
     public partial class FormMain : Form
     {
-        private SqlConnection _connection = null;
-        private bool IsConnected { get { return _connection != null && _connection.State == ConnectionState.Open; } }
-        private bool IsClosed { get { return _connection != null && _connection.State == ConnectionState.Closed; } }
+        private string _connectionString = null;
 
         public FormMain()
         {
@@ -23,47 +21,19 @@ namespace SQLServerNDT.Forms
 
         private void buttonConnectLocal_Click(object sender, EventArgs e)
         {
-            if (IsConnected)
-            {
-                CloseDatabase();
-            }
-            else
+            if (_connectionString == null)
             {
                 FormConnection conn = new FormConnection();
                 if (conn.ShowDialog() == DialogResult.OK)
                 {
-                    _connection = conn.Connection;
-                    _connection.StateChange += (s, ea) =>
-                    {
-                        if (ea.OriginalState == ConnectionState.Open
-                            && ea.CurrentState == ConnectionState.Closed)
-                        {
-                            MessageBox.Show("Closed");
-                            RefreshUI_DB_OK(false);
-                            ClearDataGridView();
-                        }
-                    };
+                    _connectionString = conn.ConnectionString;
                     RefreshUI_DB_OK(true);
                 }
-                else
-                {
-                    RefreshUI_DB_OK(false);
-                }
             }
-        }
-
-        protected override void OnClosed(EventArgs e)
-        {
-            CloseDatabase();
-            base.OnClosed(e);
-        }
-
-        void CloseDatabase()
-        {
-            if (_connection != null && IsConnected)
+            else
             {
-                _connection.Close();
-                _connection = null;
+                _connectionString = null;
+                RefreshUI_DB_OK(false);
             }
         }
 
@@ -83,41 +53,36 @@ namespace SQLServerNDT.Forms
 
             try
             {
-                if (_connection == null) throw new NullReferenceException("데이터베이스와 연결이 되지 않았습니다.");
                 ClearDataGridView();
-                // http://social.msdn.microsoft.com/Forums/en-US/csharpgeneral/thread/e6698cad-15f7-41e7-82c3-cc71c17f30e2/
-                SqlDataAdapter da = new SqlDataAdapter(query, _connection);
-                SqlCommandBuilder sqlCommandBuilder = new SqlCommandBuilder(da);
-
-                // Populate a new data table and bind it to the BindingSource.
-                DataTable dt = new DataTable
+                using (SqlConnection _connection = new SqlConnection(_connectionString))
                 {
-                    Locale = System.Globalization.CultureInfo.InvariantCulture
-                };
-                da.Fill(dt);
-                this.dataGridView.DataSource = dt;
+                    _connection.Open();
 
-                // Resize the DataGridView columns to fit the newly loaded content.
-                this.dataGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-                // Fit with Windows
-                //this.dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    // http://social.msdn.microsoft.com/Forums/en-US/csharpgeneral/thread/e6698cad-15f7-41e7-82c3-cc71c17f30e2/
+                    SqlDataAdapter da = new SqlDataAdapter(query, _connection);
+                    SqlCommandBuilder sqlCommandBuilder = new SqlCommandBuilder(da);
 
-                // you can make it grid readonly.
-                this.dataGridView.ReadOnly = true;
+                    // Populate a new data table and bind it to the BindingSource.
+                    DataTable dt = new DataTable
+                    {
+                        Locale = System.Globalization.CultureInfo.InvariantCulture
+                    };
+                    da.Fill(dt);
+                    this.dataGridView.DataSource = dt;
 
-                this.dataGridView.BackgroundColor = SystemColors.ControlDark;
-            }
-            catch (NullReferenceException nex)
-            {
-                RefreshUI_DB_OK(false);
-                MessageBox.Show(this, nex.Message, "연결문제", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    // Resize the DataGridView columns to fit the newly loaded content.
+                    this.dataGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                    // Fit with Windows
+                    //this.dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+                    // you can make it grid readonly.
+                    this.dataGridView.ReadOnly = true;
+
+                    this.dataGridView.BackgroundColor = SystemColors.ControlDark;
+                }
             }
             catch (Exception ex)
             {
-                if (IsClosed)
-                {
-                    RefreshUI_DB_OK(false);
-                }
                 MessageBox.Show(this, ex.Message, "쿼리실패", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
