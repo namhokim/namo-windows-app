@@ -26,9 +26,6 @@ namespace SQLServerNDT.Forms
             if (IsConnected)
             {
                 CloseDatabase();
-                //this.buttonConnInfo.Enabled = false;
-                //this.buttonConnect.Text = "연결(&C)";
-                //RefreshUI_DB_OK(true);
             }
             else
             {
@@ -41,6 +38,7 @@ namespace SQLServerNDT.Forms
                         if (ea.OriginalState == ConnectionState.Open
                             && ea.CurrentState == ConnectionState.Closed)
                         {
+                            MessageBox.Show("Closed");
                             RefreshUI_DB_OK(false);
                             ClearDataGridView();
                         }
@@ -74,7 +72,7 @@ namespace SQLServerNDT.Forms
             // http://stackoverflow.com/questions/7430933/datagridview-remove-all-columns
             this.dataGridView.Columns.Clear();
             this.dataGridView.DataSource = null;
-            this.dataGridView.AutoGenerateColumns = false;
+            //this.dataGridView.AutoGenerateColumns = false;
             //DataGridViewTextBoxColumn col = new DataGridViewTextBoxColumn();
             //this.dataGridView.Columns.Add(col);
         }
@@ -86,6 +84,7 @@ namespace SQLServerNDT.Forms
             try
             {
                 if (_connection == null) throw new NullReferenceException("데이터베이스와 연결이 되지 않았습니다.");
+                ClearDataGridView();
                 // http://social.msdn.microsoft.com/Forums/en-US/csharpgeneral/thread/e6698cad-15f7-41e7-82c3-cc71c17f30e2/
                 SqlDataAdapter da = new SqlDataAdapter(query, _connection);
                 SqlCommandBuilder sqlCommandBuilder = new SqlCommandBuilder(da);
