@@ -19,7 +19,7 @@ namespace SQLServerNDT.Forms
         private void buttonConnectLocal_Click(object sender, EventArgs e)
         {
             FormConnection conn = new FormConnection();
-            conn.ShowDialog();
+            _connection = conn.Connection;
         }
     }
 }

@@ -34,12 +34,14 @@
             this.labelLogin = new System.Windows.Forms.Label();
             this.labelPassword = new System.Windows.Forms.Label();
             this.labelSeperator = new System.Windows.Forms.Label();
-            this.buttonOK = new System.Windows.Forms.Button();
+            this.buttonConnect = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.comboBoxServerName = new System.Windows.Forms.ComboBox();
             this.comboBoxAuthenticationType = new System.Windows.Forms.ComboBox();
             this.comboBoxID = new System.Windows.Forms.ComboBox();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // labelServerName
@@ -88,26 +90,25 @@
             this.labelSeperator.TabIndex = 4;
             this.labelSeperator.Text = "labelSeperator";
             // 
-            // buttonOK
+            // buttonConnect
             // 
-            this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(303, 149);
-            this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(100, 30);
-            this.buttonOK.TabIndex = 5;
-            this.buttonOK.Text = "연결(&C)";
-            this.buttonOK.UseVisualStyleBackColor = true;
-            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
+            this.buttonConnect.Location = new System.Drawing.Point(303, 149);
+            this.buttonConnect.Name = "buttonConnect";
+            this.buttonConnect.Size = new System.Drawing.Size(100, 30);
+            this.buttonConnect.TabIndex = 5;
+            this.buttonConnect.Text = "연결(&C)";
+            this.buttonConnect.UseVisualStyleBackColor = true;
+            this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
             // 
             // buttonCancel
             // 
-            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new System.Drawing.Point(409, 149);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(100, 30);
             this.buttonCancel.TabIndex = 6;
             this.buttonCancel.Text = "취소";
             this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // comboBoxServerName
             // 
@@ -146,17 +147,35 @@
             this.textBoxPassword.TabIndex = 10;
             this.textBoxPassword.UseSystemPasswordChar = true;
             // 
+            // progressBar
+            // 
+            this.progressBar.Location = new System.Drawing.Point(24, 123);
+            this.progressBar.MarqueeAnimationSpeed = 10;
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(475, 8);
+            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressBar.TabIndex = 11;
+            this.progressBar.Visible = false;
+            // 
+            // backgroundWorker
+            // 
+            this.backgroundWorker.WorkerReportsProgress = true;
+            this.backgroundWorker.WorkerSupportsCancellation = true;
+            this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
+            this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
+            // 
             // FormConnection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(521, 191);
+            this.Controls.Add(this.progressBar);
             this.Controls.Add(this.textBoxPassword);
             this.Controls.Add(this.comboBoxID);
             this.Controls.Add(this.comboBoxAuthenticationType);
             this.Controls.Add(this.comboBoxServerName);
             this.Controls.Add(this.buttonCancel);
-            this.Controls.Add(this.buttonOK);
+            this.Controls.Add(this.buttonConnect);
             this.Controls.Add(this.labelSeperator);
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.labelLogin);
@@ -183,11 +202,13 @@
         private System.Windows.Forms.Label labelLogin;
         private System.Windows.Forms.Label labelPassword;
         private System.Windows.Forms.Label labelSeperator;
-        private System.Windows.Forms.Button buttonOK;
+        private System.Windows.Forms.Button buttonConnect;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.ComboBox comboBoxServerName;
         private System.Windows.Forms.ComboBox comboBoxAuthenticationType;
         private System.Windows.Forms.ComboBox comboBoxID;
         private System.Windows.Forms.TextBox textBoxPassword;
+        private System.Windows.Forms.ProgressBar progressBar;
+        private System.ComponentModel.BackgroundWorker backgroundWorker;
     }
 }

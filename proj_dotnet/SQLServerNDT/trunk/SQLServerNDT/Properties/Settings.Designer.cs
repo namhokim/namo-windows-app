@@ -51,12 +51,24 @@ namespace SQLServerNDT.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection LoginLists {
+        public global::System.Collections.Specialized.StringCollection Users {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["LoginLists"]));
+                return ((global::System.Collections.Specialized.StringCollection)(this["Users"]));
             }
             set {
-                this["LoginLists"] = value;
+                this["Users"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Password {
+            get {
+                return ((string)(this["Password"]));
+            }
+            set {
+                this["Password"] = value;
             }
         }
     }
