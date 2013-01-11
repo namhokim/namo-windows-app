@@ -135,11 +135,24 @@ namespace SQLServerNDT.Forms
 
         private string MakeConnectionString()
         {
-            const string ConnFormat = @"Data Source={0};Initial Catalog=master;"
+            // Integrated Security=SSPI
+            const string ConnFormatSQL = @"Data Source={0};Initial Catalog=master;"
                 + "Persist Security Info=True;User ID={1};Password={2};Connection Timeout={3}";
+            const string ConnFormatWin = @"Data Source={0};Initial Catalog=master;"
+                + "Persist Security Info=True;Integrated Security=SSPI;Connection Timeout={1}";
             int timeout = 3;
-            string connStr = string.Format(ConnFormat,
-                comboBoxServerName.Text, comboBoxID.Text, textBoxPassword.Text, timeout);
+            string connStr, server;
+            if (comboBoxServerName.Text == "(local)") server = "localhost";
+            else server = comboBoxServerName.Text;
+            if (this.IsSQLServerAuthentication)
+            {
+                connStr = string.Format(ConnFormatSQL,
+                    server, comboBoxID.Text, textBoxPassword.Text, timeout);
+            }
+            else
+            {
+                connStr = string.Format(ConnFormatWin, server, timeout);
+            }
             return connStr;
         }
 

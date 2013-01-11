@@ -42,6 +42,7 @@ namespace SQLServerNDT.Forms
                             && ea.CurrentState == ConnectionState.Closed)
                         {
                             RefreshUI_DB_OK(false);
+                            ClearDataGridView();
                         }
                     };
                     RefreshUI_DB_OK(true);
@@ -66,7 +67,6 @@ namespace SQLServerNDT.Forms
                 _connection.Close();
                 _connection = null;
             }
-            ClearDataGridView();
         }
 
         void ClearDataGridView()
