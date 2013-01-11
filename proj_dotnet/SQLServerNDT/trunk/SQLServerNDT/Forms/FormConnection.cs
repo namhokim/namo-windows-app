@@ -173,7 +173,7 @@ namespace SQLServerNDT.Forms
         private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             LockUI(false);
-            if(_connection.State==ConnectionState.Open)
+            if (_connection!=null && _connection.State == ConnectionState.Open)
             {
                 this.DialogResult = DialogResult.OK;
                 this.Close();
