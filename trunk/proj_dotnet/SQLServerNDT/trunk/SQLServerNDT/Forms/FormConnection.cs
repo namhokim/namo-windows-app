@@ -134,7 +134,6 @@ namespace SQLServerNDT.Forms
 
         private string MakeConnectionString()
         {
-            // Integrated Security=SSPI
             const string ConnFormatSQL = @"Data Source={0};Initial Catalog=master;"
                 + "Persist Security Info=True;User ID={1};Password={2};Connection Timeout={3}";
             const string ConnFormatWin = @"Data Source={0};Initial Catalog=master;"
