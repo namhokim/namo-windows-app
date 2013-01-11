@@ -65,14 +65,14 @@
             this.dataGridView.Location = new System.Drawing.Point(13, 43);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowTemplate.Height = 23;
-            this.dataGridView.Size = new System.Drawing.Size(455, 176);
+            this.dataGridView.Size = new System.Drawing.Size(679, 257);
             this.dataGridView.TabIndex = 2;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(480, 231);
+            this.ClientSize = new System.Drawing.Size(704, 312);
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.buttonConnInfo);
             this.Controls.Add(this.buttonConnect);
