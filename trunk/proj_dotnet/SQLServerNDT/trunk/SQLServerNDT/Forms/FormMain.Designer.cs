@@ -30,8 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.buttonConnect = new System.Windows.Forms.Button();
-            this.buttonConnInfo = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.textBoxQuery = new System.Windows.Forms.TextBox();
+            this.comboBoxQueries = new System.Windows.Forms.ComboBox();
+            this.buttonExecuteQuery = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -39,57 +41,93 @@
             // 
             this.buttonConnect.Location = new System.Drawing.Point(13, 13);
             this.buttonConnect.Name = "buttonConnect";
-            this.buttonConnect.Size = new System.Drawing.Size(72, 23);
+            this.buttonConnect.Size = new System.Drawing.Size(59, 23);
             this.buttonConnect.TabIndex = 0;
             this.buttonConnect.Text = "연결(&C)";
             this.buttonConnect.UseVisualStyleBackColor = true;
             this.buttonConnect.Click += new System.EventHandler(this.buttonConnectLocal_Click);
-            // 
-            // buttonConnInfo
-            // 
-            this.buttonConnInfo.Enabled = false;
-            this.buttonConnInfo.Location = new System.Drawing.Point(92, 13);
-            this.buttonConnInfo.Name = "buttonConnInfo";
-            this.buttonConnInfo.Size = new System.Drawing.Size(100, 23);
-            this.buttonConnInfo.TabIndex = 1;
-            this.buttonConnInfo.Text = "연결정보보기";
-            this.buttonConnInfo.UseVisualStyleBackColor = true;
-            this.buttonConnInfo.Click += new System.EventHandler(this.buttonConnInfo_Click);
             // 
             // dataGridView
             // 
             this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView.BackgroundColor = System.Drawing.SystemColors.HighlightText;
+            this.dataGridView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView.Location = new System.Drawing.Point(13, 43);
+            this.dataGridView.GridColor = System.Drawing.SystemColors.ControlLight;
+            this.dataGridView.Location = new System.Drawing.Point(13, 139);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
             this.dataGridView.RowTemplate.Height = 23;
-            this.dataGridView.Size = new System.Drawing.Size(679, 257);
-            this.dataGridView.TabIndex = 2;
+            this.dataGridView.Size = new System.Drawing.Size(679, 184);
+            this.dataGridView.TabIndex = 4;
+            this.dataGridView.TabStop = false;
+            // 
+            // textBoxQuery
+            // 
+            this.textBoxQuery.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxQuery.Location = new System.Drawing.Point(12, 42);
+            this.textBoxQuery.Multiline = true;
+            this.textBoxQuery.Name = "textBoxQuery";
+            this.textBoxQuery.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.textBoxQuery.Size = new System.Drawing.Size(680, 76);
+            this.textBoxQuery.TabIndex = 3;
+            this.textBoxQuery.TextChanged += new System.EventHandler(this.textBoxQuery_TextChanged);
+            this.textBoxQuery.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxQuery_KeyDown);
+            // 
+            // comboBoxQueries
+            // 
+            this.comboBoxQueries.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxQueries.Enabled = false;
+            this.comboBoxQueries.FormattingEnabled = true;
+            this.comboBoxQueries.Location = new System.Drawing.Point(92, 14);
+            this.comboBoxQueries.Name = "comboBoxQueries";
+            this.comboBoxQueries.Size = new System.Drawing.Size(532, 20);
+            this.comboBoxQueries.TabIndex = 1;
+            this.comboBoxQueries.SelectedIndexChanged += new System.EventHandler(this.comboBoxQueries_SelectedIndexChanged);
+            // 
+            // buttonExecuteQuery
+            // 
+            this.buttonExecuteQuery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonExecuteQuery.Enabled = false;
+            this.buttonExecuteQuery.Location = new System.Drawing.Point(630, 13);
+            this.buttonExecuteQuery.Name = "buttonExecuteQuery";
+            this.buttonExecuteQuery.Size = new System.Drawing.Size(62, 23);
+            this.buttonExecuteQuery.TabIndex = 2;
+            this.buttonExecuteQuery.Text = "수행(&E)";
+            this.buttonExecuteQuery.UseVisualStyleBackColor = true;
+            this.buttonExecuteQuery.Click += new System.EventHandler(this.buttonExecuteQuery_Click);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(704, 312);
+            this.ClientSize = new System.Drawing.Size(704, 335);
+            this.Controls.Add(this.buttonExecuteQuery);
+            this.Controls.Add(this.comboBoxQueries);
+            this.Controls.Add(this.textBoxQuery);
             this.Controls.Add(this.dataGridView);
-            this.Controls.Add(this.buttonConnInfo);
             this.Controls.Add(this.buttonConnect);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(500, 300);
             this.Name = "FormMain";
             this.Text = "SQL Server 나모진단도구";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Button buttonConnect;
-        private System.Windows.Forms.Button buttonConnInfo;
         private System.Windows.Forms.DataGridView dataGridView;
+        private System.Windows.Forms.TextBox textBoxQuery;
+        private System.Windows.Forms.ComboBox comboBoxQueries;
+        private System.Windows.Forms.Button buttonExecuteQuery;
     }
 }
 
