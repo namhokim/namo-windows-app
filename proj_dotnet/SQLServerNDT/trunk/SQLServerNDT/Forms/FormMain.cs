@@ -157,5 +157,50 @@ namespace SQLServerNDT.Forms
             }
         }
 
+        private void splitContainer_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            // prevent for focus at splitter
+            textBoxQuery.Focus();
+        }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Main Windows size
+            // http://stackoverflow.com/questions/1873658/net-winforms-remember-windows-size-and-location
+            if (WindowState == FormWindowState.Maximized)
+            {
+                Properties.Settings.Default.Location = RestoreBounds.Location;
+                Properties.Settings.Default.Size = RestoreBounds.Size;
+                Properties.Settings.Default.Maximised = true;
+            }
+            else
+            {
+                Properties.Settings.Default.Location = Location;
+                Properties.Settings.Default.Size = Size;
+                Properties.Settings.Default.Maximised = false;
+            }
+            Properties.Settings.Default.Save();
+
+            // Splitter info
+        }
+
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.Maximised)
+            {
+                WindowState = FormWindowState.Maximized;
+            }
+
+            try
+            {
+                Location = Properties.Settings.Default.Location;
+                Size = Properties.Settings.Default.Size;
+            }
+            catch (NullReferenceException)
+            {
+                // first runtime, then using default size and location
+            }
+        }
+
     }
 }
