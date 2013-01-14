@@ -63,6 +63,7 @@
             this.dataGridView.Size = new System.Drawing.Size(679, 184);
             this.dataGridView.TabIndex = 4;
             this.dataGridView.TabStop = false;
+            this.dataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridView_DataError);
             // 
             // textBoxQuery
             // 
