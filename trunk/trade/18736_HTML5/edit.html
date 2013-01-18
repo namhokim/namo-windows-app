@@ -16,7 +16,7 @@
         </script
 
 >
-<!-- ³ëµåÁ¦ÀÌ¿¡½º ¼­¹ö ¿¬°á  --!>
+<!-- ë…¸ë“œì œì´ì—ìŠ¤ ì„œë²„ ì—°ê²°  --!>
         <script src="my.js">	
         </script>
 
@@ -34,7 +34,7 @@
 var text="";
 var textDirection ="";
 
-/* ¼ÒÄÏ ¿¬°á½Ã ÀÛµ¿   */
+/* ì†Œì¼“ ì—°ê²°ì‹œ ì‘ë™   */
 $(document).ready(function(){
 
 var socket=io.connect();
@@ -86,7 +86,7 @@ drawText(data.myText,posX,posY);
 
 });
 
-/* up-down »óÇÏÀÌµ¿ ¾Ö´Ï¸ŞÀÌ¼Ç*/
+/* up-down ìƒí•˜ì´ë™ ì• ë‹ˆë©”ì´ì…˜*/
         function animate() {            
            ctx2.clearRect(0, 0, 380, 200);
            ctx2.globalAlpha = 1;
@@ -122,7 +122,7 @@ drawText(data.myText,posX,posY);
 	
           }    
 
-/* left-right ÁÂ¿ìÀÌµ¿ ¾Ö´Ï¸ŞÀÌ¼Ç*/
+/* left-right ì¢Œìš°ì´ë™ ì• ë‹ˆë©”ì´ì…˜*/
         function animate2() {            
             ctx3.clearRect(0, 0,380, 200);
             ctx3.globalAlpha = 1;
@@ -168,20 +168,20 @@ drawText(data.myText,posX,posY);
     &nbsp;&nbsp;
 
 
-<!-- Äµ¹ö½º 4°³ -->	
-	<!-- ±ÛÀÚ ¾²´Â Äµ¹ö½º -->
+<!-- ìº”ë²„ìŠ¤ 4ê°œ -->	
+	<!-- ê¸€ì ì“°ëŠ” ìº”ë²„ìŠ¤ -->
 	<canvas id="layer1" width="380" height="200" style="z-index: 4;
 position:absolute; border: 1px solid #000; "></canvas>
 	
-	<!-- ¸ğ¼Ç1 ³ª¿À´Â Äµ¹ö½º -->
+	<!-- ëª¨ì…˜1 ë‚˜ì˜¤ëŠ” ìº”ë²„ìŠ¤ -->
 	<canvas id="layer2" width="380" height="200" style="z-index: 2;
 position:absolute; border: 1px solid #000; "></canvas>
 
-	<!-- ¸ğ¼Ç2 ³ª¿À´Â Äµ¹ö½º -->
+	<!-- ëª¨ì…˜2 ë‚˜ì˜¤ëŠ” ìº”ë²„ìŠ¤ -->
 	<canvas id="layer3" width="380" height="200" style="z-index: 3;
 position:absolute; border: 1px solid #000; "></canvas>
 
-	<!-- ÀÌ¹ÌÁö ¿Ã¸®´Â Äµ¹ö½º -->
+	<!-- ì´ë¯¸ì§€ ì˜¬ë¦¬ëŠ” ìº”ë²„ìŠ¤ -->
 	<canvas id="layer4" width="380" height="200" style="z-index: 1;
 position:absolute; border: 1px solid #000; "></canvas>
 </p>
@@ -211,7 +211,7 @@ position:absolute; border: 1px solid #000; "></canvas>
                     </div>
                 </div>
 
-<!-- ±ÛÀÚ È¿°ú ÁöÁ¤ ÅÇ -->
+<!-- ê¸€ì íš¨ê³¼ ì§€ì • íƒ­ -->
 <div data-role="collapsible">
 <h3>font</h3>
 
@@ -246,7 +246,7 @@ position:absolute; border: 1px solid #000; "></canvas>
 
 
 
-<!-- ÀÌ¹ÌÁö ºÒ·¯¿À±â ÅÇ -->
+<!-- ì´ë¯¸ì§€ ë¶ˆëŸ¬ì˜¤ê¸° íƒ­ -->
 <div data-role="collapsible">
 <h3>Photo</h3>
  <div data-role="content"> 
@@ -260,7 +260,7 @@ position:absolute; border: 1px solid #000; "></canvas>
     </div>
 </div>
 
-<!-- ¸ğ¼Ç ¾²±â ÅÇ -->
+<!-- ëª¨ì…˜ ì“°ê¸° íƒ­ -->
 <div data-role="collapsible">
 <h3>Motion</h3>
   <input type="button" id="sh" value="up-down" onclick="animate2()">
@@ -309,7 +309,7 @@ layer1.onmousedown = myDown;
 }
 
 
-/*   Äµ¹ö½º ÃÊ±âÈ­ ÇÔ¼ö   */
+/*   ìº”ë²„ìŠ¤ ì´ˆê¸°í™” í•¨ìˆ˜   */
 
 function clear() {
  ctx1.clearRect(0, 0, WIDTH, HEIGHT);
@@ -317,7 +317,7 @@ function clear() {
 
 
 
-/*   Äµ¹ö½º ³» ±ÛÀÚ ¾²±â ÇÔ¼ö   */
+/*   ìº”ë²„ìŠ¤ ë‚´ ê¸€ì ì“°ê¸° í•¨ìˆ˜   */
 
 function drawText(posX,posY) { 
 ctx1.fillText(text, posX  , posY);
@@ -327,7 +327,7 @@ ctx1.beginPath();
 
 }
 
-/*   Äµ¹ö½º ³» ÅØ½ºÆ®Ã¢¿¡ ÀÖ´Â ±ÛÀÚ ¾²±â ÇÔ¼ö   */
+/*   ìº”ë²„ìŠ¤ ë‚´ í…ìŠ¤íŠ¸ì°½ì— ìˆëŠ” ê¸€ì ì“°ê¸° í•¨ìˆ˜   */
 
 function draw() {
     text = document.getElementById('myText').value,
@@ -338,7 +338,7 @@ clear();
  drawText(posX, posY);
 }
 
-/*   Äµ¹ö½º ³» ±ÛÀÚ µå·¡±×? ÇÔ¼ö   */
+/*   ìº”ë²„ìŠ¤ ë‚´ ê¸€ì ë“œë˜ê·¸? í•¨ìˆ˜   */
 
 function myMove(e){
  if (dragok){
@@ -372,7 +372,7 @@ function chkFill(){
   drawText(myText.value,posX,posY); 
 }
 
-/*   Äµ¹ö½º ³» ±ÛÀÚ ÆùÆ® º¯°æ ÇÔ¼ö   */
+/*   ìº”ë²„ìŠ¤ ë‚´ ê¸€ì í°íŠ¸ ë³€ê²½ í•¨ìˆ˜   */
 function changeFont(){
  
   ctx1.font = eval("'"+ document.getElementById('fontSize').value +'px '+ document.getElementById('fontFace').value+"'");
@@ -380,13 +380,13 @@ function changeFont(){
 }
 
 
-/*  Äµ¹ö½º ³» ±ÛÀÚ»ö º¯°æ ÇÔ¼ö   */
+/*  ìº”ë²„ìŠ¤ ë‚´ ê¸€ììƒ‰ ë³€ê²½ í•¨ìˆ˜   */
 function changeColor(){
     ctx1.fillStyle = document.getElementById('fontColor').value;
    drawText(myText.value,posX,posY);  
 }
 
-/*  ÀÌ¹ÌÁö ºÒ·¯¿À±â ÇÔ¼ö   */
+/*  ì´ë¯¸ì§€ ë¶ˆëŸ¬ì˜¤ê¸° í•¨ìˆ˜   */
 function doIt() {
         var reader = new FileReader();
         reader.onload = (function(e) {
