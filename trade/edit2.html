@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+  <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
+
+        <link rel="stylesheet" href="my.css" />
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js">
+        </script>
+        <script src="my.js">
+        </script>
+    
+
+<script type="text/javascript">
+      function doIt() {
+        var reader = new FileReader();
+        reader.onload = (function(e) {
+            var img = new Image();
+            img.src = e.target.result;
+            var c = document.getElementById("cv");
+            var ctx = c.getContext("2d");
+            ctx.drawImage(img,10,10,200,200);
+          }
+        );
+        reader.readAsDataURL(document.getElementById('userImage').files[0]);
+      }
+    </script>
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script>
+
+var text="";
+var textDirection ="";
+
+
+
+
+$(document).ready(function(){
+
+var socket=io.connect();
+
+socket.on('message', function (data){
+
+var output='';
+output+='	<h3>'+data.myText+'</h3>';
+drawText(data.myText,posX,posY);
+
+});
+		
+
+		$('button').click(function(){
+		
+		socket.emit('message',{
+		    myText: $('#myText').val(), 
+          	  fontSize: $('#fontSize').val(),
+		fontColor:$('#fontColor').val(),
+		cansvasColor:$(#'canvasColor').val(),
+		fontFace:$('#fontFace').val(),
+		posX:x,	// 전송할 때 위치전송
+		posY:y	         // 전송할 때 위치전송
+		});
+		});
+
+
+	$('#sh').click(function(){
+	    context = document.getElementById("cv").getContext("2d");
+    setInterval("animate2()", 100);
+
+            textDirection = "right";
+           // textXpos = 10;
+            textYpos = 10;
+	text=$('#myText').val();
+
+
+});
+
+	$('#jw').click(function(){
+	context = document.getElementById("cv").getContext("2d");            
+            setInterval("animate()", 100);
+            textDirection ="right";
+            textXpos = 10;
+            //text = "Multimedia Science";    
+	text=$('#myText').val();
+});
+
+});
+        function animate2() {            
+            // Clear screen
+          context.clearRect(0, 0, 380, 200);
+            context.globalAlpha = 1;
+            context.fillStyle = '#fff';
+            context.fillRect(0, 0, 380, 200);   
+            var metrics = context.measureText(text);
+            var textWidth = metrics.width;
+			var textheight=metrics.height;
+            if (textDirection == "right") {
+                textYpos += 10;
+                if (textYpos <200 ) {
+                    textDirection = "left";
+                }
+            }
+            else {
+                textYpos -= 10;
+                if (textYpos > 200) {
+                    textDirection = "right";
+                }                    
+            }
+            context.font = '50px _sans';
+            context.fillStyle = '#0000FF';
+            context.textBaseline = 'top';
+            context.fillText  ( text,200, textYpos);    
+          }    
+
+        function animate() {            
+            // Clear screen
+            context.clearRect(0, 0,380, 200);
+            context.globalAlpha = 1;
+            context.fillStyle = '#fff';
+            context.fillRect(0, 0, 380, 200);   
+            var metrics = context.measureText(text);
+            var textWidth = metrics.width;
+            if (textDirection == "right") {
+                textXpos += 10;
+                if (textXpos > 380 - textWidth) {
+                    textDirection = "left";
+                }
+            }
+            else {
+                textXpos -= 10;
+                if (textXpos < 10) {
+                    textDirection = "right";
+                }                    
+            }
+            context.font = '50px _sans';
+            context.fillStyle = '#0000FF';
+            context.textBaseline = 'top';
+            context.fillText  ( text, textXpos, 90);    
+          }    
+
+</script>
+<meta name="generator" content="Namo WebEditor"><title></title>
+
+</head>
+
+<body><div id="page">
+    <p><font face="Arial Rounded MT Bold">
+    
+    <span style="font-size:12pt;">&nbsp;&nbsp;
+	
+
+	<canvas id="cv" width="380" height="200" style="position: relative; border: 1px solid #000; "></canvas>
+  <br>
+ &nbsp;&nbsp;
+
+  <button>Send Text</button> </span></font><font face="Arial Rounded MT Bold"><span style="font-size:12pt;"></span></font></p>
+    <p>
+	
+
+</span></font></p>
+    <p><font face="Arial Rounded MT Bold"><input type="text" id="myText" size="47" >
+</font>  </p>
+    
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+
+			
+                        <input type="button" id="btn" value="submit" onclick="draw();">
+                    </div>
+                    <div class="ui-block-b">
+                     <a data-role="button" data-theme="b" href="#page1" data-icon="star" data-iconpos="left">
+                            select
+                        </a>
+                    </div>
+                </div>
+
+
+<div data-role="collapsible">
+<h3>font</h3>
+
+<p><font face="Arial Rounded MT Bold"><span style="font-size:12pt;">
+  <!--<input type="radio" name="isFill" value="Fill" onchange="chkFill();" checked>Fill&nbsp;&nbsp;
+ <!--<input type="radio" name="isFill" value="Stroke" onchange="chkFill();">Stroke&nbsp;&nbsp;-->
+ 
+  size:<p/> <input id="fontSize" type="range" min="10" max="60" step="5" value="50" onchange="changeFont();" />
+  <p/>font: <select id="fontFace" onchange="changeFont();">
+
+        <option value="Tahoma" selected>Tahoma</option>
+        <option value="Verdana">Verdana</option>
+        <option value="Gulim">Gulim</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Symbol">Symbol</option>
+        <option value="Terminal">Terminal</option>
+        </select> 
+
+		Color: <select id="fontColor" onchange="changeColor(1);">
+
+        <option value="Black" selected>Black</option>
+        <option value="Red">Red</option>
+        <option value="Blue">Blue</option>
+        <option value="Green">Green</option>
+        <option value="Yellow">Yellow</option>
+        </select> 
+ canvas Color: <select id="canvasColor" onchange="changecanvasColor(1);">
+
+        <option value="Black" selected>Black</option>
+        <option value="Red">Red</option>
+        <option value="Blue">Blue</option>
+        <option value="Green">Green</option>
+        <option value="Yellow">Yellow</option>
+        </select> 
+</span></font>
+
+  &nbsp; <font face="Arial Rounded MT Bold"><form type="text" name="myText" id="myText" size="47" onkeypress="inputText(event.keyCode);" onkeyup="inputBackSpace(event.keyCode);">
+</form></font> 
+</div>
+
+
+
+
+<div data-role="collapsible">
+<h3>Photo</h3>
+ <div data-role="content"> 
+
+     <fieldset class="ui-grid-a">
+    <input type="file" id="userImage">
+    <input type="button" onclick="doIt()" value="image"><br/>
+    <canvas id="canvas" style="border: 1px solid black; height: 400px; width: 400px;"/>
+                </div>
+        </fieldset>
+    </div>
+</div>
+
+
+
+
+<div data-role="collapsible">
+<h3>Motion</h3>
+  <input type="button" id="sh" value="up-down" onclick="animate2()">
+  <input type="button" id="jw" value="left-right">
+</div>
+
+
+
+
+
+
+ <div id="msgDiv">
+ </div>
+
+ </div>
+ </body>
+
+	
+
+</html>
+
+
+
+
+
+
+
+<script type="text/javascript">	
+window.onDOMReady = Init();
+if(window.addEventListener){
+    window.addEventListener('load', Init, false); 
+}
+window.onDOMReady = Init();
+var canvas, context, msgDiv, fontColor, fontFace,canvasColor;
+var posX=20;
+var posY=30;
+var x;
+var y;
+var WIDTH=380;
+var HEIGHT=200;
+var isFill = true;
+var dragok=false,
+text= document.getElementById('myText').value,
+fontSize=document.getElementById('fontSize').value,
+textLength = (text.length * fontSize)/2;
+
+
+function drawText(posX,posY) { 
+context.fillText(text, posX  , posY);
+context.beginPath();
+  context.closePath();
+  context.stroke();
+
+}
+
+function clear() {
+ context.clearRect(0, 0, WIDTH, HEIGHT);
+}
+
+
+function Init() {     
+  canvas = document.getElementById('cv');
+  context = canvas.getContext('2d');     
+  context.font = eval("'"+ document.getElementById('fontSize').value +'px '+ document.getElementById('fontFace').value+"'");
+  context.fillStyle = document.getElementById('fontColor').value;
+  context.textBaseline = "top";
+
+ canvas.onmousedown = myDown;
+ canvas.onmouseup = myUp;
+ //return setInterval(draw, 40);
+
+ $('#cv').click(mydraw);///////////////////////////////////
+
+}
+
+/* 캔버스 클릭한 곳에 텍스트창의 글자 입력 하는 함수 */
+function mydraw(evt){        //////////////////////////////////////////
+var text = document.getElementById('myText').value///////////////////////
+
+ x = evt.pageX - $(this).offset().left;//////////////////////////
+ y = evt.pageY - $(this).offset().top;///////////////////////////
+
+context.fillText(text, x, y);///////////////////////////////////
+ 
+}
+
+
+function clear() {
+ context.clearRect(0, 0, WIDTH, HEIGHT);
+}
+
+
+function draw() {
+    text = document.getElementById('myText').value,
+
+    textLength = (text.length * fontSize)/2;
+clear();
+
+ drawText(posX, posY);
+}
+
+
+
+
+function myMove(e){
+ if (dragok){
+  posX = e.pageX - canvas.offsetLeft;
+  posY = e.pageY - canvas.offsetTop;
+ }
+}
+
+function myDown(e){
+ if (e.pageX < posX + textLength + canvas.offsetLeft && e.pageX > posX - textLength + canvas.offsetLeft && e.pageY < posY + 15 + canvas.offsetTop &&
+ e.pageY > posY -15 + canvas.offsetTop){
+  posX = e.pageX - canvas.offsetLeft;
+  posY = e.pageY - canvas.offsetTop;
+  dragok = true;
+  canvas.onmousemove = myMove;
+ }
+}
+
+function myUp(){
+ dragok = false;
+ canvas.onmousemove = null;
+}
+  
+
+
+
+
+
+
+/*
+function inputText(keyCode){    
+  //msgDiv.innerText = keyCode;     
+
+  var textWidth = context.measureText(myText.value).width;       
+ drawText(String.fromCharCode(keyCode), textWidth,0);      
+}     
+
+function inputBackSpace(keyCode){
+  if(keyCode == 8 || keyCode == 46){ // ?   ?  ?    ?        ? 
+    clearCanvas();
+    drawText(myText.value,posX,posY);     
+  }
+}
+
+*/
+
+function chkFill(){
+  isFill = myForm.isFill[0].checked;
+  clearCanvas();
+  drawText(myText.value,posX,posY); 
+}
+
+function changeFont(){
+ // clearCanvas();
+  context.font = eval("'"+ document.getElementById('fontSize').value +'px '+ document.getElementById('fontFace').value+"'");
+  drawText(myText.value,posX,posY);  
+}
+
+
+function changeColor(){
+// clearCanvas();
+
+    context.fillStyle = document.getElementById('fontColor').value;
+
+	drawText(myText.value,posX,posY);  
+}
+function changecanvasColor(){
+context.fillStyle =document.getElementById('canvasColor').value;
+context.fillRect(0,0,380,200);
+
+}
+</script>
