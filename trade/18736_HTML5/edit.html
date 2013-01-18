@@ -3,36 +3,20 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
-        <link rel="stylesheet" href="my.css" />
-        <style>
-            /* App custom styles */
-        </style>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js">
-        </script
-
->
-<!-- 노드제이에스 서버 연결  --!>
-        <script src="my.js">	
-        </script>
-
-
-    <script type="text/javascript">
-      
-    </script>
-
-
-
-<script src="/socket.io/socket.io.js"></script>
-<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-<script>
+	<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
+	<link rel="stylesheet" href="my.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
+	<script src="my.js"></script>
+	<script type="text/javascript">
+	</script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script>
 
 var text="";
 var textDirection ="";
 
-/* 소켓 연결시 작동   */
 $(document).ready(function(){
 
 var socket=io.connect();
