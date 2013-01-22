@@ -7,137 +7,122 @@
 	<link rel="stylesheet" href="my.css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
-	<script src="my.js"></script>
-	<script type="text/javascript">
-	</script>
-	<script src="/socket.io/socket.io.js"></script>
 	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-	<script>
+	<script src="my.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+	var text="";
+	var textDirection ="";
 
-var text="";
-var textDirection ="";
-
-$(document).ready(function(){
-
-var socket=io.connect();
-
-socket.on('message', function (data){
-
-var output='';
-output+='	<h3>'+data.myText+'</h3>';
-drawText(data.myText,posX,posY);
-
-});
+	$(document).ready(function(){
+		var socket=io.connect();
+		socket.on('message', function (data){
+			var output='';
+			output+='	<h3>'+data.myText+'</h3>';
+			drawText(data.myText,posX,posY);
+		});
 		
-
 		$('button').click(function(){
-		
-		socket.emit('message',{
-		    myText: $('#myText').val(), 
-          	  fontSize: $('#fontSize').val(),
-		fontColor:$('#fontColor').val(),
-		fontFace:$('#fontFace').val(),
-		posX:posX,
-		posY:posY
-		});
+			socket.emit('message',{
+				myText: $('#myText').val(), 
+				fontSize: $('#fontSize').val(),
+				fontColor:$('#fontColor').val(),
+				fontFace:$('#fontFace').val(),
+				posX:posX,
+				posY:posY
+			});
 		});
 
 
-	$('#sh').click(function(){
-	    ctx2 = document.getElementById("layer2").getContext("2d");
-       setInterval("animate()", 100);
+		$('#sh').click(function(){
+			ctx2 = document.getElementById("layer2").getContext("2d");
+			setInterval("animate()", 100);
 
             textDirection = "right";
           
             textYpos = 10;
-	text=$('#myText').val();
+			text=$('#myText').val();
+		});
 
-
-});
-
-	$('#jw').click(function(){
-		
-
-	 ctx3 = document.getElementById("layer3").getContext("2d");            
-            setInterval("animate2()", 100);
+		$('#jw').click(function(){
+			ctx3 = document.getElementById("layer3").getContext("2d");            
+			setInterval("animate2()", 100);
             textDirection ="right";
             textXpos = 10;
             //text = "Multimedia Science";    
-	text=$('#myText').val();
-});
+			text=$('#myText').val();
+		});
+	}); // jquery ready
 
-});
 
-/* up-down 상하이동 애니메이션*/
-        function animate() {            
-           ctx2.clearRect(0, 0, 380, 200);
-           ctx2.globalAlpha = 1;
-           ctx2.fillStyle = '#fff';
-	ctx2.save();
-           ctx2.fillRect(0, 0, 380, 200);   
-            var metrics = ctx2.measureText(text);
-            var textWidth = metrics.width;
-			var textheight=metrics.height;
-	var fontColor = $('#fontColor').val(); 
-	  var fontSize = $('#fontSize').val(); 
-            var fontFace = $('#fontFace').val();
-	var posX = canvas.offsetLeft;
-	var posY = canvas.offsetTop;
+	/* up-down 상하이동 애니메이션*/
+	function animate() {            
+		ctx2.clearRect(0, 0, 380, 200);
+		ctx2.globalAlpha = 1;
+		ctx2.fillStyle = '#fff';
+		ctx2.save();
+		ctx2.fillRect(0, 0, 380, 200);   
+		var metrics = ctx2.measureText(text);
+		var textWidth = metrics.width;
+		var textheight=metrics.height;
+		var fontColor = $('#fontColor').val(); 
+		var fontSize = $('#fontSize').val(); 
+		var fontFace = $('#fontFace').val();
+		var posX = canvas.offsetLeft;
+		var posY = canvas.offsetTop;
 
-            if (textDirection == "right") {
-                textYpos += 10;
-                if (textYpos >160 ) {
-                    textDirection = "left";
-                }
-            }
-            else {
-                textYpos -= 10;
-                if (textYpos <0) {
-                    textDirection = "right";
-                }                    
-            }
-           ctx2.font = fontSize;
-          ctx2.fillStyle = fontColor;
-	ctx2.fontFace=fontFace;
-          ctx2.textBaseline = 'top';
-           ctx2.fillText( text,posX, textYpos);    
-	
-          }    
+		if (textDirection == "right") {
+			textYpos += 10;
+			if (textYpos >160 ) {
+				textDirection = "left";
+			}
+		}
+		else {
+			textYpos -= 10;
+			if (textYpos <0) {
+				textDirection = "right";
+			}                    
+		}
+		ctx2.font = fontSize;
+		ctx2.fillStyle = fontColor;
+		ctx2.fontFace=fontFace;
+		ctx2.textBaseline = 'top';
+		ctx2.fillText( text,posX, textYpos);
+	}
 
-/* left-right 좌우이동 애니메이션*/
-        function animate2() {            
-            ctx3.clearRect(0, 0,380, 200);
-            ctx3.globalAlpha = 1;
-            ctx3.fillStyle = '#fff';
-	ctx3.save();
-            ctx3.fillRect(0, 0, 380, 200);   
-            var metrics = ctx3.measureText(text);
-            var textWidth = metrics.width;
-  var fontColor = $('#fontColor').val(); 
-	  var fontSize = $('#fontSize').val(); 
-            var fontFace = $('#fontFace').val();
-	var posX = canvas.offsetLeft;
-	var posY = canvas.offsetTop;
+	/* left-right 좌우이동 애니메이션*/
+	function animate2() {            
+		ctx3.clearRect(0, 0,380, 200);
+		ctx3.globalAlpha = 1;
+		ctx3.fillStyle = '#fff';
+		ctx3.save();
+		ctx3.fillRect(0, 0, 380, 200);   
+		var metrics = ctx3.measureText(text);
+		var textWidth = metrics.width;
+		var fontColor = $('#fontColor').val(); 
+		var fontSize = $('#fontSize').val(); 
+		var fontFace = $('#fontFace').val();
+		var posX = canvas.offsetLeft;
+		var posY = canvas.offsetTop;
 
-            if (textDirection == "right") {
-                textXpos += 10;
-                if (textXpos > 380 - textWidth) {
-                    textDirection = "left";
-                }
-            }
-            else {
-                textXpos -= 10;
-                if (textXpos < 0) {
-                    textDirection = "right";
-                }                    
-            }
-            ctx3.font = fontSize;
-            ctx3.fillStyle = fontColor;
-            ctx3.fontFace=fontFace;
-            ctx3.textBaseline = 'top';
-            ctx3.fillText  ( text, textXpos, posY);    
-	
-          }    
+		if (textDirection == "right") {
+			textXpos += 10;
+			if (textXpos > 380 - textWidth) {
+				textDirection = "left";
+			}
+		}
+		else {
+			textXpos -= 10;
+			if (textXpos < 0) {
+				textDirection = "right";
+			}                    
+		}
+		ctx3.font = fontSize;
+		ctx3.fillStyle = fontColor;
+		ctx3.fontFace=fontFace;
+		ctx3.textBaseline = 'top';
+		ctx3.fillText  ( text, textXpos, posY);    
+	}
 
 </script>
 </head>
