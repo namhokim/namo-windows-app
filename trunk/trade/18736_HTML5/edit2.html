@@ -7,9 +7,14 @@
 	<link rel="stylesheet" href="my.css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script src="my.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
 	<script type="text/javascript">
-      function doIt() {
+	var text="";
+	var textDirection ="";
+
+	function doIt() {
         var reader = new FileReader();
         reader.onload = (function(e) {
             var img = new Image();
@@ -21,75 +26,60 @@
         );
         reader.readAsDataURL(document.getElementById('userImage').files[0]);
       }
-	</script>
-	<script src="/socket.io/socket.io.js"></script>
-	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-	<script>
 
-var text="";
-var textDirection ="";
-
-$(document).ready(function(){
-
-var socket=io.connect();
-
-socket.on('message', function (data){
-
-var output='';
-output+='	<h3>'+data.myText+'</h3>';
-drawText(data.myText,posX,posY);
-
-});
+	$(document).ready(function(){
+		var socket=io.connect();
+		socket.on('message', function (data){
+			var output='';
+			output+='	<h3>'+data.myText+'</h3>';
+			drawText(data.myText,posX,posY);
+		});
 		
-
 		$('button').click(function(){
-		
-		socket.emit('message',{
-		    myText: $('#myText').val(), 
-          	  fontSize: $('#fontSize').val(),
-		fontColor:$('#fontColor').val(),
-		cansvasColor:$(#'canvasColor').val(),
-		fontFace:$('#fontFace').val(),
-		posX:x,	// 전송할 때 위치전송
-		posY:y	         // 전송할 때 위치전송
-		});
+			socket.emit('message',{
+				myText: $('#myText').val(), 
+				fontSize: $('#fontSize').val(),
+				fontColor:$('#fontColor').val(),
+				cansvasColor:$(#'canvasColor').val(),
+				fontFace:$('#fontFace').val(),
+				posX:x,	// 전송할 때 위치전송
+				posY:y	// 전송할 때 위치전송
+			});
 		});
 
 
-	$('#sh').click(function(){
-	    context = document.getElementById("cv").getContext("2d");
-    setInterval("animate2()", 100);
+		$('#sh').click(function(){
+			context = document.getElementById("cv").getContext("2d");
+			setInterval("animate2()", 100);
 
             textDirection = "right";
            // textXpos = 10;
             textYpos = 10;
-	text=$('#myText').val();
+			text=$('#myText').val();
+		});
 
-
-});
-
-	$('#jw').click(function(){
-	context = document.getElementById("cv").getContext("2d");            
-            setInterval("animate()", 100);
+		$('#jw').click(function(){
+			context = document.getElementById("cv").getContext("2d");            
+			setInterval("animate()", 100);
             textDirection ="right";
             textXpos = 10;
             //text = "Multimedia Science";    
-	text=$('#myText').val();
-});
+			text=$('#myText').val();
+		});
+	}); // jquery ready
 
-});
-        function animate2() {            
-            // Clear screen
-          context.clearRect(0, 0, 380, 200);
-            context.globalAlpha = 1;
-            context.fillStyle = '#fff';
-            context.fillRect(0, 0, 380, 200);   
-            var metrics = context.measureText(text);
-            var textWidth = metrics.width;
-			var textheight=metrics.height;
-            if (textDirection == "right") {
-                textYpos += 10;
-                if (textYpos <200 ) {
+	function animate2() {            
+		// Clear screen
+		context.clearRect(0, 0, 380, 200);
+		context.globalAlpha = 1;
+		context.fillStyle = '#fff';
+		context.fillRect(0, 0, 380, 200);   
+		var metrics = context.measureText(text);
+		var textWidth = metrics.width;
+		var textheight=metrics.height;
+		if (textDirection == "right") {
+			textYpos += 10;
+			if (textYpos <200 ) {
                     textDirection = "left";
                 }
             }
