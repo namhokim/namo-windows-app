@@ -121,43 +121,39 @@
             context.fillText  ( text, textXpos, 90);    
           }    
 
-</script>
-<meta name="generator" content="Namo WebEditor"><title></title>
 
+</script>
 </head>
 
-<body><div id="page">
-    <p><font face="Arial Rounded MT Bold">
-    
-    <span style="font-size:12pt;">&nbsp;&nbsp;
+<body>
+<div id="page">
+	<p><font face="Arial Rounded MT Bold">
+	<span style="font-size:12pt;">&nbsp;&nbsp;
 	
 
 	<canvas id="cv" width="380" height="200" style="position: relative; border: 1px solid #000; "></canvas>
   <br>
  &nbsp;&nbsp;
 
-  <button>Send Text</button> </span></font><font face="Arial Rounded MT Bold"><span style="font-size:12pt;"></span></font></p>
+	<button>Send Text</button>
+	</span></font><font face="Arial Rounded MT Bold"><span style="font-size:12pt;"></span></font></p>
     <p>
 	
 
-</span></font></p>
-    <p><font face="Arial Rounded MT Bold"><input type="text" id="myText" size="47" >
-</font>  </p>
-    
-                <div class="ui-grid-a">
-                    <div class="ui-block-a">
+	</span>
+	</font></p>
+<p><font face="Arial Rounded MT Bold"><input type="text" id="myText" size="47" ></font></p>
 
-			
-                        <input type="button" id="btn" value="submit" onclick="draw();">
-                    </div>
-                    <div class="ui-block-b">
-                     <a data-role="button" data-theme="b" href="#page1" data-icon="star" data-iconpos="left">
-                            select
-                        </a>
-                    </div>
-                </div>
+<div class="ui-grid-a">
+	<div class="ui-block-a">
+		<input type="button" id="btn" value="submit" onclick="draw();">
+	</div>
+	<div class="ui-block-b">
+		<a data-role="button" data-theme="b" href="#page1" data-icon="star" data-iconpos="left">select</a>
+	</div>
+</div>
 
-
+<!-- 글자 효과 지정 탭 -->
 <div data-role="collapsible">
 <h3>font</h3>
 
@@ -200,42 +196,30 @@
 
 
 
-
+<!-- 이미지 불러오기 탭 -->
 <div data-role="collapsible">
 <h3>Photo</h3>
- <div data-role="content"> 
-
-     <fieldset class="ui-grid-a">
-    <input type="file" id="userImage">
-    <input type="button" onclick="doIt()" value="image"><br/>
-    <canvas id="canvas" style="border: 1px solid black; height: 400px; width: 400px;"/>
-                </div>
-        </fieldset>
-    </div>
+	<div data-role="content"> 
+		<fieldset class="ui-grid-a">
+		 <input type="file" id="userImage">
+		 <input type="button" onclick="doIt()" value="image"><br/>
+		 <canvas id="canvas" style="border: 1px solid black; height: 400px; width: 400px;"/>
+		</fieldset>
+	</div>
 </div>
 
 
 
-
+<!-- 모션 쓰기 탭 -->
 <div data-role="collapsible">
 <h3>Motion</h3>
   <input type="button" id="sh" value="up-down" onclick="animate2()">
   <input type="button" id="jw" value="left-right">
 </div>
 
-
-
-
-
-
- <div id="msgDiv">
- </div>
-
+	<div id="msgDiv" />
  </div>
  </body>
-
-	
-
 </html>
 
 
