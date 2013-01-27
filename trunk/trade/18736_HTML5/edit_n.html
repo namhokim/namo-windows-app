@@ -4,36 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
-    <style type="text/css">
-		canvas#layer {z-index: 1;position:static; border: 1px solid #000;margin: 12px 12px 12px 12px;}
-		.collapsible_title {font-family: "Arial Rounded MT Bold"; font-size:12pt;}
-	</style>
+    <link rel="stylesheet" href="edit.css" />
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
-    <script>
-        // jQuery
-        $( document ).ready(function() {
-			var canvas = $('#layer');
-			var context = canvas.get(0).getContext("2d");
-			
-			/*   캔버스 내 텍스트창에 있는 글자 쓰기 함수 <= function draw()   */
-			$('#btn_text_submit').click(function() {
-				var text = $('#myText').val();
-				var size = $('#fontSize').val();
-				var font = $('#fontFace option:selected').val();
-				var color = $('#fontColor option:selected').val();
-				//var textLen = (text.length * fontSize)/2;
-				//alert(cont_font);
-				context.clearRect(0,0,canvas.width(), canvas.height());
-				context.font = size + 'px ' + font;
-				context.fillStyle = color;
-				context.fillText(text, 40,40);
-				context.beginPath();
-				context.closePath();
-				context.stroke();
-			});
-        });
-    </script>
+    <script src="edit.js"></script>
     </head>
     <body>
 <div id="page">
