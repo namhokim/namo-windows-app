@@ -1,6 +1,6 @@
 // jQuery
 $( document ).ready(function() {
-	var can, ctx, canX, canY;
+	var can, ctx, canX, canY, mouseIsDown;
 	var canvas, context, canvasWidth, canvasHeight;
 	var textObjects, refreshRepeat, selected, selectedObj;
 	var textInput, fontSize, fontFace, fontColor;
@@ -12,6 +12,7 @@ $( document ).ready(function() {
 		// native javascript
 		can = document.getElementById("layer");
 		ctx = can.getContext("2d");
+		mouseIsDown = false;
 		
 		// jQuery
 		canvas = $('#layer');
@@ -23,11 +24,22 @@ $( document ).ready(function() {
 		refreshRepeat = false;	// 화면갱신을 반복할지 플래그
 		selected = false;	// 마우스로 현재 선택하고 있는지 여부
 		selectedObj = null;
+		
 		// elements
 		textInput = $('#myText');
 		fontSize = $('#fontSize');
 		fontFace = $('#fontFace');
 		fontColor = $('#fontColor');
+		
+		// event handler
+		can.addEventListener("mousedown", mouseDown, false);
+		can.addEventListener("mousemove", mouseXY, false);
+		can.addEventListener("touchstart", touchDown, false);
+		can.addEventListener("touchmove", touchXY, true);
+		can.addEventListener("touchend", touchUp, false);
+		
+		document.body.addEventListener("mouseup", mouseUp, false);
+		document.body.addEventListener("touchcancel", touchUp, false);
 	}
 	
 	/* 텍스트 객체 */
@@ -88,6 +100,53 @@ $( document ).ready(function() {
 		}
 		refresh();
 	});
+	
+	function mouseUp() {
+            mouseIsDown = false;
+            mouseXY();
+        }
+ 
+        function touchUp() {
+            mouseIsDown = false;
+            // no touch to track, so just show state
+            showPos();
+        }
+ 
+        function mouseDown() {
+            mouseIsDown = true;
+            mouseXY();
+        }
+ 
+        function touchDown() {
+            mouseIsDown = true;
+            touchXY();
+        }
+	
+	function mouseXY(e) {
+		//if(!mouseIsDown) return;
+		if (!e) var e = event;
+		canX = e.pageX - can.offsetLeft;
+		canY = e.pageY - can.offsetTop;
+		showPos();
+	}
+	
+	function touchXY(e) {
+		if (!e) var e = event;
+		e.preventDefault();
+		canX = e.targetTouches[0].pageX - can.offsetLeft;
+		canY = e.targetTouches[0].pageY - can.offsetTop;
+		showPos();
+	}
+	
+	function showPos() {
+		var str = canX + ", " + canY;
+		if (mouseIsDown) {
+			str += " down";
+		} else {
+			str += " up";
+		}
+		textInput.val(str);
+	}
 	
 	/* 객체들을 화면에 그려주는 함수 */
 	function refresh() {
