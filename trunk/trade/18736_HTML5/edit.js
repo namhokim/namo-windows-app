@@ -43,14 +43,13 @@ $( document ).ready(function() {
 		var text = textInput.val();
 		if (text.length == 0) return;	// 입력글자의 수가 zero이면 submit 불가
 		var size = $('#fontSize').val();
-		var font = $('#fontFace option:selected').val();
-		var color = $('#fontColor option:selected').val();
+		var font = $('#fontFace > option:selected').val();
+		var color = $('#fontColor > option:selected').val();
 		textObjects.push(new Text(text, 0, canvasHeight, size, font, color));	// 추가
 		textInput.val('');	// 입력컨트롤 값 초기화
 		refresh();			// 화면 갱신
 	});
 
-	
 	/* 캔버스 클릭시 */
 	canvas.click(function(e) {
 		if(selectedObj==null) {
@@ -59,6 +58,7 @@ $( document ).ready(function() {
 				var tObj = textObjects[i];
 				if (containTextObject(tObj, e.pageX, e.pageY)) {
 					selectedObj = tObj;
+					getAttributeToControl();
 					break;	// 선택이 되었으면 빠져나옴(배열 앞의 제일 처음만 선택)
 				} else {
 					selectedObj = null;
@@ -66,6 +66,7 @@ $( document ).ready(function() {
 			}
 		} else {
 			selectedObj = null;	// 선택해제
+			setTextHandler(null, false);
 		}
 		refresh();
 	});
@@ -127,6 +128,53 @@ $( document ).ready(function() {
 	/* Canvas context에 글꼴을 적용하기 위한 문자열 생성함수*/
 	function makeFontString(size, font) {
 		return size + 'px ' + font;
+	}
+	
+	/* 캔버스에서 선택된 텍스트객체의 속성을 컨트롤에 반영 */
+	function getAttributeToControl()
+	{
+		if (selectedObj==null) return;
+
+		textInput.val(selectedObj.text);
+		$('#fontSize').val(selectedObj.size).slider('refresh');
+		$('#fontFace').val(selectedObj.font).selectmenu('refresh');
+		$('#fontColor').val(selectedObj.color).selectmenu('refresh');
+		
+		// 핸들러 연결
+		setTextHandler(selectedObj, true);
+	}
+	
+	/* 텍스트 컨트롤과 텍스트객체 연결/해제 */
+	function setTextHandler(textObject, isConnect) {
+		if(isConnect) {
+			if (selectedObj==null) return;
+			
+			textInput.on('keyup', function(e) {
+				selectedObj.text = $(this).val();
+				refresh();
+			});
+			
+			$('#fontSize').on('change', function(e) {
+				selectedObj.size = $(this).val();
+				refresh();
+			});
+			
+			$('#fontFace').on('change', function(e) {
+				selectedObj.font = $(this).val();
+				refresh();
+			});
+			
+			$('#fontColor').on('change', function(e) {
+				selectedObj.color = $(this).val();
+				refresh();
+			});
+		} else {
+			textInput.val("");
+			textInput.off('keyup');
+			$('#fontSize').off('change');
+			$('#fontFace').off('change');
+			$('#fontColor').off('change');
+		}
 	}
 	
 });
