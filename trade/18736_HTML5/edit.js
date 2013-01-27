@@ -1,16 +1,34 @@
 // jQuery
 $( document ).ready(function() {
-	var canvas = $('#layer');
-	var canvasWidth = canvas.width();
-	var canvasHeight = canvas.height();
+	var can, ctx, canX, canY;
+	var canvas, context, canvasWidth, canvasHeight;
+	var textObjects, refreshRepeat, selected, selectedObj;
+	var textInput, fontSize, fontFace, fontColor;
 	
-	var context = canvas.get(0).getContext("2d");
-	var textInput = $('#myText');
-	var textObjects = new Array();	// 텍스트객체를 저장할 배열
-	var refreshRepeat = false;	// 화면갱싱을 반복할지 플래그
+	init();	// 초기화 함수 호출
 	
-	var selected = false;	// 마우스로 현재 선택하고 있는지 여부
-	var selectedObj = null;
+	/* 초기화 */
+	function init() {
+		// native javascript
+		can = document.getElementById("layer");
+		ctx = can.getContext("2d");
+		
+		// jQuery
+		canvas = $('#layer');
+		context = canvas.get(0).getContext("2d");
+		canvasWidth = canvas.width();
+		canvasHeight = canvas.height();
+		
+		textObjects = new Array();	// 텍스트객체를 저장할 배열
+		refreshRepeat = false;	// 화면갱신을 반복할지 플래그
+		selected = false;	// 마우스로 현재 선택하고 있는지 여부
+		selectedObj = null;
+		// elements
+		textInput = $('#myText');
+		fontSize = $('#fontSize');
+		fontFace = $('#fontFace');
+		fontColor = $('#fontColor');
+	}
 	
 	/* 텍스트 객체 */
 	var Text = function(text, x, y, size, font, color) {
@@ -42,9 +60,9 @@ $( document ).ready(function() {
 	$('#btn_text_submit').click(function() {
 		var text = textInput.val();
 		if (text.length == 0) return;	// 입력글자의 수가 zero이면 submit 불가
-		var size = $('#fontSize').val();
-		var font = $('#fontFace > option:selected').val();
-		var color = $('#fontColor > option:selected').val();
+		var size = fontSize.val();
+		var font = fontFace.val();
+		var color = fontColor.val();
 		textObjects.push(new Text(text, 0, canvasHeight, size, font, color));	// 추가
 		textInput.val('');	// 입력컨트롤 값 초기화
 		refresh();			// 화면 갱신
@@ -136,9 +154,9 @@ $( document ).ready(function() {
 		if (selectedObj==null) return;
 
 		textInput.val(selectedObj.text);
-		$('#fontSize').val(selectedObj.size).slider('refresh');
-		$('#fontFace').val(selectedObj.font).selectmenu('refresh');
-		$('#fontColor').val(selectedObj.color).selectmenu('refresh');
+		fontSize.val(selectedObj.size).slider('refresh');
+		fontFace.val(selectedObj.font).selectmenu('refresh');
+		fontColor.val(selectedObj.color).selectmenu('refresh');
 		
 		// 핸들러 연결
 		setTextHandler(selectedObj, true);
@@ -154,26 +172,26 @@ $( document ).ready(function() {
 				refresh();
 			});
 			
-			$('#fontSize').on('change', function(e) {
+			fontSize.on('change', function(e) {
 				selectedObj.size = $(this).val();
 				refresh();
 			});
 			
-			$('#fontFace').on('change', function(e) {
+			fontFace.on('change', function(e) {
 				selectedObj.font = $(this).val();
 				refresh();
 			});
 			
-			$('#fontColor').on('change', function(e) {
+			fontColor.on('change', function(e) {
 				selectedObj.color = $(this).val();
 				refresh();
 			});
 		} else {
 			textInput.val("");
 			textInput.off('keyup');
-			$('#fontSize').off('change');
-			$('#fontFace').off('change');
-			$('#fontColor').off('change');
+			fontSize.off('change');
+			fontFace.off('change');
+			fontColor.off('change');
 		}
 	}
 	
