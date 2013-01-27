@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+    <style type="text/css">
+		canvas#layer {z-index: 1;position:static; border: 1px solid #000;margin: 12px 12px 12px 12px;}
+		.collapsible_title {font-family: "Arial Rounded MT Bold"; font-size:12pt;}
+	</style>
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+    <script>
+        // jQuery
+        $( document ).ready(function() {
+			var canvas = $('#layer');
+			var context = canvas.get(0).getContext("2d");
+			
+			/*   캔버스 내 텍스트창에 있는 글자 쓰기 함수 <= function draw()   */
+			$('#btn_text_submit').click(function() {
+				var text = $('#myText').val();
+				var size = $('#fontSize').val();
+				var font = $('#fontFace option:selected').val();
+				var color = $('#fontColor option:selected').val();
+				//var textLen = (text.length * fontSize)/2;
+				//alert(cont_font);
+				context.clearRect(0,0,canvas.width(), canvas.height());
+				context.font = size + 'px ' + font;
+				context.fillStyle = color;
+				context.fillText(text, 40,40);
+				context.beginPath();
+				context.closePath();
+				context.stroke();
+			});
+        });
+    </script>
+    </head>
+    <body>
+<div id="page">
+	<!-- 통합 캔버스 -->
+      <canvas id="layer" width="380" height="200">브라우저가 HTML5 Canvas를 지원하지 않습니다.</canvas>
+      <!-- Text -->
+      <button>Send Text</button>
+      <input type="text" id="myText" size="47"  title="Please input the text here." />
+    <div class="ui-grid-a">
+        <div class="ui-block-a">
+            <input type="button" id="btn_text_submit" value="submit" />
+        </div>
+        <div class="ui-block-b">
+            <a data-role="button" data-theme="b" href="#page1" data-icon="star" data-iconpos="left">select</a>
+        </div>
+    </div>
+    <!-- 글자 효과 지정 탭 -->
+	<div data-role="collapsible">
+    	<h3>Text Settings</h3>
+        <div>
+            <span class="collapsible_title">Size:</span><br/>
+            <input id="fontSize" type="range" min="10" max="60" step="5" value="50" />
+        </div>
+        <div>
+            <span class="collapsible_title">Font: </span>
+            <select id="fontFace">
+                <option value="Tahoma" selected>Tahoma</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Gulim">Gulim</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Symbol">Symbol</option>
+                <option value="Terminal">Terminal</option>
+            </select>
+        </div>
+        <div>
+        	<span class="collapsible_title">Color:</span>
+            <select id="fontColor">
+                <option value="Black" selected>Black</option>
+                <option value="Red">Red</option>
+                <option value="Blue">Blue</option>
+                <option value="Green">Green</option>
+                <option value="Yellow">Yellow</option>
+            </select> 
+        </div>
+    </div>
+</div>
+</body>
+</html>
