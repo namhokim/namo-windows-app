@@ -72,16 +72,36 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="resources\CSharp\MvcApplication.NUnit.Tests.zip" />
-    <None Include="resources\CSharp\NUnit.reg" />
-    <None Include="resources\CSharp\NUnit64bit.reg" />
-    <None Include="resources\CSharp\NUnit64bitExpress.reg" />
-    <None Include="resources\CSharp\NUnitExpress.reg" />
-    <None Include="resources\Visual Basic\MvcApplication.NUnit.Tests.zip" />
-    <None Include="resources\Visual Basic\NUnit.reg" />
-    <None Include="resources\Visual Basic\NUnit64bit.reg" />
-    <None Include="resources\Visual Basic\NUnit64bitExpress.reg" />
-    <None Include="resources\Visual Basic\NUnitExpress.reg" />
+    <None Include="CSharp\MvcApplication.NUnit.Tests.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="CSharp\NUnit.reg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="CSharp\NUnit64bit.reg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="CSharp\NUnit64bitExpress.reg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="CSharp\NUnitExpress.reg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Visual Basic\MvcApplication.NUnit.Tests.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Visual Basic\NUnit.reg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Visual Basic\NUnit64bit.reg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Visual Basic\NUnit64bitExpress.reg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Visual Basic\NUnitExpress.reg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
