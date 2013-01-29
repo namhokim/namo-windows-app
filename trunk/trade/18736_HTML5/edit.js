@@ -2,7 +2,7 @@
 $( document ).ready(function() {
 
 	/* ready내 전역변수들 */
-	var can, ctx, canX, canY, mouseIsDown, initX, iniY;
+	var can, ctx, canX, canY, mouseIsDown, initX, initY;
 	var canvas, context, canvasWidth, canvasHeight;
 	var textObjects, refreshRepeat, selected, selectedObj;
 	var textInput, fontSize, fontFace, fontColor, textSubmitButton;
@@ -115,11 +115,7 @@ $( document ).ready(function() {
 		mouseXY();
 	}
 	function mouseXY(e) {
-		//if(!mouseIsDown) return;
-		if (!e) var e = event;
-		canX = e.pageX - can.offsetLeft;
-		canY = e.pageY - can.offsetTop;
-		showPos();
+		handleXY(true);
 	}
 
 	/* 터치시 */
@@ -132,11 +128,26 @@ $( document ).ready(function() {
 		// no touch to track, so just show state
 		showPos();
 	}
+
 	function touchXY(e) {
+		handleXY(false);
+	}
+
+	function handleXY(isMouse, e) {
 		if (!e) var e = event;
 		e.preventDefault();
-		canX = e.targetTouches[0].pageX - can.offsetLeft;
-		canY = e.targetTouches[0].pageY - can.offsetTop;
+		if (isMouse) {
+			canX = e.pageX - can.offsetLeft;
+			canY = e.pageY - can.offsetTop;
+		} else {
+			canX = e.targetTouches[0].pageX - can.offsetLeft;
+			canY = e.targetTouches[0].pageY - can.offsetTop;
+		}
+		
+		if(!mouseIsDown) {
+			initX = canX;
+			initY = canY;
+		}
 		showPos();
 	}
 	
