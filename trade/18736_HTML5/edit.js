@@ -90,19 +90,12 @@ $( document ).ready(function() {
 		refresh();			// 화면 갱신
 	});
 
-	/* 캔버스 클릭시 */
+	/* 캔버스 클릭시 : deprecated */
 	canvas.click(function(e) {
 		if(selectedObj==null) {
-			var objLen = textObjects.length;
-			for (var i=0; i<objLen; i++) {
-				var tObj = textObjects[i];
-				if (containTextObject(tObj, e.pageX, e.pageY)) {
-					selectedObj = tObj;
-					getAttributeToControl();
-					break;	// 선택이 되었으면 빠져나옴(배열 앞의 제일 처음만 선택)
-				} else {
-					selectedObj = null;
-				}
+			selectedObj = getCanvasObject(e.pageX, e.pageY);
+			if (selectedObj!=null) {
+				getAttributeToControl();
 			}
 		} else {
 			selectedObj = null;	// 선택해제
@@ -190,6 +183,20 @@ $( document ).ready(function() {
 
 	//////////////////////////////////////////////////////////////////////
 	
+	/* 해당 포인터에 텍스트객체가 있으면 반환, 없으면 null 반환 */
+	function getCanvasObject(x, y) {
+		var objLen = textObjects.length;
+
+		for (var i=0; i<objLen; i++) {
+			var tObj = textObjects[i];
+			if (containTextObject(tObj, x, y)) {
+				return tObj;	// 배열 앞의 제일 처음만 선택
+			}
+		}
+
+		return null;	// 찾지 못했다
+	}
+
 	/* 텍스트객체에 해당 포인터가 속해있는지 판단 */
 	function containTextObject(textObject, x, y) {
 		var rect = TextToRectangle(textObject);
