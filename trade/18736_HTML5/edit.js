@@ -5,7 +5,7 @@ $( document ).ready(function() {
 	var can, ctx, canX, canY, mouseIsDown, initX, iniY;
 	var canvas, context, canvasWidth, canvasHeight;
 	var textObjects, refreshRepeat, selected, selectedObj;
-	var textInput, fontSize, fontFace, fontColor;
+	var textInput, fontSize, fontFace, fontColor, textSubmitButton;
 	
 	/* 초기화 함수 호출 */
 	init();
@@ -35,6 +35,7 @@ $( document ).ready(function() {
 		fontSize = $('#fontSize');
 		fontFace = $('#fontFace');
 		fontColor = $('#fontColor');
+		textSubmitButton = $('#btn_text_submit');
 		
 		// event handler
 		can.addEventListener("mousedown", mouseDown, false);
@@ -78,7 +79,7 @@ $( document ).ready(function() {
 	//////////////////////////////////////////////////////////////////////
 	
 	/*   캔버스 내 텍스트창에 있는 글자 쓰기 함수 <= function draw()   */
-	$('#btn_text_submit').click(function() {
+	textSubmitButton.click(function() {
 		var text = textInput.val();
 		if (text.length == 0) return;	// 입력글자의 수가 zero이면 submit 불가
 		var size = fontSize.val();
