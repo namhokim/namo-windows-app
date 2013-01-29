@@ -1,11 +1,16 @@
-// jQuery
+/* jQuery - DOM hierarchy has been fully constructed */
 $( document ).ready(function() {
-	var can, ctx, canX, canY, mouseIsDown;
+
+	/* ready내 전역변수들 */
+	var can, ctx, canX, canY, mouseIsDown, initX, iniY;
 	var canvas, context, canvasWidth, canvasHeight;
 	var textObjects, refreshRepeat, selected, selectedObj;
 	var textInput, fontSize, fontFace, fontColor;
 	
-	init();	// 초기화 함수 호출
+	/* 초기화 함수 호출 */
+	init();
+
+	//////////////////////////////////////////////////////////////////////
 	
 	/* 초기화 */
 	function init() {
@@ -41,6 +46,8 @@ $( document ).ready(function() {
 		document.body.addEventListener("mouseup", mouseUp, false);
 		document.body.addEventListener("touchcancel", touchUp, false);
 	}
+
+	//////////////////////////////////////////////////////////////////////
 	
 	/* 텍스트 객체 */
 	var Text = function(text, x, y, size, font, color) {
@@ -67,6 +74,8 @@ $( document ).ready(function() {
 		this.width = width;
 		this.height = height;
 	};
+
+	//////////////////////////////////////////////////////////////////////
 	
 	/*   캔버스 내 텍스트창에 있는 글자 쓰기 함수 <= function draw()   */
 	$('#btn_text_submit').click(function() {
@@ -101,27 +110,16 @@ $( document ).ready(function() {
 		refresh();
 	});
 	
+	//////////////////////////////////////////////////////////////////////
+	/* 마우스 클릭시 */
+	function mouseDown() {
+		mouseIsDown = true;
+		mouseXY();
+	}
 	function mouseUp() {
-            mouseIsDown = false;
-            mouseXY();
-        }
- 
-        function touchUp() {
-            mouseIsDown = false;
-            // no touch to track, so just show state
-            showPos();
-        }
- 
-        function mouseDown() {
-            mouseIsDown = true;
-            mouseXY();
-        }
- 
-        function touchDown() {
-            mouseIsDown = true;
-            touchXY();
-        }
-	
+		mouseIsDown = false;
+		mouseXY();
+	}
 	function mouseXY(e) {
 		//if(!mouseIsDown) return;
 		if (!e) var e = event;
@@ -129,7 +127,17 @@ $( document ).ready(function() {
 		canY = e.pageY - can.offsetTop;
 		showPos();
 	}
-	
+
+	/* 터치시 */
+	function touchDown() {
+		mouseIsDown = true;
+		touchXY();
+	}
+	function touchUp() {
+		mouseIsDown = false;
+		// no touch to track, so just show state
+		showPos();
+	}
 	function touchXY(e) {
 		if (!e) var e = event;
 		e.preventDefault();
@@ -147,6 +155,8 @@ $( document ).ready(function() {
 		}
 		textInput.val(str);
 	}
+
+	//////////////////////////////////////////////////////////////////////
 	
 	/* 객체들을 화면에 그려주는 함수 */
 	function refresh() {
@@ -176,6 +186,8 @@ $( document ).ready(function() {
 			setTimeout(refresh, 33);
 		}
 	};
+
+	//////////////////////////////////////////////////////////////////////
 	
 	/* 텍스트객체에 해당 포인터가 속해있는지 판단 */
 	function containTextObject(textObject, x, y) {
