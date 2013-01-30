@@ -123,9 +123,10 @@ $( document ).ready(function() {
 	}
 	function touchUp() {
 		mouseIsDown = false;
+		
+		// 이벤트 종료(touch)
 		if(isSamePostion(initX, initY, canX, canY)) {
-			// 이벤트 종료(toush)
-			showPos();
+			selectHandler(canX, canY);
 		}
 		initInitPosition();
 	}
@@ -147,7 +148,7 @@ $( document ).ready(function() {
 		
 		if (mouseIsDown) {
 			if (isBeforeUp()) {
-				// 이벤트 시작
+				// 이벤트 시작(mouse/touch)
 				initX = canX;
 				initY = canY;
 			}
@@ -155,7 +156,7 @@ $( document ).ready(function() {
 			if (!isBeforeUp()) {
 				// 이벤트 종료(mouse)
 				if(isSamePostion(initX, initY, canX, canY)) {
-					showPos();
+					selectHandler(canX, canY);
 				}
 			}
 		}
@@ -178,6 +179,19 @@ $( document ).ready(function() {
 	
 	function isSamePostion(x1, y1, x2, y2) {
 		return ( (x1==x2) && (y1==y2) );
+	}
+	
+	function selectHandler(x, y) {
+		if(selectedObj==null) {
+			selectedObj = getCanvasObject(x, y);
+			if (selectedObj!=null) {
+				getAttributeToControl();
+			}
+		} else {
+			selectedObj = null;	// 선택해제
+			setTextHandler(null, false);
+		}
+		refresh();
 	}
 
 	//////////////////////////////////////////////////////////////////////
