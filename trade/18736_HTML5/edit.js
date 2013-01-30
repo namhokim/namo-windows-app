@@ -5,7 +5,7 @@ $( document ).ready(function() {
 	var NOT_SELECTED = Number.MAX_VALUE;
 
 	/* ready내 전역변수들 */
-	var can, ctx, canX, canY, mouseIsDown, initX, initY;
+	var can, ctx, canX, canY, mouseIsDown, initX, initY, selX, selY;
 	var canvas, context, canvasWidth, canvasHeight;
 	var textObjects, refreshRepeat, selected, selectedObj;
 	var textInput, fontSize, fontFace, fontColor, textSubmitButton;
@@ -126,7 +126,11 @@ $( document ).ready(function() {
 		
 		// 이벤트 종료(touch)
 		if(isSamePostion(initX, initY, canX, canY)) {
-			selectHandler(canX, canY);
+			if (selectedObj!=null) {
+				getAttributeToControl();
+			}
+		} else {
+			selectHandler(canX, canY);	// 해제
 		}
 		initInitPosition();
 	}
@@ -151,12 +155,24 @@ $( document ).ready(function() {
 				// 이벤트 시작(mouse/touch)
 				initX = canX;
 				initY = canY;
+				selectHandler(canX, canY);	// 선택
+			} else {
+				// 이동
+				if(selectedObj!=null) {
+					selectedObj.x = selX + (canX-initX);
+					selectedObj.y = selY + (canY-initY);
+					refresh();
+				}
 			}
 		} else {
 			if (!isBeforeUp()) {
 				// 이벤트 종료(mouse)
 				if(isSamePostion(initX, initY, canX, canY)) {
-					selectHandler(canX, canY);
+					if (selectedObj!=null) {
+						getAttributeToControl();
+					}
+				} else {
+					selectHandler(canX, canY);	// 해제
 				}
 			}
 		}
@@ -181,12 +197,12 @@ $( document ).ready(function() {
 		return ( (x1==x2) && (y1==y2) );
 	}
 	
+	/* 해당 좌표에 텍스트 객체가 있으면 선택, 없으면 해제한다. */
 	function selectHandler(x, y) {
 		if(selectedObj==null) {
 			selectedObj = getCanvasObject(x, y);
-			if (selectedObj!=null) {
-				getAttributeToControl();
-			}
+			selX = selectedObj.x;
+			selY = selectedObj.y;
 		} else {
 			selectedObj = null;	// 선택해제
 			setTextHandler(null, false);
