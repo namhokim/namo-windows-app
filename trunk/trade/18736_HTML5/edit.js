@@ -1,6 +1,9 @@
 /* jQuery - DOM hierarchy has been fully constructed */
 $( document ).ready(function() {
 
+	/* 상수 */
+	var NOT_SELECTED = Number.MAX_VALUE;
+
 	/* ready내 전역변수들 */
 	var can, ctx, canX, canY, mouseIsDown, initX, initY;
 	var canvas, context, canvasWidth, canvasHeight;
@@ -18,6 +21,7 @@ $( document ).ready(function() {
 		can = document.getElementById("layer");
 		ctx = can.getContext("2d");
 		mouseIsDown = false;
+		initInitPosition();
 		
 		// jQuery
 		canvas = $('#layer');
@@ -37,15 +41,22 @@ $( document ).ready(function() {
 		fontColor = $('#fontColor');
 		textSubmitButton = $('#btn_text_submit');
 		
-		// event handler
+		// event handlers
 		can.addEventListener("mousedown", mouseDown, false);
 		can.addEventListener("mousemove", mouseXY, false);
 		can.addEventListener("touchstart", touchDown, false);
 		can.addEventListener("touchmove", touchXY, true);
 		can.addEventListener("touchend", touchUp, false);
-		
 		document.body.addEventListener("mouseup", mouseUp, false);
 		document.body.addEventListener("touchcancel", touchUp, false);
+	}
+	
+	
+	/* 이벤트좌표 초기화 */
+	function initInitPosition()
+	{
+		initX = NOT_SELECTED;
+		initY = NOT_SELECTED;
 	}
 
 	//////////////////////////////////////////////////////////////////////
@@ -89,20 +100,6 @@ $( document ).ready(function() {
 		textInput.val('');	// 입력컨트롤 값 초기화
 		refresh();			// 화면 갱신
 	});
-
-	/* 캔버스 클릭시 : deprecated */
-	canvas.click(function(e) {
-		if(selectedObj==null) {
-			selectedObj = getCanvasObject(e.pageX, e.pageY);
-			if (selectedObj!=null) {
-				getAttributeToControl();
-			}
-		} else {
-			selectedObj = null;	// 선택해제
-			setTextHandler(null, false);
-		}
-		refresh();
-	});
 	
 	//////////////////////////////////////////////////////////////////////
 	/* 마우스 클릭시 */
@@ -113,6 +110,7 @@ $( document ).ready(function() {
 	function mouseUp() {
 		mouseIsDown = false;
 		mouseXY();
+		initInitPosition();
 	}
 	function mouseXY(e) {
 		handleXY(true);
@@ -125,8 +123,11 @@ $( document ).ready(function() {
 	}
 	function touchUp() {
 		mouseIsDown = false;
-		// no touch to track, so just show state
-		showPos();
+		if(isSamePostion(initX, initY, canX, canY)) {
+			// 이벤트 종료(toush)
+			showPos();
+		}
+		initInitPosition();
 	}
 
 	function touchXY(e) {
@@ -144,11 +145,21 @@ $( document ).ready(function() {
 			canY = e.targetTouches[0].pageY - can.offsetTop;
 		}
 		
-		if(!mouseIsDown) {
-			initX = canX;
-			initY = canY;
+		if (mouseIsDown) {
+			if (isBeforeUp()) {
+				// 이벤트 시작
+				initX = canX;
+				initY = canY;
+			}
+		} else {
+			if (!isBeforeUp()) {
+				// 이벤트 종료(mouse)
+				if(isSamePostion(initX, initY, canX, canY)) {
+					showPos();
+				}
+			}
 		}
-		showPos();
+		
 	}
 	
 	function showPos() {
@@ -159,6 +170,14 @@ $( document ).ready(function() {
 			str += " up";
 		}
 		textInput.val(str);
+	}
+	
+	function isBeforeUp() {
+		return (initX == NOT_SELECTED);
+	}
+	
+	function isSamePostion(x1, y1, x2, y2) {
+		return ( (x1==x2) && (y1==y2) );
 	}
 
 	//////////////////////////////////////////////////////////////////////
