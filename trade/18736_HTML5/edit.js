@@ -64,19 +64,19 @@ $( document ).ready(function() {
 	/* 텍스트 객체 */
 	var Text = function(text, x, y, size, font, color) {
 		this.text = text;
-		this.x = x;
-		this.y = y;
-		this.size = size;
+		this.x = Number(x);
+		this.y = Number(y);
+		this.size = Number(size);
 		this.font = font;
 		this.color = color;
 	};
 	
 	/* 직사각형 객체 */
 	var Rectangle = function(x, y, width, height) {
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
+		this.x = Number(x);
+		this.y = Number(y);
+		this.width = Number(width);
+		this.height = Number(height);
 	};
 	
 	/* 선택 객체 */
@@ -130,7 +130,7 @@ $( document ).ready(function() {
 				getAttributeToControl();
 			}
 		} else {
-			selectHandler(canX, canY);	// 해제
+			unselect(true);
 		}
 		initInitPosition();
 	}
@@ -172,7 +172,7 @@ $( document ).ready(function() {
 						getAttributeToControl();
 					}
 				} else {
-					selectHandler(canX, canY);	// 해제
+					unselect(true);
 				}
 			}
 		}
@@ -199,15 +199,35 @@ $( document ).ready(function() {
 	
 	/* 해당 좌표에 텍스트 객체가 있으면 선택, 없으면 해제한다. */
 	function selectHandler(x, y) {
-		if(selectedObj==null) {
-			selectedObj = getCanvasObject(x, y);
-			selX = selectedObj.x;
-			selY = selectedObj.y;
+		var newSelectedObj = getCanvasObject(x, y);
+		if (newSelectedObj==null) {
+			unselect(false);
 		} else {
-			selectedObj = null;	// 선택해제
-			setTextHandler(null, false);
+			if(selectedObj==null) {
+				selectStatus(newSelectedObj);
+			} else {
+				if (selectedObj===newSelectedObj) {
+					unselect(false);
+				} else {
+					selectStatus(newSelectedObj);
+				}
+			}
 		}
 		refresh();
+	}
+	
+	function selectStatus (newSelectedObject) {
+		selectedObj = newSelectedObject;
+		selX = selectedObj.x;
+		selY = selectedObj.y;
+	}
+	
+	function unselect(needRefresh) {
+		selectedObj = null;	// 선택해제
+		setTextHandler(null, false);
+		if (needRefresh) {
+			refresh();
+		}
 	}
 
 	//////////////////////////////////////////////////////////////////////
@@ -263,7 +283,7 @@ $( document ).ready(function() {
 		
 		var minX = rect.x;
 		var minY = rect.y;
-		var maxX =  rect.x +  rect.width;
+		var maxX = rect.x + rect.width;
 		var maxY = rect.y + rect.height;
 		
 		return ( (minX<=x) && (x<=maxX) && (minY<=y) && (y<=maxY) );
