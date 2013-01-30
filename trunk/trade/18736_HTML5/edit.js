@@ -179,6 +179,7 @@ $( document ).ready(function() {
 		
 	}
 	
+	// 개발용 테스트용
 	function showPos() {
 		var str = canX + ", " + canY;
 		if (mouseIsDown) {
