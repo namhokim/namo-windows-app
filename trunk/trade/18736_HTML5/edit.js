@@ -370,7 +370,7 @@ $( document ).ready(function() {
 			});
 			
 			fontSize.on('change', function(e) {
-				selectedObj.size = $(this).val();
+				selectedObj.size = Number($(this).val());
 				refreshIfNotRepeat();
 			});
 			
@@ -397,9 +397,9 @@ $( document ).ready(function() {
 	function processMotion(textObject) {
 		var VELOCITY = 2;	// 2 px/frame
 
-		switch (textObject.motionType)
-		{
+		switch (textObject.motionType) {
 		case MOTION_TYPE_VERTICAL:
+			var ty = textObject.y;
 			if (textObject.motionToPositive) {
 				textObject.y += VELOCITY;
 				if (textObject.y > canvasHeight)
@@ -407,8 +407,7 @@ $( document ).ready(function() {
 					textObject.y = canvasHeight;
 					invertDirection(textObject);
 				}
-			}
-			else {
+			} else {
 				textObject.y -= VELOCITY;
 				if ((textObject.y - textObject.size) < 0)
 				{
@@ -416,6 +415,7 @@ $( document ).ready(function() {
 					invertDirection(textObject);
 				}
 			}
+			textInput.val( textObject.y );
 			break;
 		case MOTION_TYPE_HORIZON:
 			if (textObject.motionToPositive) {
@@ -426,8 +426,7 @@ $( document ).ready(function() {
 					textObject.x = (canvasWidth - rect.width);
 					invertDirection(textObject);
 				}
-			}
-			else {
+			} else {
 				textObject.x -= VELOCITY;
 				if (textObject.x < 0)
 				{
@@ -439,10 +438,13 @@ $( document ).ready(function() {
 		}
 	}
 
-	/* 방향 전환 함수 */
+	/* 방향 전환 함수 : 캔버스 경계를 초과했을 경우 호출 */
 	function invertDirection(textObject) {
-		var nextDir = (!textObject.motionToPositive);
-		textObject.motionToPositive = nextDir;
+		if (textObject.motionToPositive) {
+			textObject.motionToPositive = false;
+		} else {
+			textObject.motionToPositive = true;
+		}
 	}
 	
 });
