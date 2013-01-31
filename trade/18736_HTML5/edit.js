@@ -448,9 +448,16 @@ $( document ).ready(function() {
 			}
 			break;
 		case MOTION_TYPE_HORIZON:
+			var rect = TextToRectangle(textObject);
+
 			if (textObject.motionToPositive) {
+				if (rect.width >= canvasWidth) {	// 빠르게 튀김 방지
+					textObject.x = (canvasWidth - rect.width);
+					break;
+				}
+
 				textObject.x += VELOCITY;
-				var rect = TextToRectangle(textObject);
+				
 				if ((rect.x+rect.width) > canvasWidth)
 				{
 					textObject.x = (canvasWidth - rect.width);
