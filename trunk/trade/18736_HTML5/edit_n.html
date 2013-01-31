@@ -53,9 +53,19 @@
             </select> 
         </div>
     </div>
+	<!-- 이미지 불러오기 탭 -->
+	<div data-role="collapsible">
+		<h3>Photo</h3>
+		<div data-role="content"> 
+			<fieldset class="ui-grid-a">
+			 <input id="imageSrc" type="file" accept="image/*" />
+			 <input id="imageAdd" type="button" value="image" />
+			</fieldset>
+		</div>
+	</div>
 	<!-- 모션 쓰기 탭 -->
 	<div data-role="collapsible">
-	<h3>Motion</h3>
+		<h3>Motion</h3>
 		<input type="button" id="motion-ud" value="up-down" />
 		<input type="button" id="motion-lf" value="left-right" />
 	</div>
