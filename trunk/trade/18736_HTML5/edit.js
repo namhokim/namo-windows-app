@@ -110,7 +110,7 @@ $( document ).ready(function() {
 		var size = fontSize.val();
 		var font = fontFace.val();
 		var color = fontColor.val();
-		textObjects.push(new Text(text, 0, canvasHeight, size, font, color));	// 추가
+		textObjects.push(new TextObj(text, 0, canvasHeight, size, font, color));	// 추가
 		textInput.val('');	// 입력컨트롤 값 초기화
 		refreshIfNotRepeat();			// 화면 갱신
 	});
@@ -137,13 +137,11 @@ $( document ).ready(function() {
 	$('#motion-ud').click(function() {
 		if (selectedObj==null) return;
 		selectedObj.motionType = MOTION_TYPE_VERTICAL;
-//		alert(MOTION_TYPE_VERTICAL);
 		refreshAndRepeatIfNotRepeat();
 	});
 	$('#motion-lf').click(function() {
 		if (selectedObj==null) return;
 		selectedObj.motionType = MOTION_TYPE_HORIZON;
-//		alert(MOTION_TYPE_HORIZON);
 		refreshAndRepeatIfNotRepeat();
 	});
 	
@@ -448,7 +446,6 @@ $( document ).ready(function() {
 					invertDirection(textObject);
 				}
 			}
-			textInput.val( textObject.y );
 			break;
 		case MOTION_TYPE_HORIZON:
 			if (textObject.motionToPositive) {
