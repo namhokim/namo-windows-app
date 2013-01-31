@@ -3,6 +3,9 @@ $( document ).ready(function() {
 
 	/* 상수 */
 	var NOT_SELECTED = Number.MAX_VALUE;
+	var MOTION_TYPE_NONE = 1;		// 모션미사용
+	var MOTION_TYPE_VERTICAL = 2;	// 상/하
+	var MOTION_TYPE_HORIZON = 3;	// 좌/우
 
 	/* ready내 전역변수들 */
 	var can, ctx, canX, canY, mouseIsDown, initX, initY, selX, selY;
@@ -30,7 +33,7 @@ $( document ).ready(function() {
 		canvasHeight = canvas.height();
 		
 		textObjects = new Array();	// 텍스트객체를 저장할 배열
-		refreshRepeat = false;	// 화면갱신을 반복할지 플래그
+		refreshRepeat = false;	// 화면갱신을 반복할지 여부
 		selected = false;	// 마우스로 현재 선택하고 있는지 여부
 		selectedObj = null;
 		
@@ -69,6 +72,8 @@ $( document ).ready(function() {
 		this.size = Number(size);
 		this.font = font;
 		this.color = color;
+		this.motionType = MOTION_TYPE_NONE;
+		this.motionToPositive = true;
 	};
 	
 	/* 직사각형 객체 */
@@ -98,7 +103,21 @@ $( document ).ready(function() {
 		var color = fontColor.val();
 		textObjects.push(new Text(text, 0, canvasHeight, size, font, color));	// 추가
 		textInput.val('');	// 입력컨트롤 값 초기화
-		refresh();			// 화면 갱신
+		refreshIfNotRepeat();			// 화면 갱신
+	});
+
+	/* 모션관련 컨트롤 이벤트 */
+	$('#motion-ud').click(function() {
+		if (selectedObj==null) return;
+		selectedObj.motionType = MOTION_TYPE_VERTICAL;
+//		alert(MOTION_TYPE_VERTICAL);
+		refreshAndRepeatIfNotRepeat();
+	});
+	$('#motion-lf').click(function() {
+		if (selectedObj==null) return;
+		selectedObj.motionType = MOTION_TYPE_HORIZON;
+//		alert(MOTION_TYPE_HORIZON);
+		refreshAndRepeatIfNotRepeat();
 	});
 	
 	//////////////////////////////////////////////////////////////////////
@@ -161,7 +180,7 @@ $( document ).ready(function() {
 				if(selectedObj!=null) {
 					selectedObj.x = selX + (canX-initX);
 					selectedObj.y = selY + (canY-initY);
-					refresh();
+					refreshIfNotRepeat();
 				}
 			}
 		} else {
@@ -214,7 +233,7 @@ $( document ).ready(function() {
 				}
 			}
 		}
-		refresh();
+		refreshIfNotRepeat();
 	}
 	
 	function selectStatus (newSelectedObject) {
@@ -227,12 +246,29 @@ $( document ).ready(function() {
 		selectedObj = null;	// 선택해제
 		setTextHandler(null, false);
 		if (needRefresh) {
-			refresh();
+			refreshIfNotRepeat();
 		}
 	}
 
 	//////////////////////////////////////////////////////////////////////
 	
+	/* 애니메이션 효과가 아닐때 refresh 수행 */
+	function refreshIfNotRepeat() {
+		if (!refreshRepeat)
+		{
+			refresh();
+		}
+	}
+
+	/* 애니메이션 효과가 아닐때 애니메이션 효과 지정+refresh 시작 */
+	function refreshAndRepeatIfNotRepeat() {
+		if (!refreshRepeat)
+		{
+			refreshRepeat = true;
+			refresh();
+		}
+	}
+
 	/* 객체들을 화면에 그려주는 함수 */
 	function refresh() {
 		// 화면 초기화
@@ -246,6 +282,7 @@ $( document ).ready(function() {
 			context.font = makeFontString(tObj.size, tObj.font);
 			context.fillStyle = tObj.color;
 			context.fillText(tObj.text, tObj.x, tObj.y);
+			processMotion(tObj);
 		}
 		
 		// 이미지처리
@@ -329,22 +366,22 @@ $( document ).ready(function() {
 			
 			textInput.on('keyup', function(e) {
 				selectedObj.text = $(this).val();
-				refresh();
+				refreshIfNotRepeat();
 			});
 			
 			fontSize.on('change', function(e) {
 				selectedObj.size = $(this).val();
-				refresh();
+				refreshIfNotRepeat();
 			});
 			
 			fontFace.on('change', function(e) {
 				selectedObj.font = $(this).val();
-				refresh();
+				refreshIfNotRepeat();
 			});
 			
 			fontColor.on('change', function(e) {
 				selectedObj.color = $(this).val();
-				refresh();
+				refreshIfNotRepeat();
 			});
 		} else {
 			textInput.val("");
@@ -353,6 +390,59 @@ $( document ).ready(function() {
 			fontFace.off('change');
 			fontColor.off('change');
 		}
+	}
+
+	//////////////////////////////////////////////////////////////////////
+	/* 모션 처리 */
+	function processMotion(textObject) {
+		var VELOCITY = 2;	// 2 px/frame
+
+		switch (textObject.motionType)
+		{
+		case MOTION_TYPE_VERTICAL:
+			if (textObject.motionToPositive) {
+				textObject.y += VELOCITY;
+				if (textObject.y > canvasHeight)
+				{
+					textObject.y = canvasHeight;
+					invertDirection(textObject);
+				}
+			}
+			else {
+				textObject.y -= VELOCITY;
+				if ((textObject.y - textObject.size) < 0)
+				{
+					textObject.y = textObject.size;	// 기준이 아래임
+					invertDirection(textObject);
+				}
+			}
+			break;
+		case MOTION_TYPE_HORIZON:
+			if (textObject.motionToPositive) {
+				textObject.x += VELOCITY;
+				var rect = TextToRectangle(textObject);
+				if ((rect.x+rect.width) > canvasWidth)
+				{
+					textObject.x = (canvasWidth - rect.width);
+					invertDirection(textObject);
+				}
+			}
+			else {
+				textObject.x -= VELOCITY;
+				if (textObject.x < 0)
+				{
+					textObject.x = 0;	// 기준이 왼쪽임
+					invertDirection(textObject);
+				}
+			}
+			break;
+		}
+	}
+
+	/* 방향 전환 함수 */
+	function invertDirection(textObject) {
+		var nextDir = (!textObject.motionToPositive);
+		textObject.motionToPositive = nextDir;
 	}
 	
 });
