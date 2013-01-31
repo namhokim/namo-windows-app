@@ -299,6 +299,14 @@ $( document ).ready(function() {
 		// 화면 초기화
 		context.clearRect(0,0,canvasWidth, canvasHeight);
 		
+		// 이미지처리
+		objLen = imageObjects.length;
+		for (var i=0; i<objLen; i++)
+		{
+			var tObj = imageObjects[i];
+			context.drawImage(tObj.image, tObj.x, tObj.y);
+		}
+
 		// 텍스트 처리
 		var objLen = textObjects.length;
 		for (var i=0; i<objLen; i++) {
@@ -308,14 +316,6 @@ $( document ).ready(function() {
 			context.fillStyle = tObj.color;
 			context.fillText(tObj.text, tObj.x, tObj.y);
 			processMotion(tObj);
-		}
-		
-		// 이미지처리
-		objLen = imageObjects.length;
-		for (var i=0; i<objLen; i++)
-		{
-			var tObj = imageObjects[i];
-			context.drawImage(tObj.image, tObj.x, tObj.y);
 		}
 		
 		// 선택처리
