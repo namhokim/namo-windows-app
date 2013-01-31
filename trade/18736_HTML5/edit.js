@@ -8,9 +8,10 @@ $( document ).ready(function() {
 	var MOTION_TYPE_HORIZON = 3;	// 좌/우
 
 	/* ready내 전역변수들 */
+	var URL = window.webkitURL || window.URL;
 	var can, ctx, canX, canY, mouseIsDown, initX, initY, selX, selY;
 	var canvas, context, canvasWidth, canvasHeight;
-	var textObjects, refreshRepeat, selected, selectedObj;
+	var textObjects, imageObjects, refreshRepeat, selectedObj;
 	var textInput, fontSize, fontFace, fontColor, textSubmitButton;
 	
 	/* 초기화 함수 호출 */
@@ -33,6 +34,7 @@ $( document ).ready(function() {
 		canvasHeight = canvas.height();
 		
 		textObjects = new Array();	// 텍스트객체를 저장할 배열
+		imageObjects = new Array();	// 이미지객체를 저장할 배열
 		refreshRepeat = false;	// 화면갱신을 반복할지 여부
 		selected = false;	// 마우스로 현재 선택하고 있는지 여부
 		selectedObj = null;
@@ -65,7 +67,7 @@ $( document ).ready(function() {
 	//////////////////////////////////////////////////////////////////////
 	
 	/* 텍스트 객체 */
-	var Text = function(text, x, y, size, font, color) {
+	var TextObj = function(text, x, y, size, font, color) {
 		this.text = text;
 		this.x = Number(x);
 		this.y = Number(y);
@@ -74,6 +76,13 @@ $( document ).ready(function() {
 		this.color = color;
 		this.motionType = MOTION_TYPE_NONE;
 		this.motionToPositive = true;
+	};
+
+	/* 이미지 객체 */
+	var ImageObj = function(image, x, y) {
+		this.image = image;
+		this.x = Number(x);
+		this.y = Number(y);
 	};
 	
 	/* 직사각형 객체 */
@@ -104,6 +113,24 @@ $( document ).ready(function() {
 		textObjects.push(new Text(text, 0, canvasHeight, size, font, color));	// 추가
 		textInput.val('');	// 입력컨트롤 값 초기화
 		refreshIfNotRepeat();			// 화면 갱신
+	});
+
+	/* 이미지 선택시 이벤트 */
+	$('#imageSrc').change(function(e) {
+		selImage = URL.createObjectURL(e.target.files[0]);
+	});
+	/* 이미지 추가 이벤트 */
+	$('#imageAdd').click(function() {
+		if (selImage == null) return;
+
+		var img = new Image();
+		img.onload = function() {
+			var image = new ImageObj(this, 0, 0);
+			imageObjects.push(image);
+			refreshIfNotRepeat();			// 화면 갱신
+		}
+		img.src = selImage;
+		selImage = null;
 	});
 
 	/* 모션관련 컨트롤 이벤트 */
@@ -286,6 +313,12 @@ $( document ).ready(function() {
 		}
 		
 		// 이미지처리
+		objLen = imageObjects.length;
+		for (var i=0; i<objLen; i++)
+		{
+			var tObj = imageObjects[i];
+			context.drawImage(tObj.image, tObj.x, tObj.y);
+		}
 		
 		// 선택처리
 		if (selectedObj!=null) {
