@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+		<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+		<title>접속중</title>
+    </head>
+    <body>
+        <!-- Home -->
+        <div data-role="page" id="page1">
+            <div data-role="content">
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="textinput1">서버 IP</label>
+                        <input name="" id="textinput1" placeholder="" value="http://127.0.0.1:52273" type="text" />
+                    </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="textinput2">모바일 IP</label>
+                        <input name="" id="textinput2" placeholder="" value="http://111.2.3.1:23473" type="text" />
+                    </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="textinput3">PC IP</label>
+                        <input name="" id="textinput3" placeholder="" value="http://347.0.9.1:12343" type="text" />
+                    </fieldset>
+                </div>
+                <a href="antechamber" rel="external" data-role="button" data-transition="none"  data-icon="check" data-iconpos="left">접속중</a>
+            </div>
+        </div>
+    </body>
+</html>
