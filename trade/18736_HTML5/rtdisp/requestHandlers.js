@@ -1,53 +1,41 @@
 var querystring = require("querystring"),
     fs = require("fs");
 
-function start(response, postData) {
-  console.log("Request handler 'start' was called.");
+var DEFAULT_ENCODING = 'utf8';
+var RAW_ENCODING = 'binary';
 
-  var body = '<html>'+
-    '<head>'+
-    '<meta http-equiv="Content-Type" '+
-    'content="text/html; charset=UTF-8" />'+
-    '</head>'+
-    '<body>'+
-    '<form action="/upload" enctype="multipart/form-data" '+
-    'method="post">'+
-    '<input type="file" name="upload">'+
-    '<input type="submit" value="Upload file" />'+
-    '</form>'+
-    '</body>'+
-    '</html>';
-
-    response.writeHead(200, {"Content-Type": "text/html"});
-    response.write(body);
-    response.end();
+function mobile(response, postData) {
+  fs.readFile(__dirname + '/index.html', DEFAULT_ENCODING,
+    function(error, file) {
+      if(error) {
+        response.writeHead(500, {"Content-Type": "text/plain"});
+        response.write(error + "\n");
+        response.end();
+      } else {
+        response.writeHead(200, {"Content-Type": "text/html"});
+        response.write(file, DEFAULT_ENCODING);
+        response.end();
+      }
+    });
 }
 
-function upload(response, postData) {
-  console.log("Request handler 'upload' was called.");
-  response.writeHead(200, {"Content-Type": "text/plain"});
-  response.write("You've sent the text: "+
-  querystring.parse(postData).text);
-  response.end();
-}
-
-function show(response, postData) {
-  console.log("Request handler 'show' was called.");
-  fs.readFile("/tmp/test.png", "binary", function(error, file) {
-    if(error) {
-      response.writeHead(500, {"Content-Type": "text/plain"});
-      response.write(error + "\n");
-      response.end();
-    } else {
-      response.writeHead(200, {"Content-Type": "image/png"});
-      response.write(file, "binary");
-      response.end();
-    }
-  });
+function draw(response, postData) {
+  fs.readFile(__dirname + '/draw.html', DEFAULT_ENCODING,
+    function(error, file) {
+      if(error) {
+        response.writeHead(500, {"Content-Type": "text/plain"});
+        response.write(error + "\n");
+        response.end();
+      } else {
+        response.writeHead(200, {"Content-Type": "text/html"});
+        response.write(file, DEFAULT_ENCODING);
+        response.end();
+      }
+    });
 }
 
 function favicon(response, postData) {
-  fs.readFile(__dirname + '/favicon.ico', "binary",
+  fs.readFile(__dirname + '/favicon.ico', RAW_ENCODING,
     function(error, file) {
       if(error) {
         response.writeHead(500, {"Content-Type": "text/plain"});
@@ -55,29 +43,13 @@ function favicon(response, postData) {
         response.end();
       } else {
         response.writeHead(200, {"Content-Type": "image/vnd.microsoft.icon"});
-        response.write(file, "binary");
+        response.write(file, RAW_ENCODING);
         response.end();
       }
     });
 }
 
-function desktop(response, postData) {
-  fs.readFile(__dirname + '/favicon.ico', "binary",
-    function(error, file) {
-      if(error) {
-        response.writeHead(500, {"Content-Type": "text/plain"});
-        response.write(error + "\n");
-        response.end();
-      } else {
-        response.writeHead(200, {"Content-Type": "image/vnd.microsoft.icon"});
-        response.write(file, "binary");
-        response.end();
-      }
-    });
-}
 
-exports.start = start;
-exports.upload = upload;
-exports.show = show;
+exports.mobile = mobile;
+exports.draw = draw;
 exports.favicon = favicon;
-exports.desktop = desktop;
