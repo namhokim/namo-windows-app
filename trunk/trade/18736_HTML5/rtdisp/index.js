@@ -3,11 +3,8 @@ var router = require("./router");
 var requestHandlers = require("./requestHandlers");
 
 var handle = {}
-handle["/"] = requestHandlers.start;
-handle["/draw"] = requestHandlers.desktop;
-handle["/start"] = requestHandlers.start;
-handle["/upload"] = requestHandlers.upload;
-handle["/show"] = requestHandlers.show;
+handle["/"] = requestHandlers.mobile;
+handle["/draw"] = requestHandlers.draw;
 handle["/favicon.ico"] = requestHandlers.favicon;
 
 server.start(router.route, handle, 52273);
