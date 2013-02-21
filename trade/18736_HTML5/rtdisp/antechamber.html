@@ -6,27 +6,14 @@
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+		<link rel="stylesheet" href="common.css" />
 		<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
 		<title>작업시작화면</title>
     </head>
     <body>
-
         <div data-role="page" id="page1">
-<br/>&nbsp;&nbsp;&nbsp;
-	<canvas id="layer1" width="380" height="200" style="
-position:absolute; border: 1px solid #000; "></canvas>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-
+	<canvas id="layer" width="380" height="200">브라우저가 HTML5 Canvas를 지원하지 않습니다.</canvas>
             <div data-role="content">
                 <a href="edit.html" rel="external" data-role="button" data-theme="e"> 
                     신규
@@ -35,6 +22,6 @@ position:absolute; border: 1px solid #000; "></canvas>
                 <a href="app.html" rel="external" data-role="button" data-theme="e"> 불러오기
                 </a>
             </div>
-        </div>
+        </div><!-- #page1 -->
     </body>
 </html>

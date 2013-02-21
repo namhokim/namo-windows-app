@@ -9,5 +9,6 @@ handle["/antechamber"] = requestHandlers.antechamber;
 handle["/edit"] = requestHandlers.edit;
 handle["/draw"] = requestHandlers.draw;
 handle["/favicon.ico"] = requestHandlers.favicon;
+handle["/static"] = requestHandlers.static_handler;
 
 server.start(router.route, handle, 52273);
