@@ -19,8 +19,8 @@ function route(handle, pathname, response, request) {
   console.log("About to route a request for " + pathname);
 
   // static handler
-  var staticHandle = (typeof(staticPath) == 'undefined') ? null : handle[staticPath];
-  if (typeof(staticHandle) === 'function' && startsWith(pathname, staticPath + '/')) {
+  var staticHandle = (typeof staticPath == 'undefined') ? null : handle[staticPath];
+  if ( (typeof staticHandle === 'function') && startsWith(pathname, staticPath + '/') ) {
     staticHandle(response, request, pathname);
   }
   else {
