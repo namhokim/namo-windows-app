@@ -8,10 +8,7 @@ function start(route, handle, port) {
     route(handle, pathname, response, request);
   }
 
-  if (typeof port == "undefined")
-  {
-    port = 80;
-  }
+  if (typeof port == "undefined") port = 80;
 
   var app = http.createServer(onRequest).listen(port);
   var io = require('socket.io').listen(app);
