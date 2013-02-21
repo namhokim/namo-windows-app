@@ -12,7 +12,6 @@ handle["/favicon.ico"] = requestHandlers.favicon;
 
 var staticPath = '/static';
 handle[staticPath] = requestHandlers.static_handler;
+router.setStaticPath(staticPath);
 
 server.start(router.route, handle, 52273);
-
-exports.staticPath = staticPath;

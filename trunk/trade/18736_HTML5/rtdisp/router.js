@@ -1,4 +1,4 @@
-var index = require("./index");
+var staticPath;  // internal global, set by setStaticPath
 
 function startsWith(targetString, searchString)
 {
@@ -10,13 +10,17 @@ function startsWith(targetString, searchString)
   }
 }
 
+function setStaticPath(path)
+{
+  staticPath = path;
+}
+
 function route(handle, pathname, response, request) {
   console.log("About to route a request for " + pathname);
 
   // static handler
-  var statPath = (index.staticPath == "undefined") ? null : index.staticPath;
-  var staticHandle = handle[statPath];
-  if (typeof(staticHandle) === 'function' && startsWith(pathname, statPath + '/')) {
+  var staticHandle = (typeof(staticPath) == 'undefined') ? null : handle[staticPath];
+  if (typeof(staticHandle) === 'function' && startsWith(pathname, staticPath + '/')) {
     staticHandle(response, request, pathname);
   }
   else {
@@ -32,3 +36,4 @@ function route(handle, pathname, response, request) {
 }
 
 exports.route = route;
+exports.setStaticPath = setStaticPath;
