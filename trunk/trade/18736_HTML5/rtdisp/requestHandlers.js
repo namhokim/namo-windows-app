@@ -99,6 +99,54 @@ function favicon(response, postData) {
     });
 }
 
+function getLastPart(targetString, delimeter)
+{
+  if (delimeter.length > targetString.length) {
+    return '';
+  }
+  else {
+    var p = targetString.lastIndexOf(delimeter);
+    if (p == -1) return '';
+    var i = p + delimeter.length;
+      document.write( i );
+    var r = targetString.substring(i);  
+    return r;
+  }
+}
+
+function static_handler(response, resource, pathname) {
+  console.log("static_handler for " + pathname);
+
+  // MIME판단
+  var enc, type;
+  switch (getLastPart)
+  {
+  case 'ico':
+    enc = RAW_ENCODING;
+    type = "image/vnd.microsoft.icon";
+    break;
+  case 'html':
+  default:
+    enc = DEFAULT_ENCODING;
+    type = "text/html";
+    break;  
+  }
+
+  // 리소스 반환
+  fs.readFile(__dirname + pathname, enc,
+    function(error, file) {
+      if(error) {
+        response.writeHead(500, {"Content-Type": "text/plain"});
+        response.write(error + "\n");
+        response.end();
+      } else {
+        response.writeHead(200, {"Content-Type": type});
+        response.write(file, enc);
+        response.end();
+      }
+    });
+}
+
 
 exports.mobile = mobile;
 exports.connect = connect;
@@ -106,3 +154,4 @@ exports.antechamber = antechamber;
 exports.edit = edit;
 exports.draw = draw;
 exports.favicon = favicon;
+exports.static_handler = static_handler;
