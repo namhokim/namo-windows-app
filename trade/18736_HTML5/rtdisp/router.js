@@ -1,3 +1,5 @@
+var index = require("./index");
+
 function startsWith(targetString, searchString)
 {
   if (searchString.length > targetString.length) {
@@ -12,11 +14,13 @@ function route(handle, pathname, response, request) {
   console.log("About to route a request for " + pathname);
 
   // static handler
-  if (startsWith(pathname, '/static/')) {
-    handle['/static'](response, request, pathname);
+  var statPath = (index.staticPath == "undefined") ? null : index.staticPath;
+  var staticHandle = handle[statPath];
+  if (typeof(staticHandle) === 'function' && startsWith(pathname, statPath + '/')) {
+    staticHandle(response, request, pathname);
   }
   else {
-    if (typeof handle[pathname] === 'function') {
+    if (typeof(handle[pathname]) === 'function') {
       handle[pathname](response, request);
     } else {
       console.log("No request handler found for " + pathname);
