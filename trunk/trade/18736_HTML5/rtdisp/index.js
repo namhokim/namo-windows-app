@@ -9,6 +9,10 @@ handle["/antechamber"] = requestHandlers.antechamber;
 handle["/edit"] = requestHandlers.edit;
 handle["/draw"] = requestHandlers.draw;
 handle["/favicon.ico"] = requestHandlers.favicon;
-handle["/static"] = requestHandlers.static_handler;
+
+var staticPath = '/static';
+handle[staticPath] = requestHandlers.static_handler;
 
 server.start(router.route, handle, 52273);
+
+exports.staticPath = staticPath;
