@@ -1,81 +1,59 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-<title>canvas</title>
-<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+	<title>canvas</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var socket=io.connect();
 
-<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script type="text/javascript">
+			socket.on('message', function (data){
 
-$(document).ready(function(){
+				fontSize=data.fontSize;
+				fontFace=data.fontFace;
+				fontColor=data.fontColor;
+				posX=data.posX;
+				posY=data.posY;
 
-var socket=io.connect();
+				context.fillStyle = fontColor;
+				context.font = eval("'" + fontSize + 'px ' + fontFace + "'");
+				drawText(data.myText,0);
+			});	// end of socket.on
 
+		});
 
+		if(window.addEventListener){
+			window.addEventListener('load', Init, false); 
+		} 
 
+		var canvas, context, myText,msgDiv
+		var isFill = true;
 
+		function Init() {     
+			canvas = document.getElementById('cv2');
+			context = canvas.getContext('2d');     
+			context.font = eval("'"+$('#fontSize').val()+'px ' +$('#fontFace').val()+ "'");  
+			context.textBaseline = "top"; 
 
-socket.on('message', function (data){
+			myText = document.getElementById('myText');
+			myText.focus();
+			msgDiv = document.getElementById("msgDiv"); 
+		}
 
-	fontSize=data.fontSize;
-	fontFace=data.fontFace;
-	fontColor=data.fontColor;
-	posX=data.posX;
-	posY=data.posY;
-            
-
-context.fillStyle = fontColor;
-context.font = eval("'" + fontSize + 'px ' + fontFace + "'");
-drawText(data.myText,0);   
-});
-
-
-});
-</script>
-
-
-<script type="text/javascript">
-if(window.addEventListener){
-    window.addEventListener('load', Init, false); 
-} 
-
-var canvas, context, myText,msgDiv
-var isFill = true;
-
-
-function Init() {     
-  canvas = document.getElementById('cv2');
-  context = canvas.getContext('2d');     
-  context.font = eval("'"+$('#fontSize').val()+'px ' +$('#fontFace').val()+ "'");  
-  
-  context.textBaseline = "top"; 
-  
-
-  myText = document.getElementById('myText');
-  myText.focus();
-  
- msgDiv = document.getElementById("msgDiv"); 
-}
-
-
-
-function drawText(text, posX){  
-  if(!isFill){
-    context.strokeText(text, posX  , 0);    
-  }
-  else{
-    context.fillText(text, posX  , 0);    
-  }
-}
-
-</script>
-
-
+		function drawText(text, posX){  
+			if(!isFill){
+				context.strokeText(text, posX  , 0);    
+			}
+			else{
+				context.fillText(text, posX  , 0);    
+			}
+		}
+	</script>
+</head>
 <body>
-<ul id="content"></ul>
-<canvas id="cv2" width="380" height="200" style="position: relative; border: 1px solid #000;"></canvas>
+	<canvas id="cv2" width="380" height="200" style="position: relative; border: 1px solid #000;">브라우저가 HTML5 Canvas를 지원하지 않습니다.</canvas>
 </body>
 </html>
