@@ -9,6 +9,14 @@
 		<link rel="stylesheet" href="/static/common.css" />
 		<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+         <script>
+			var socket = io.connect('http://localhost:52273')
+			socket.on('news', function (data) {
+				console.log(data);
+				socket.emit('my other event', { my: 'data' });
+			  });
+		</script>
 		<title>작업시작화면</title>
     </head>
     <body>
