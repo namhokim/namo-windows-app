@@ -40,7 +40,10 @@ function static_handler(response, request, pathname) {
     break;
   case 'css':
     type = "text/css";
-    break;  
+    break;
+  case 'js':
+    type = "text/javascript";
+    break;
   }
 
   // 리소스 반환
