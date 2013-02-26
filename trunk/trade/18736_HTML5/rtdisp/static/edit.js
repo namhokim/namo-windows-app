@@ -139,7 +139,7 @@ $( document ).ready(function() {
 	});
 	
 	/* 배경색 변경시 이벤트 */
-	$('#bgColor').change(function(e) {
+	bgColor.change(function(e) {
 		backgroundColor = bgColor.val();
 		refresh();
 	});
