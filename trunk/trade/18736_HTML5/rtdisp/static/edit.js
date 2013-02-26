@@ -12,7 +12,8 @@ $( document ).ready(function() {
 	var can, ctx, canX, canY, mouseIsDown, initX, initY, selX, selY;
 	var canvas, context, canvasWidth, canvasHeight;
 	var textObjects, imageObjects, refreshRepeat, selectedObj;
-	var textInput, fontSize, fontFace, fontColor, textSubmitButton;
+	var textInput, fontSize, fontFace, fontColor, bgColor, textSubmitButton;
+	var backgroundColor;
 	
 	/* 초기화 함수 호출 */
 	init();
@@ -44,7 +45,11 @@ $( document ).ready(function() {
 		fontSize = $('#fontSize');
 		fontFace = $('#fontFace');
 		fontColor = $('#fontColor');
+		bgColor = $('#bgColor');
 		textSubmitButton = $('#btn_text_submit');
+		
+		backgroundColor = "white";
+		refresh();
 		
 		// event handlers
 		can.addEventListener("mousedown", mouseDown, false);
@@ -131,6 +136,12 @@ $( document ).ready(function() {
 		}
 		img.src = selImage;
 		selImage = null;
+	});
+	
+	/* 배경색 변경시 이벤트 */
+	$('#bgColor').change(function(e) {
+		backgroundColor = bgColor.val();
+		refresh();
 	});
 
 	/* 모션관련 컨트롤 이벤트 */
@@ -298,6 +309,10 @@ $( document ).ready(function() {
 	function refresh() {
 		// 화면 초기화
 		context.clearRect(0,0,canvasWidth, canvasHeight);
+		
+		// 배경색
+		context.fillStyle = backgroundColor;
+		context.fillRect(0,0,canvasWidth, canvasHeight);
 		
 		// 이미지처리
 		objLen = imageObjects.length;
