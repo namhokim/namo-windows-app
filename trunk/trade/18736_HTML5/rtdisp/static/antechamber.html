@@ -16,22 +16,12 @@
 				if( typeof sock_io_addr != "undefined") {
 					//alert(sock_io_addr);
 					var socket = io.connect(sock_io_addr);
-					socket.on('news', function (data) {
+					socket.on('data', function (data) {
 						console.log(data);
 					});
 				}	// if socket.io
 			});		// end of jQuery ready
 		</script>
-        <!--
-         <script>
-			var socket = io.connect('http://222.237.65.198:52273')
-			socket.on('news', function (data) {
-				console.log(data);
-				alert(data);
-				socket.emit('my other event', { my: 'data' });
-			  });
-		</script>
-        -->
 		<title>작업시작화면</title>
     </head>
     <body>

@@ -15,14 +15,21 @@ function start(route, handle, port) {
 		, io = require('socket.io').listen(app);
 
 	app.listen(port);
-/*
+
+	var drawData = null;	// local draw data storage
+	
 	io.sockets.on('connection', function(socket) {
-		socket.emit('news', { hello: 'world' });
-		socket.on('my other event', function (data) {
-			console.log(data);
+		if (drawData!=null) {
+			socket.emit('draw', drawData);
+		}
+		
+		socket.on('data', function (data) {
+			drawData = data;
+			console.log(drawData);
+			socket.broadcast.emit('draw', drawData);
 		});
 	});
-	*/
+
 	console.log("Server has started on " + port + ".");
 }
 
