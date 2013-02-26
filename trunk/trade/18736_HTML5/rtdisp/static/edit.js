@@ -130,6 +130,7 @@ $( document ).ready(function() {
 			for (var i=0; i<objLen; i++) {
 				if (selectedObj === textObjects[i]) {
 					textObjects.splice(i, 1);
+					setTextHandler(selectedObj, false);
 					selectedObj = null;
 					break;
 				}
