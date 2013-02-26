@@ -15,6 +15,7 @@ $( document ).ready(function() {
 	var textInput, fontSize, fontFace, fontColor, bgColor;
 	var textSubmitButton, textClearButton;
 	var backgroundColor;
+	var socket;
 	
 	/* 초기화 함수 호출 */
 	init();
@@ -61,8 +62,15 @@ $( document ).ready(function() {
 		can.addEventListener("touchend", touchUp, false);
 		document.body.addEventListener("mouseup", mouseUp, false);
 		document.body.addEventListener("touchcancel", touchUp, false);
+		
+		/* socket.io 부분(서버로 전송을 위해) */
+		if( typeof sock_io_addr != "undefined") {
+			//alert(sock_io_addr);
+			socket = io.connect(sock_io_addr);
+		} else {
+			socket = null
+		}
 	}
-	
 	
 	/* 이벤트좌표 초기화 */
 	function initInitPosition()
@@ -161,6 +169,12 @@ $( document ).ready(function() {
 	bgColor.change(function(e) {
 		backgroundColor = bgColor.val();
 		refresh();
+	});
+	
+	/* 서버로 전송 */
+	$('#send').click(function() {
+		var data = {bgColor : backgroundColor, texts : textObjects};
+		socket.emit('data', {draw: data});
 	});
 
 	/* 모션관련 컨트롤 이벤트 */

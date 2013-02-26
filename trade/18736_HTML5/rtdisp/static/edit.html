@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="/static/common.css" />
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+    <script src="/static/common.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="/static/edit.js"></script>
     </head>
     <body>
@@ -15,7 +17,7 @@
       <canvas id="layer" width="380" height="200">브라우저가 HTML5 Canvas를 지원하지 않습니다.</canvas>
       <!-- Text -->
       <input type="text" id="myText" size="47"  title="Please input the text here." />
-      <button>Send Text</button>
+      <button id="send">Send Text</button>
     <div class="ui-grid-a">
         <div class="ui-block-a">
             <input type="button" id="btn_text_submit" value="submit" />
