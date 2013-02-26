@@ -12,7 +12,8 @@ $( document ).ready(function() {
 	var can, ctx, canX, canY, mouseIsDown, initX, initY, selX, selY;
 	var canvas, context, canvasWidth, canvasHeight;
 	var textObjects, imageObjects, refreshRepeat, selectedObj;
-	var textInput, fontSize, fontFace, fontColor, bgColor, textSubmitButton;
+	var textInput, fontSize, fontFace, fontColor, bgColor;
+	var textSubmitButton, textClearButton;
 	var backgroundColor;
 	
 	/* 초기화 함수 호출 */
@@ -47,6 +48,7 @@ $( document ).ready(function() {
 		fontColor = $('#fontColor');
 		bgColor = $('#bgColor');
 		textSubmitButton = $('#btn_text_submit');
+		textClearButton = $('#btn_text_clear');
 		
 		backgroundColor = "white";
 		refresh();
@@ -119,6 +121,22 @@ $( document ).ready(function() {
 		textInput.val('');	// 입력컨트롤 값 초기화
 		refreshIfNotRepeat();			// 화면 갱신
 	});
+	
+	/* 텍스트 선택 삭제 */
+	textClearButton.click(function() {
+		if (selectedObj!=null) {
+			// 텍스트 처리
+			var objLen = textObjects.length;
+			for (var i=0; i<objLen; i++) {
+				if (selectedObj === textObjects[i]) {
+					textObjects.splice(i, 1);
+					selectedObj = null;
+					break;
+				}
+			}
+			refresh();
+		}
+	});
 
 	/* 이미지 선택시 이벤트 */
 	$('#imageSrc').change(function(e) {
@@ -129,7 +147,7 @@ $( document ).ready(function() {
 		if (selImage == null) return;
 
 		var img = new Image();
-		img.onload = function() {
+		img.onload = function() {imageObjects
 			var image = new ImageObj(this, 0, 0);
 			imageObjects.push(image);
 			refreshIfNotRepeat();			// 화면 갱신
