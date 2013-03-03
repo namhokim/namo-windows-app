@@ -21,6 +21,7 @@ function start(route, handle, port) {
 	io.sockets.on('connection', function(socket) {
 		if (drawData!=null) {
 			socket.emit('draw', drawData);
+			socket.emit('draw_once', drawData);
 		}
 		
 		socket.on('data', function (data) {
@@ -29,6 +30,7 @@ function start(route, handle, port) {
 				console.log(drawData);
 				socket.broadcast.emit('draw', drawData);
 			} catch (err){
+				console.log(err);
 				return true;
 			}
 		});

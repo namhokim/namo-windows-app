@@ -10,7 +10,6 @@ $( document ).ready(function() {
 	var textSubmitButton, textClearButton;
 	var backgroundColor;
 	var socket;
-	var isDrawDiscard = false;
 	
 	/* 초기화 함수 호출 */
 	init();
@@ -62,13 +61,10 @@ $( document ).ready(function() {
 		if( typeof sock_io_addr != "undefined") {
 			//alert(sock_io_addr);
 			socket = io.connect(sock_io_addr);
-			socket.on('draw', function (data) {
-				if (isDrawDiscard==false) {
-					isDrawDiscard = true;
-					backgroundColor = data.draw.bgColor;
-					textObjects = data.draw.texts;
-					refresh();
-				}
+			socket.on('draw_once', function (data) {
+				backgroundColor = data.draw.bgColor;
+				textObjects = data.draw.texts;
+				refresh();
 			});
 		} else {
 			socket = null
