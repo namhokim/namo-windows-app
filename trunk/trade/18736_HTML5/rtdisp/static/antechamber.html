@@ -13,11 +13,13 @@
         <script src="/socket.io/socket.io.js"></script>
         <script>
 			$( document ).ready( function() {
+				// jQuery
+				var canvas = $('#layer');
+				// Socket.io
 				if( typeof sock_io_addr != "undefined") {
-					//alert(sock_io_addr);
-					var socket = io.connect(sock_io_addr);
-					socket.on('data', function (data) {
-						console.log(data);
+					var socket=io.connect(sock_io_addr);
+					socket.on('draw', function (data) {
+						refreshCanvas(canvas, data);
 					});
 				}	// if socket.io
 			});		// end of jQuery ready
