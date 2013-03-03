@@ -1,12 +1,6 @@
 /* jQuery - DOM hierarchy has been fully constructed */
 $( document ).ready(function() {
 
-	/* 상수 */
-	var NOT_SELECTED = Number.MAX_VALUE;
-	var MOTION_TYPE_NONE = 1;		// 모션미사용
-	var MOTION_TYPE_VERTICAL = 2;	// 상/하
-	var MOTION_TYPE_HORIZON = 3;	// 좌/우
-
 	/* ready내 전역변수들 */
 	var URL = window.webkitURL || window.URL;
 	var can, ctx, canX, canY, mouseIsDown, initX, initY, selX, selY;
@@ -173,7 +167,7 @@ $( document ).ready(function() {
 	
 	/* 서버로 전송 */
 	$('#send').click(function() {
-		var data = {bgColor : backgroundColor, texts : textObjects};
+		var data = {bgColor : backgroundColor, texts : textObjects, refreshAgain : refreshRepeat};
 		socket.emit('data', {draw: data});
 	});
 
@@ -363,7 +357,7 @@ $( document ).ready(function() {
 			context.font = makeFontString(tObj.size, tObj.font);
 			context.fillStyle = tObj.color;
 			context.fillText(tObj.text, tObj.x, tObj.y);
-			processMotion(tObj);
+			processMotion(tObj, canvasWidth, canvasHeight);
 		}
 		
 		// 선택처리
@@ -418,11 +412,7 @@ $( document ).ready(function() {
 		
 		return new Rectangle(x, y, width, height);
 	}
-	
-	/* Canvas context에 글꼴을 적용하기 위한 문자열 생성함수*/
-	function makeFontString(size, font) {
-		return size + 'px ' + font;
-	}
+
 	
 	/* 캔버스에서 선택된 텍스트객체의 속성을 컨트롤에 반영 */
 	function getAttributeToControl()
@@ -468,67 +458,6 @@ $( document ).ready(function() {
 			fontSize.off('change');
 			fontFace.off('change');
 			fontColor.off('change');
-		}
-	}
-
-	//////////////////////////////////////////////////////////////////////
-	/* 모션 처리 */
-	function processMotion(textObject) {
-		var VELOCITY = 2;	// 2 px/frame
-
-		switch (textObject.motionType) {
-		case MOTION_TYPE_VERTICAL:
-			var ty = textObject.y;
-			if (textObject.motionToPositive) {
-				textObject.y += VELOCITY;
-				if (textObject.y > canvasHeight)
-				{
-					textObject.y = canvasHeight;
-					invertDirection(textObject);
-				}
-			} else {
-				textObject.y -= VELOCITY;
-				if ((textObject.y - textObject.size) < 0)
-				{
-					textObject.y = textObject.size;	// 기준이 아래임
-					invertDirection(textObject);
-				}
-			}
-			break;
-		case MOTION_TYPE_HORIZON:
-			var rect = TextToRectangle(textObject);
-
-			if (textObject.motionToPositive) {
-				if (rect.width >= canvasWidth) {	// 빠르게 튀김 방지
-					textObject.x = (canvasWidth - rect.width);
-					break;
-				}
-
-				textObject.x += VELOCITY;
-				
-				if ((rect.x+rect.width) > canvasWidth)
-				{
-					textObject.x = (canvasWidth - rect.width);
-					invertDirection(textObject);
-				}
-			} else {
-				textObject.x -= VELOCITY;
-				if (textObject.x < 0)
-				{
-					textObject.x = 0;	// 기준이 왼쪽임
-					invertDirection(textObject);
-				}
-			}
-			break;
-		}
-	}
-
-	/* 방향 전환 함수 : 캔버스 경계를 초과했을 경우 호출 */
-	function invertDirection(textObject) {
-		if (textObject.motionToPositive) {
-			textObject.motionToPositive = false;
-		} else {
-			textObject.motionToPositive = true;
 		}
 	}
 	
