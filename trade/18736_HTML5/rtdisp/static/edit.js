@@ -183,6 +183,10 @@ $( document ).ready(function() {
 		refreshAndRepeatIfNotRepeat();
 	});
 	
+	$('#complete').click(function() {
+		$(location).attr('href', './antechamber');
+	});
+	
 	//////////////////////////////////////////////////////////////////////
 	/* 마우스 클릭시 */
 	function mouseDown() {
