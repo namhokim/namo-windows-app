@@ -24,9 +24,13 @@ function start(route, handle, port) {
 		}
 		
 		socket.on('data', function (data) {
-			drawData = data;
-			console.log(drawData);
-			socket.broadcast.emit('draw', drawData);
+			try {
+				drawData = data;
+				console.log(drawData);
+				socket.broadcast.emit('draw', drawData);
+			} catch (err){
+				return true;
+			}
 		});
 	});
 

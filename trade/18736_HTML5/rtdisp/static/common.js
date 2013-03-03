@@ -6,8 +6,8 @@ var MOTION_TYPE_NONE = 1;		// 모션미사용
 var MOTION_TYPE_VERTICAL = 2;	// 상/하
 var MOTION_TYPE_HORIZON = 3;	// 좌/우
 
-//var sock_io_addr = "http://222.237.65.198:52273";
-var sock_io_addr = "http://localhost:52273";
+var sock_io_addr = "http://222.237.65.198:52273";
+//var sock_io_addr = "http://localhost:52273";
 var refreshAgain = false;
 
 /* 객체들을 화면에 그려주는 함수 */
