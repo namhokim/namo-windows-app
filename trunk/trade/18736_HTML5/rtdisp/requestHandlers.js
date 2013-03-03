@@ -78,7 +78,12 @@ function antechamber(response, request) {
   static_handler(response, request, '/static/antechamber.html');
 }
 
-// #4. 모바일 편집 화면
+// #4. 모바일 편집 화면(새화면)
+function edit_new(response, request) {
+  static_handler(response, request, '/static/edit_new.html');
+}
+
+// #4. 모바일 편집 화면(로딩)
 function edit(response, request) {
   static_handler(response, request, '/static/edit.html');
 }
@@ -97,6 +102,7 @@ function favicon(response, request) {
 exports.mobile = mobile;
 exports.connect = connect;
 exports.antechamber = antechamber;
+exports.edit_new = edit_new;
 exports.edit = edit;
 exports.draw = draw;
 exports.favicon = favicon;
