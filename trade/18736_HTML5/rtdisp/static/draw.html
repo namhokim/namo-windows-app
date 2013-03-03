@@ -9,16 +9,19 @@
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
 		$(document).ready(function() {
+			// jQuery
+			var canvas = $('#layer');
+			// Socket.io
 			if( typeof sock_io_addr != "undefined") {
 				var socket=io.connect(sock_io_addr);
 				socket.on('draw', function (data) {
-					console.log('draw data in ' + data.draw.bgColor);
+					refreshCanvas(canvas, data);
 				});
 			}	// if socket.io
 		});
 	</script>
 </head>
 <body>
-	<canvas id="cv2" width="380" height="200" style="position: relative; border: 1px solid #000;">브라우저가 HTML5 Canvas를 지원하지 않습니다.</canvas>
+	<canvas id="layer" width="380" height="200" style="position: relative; border: 1px solid #000;">브라우저가 HTML5 Canvas를 지원하지 않습니다.</canvas>
 </body>
 </html>
