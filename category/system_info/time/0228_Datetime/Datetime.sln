@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GetDateFormatTest", "GetDateFormatTest\GetDateFormatTest.vcproj", "{676D0499-E2D3-4A26-A625-58AB8AD9FADA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{676D0499-E2D3-4A26-A625-58AB8AD9FADA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{676D0499-E2D3-4A26-A625-58AB8AD9FADA}.Debug|Win32.Build.0 = Debug|Win32
+		{676D0499-E2D3-4A26-A625-58AB8AD9FADA}.Release|Win32.ActiveCfg = Release|Win32
+		{676D0499-E2D3-4A26-A625-58AB8AD9FADA}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
