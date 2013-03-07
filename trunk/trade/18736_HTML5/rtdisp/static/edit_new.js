@@ -33,8 +33,7 @@ $( document ).ready(function() {
 		textObjects = new Array();	// 텍스트객체를 저장할 배열
 		imageObjects = new Array();	// 이미지객체를 저장할 배열
 		refreshRepeat = false;	// 화면갱신을 반복할지 여부
-		selected = false;	// 마우스로 현재 선택하고 있는지 여부
-		selectedObj = null;
+		selectedObj = null;         // 선택 객체(미선택시 null)
 		
 		// elements
 		textInput = $('#myText');
@@ -74,7 +73,6 @@ $( document ).ready(function() {
 	}
 
 	//////////////////////////////////////////////////////////////////////
-	
 	/* 텍스트 객체 */
 	var TextObj = function(text, x, y, size, font, color) {
 		this.text = text;
@@ -86,6 +84,24 @@ $( document ).ready(function() {
 		this.motionType = MOTION_TYPE_NONE;
 		this.motionToPositive = true;
 	};
+
+  TextObj.prototype.makeFontString = function()
+  {
+    return this.size + 'px ' + this.font;
+  };
+
+  TextObj.prototype.textToRectangle = function()
+  {
+    var x = this.x;
+		var y = this.y - this.size;	// text객체는 좌측아래를 기준점으로 사용
+		context.font = this.makeFontString();
+		var width = context.measureText(this.text).width;
+		var height = this.size;
+		
+		return new Rectangle(x, y, width, height);
+  };
+
+  //////////////////////////////////////////////////////////////////////
 
 	/* 이미지 객체 */
 	var ImageObj = function(image, x, y) {
