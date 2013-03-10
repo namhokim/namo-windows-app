@@ -14,6 +14,7 @@ var canvasWidth;
 var canvasHeight;
 var context;
 var refreshAgain = false;
+var refreshing = false;
 var backgroundColor = "white";
 var textObjs = new Array();	// 텍스트객체를 저장할 배열
 
@@ -28,6 +29,7 @@ function initCommon(canvas) {
 function refreshData(data) {
 	// 다시 그릴 여부 설정
 	refreshAgain = data.draw.refreshAgain;
+	if (!refreshAgain) refreshing = false;
 	
 	// 배경색
 	backgroundColor = data.draw.bgColor;
@@ -45,6 +47,13 @@ function refreshData(data) {
 	}
 	
 	// 화면 초기화
+	refreshGuard();
+}
+
+function refreshGuard() {
+	if (refreshing) return;
+	
+	if (refreshAgain) refreshing = true;
 	refreshCanvas();
 }
 
@@ -68,11 +77,11 @@ function refreshCanvas() {
 		processMotion(tObj,canvasWidth, canvasHeight);
 	}
 	
-	//if (refreshAgain) {	// 애니메이션을 위한 반복시
-	//	setTimeout(function() {
-	//		refreshCanvas(canvas, data);
-	//	}, 33);
-	//}
+	if (refreshAgain) {	// 애니메이션을 위한 반복시
+		setTimeout(function() {
+			refreshCanvas();
+		}, 33);
+	}
 }
 
 /* 모션 처리 */
@@ -165,3 +174,28 @@ function invertDirection(textObject) {
   };
 
   //////////////////////////////////////////////////////////////////////
+  
+  	/* 이미지 객체 */
+	var ImageObj = function(image, x, y) {
+		this.image = image;
+		this.x = Number(x);
+		this.y = Number(y);
+	};
+	
+	/* 직사각형 객체 */
+	var Rectangle = function(x, y, width, height) {
+		this.x = Number(x);
+		this.y = Number(y);
+		this.width = Number(width);
+		this.height = Number(height);
+	};
+	
+	/* 선택 객체 */
+	var SelectRect = function(x, y, width, height) {
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+	};
+
+	//////////////////////////////////////////////////////////////////////

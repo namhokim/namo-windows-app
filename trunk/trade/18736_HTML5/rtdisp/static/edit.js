@@ -27,6 +27,7 @@ $( document ).ready(function() {
 		// jQuery
 		canvas = $('#layer');
 		context = canvas.get(0).getContext("2d");
+		initCommon(canvas);	// common
 		canvasWidth = canvas.width();
 		canvasHeight = canvas.height();
 		
@@ -89,30 +90,6 @@ $( document ).ready(function() {
 
   //////////////////////////////////////////////////////////////////////
 
-	/* 이미지 객체 */
-	var ImageObj = function(image, x, y) {
-		this.image = image;
-		this.x = Number(x);
-		this.y = Number(y);
-	};
-	
-	/* 직사각형 객체 */
-	var Rectangle = function(x, y, width, height) {
-		this.x = Number(x);
-		this.y = Number(y);
-		this.width = Number(width);
-		this.height = Number(height);
-	};
-	
-	/* 선택 객체 */
-	var SelectRect = function(x, y, width, height) {
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
-	};
-
-	//////////////////////////////////////////////////////////////////////
 	
 	/*   캔버스 내 텍스트창에 있는 글자 쓰기 함수 <= function draw()   */
 	textSubmitButton.click(function() {
