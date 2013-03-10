@@ -41,7 +41,7 @@ function refreshData(data) {
 	  var aText = data.draw.texts[i];
 	  var nText = new TextObj(aText.text, aText.x, aText.y, aText.size, aText.font, aText.color);
 	  nText.motionType = aText.motionType;
-	  nText.motionToPositive = aText.motionToPositiv;
+	  nText.motionToPositive = aText.motionToPositive;
 
 	  textObjs.push(nText);	// 추가
 	}
