@@ -374,7 +374,7 @@ $( document ).ready(function() {
 		for (var i=0; i<objLen; i++) {
 			var tObj = textObjects[i];
 
-			context.font = makeFontString(tObj.size, tObj.font);
+			context.font = tObj.makeFontString();
 			context.fillStyle = tObj.color;
 			context.fillText(tObj.text, tObj.x, tObj.y);
 			processMotion(tObj, canvasWidth, canvasHeight);
@@ -426,7 +426,7 @@ $( document ).ready(function() {
 		
 		var x = textObject.x;
 		var y = textObject.y - textObject.size;	// text객체는 좌측아래를 기준점으로 사용
-		context.font = makeFontString(textObject.size, textObject.font);
+		context.font = textObject.makeFontString();
 		var width = context.measureText(textObject.text).width;
 		var height = textObject.size;
 		

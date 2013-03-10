@@ -8,31 +8,61 @@ var MOTION_TYPE_HORIZON = 3;	// 좌/우
 
 //var sock_io_addr = "http://222.237.65.198:52273";
 var sock_io_addr = "http://localhost:52273";
+
+// 공통 변수
+var canvasWidth;
+var canvasHeight;
+var context;
 var refreshAgain = false;
+var backgroundColor = "white";
+var textObjs = new Array();	// 텍스트객체를 저장할 배열
 
-/* 객체들을 화면에 그려주는 함수 */
-function refreshCanvas(canvas, data) {
+/* 초기화 */
+function initCommon(canvas) {
+	canvasWidth = canvas.width();
+	canvasHeight = canvas.height();
+	context = canvas.get(0).getContext("2d");
+}
 
-	// 공통 변수
-	var canvasWidth = canvas.width();
-	var canvasHeight = canvas.height();
-	var context = canvas.get(0).getContext("2d");
+/* 데이터 갱신 */
+function refreshData(data) {
+	// 다시 그릴 여부 설정
 	refreshAgain = data.draw.refreshAgain;
 	
+	// 배경색
+	backgroundColor = data.draw.bgColor;
+	
+	// 텍스트 데이터
+	var objLen = data.draw.texts.length;
+	textObjs = new Array();
+	for (var i=0; i<objLen; i++) {
+	  var aText = data.draw.texts[i];
+	  var nText = new TextObj(aText.text, aText.x, aText.y, aText.size, aText.font, aText.color);
+	  nText.motionType = aText.motionType;
+	  nText.motionToPositive = aText.motionToPositiv;
+
+	  textObjs.push(nText);	// 추가
+	}
+	
+	// 화면 초기화
+	refreshCanvas();
+}
+
+/* 객체들을 화면에 그려주는 함수 */
+function refreshCanvas() {
 	// 화면 초기화
 	context.clearRect(0,0,canvasWidth, canvasHeight);
 	
 	// 배경색
-	context.fillStyle = data.draw.bgColor;
+	context.fillStyle = backgroundColor;
 	context.fillRect(0,0,canvasWidth, canvasHeight);
 	
 	// 텍스트 처리
-	var textObjects = data.draw.texts;
-	var objLen = textObjects.length;
+	var objLen = textObjs.length;
 	for (var i=0; i<objLen; i++) {
-		var tObj = textObjects[i];
+		var tObj = textObjs[i];
 
-		context.font = makeFontString(tObj.size, tObj.font);
+		context.font = tObj.makeFontString();
 		context.fillStyle = tObj.color;
 		context.fillText(tObj.text, tObj.x, tObj.y);
 		processMotion(tObj,canvasWidth, canvasHeight);
@@ -43,11 +73,6 @@ function refreshCanvas(canvas, data) {
 	//		refreshCanvas(canvas, data);
 	//	}, 33);
 	//}
-};
-
-/* Canvas context에 글꼴을 적용하기 위한 문자열 생성함수*/
-function makeFontString(size, font) {
-	return size + 'px ' + font;
 }
 
 /* 모션 처리 */
@@ -109,3 +134,34 @@ function invertDirection(textObject) {
 		textObject.motionToPositive = true;
 	}
 }
+
+	//////////////////////////////////////////////////////////////////////
+	/* 텍스트 객체 */
+	var TextObj = function(text, x, y, size, font, color) {
+		this.text = text;
+		this.x = Number(x);
+		this.y = Number(y);
+		this.size = Number(size);
+		this.font = font;
+		this.color = color;
+		this.motionType = MOTION_TYPE_NONE;
+		this.motionToPositive = true;
+	};
+
+  TextObj.prototype.makeFontString = function()
+  {
+    return this.size + 'px ' + this.font;
+  };
+
+  TextObj.prototype.textToRectangle = function()
+  {
+    var x = this.x;
+		var y = this.y - this.size;	// text객체는 좌측아래를 기준점으로 사용
+		context.font = this.makeFontString();
+		var width = context.measureText(this.text).width;
+		var height = this.size;
+		
+		return new Rectangle(x, y, width, height);
+  };
+
+  //////////////////////////////////////////////////////////////////////
