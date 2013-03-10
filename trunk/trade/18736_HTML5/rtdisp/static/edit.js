@@ -71,6 +71,8 @@ $( document ).ready(function() {
 				  var nText = new TextObj(aText.text, aText.x, aText.y, aText.size, aText.font, aText.color);
 				  nText.motionType = aText.motionType;
 				  nText.motionToPositive = aText.motionToPositiv;
+				  
+				  if (!refreshRepeat && aText.motionType!=MOTION_TYPE_NONE) refreshRepeat = true;
 		
 				  textObjects.push(nText);	// 추가
 				}	// draw_once
@@ -116,7 +118,7 @@ $( document ).ready(function() {
 					break;
 				}
 			}
-			refresh();
+			refreshIfNotRepeat();
 		}
 	});
 
@@ -141,7 +143,7 @@ $( document ).ready(function() {
 	/* 배경색 변경시 이벤트 */
 	bgColor.change(function(e) {
 		backgroundColor = bgColor.val();
-		refresh();
+		refreshIfNotRepeat();
 	});
 	
 	/* 서버로 전송 */
