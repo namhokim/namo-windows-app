@@ -15,11 +15,12 @@
 			$( document ).ready( function() {
 				// jQuery
 				var canvas = $('#layer');
+				initCommon(canvas);
 				// Socket.io
 				if( typeof sock_io_addr != "undefined") {
 					var socket=io.connect(sock_io_addr);
 					socket.on('draw', function (data) {
-						refreshCanvas(canvas, data);
+						refreshData(data);
 					});
 				}	// if socket.io
 			});		// end of jQuery ready

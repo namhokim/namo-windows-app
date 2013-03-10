@@ -63,17 +63,16 @@ $( document ).ready(function() {
 			socket.on('draw_once', function (data) {
 				backgroundColor = data.draw.bgColor;
 
-        // text object insert
-        var objLen = data.draw.texts.length;
-        for (var i=0; i<objLen; i++) {
-          var aText = data.draw.texts[i];
-          var nText = new TextObj(
-            aText.text, aText.x, aText.y, aText.size, aText.font, aText.color);
-          nText.motionType = aText.motionType;
-          nText.motionToPositive = aText.motionToPositiv;
-
-          textObjects.push(nText);	// 추가
-        }
+				// text object insert
+				var objLen = data.draw.texts.length;
+				for (var i=0; i<objLen; i++) {
+				  var aText = data.draw.texts[i];
+				  var nText = new TextObj(aText.text, aText.x, aText.y, aText.size, aText.font, aText.color);
+				  nText.motionType = aText.motionType;
+				  nText.motionToPositive = aText.motionToPositiv;
+		
+				  textObjects.push(nText);	// 추가
+				}	// draw_once
 				refresh();
 			});
 		} else {
@@ -87,35 +86,6 @@ $( document ).ready(function() {
 		initX = NOT_SELECTED;
 		initY = NOT_SELECTED;
 	}
-
-	//////////////////////////////////////////////////////////////////////
-	/* 텍스트 객체 */
-	var TextObj = function(text, x, y, size, font, color) {
-		this.text = text;
-		this.x = Number(x);
-		this.y = Number(y);
-		this.size = Number(size);
-		this.font = font;
-		this.color = color;
-		this.motionType = MOTION_TYPE_NONE;
-		this.motionToPositive = true;
-	};
-
-  TextObj.prototype.makeFontString = function()
-  {
-    return this.size + 'px ' + this.font;
-  };
-
-  TextObj.prototype.textToRectangle = function()
-  {
-    var x = this.x;
-		var y = this.y - this.size;	// text객체는 좌측아래를 기준점으로 사용
-		context.font = this.makeFontString();
-		var width = context.measureText(this.text).width;
-		var height = this.size;
-		
-		return new Rectangle(x, y, width, height);
-  };
 
   //////////////////////////////////////////////////////////////////////
 
@@ -390,7 +360,7 @@ $( document ).ready(function() {
 		for (var i=0; i<objLen; i++) {
 			var tObj = textObjects[i];
 
-			context.font = makeFontString(tObj.size, tObj.font);
+			context.font = tObj.makeFontString();
 			context.fillStyle = tObj.color;
 			context.fillText(tObj.text, tObj.x, tObj.y);
 			processMotion(tObj, canvasWidth, canvasHeight);
@@ -442,7 +412,7 @@ $( document ).ready(function() {
 		
 		var x = textObject.x;
 		var y = textObject.y - textObject.size;	// text객체는 좌측아래를 기준점으로 사용
-		context.font = makeFontString(textObject.size, textObject.font);
+		context.font = textObject.makeFontString();
 		var width = context.measureText(textObject.text).width;
 		var height = textObject.size;
 		
