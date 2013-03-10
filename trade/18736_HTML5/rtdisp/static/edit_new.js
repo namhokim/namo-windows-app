@@ -27,6 +27,7 @@ $( document ).ready(function() {
 		// jQuery
 		canvas = $('#layer');
 		context = canvas.get(0).getContext("2d");
+		initCommon(canvas);	// common
 		canvasWidth = canvas.width();
 		canvasHeight = canvas.height();
 		
@@ -71,60 +72,6 @@ $( document ).ready(function() {
 		initX = NOT_SELECTED;
 		initY = NOT_SELECTED;
 	}
-
-	//////////////////////////////////////////////////////////////////////
-	/* 텍스트 객체 */
-	var TextObj = function(text, x, y, size, font, color) {
-		this.text = text;
-		this.x = Number(x);
-		this.y = Number(y);
-		this.size = Number(size);
-		this.font = font;
-		this.color = color;
-		this.motionType = MOTION_TYPE_NONE;
-		this.motionToPositive = true;
-	};
-
-  TextObj.prototype.makeFontString = function()
-  {
-    return this.size + 'px ' + this.font;
-  };
-
-  TextObj.prototype.textToRectangle = function()
-  {
-    var x = this.x;
-		var y = this.y - this.size;	// text객체는 좌측아래를 기준점으로 사용
-		context.font = this.makeFontString();
-		var width = context.measureText(this.text).width;
-		var height = this.size;
-		
-		return new Rectangle(x, y, width, height);
-  };
-
-  //////////////////////////////////////////////////////////////////////
-
-	/* 이미지 객체 */
-	var ImageObj = function(image, x, y) {
-		this.image = image;
-		this.x = Number(x);
-		this.y = Number(y);
-	};
-	
-	/* 직사각형 객체 */
-	var Rectangle = function(x, y, width, height) {
-		this.x = Number(x);
-		this.y = Number(y);
-		this.width = Number(width);
-		this.height = Number(height);
-	};
-	
-	/* 선택 객체 */
-	var SelectRect = function(x, y, width, height) {
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
-	};
 
 	//////////////////////////////////////////////////////////////////////
 	
