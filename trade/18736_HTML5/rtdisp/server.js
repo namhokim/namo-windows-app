@@ -1,8 +1,5 @@
 function start(route, handle, port) {
 
-	var refreshAgain = false;
-	var refreshing = false;
-
 	// handler
 	function onRequest(request, response) {
 		var url = require("url");
@@ -10,7 +7,6 @@ function start(route, handle, port) {
 		console.log("Request for " + pathname + " received.");
 		route(handle, pathname, response, request);
 	}
-	
 
 	// start
 	if (typeof port === "undefined") port = 80;
@@ -31,7 +27,6 @@ function start(route, handle, port) {
 		socket.on('data', function (data) {
 			try {
 				drawData = data;
-				refreshAgain = data.draw.refreshAgain;
 				console.log(drawData);
 				socket.broadcast.emit('draw', drawData);
 			} catch (err){
