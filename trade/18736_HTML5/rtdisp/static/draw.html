@@ -2,7 +2,6 @@
 <html>
 <head>
 	<title>canvas</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
 	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script src="/static/common.js"></script>
@@ -17,7 +16,7 @@
 			// Socket.io
 			if( typeof sock_io_addr != "undefined") {
 				var socket=io.connect(sock_io_addr);
-				socket.on('draw', function (data) {
+				socket.on('receive', function (data) {
 					// x3
 					var objLen = data.draw.texts.length;
 					for (var i=0; i<objLen; i++) {
@@ -27,6 +26,11 @@
 						aText.size = aText.size * 3;
 					}
 					refreshData(data);
+				});
+				socket.on('requestData', function (requester) {
+					//console.log(requester.requester);
+					var data = {bgColor : backgroundColor, texts : textObjs, refreshAgain : refreshAgain};
+					socket.emit('responseData', {draw: data});
 				});
 			}	// if socket.io
 		});
