@@ -31,19 +31,27 @@ function static_handler(response, request, pathname) {
     , type = 'application/octet-stream';
   switch (getLastPart(pathname, '.'))
   {
-  case 'ico':
-    enc = RAW_ENCODING;
-    type = "image/vnd.microsoft.icon";
-    break;
-  case 'html':
-    type = "text/html";
-    break;
-  case 'css':
-    type = "text/css";
-    break;
-  case 'js':
-    type = "text/javascript";
-    break;
+	case 'ico':
+		enc = RAW_ENCODING;
+		type = "image/vnd.microsoft.icon";
+		break;
+	case 'png':
+		enc = RAW_ENCODING;
+		type = "image/png";
+		break;
+	case 'gif':
+		enc = RAW_ENCODING;
+		type = "image/gif";
+		break;
+	case 'html':
+		type = "text/html";
+		break;
+	case 'css':
+		type = "text/css";
+		break;
+	case 'js':
+		type = "text/javascript";
+		break;
   }
 
   // 리소스 반환

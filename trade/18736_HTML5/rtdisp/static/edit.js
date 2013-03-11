@@ -73,7 +73,7 @@ $( document ).ready(function() {
 				  aText.size = aText.size / 3;
 				  var nText = new TextObj(aText.text, aText.x, aText.y, aText.size, aText.font, aText.color);
 				  nText.motionType = aText.motionType;
-				  nText.motionToPositive = aText.motionToPositiv;
+				  nText.motionToPositive = aText.motionToPositive;
 				  
 				  if (!refreshRepeat && aText.motionType!=MOTION_TYPE_NONE) refreshRepeat = true;
 		
