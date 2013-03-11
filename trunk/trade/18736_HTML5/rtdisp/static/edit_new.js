@@ -100,7 +100,7 @@ $( document ).ready(function() {
 					break;
 				}
 			}
-			refresh();
+			refreshIfNotRepeat();			// 화면 갱신
 		}
 	});
 
@@ -125,7 +125,7 @@ $( document ).ready(function() {
 	/* 배경색 변경시 이벤트 */
 	bgColor.change(function(e) {
 		backgroundColor = bgColor.val();
-		refresh();
+		refreshIfNotRepeat();			// 화면 갱신
 	});
 	
 	/* 서버로 전송 */
