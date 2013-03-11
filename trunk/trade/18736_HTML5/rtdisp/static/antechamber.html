@@ -19,9 +19,18 @@
 				// Socket.io
 				if( typeof sock_io_addr != "undefined") {
 					var socket=io.connect(sock_io_addr);
-					socket.on('draw', function (data) {
+					socket.on('responseData', function (data) {
+						// ÷3
+						var objLen = data.draw.texts.length;
+						for (var i=0; i<objLen; i++) {
+							var aText = data.draw.texts[i];
+							aText.x = aText.x / 3;
+							aText.y = aText.y / 3;
+							aText.size = aText.size / 3;
+						}
 						refreshData(data);
 					});
+					socket.emit('requestData', {requester: 'antechamber'});
 				}	// if socket.io
 			});		// end of jQuery ready
 		</script>

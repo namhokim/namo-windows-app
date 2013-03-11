@@ -61,13 +61,16 @@ $( document ).ready(function() {
 		if( typeof sock_io_addr != "undefined") {
 			//alert(sock_io_addr);
 			socket = io.connect(sock_io_addr);
-			socket.on('draw_once', function (data) {
+			socket.on('responseData', function (data) {
 				backgroundColor = data.draw.bgColor;
 
 				// text object insert
 				var objLen = data.draw.texts.length;
 				for (var i=0; i<objLen; i++) {
 				  var aText = data.draw.texts[i];
+				  aText.x = aText.x / 3;
+				  aText.y = aText.y / 3;
+				  aText.size = aText.size / 3;
 				  var nText = new TextObj(aText.text, aText.x, aText.y, aText.size, aText.font, aText.color);
 				  nText.motionType = aText.motionType;
 				  nText.motionToPositive = aText.motionToPositiv;
@@ -78,6 +81,7 @@ $( document ).ready(function() {
 				}	// draw_once
 				refresh();
 			});
+			socket.emit('requestData', {requester: 'edit'});
 		} else {
 			socket = null
 		}
@@ -149,7 +153,7 @@ $( document ).ready(function() {
 	/* 서버로 전송 */
 	$('#send').click(function() {
 		var data = {bgColor : backgroundColor, texts : textObjects, refreshAgain : refreshRepeat};
-		socket.emit('data', {draw: data});
+		socket.emit('send', {draw: data});
 	});
 
 	/* 모션관련 컨트롤 이벤트 */

@@ -131,7 +131,7 @@ $( document ).ready(function() {
 	/* 서버로 전송 */
 	$('#send').click(function() {
 		var data = {bgColor : backgroundColor, texts : textObjects, refreshAgain : refreshRepeat};
-		socket.emit('data', {draw: data});
+		socket.emit('send', {draw: data});
 	});
 
 	/* 모션관련 컨트롤 이벤트 */

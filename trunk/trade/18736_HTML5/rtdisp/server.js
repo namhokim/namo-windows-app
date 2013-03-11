@@ -16,19 +16,29 @@ function start(route, handle, port) {
 
 	app.listen(port);
 
-	var drawData = null;	// local draw data storage
-	
 	io.sockets.on('connection', function(socket) {
-		if (drawData!=null) {
-			socket.emit('draw', drawData);
-			socket.emit('draw_once', drawData);
-		}
-		
-		socket.on('data', function (data) {
+		socket.on('send', function (data) {
 			try {
-				drawData = data;
-				console.log(drawData);
-				socket.broadcast.emit('draw', drawData);
+				console.log(data);
+				socket.broadcast.emit('receive', data);
+			} catch (err){
+				console.log(err);
+				return true;
+			}
+		});
+		socket.on('requestData', function (data) {
+			try {
+				console.log(data);
+				socket.broadcast.emit('requestData', data);
+			} catch (err){
+				console.log(err);
+				return true;
+			}
+		});
+		socket.on('responseData', function (data) {
+			try {
+				console.log(data);
+				socket.broadcast.emit('responseData', data);
 			} catch (err){
 				console.log(err);
 				return true;
