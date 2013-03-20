@@ -137,6 +137,7 @@ void CsudokuDlg::LoadFromFile(LPCTSTR file)
 		int i=0;
 		while(getline(is, line))
 		{
+			if (i>=MAZE_SIZE) break;	// 파일 포맷 오류 대비
 			CString v1,v2,v3,v4;
 			ParseLine(line.c_str(),v1,v2,v3,v4);
 			SetButtonValue(btn[i][0], v1);
@@ -174,9 +175,9 @@ void CsudokuDlg::SetButtonValue(CButton&button, const CString& value)
 void CsudokuDlg::ClearButtonValues()
 {
 	CString emptyStr;
-	for(int i=0; i<4; i++)
+	for(int i=0; i<MAZE_SIZE; i++)
 	{
-		for(int j=0; j<4; j++)
+		for(int j=0; j<MAZE_SIZE; j++)
 		{
 			SetButtonValue(btn[i][j], emptyStr);
 		}
