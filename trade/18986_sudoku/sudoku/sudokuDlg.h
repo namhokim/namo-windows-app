@@ -4,7 +4,7 @@
 
 #pragma once
 #include "afxwin.h"
-
+#define MAZE_SIZE 4
 
 // CsudokuDlg 대화 상자
 class CsudokuDlg : public CDialog
@@ -39,5 +39,5 @@ public:
 	afx_msg void OnBnClickedButtonNew();
 	HACCEL m_hAccelTable;
 	BOOL PreTranslateMessage(MSG* pMsg);
-	CButton btn[4][4];
+	CButton btn[MAZE_SIZE][MAZE_SIZE];
 };
