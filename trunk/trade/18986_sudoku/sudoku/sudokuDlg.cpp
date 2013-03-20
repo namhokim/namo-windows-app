@@ -48,6 +48,7 @@ BEGIN_MESSAGE_MAP(CsudokuDlg, CDialog)
 	ON_WM_QUERYDRAGICON()
 	//}}AFX_MSG_MAP
 	ON_BN_CLICKED(IDC_BUTTON_NEW, &CsudokuDlg::OnBnClickedButtonNew)
+	ON_BN_CLICKED(IDC_BUTTON_SAVE, &CsudokuDlg::OnBnClickedButtonSave)
 END_MESSAGE_MAP()
 
 
@@ -107,7 +108,7 @@ HCURSOR CsudokuDlg::OnQueryDragIcon()
 
 void CsudokuDlg::OnBnClickedButtonNew()
 {
-	TCHAR szFilter[] = _T("텍스트 문서(*.txt) | *.txt | All Files(*.*)|*.*||");
+	TCHAR szFilter[] = _T("텍스트 문서(*.txt)|*.txt| All Files(*.*)|*.*||");
 	CFileDialog open(TRUE, _T("txt"), _T("*.txt"), OFN_HIDEREADONLY,
 		szFilter);
 	if(open.DoModal() == IDOK)
@@ -182,4 +183,35 @@ void CsudokuDlg::ClearButtonValues()
 			SetButtonValue(btn[i][j], emptyStr);
 		}
 	}
+}
+
+void CsudokuDlg::OnBnClickedButtonSave()
+{
+	TCHAR szFilter[] = _T("텍스트 문서(*.txt)|*.txt| All Files(*.*)|*.*||");
+	CFileDialog open(FALSE, _T("txt"), _T("save.txt"), OFN_OVERWRITEPROMPT,
+		szFilter);
+	if(open.DoModal() == IDOK)
+	{
+		SaveToFile(open.m_ofn.lpstrFile);
+	}
+}
+
+void CsudokuDlg::SaveToFile(LPCTSTR file)
+{
+	std::ofstream os (file, std::ios::out);
+	if (os)
+	{
+		for(int i=0; i<MAZE_SIZE; i++)
+		{
+			for(int j=0; j<MAZE_SIZE; j++)
+			{
+				CString value;
+				btn[i][j].GetWindowText(value);
+				if(value.GetLength()==0) os << 'B';
+				else os << (LPCSTR)value.GetString();
+			}
+			os << std::endl;
+		}
+	}
+
 }

@@ -25,6 +25,7 @@ private:
 	void ParseLine(LPCSTR line,CString& v1,CString& v2,CString& v3,CString& v4);
 	void SetButtonValue(CButton&button, const CString& value);
 	void ClearButtonValues();
+	void SaveToFile(LPCTSTR file);
 
 // 구현입니다.
 protected:
@@ -40,4 +41,5 @@ public:
 	HACCEL m_hAccelTable;
 	BOOL PreTranslateMessage(MSG* pMsg);
 	CButton btn[MAZE_SIZE][MAZE_SIZE];
+	afx_msg void OnBnClickedButtonSave();
 };
