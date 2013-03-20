@@ -176,6 +176,11 @@ END
 IDR_ACCELERATOR1 ACCELERATORS 
 BEGIN
     "N",            IDC_BUTTON_NEW,         VIRTKEY, CONTROL, NOINVERT
+    "S",            IDC_BUTTON_SAVE,        VIRTKEY, CONTROL, NOINVERT
+    "X",            IDC_BUTTON_QUIT,        VIRTKEY, CONTROL, NOINVERT
+    "A",            IDC_BUTTON_AUTO,        VIRTKEY, CONTROL, NOINVERT
+    "P",            IDC_BUTTON_PLAYER,      VIRTKEY, CONTROL, NOINVERT
+    "U",            IDC_BUTTON_UNDO,        VIRTKEY, CONTROL, NOINVERT
 END
 
 #endif    // ÇÑ±¹¾î resources
