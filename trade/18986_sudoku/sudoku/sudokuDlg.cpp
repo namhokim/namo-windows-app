@@ -91,7 +91,15 @@ HCURSOR CsudokuDlg::OnQueryDragIcon()
 
 void CsudokuDlg::OnBnClickedButtonNew()
 {
-	MessageBox(_T("dd"));
+	TCHAR szFilter[] = _T("텍스트 문서(*.txt) | *.txt | All Files(*.*)|*.*||");
+	CFileDialog open(TRUE, _T("txt"), _T("*.txt"), OFN_HIDEREADONLY,
+		szFilter);
+	if(open.DoModal() == IDOK)
+	{
+		MessageBox(open.m_ofn.lpstrFile);
+	}
+	//CString fileName;
+	//open.GetOFN().lpstrFile = fileName.GetBuffer(10000);
 }
 
 BOOL CsudokuDlg::PreTranslateMessage(MSG* pMsg)
