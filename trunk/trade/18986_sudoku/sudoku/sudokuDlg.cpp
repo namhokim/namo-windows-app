@@ -47,6 +47,7 @@ BOOL CsudokuDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
+	m_hAccelTable = ::LoadAccelerators(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDR_ACCELERATOR1));
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
@@ -91,4 +92,15 @@ HCURSOR CsudokuDlg::OnQueryDragIcon()
 void CsudokuDlg::OnBnClickedButtonNew()
 {
 	MessageBox(_T("dd"));
+}
+
+BOOL CsudokuDlg::PreTranslateMessage(MSG* pMsg)
+{
+	if (m_hAccelTable!=NULL)
+	{
+		if(TranslateAccelerator(m_hWnd, m_hAccelTable, pMsg))
+			return TRUE;
+	}
+
+	return CDialog::PreTranslateMessage(pMsg);
 }

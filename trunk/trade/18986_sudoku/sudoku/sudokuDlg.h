@@ -30,4 +30,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedButtonNew();
+	HACCEL m_hAccelTable;
+	BOOL PreTranslateMessage(MSG* pMsg);
 };
