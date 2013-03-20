@@ -31,6 +31,7 @@ BEGIN_MESSAGE_MAP(CsudokuDlg, CDialog)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	//}}AFX_MSG_MAP
+	ON_BN_CLICKED(IDC_BUTTON_NEW, &CsudokuDlg::OnBnClickedButtonNew)
 END_MESSAGE_MAP()
 
 
@@ -86,3 +87,8 @@ HCURSOR CsudokuDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+void CsudokuDlg::OnBnClickedButtonNew()
+{
+	MessageBox(_T("dd"));
+}
