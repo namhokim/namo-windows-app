@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include "afxwin.h"
 
 
 // CsudokuDlg 대화 상자
@@ -18,6 +19,12 @@ public:
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 지원입니다.
 
+// 맴버입니다.
+private:
+	void LoadFromFile(LPCTSTR file);
+	void ParseLine(LPCSTR line,CString& v1,CString& v2,CString& v3,CString& v4);
+	void SetButtonValue(CButton&button, const CString& value);
+	void ClearButtonValues();
 
 // 구현입니다.
 protected:
@@ -32,4 +39,5 @@ public:
 	afx_msg void OnBnClickedButtonNew();
 	HACCEL m_hAccelTable;
 	BOOL PreTranslateMessage(MSG* pMsg);
+	CButton btn[4][4];
 };

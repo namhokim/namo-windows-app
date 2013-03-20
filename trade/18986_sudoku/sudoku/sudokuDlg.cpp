@@ -25,6 +25,22 @@ CsudokuDlg::CsudokuDlg(CWnd* pParent /*=NULL*/)
 void CsudokuDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_BUTTON11, btn[0][0]);
+	DDX_Control(pDX, IDC_BUTTON12, btn[0][1]);
+	DDX_Control(pDX, IDC_BUTTON13, btn[0][2]);
+	DDX_Control(pDX, IDC_BUTTON14, btn[0][3]);
+	DDX_Control(pDX, IDC_BUTTON21, btn[1][0]);
+	DDX_Control(pDX, IDC_BUTTON22, btn[1][1]);
+	DDX_Control(pDX, IDC_BUTTON23, btn[1][2]);
+	DDX_Control(pDX, IDC_BUTTON24, btn[1][3]);
+	DDX_Control(pDX, IDC_BUTTON31, btn[2][0]);
+	DDX_Control(pDX, IDC_BUTTON32, btn[2][1]);
+	DDX_Control(pDX, IDC_BUTTON33, btn[2][2]);
+	DDX_Control(pDX, IDC_BUTTON34, btn[2][3]);
+	DDX_Control(pDX, IDC_BUTTON41, btn[3][0]);
+	DDX_Control(pDX, IDC_BUTTON42, btn[3][1]);
+	DDX_Control(pDX, IDC_BUTTON43, btn[3][2]);
+	DDX_Control(pDX, IDC_BUTTON44, btn[3][3]);
 }
 
 BEGIN_MESSAGE_MAP(CsudokuDlg, CDialog)
@@ -96,10 +112,9 @@ void CsudokuDlg::OnBnClickedButtonNew()
 		szFilter);
 	if(open.DoModal() == IDOK)
 	{
-		MessageBox(open.m_ofn.lpstrFile);
+		ClearButtonValues();
+		LoadFromFile(open.m_ofn.lpstrFile);
 	}
-	//CString fileName;
-	//open.GetOFN().lpstrFile = fileName.GetBuffer(10000);
 }
 
 BOOL CsudokuDlg::PreTranslateMessage(MSG* pMsg)
@@ -111,4 +126,59 @@ BOOL CsudokuDlg::PreTranslateMessage(MSG* pMsg)
 	}
 
 	return CDialog::PreTranslateMessage(pMsg);
+}
+
+void CsudokuDlg::LoadFromFile(LPCTSTR file)
+{
+	std::ifstream is (file, std::ios::in);
+	if (is)
+	{
+		std::string line;
+		int i=0;
+		while(getline(is, line))
+		{
+			CString v1,v2,v3,v4;
+			ParseLine(line.c_str(),v1,v2,v3,v4);
+			SetButtonValue(btn[i][0], v1);
+			SetButtonValue(btn[i][1], v2);
+			SetButtonValue(btn[i][2], v3);
+			SetButtonValue(btn[i][3], v4);
+			i++;
+		}
+		is.close();
+	}
+}
+
+void CsudokuDlg::ParseLine(LPCSTR line,CString& v1,CString& v2,CString& v3,CString& v4)
+{
+	if (line[0]!='B') v1=line[0];
+	if (line[1]!='B') v2=line[1];
+	if (line[2]!='B') v3=line[2];
+	if (line[3]!='B') v4=line[3];
+}
+
+void CsudokuDlg::SetButtonValue(CButton&button, const CString& value)
+{
+	if (value.GetLength()!=0)
+	{
+		button.EnableWindow(FALSE);
+		button.SetWindowText(value);
+	}
+	else
+	{
+		button.EnableWindow(TRUE);
+		button.SetWindowText(_T(""));
+	}
+}
+
+void CsudokuDlg::ClearButtonValues()
+{
+	CString emptyStr;
+	for(int i=0; i<4; i++)
+	{
+		for(int j=0; j<4; j++)
+		{
+			SetButtonValue(btn[i][j], emptyStr);
+		}
+	}
 }
