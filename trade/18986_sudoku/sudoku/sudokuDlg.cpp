@@ -49,6 +49,7 @@ BEGIN_MESSAGE_MAP(CsudokuDlg, CDialog)
 	//}}AFX_MSG_MAP
 	ON_BN_CLICKED(IDC_BUTTON_NEW, &CsudokuDlg::OnBnClickedButtonNew)
 	ON_BN_CLICKED(IDC_BUTTON_SAVE, &CsudokuDlg::OnBnClickedButtonSave)
+	ON_BN_CLICKED(IDC_BUTTON_QUIT, &CsudokuDlg::OnBnClickedButtonQuit)
 END_MESSAGE_MAP()
 
 
@@ -214,4 +215,8 @@ void CsudokuDlg::SaveToFile(LPCTSTR file)
 		}
 	}
 
+}
+void CsudokuDlg::OnBnClickedButtonQuit()
+{
+	EndDialog(0);
 }

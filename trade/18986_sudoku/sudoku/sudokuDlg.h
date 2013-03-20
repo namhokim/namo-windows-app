@@ -42,4 +42,5 @@ public:
 	BOOL PreTranslateMessage(MSG* pMsg);
 	CButton btn[MAZE_SIZE][MAZE_SIZE];
 	afx_msg void OnBnClickedButtonSave();
+	afx_msg void OnBnClickedButtonQuit();
 };
