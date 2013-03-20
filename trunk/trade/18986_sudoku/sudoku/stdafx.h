@@ -57,3 +57,5 @@
 #endif
 
 
+#include <fstream>      // std::ifstream
+#include <string>		// std::string

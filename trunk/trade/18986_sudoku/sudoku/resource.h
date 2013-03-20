@@ -13,20 +13,21 @@
 #define IDC_BUTTON_UNDO                 1004
 #define IDC_BUTTON11                    1005
 #define IDC_BUTTON12                    1006
-#define IDC_BUTTON13                    1007
-#define IDC_BUTTON14                    1008
-#define IDC_BUTTON15                    1009
-#define IDC_BUTTON16                    1010
-#define IDC_BUTTON17                    1011
-#define IDC_BUTTON18                    1012
-#define IDC_BUTTON19                    1013
-#define IDC_BUTTON20                    1014
-#define IDC_BUTTON21                    1015
-#define IDC_BUTTON22                    1016
-#define IDC_BUTTON23                    1017
-#define IDC_BUTTON24                    1018
-#define IDC_BUTTON25                    1019
-#define IDC_BUTTON26                    1020
+#define IDC_BUTTON21                    1007
+#define IDC_BUTTON22                    1008
+#define IDC_BUTTON133                   1009
+#define IDC_BUTTON13                    1009
+#define IDC_BUTTON14                    1010
+#define IDC_BUTTON23                    1011
+#define IDC_BUTTON24                    1012
+#define IDC_BUTTON31                    1013
+#define IDC_BUTTON32                    1014
+#define IDC_BUTTON41                    1015
+#define IDC_BUTTON42                    1016
+#define IDC_BUTTON33                    1017
+#define IDC_BUTTON34                    1018
+#define IDC_BUTTON43                    1019
+#define IDC_BUTTON44                    1020
 #define IDC_BUTTON_QUIT                 1021
 
 // Next default values for new objects
