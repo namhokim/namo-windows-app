@@ -15,7 +15,6 @@
 #define IDC_BUTTON12                    1006
 #define IDC_BUTTON21                    1007
 #define IDC_BUTTON22                    1008
-#define IDC_BUTTON133                   1009
 #define IDC_BUTTON13                    1009
 #define IDC_BUTTON14                    1010
 #define IDC_BUTTON23                    1011
@@ -29,6 +28,9 @@
 #define IDC_BUTTON43                    1019
 #define IDC_BUTTON44                    1020
 #define IDC_BUTTON_QUIT                 1021
+#define IDC_RADIO_MODE_AUTO             1022
+#define IDC_RADIO_MODE                  1022
+#define IDC_RADIO_MODE_PLAYER           1023
 
 // Next default values for new objects
 // 
@@ -36,7 +38,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        130
 #define _APS_NEXT_COMMAND_VALUE         32778
-#define _APS_NEXT_CONTROL_VALUE         1022
+#define _APS_NEXT_CONTROL_VALUE         1024
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

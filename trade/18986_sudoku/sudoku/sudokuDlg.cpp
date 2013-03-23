@@ -14,7 +14,7 @@
 // CsudokuDlg 대화 상자
 
 CsudokuDlg::CsudokuDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CsudokuDlg::IDD, pParent)
+	: CDialog(CsudokuDlg::IDD, pParent), m_hasUndo(false)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -38,6 +38,7 @@ void CsudokuDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BUTTON42, btn[3][1]);
 	DDX_Control(pDX, IDC_BUTTON43, btn[3][2]);
 	DDX_Control(pDX, IDC_BUTTON44, btn[3][3]);
+	DDX_Control(pDX, IDC_BUTTON_UNDO, m_ButtonUndo);
 }
 
 BEGIN_MESSAGE_MAP(CsudokuDlg, CDialog)
@@ -141,6 +142,8 @@ BOOL CsudokuDlg::OnInitDialog()
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
 	m_hAccelTable = ::LoadAccelerators(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDR_ACCELERATOR1));
+
+	((CButton *)GetDlgItem(IDC_RADIO_MODE_PLAYER))->SetCheck(BST_CHECKED);
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
