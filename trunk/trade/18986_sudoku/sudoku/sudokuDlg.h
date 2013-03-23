@@ -24,8 +24,8 @@ private:
 	// 맴버입니다.
 	HACCEL m_hAccelTable;
 	CButton btn[MAZE_SIZE][MAZE_SIZE];	// 버튼 값 설정/가져오기 위한 객체
-	CButton m_ButtonUndo;
-	bool m_hasUndo;	// 되돌리기 여부
+	CButton m_ButtonUndo;	// 되돌리기 버튼
+	bool m_hasUndo;			// 되돌리기 여부
 
 	// 내부용 메소드입니다.
 	void ClearButtonValues();	// 버튼 값을 초기화(새 게임 시)
@@ -48,4 +48,6 @@ protected:
 	afx_msg void OnBnClickedButtonNew();	// 새 게임
 	afx_msg void OnBnClickedButtonSave();	// 게임 저장하기
 	afx_msg void OnBnClickedButtonQuit();	// 끝내기
+
+	void OnChangeRadioMode();	// 게임모드 변경시
 };
