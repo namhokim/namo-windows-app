@@ -48,6 +48,8 @@ BEGIN_MESSAGE_MAP(CsudokuDlg, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON_NEW, &CsudokuDlg::OnBnClickedButtonNew)
 	ON_BN_CLICKED(IDC_BUTTON_SAVE, &CsudokuDlg::OnBnClickedButtonSave)
 	ON_BN_CLICKED(IDC_BUTTON_QUIT, &CsudokuDlg::OnBnClickedButtonQuit)
+	ON_BN_CLICKED(IDC_RADIO_MODE_AUTO, &CsudokuDlg::OnChangeRadioMode)
+	ON_BN_CLICKED(IDC_RADIO_MODE_PLAYER, &CsudokuDlg::OnChangeRadioMode)
 END_MESSAGE_MAP()
 
 //////////////////////////////////////////////////////////////////////////
@@ -233,4 +235,20 @@ void CsudokuDlg::OnBnClickedButtonSave()
 void CsudokuDlg::OnBnClickedButtonQuit()
 {
 	EndDialog(0);
+}
+
+void CsudokuDlg::OnChangeRadioMode()
+{
+	switch(GetCheckedRadioButton(IDC_RADIO_MODE_AUTO, IDC_RADIO_MODE_PLAYER))
+	{
+	case IDC_RADIO_MODE_AUTO:
+		m_ButtonUndo.EnableWindow(FALSE);
+		break;
+	case IDC_RADIO_MODE_PLAYER:
+		if(m_hasUndo) m_ButtonUndo.EnableWindow(TRUE);
+		break;
+	default:
+		// you have not specified what to do when you select radio X and Y, so specify it here
+		break;
+	}
 }
