@@ -9,6 +9,7 @@ public:
 	~SudokuLoader(void);
 	bool load(LPCTSTR file);
 	Sudoku* data();
+
 private:
 	int m_size;
 	Sudoku* m_data;
@@ -20,7 +21,8 @@ class SudokuSolver
 {
 public:
 	SudokuSolver(Sudoku*);
-	void solve();
+	bool solve();
+
 private:
 	Sudoku* m_data;
 };

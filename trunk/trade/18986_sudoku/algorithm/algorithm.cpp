@@ -46,6 +46,10 @@ void algorithm()
 	if (loader.load(_T("sudoku1.txt"))) {
 		Sudoku *sudoku = loader.data();
 		SudokuSolver solver(sudoku);
-		solver.solve();
+		if(solver.solve()) {
+			printf("Solved it.");
+		} else {
+			printf("Cannot solve it.");
+		}
 	}
 }
