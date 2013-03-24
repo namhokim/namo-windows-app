@@ -14,7 +14,8 @@
 // CsudokuDlg 대화 상자
 
 CsudokuDlg::CsudokuDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CsudokuDlg::IDD, pParent), m_hasUndo(false), m_loader(MAZE_SIZE)
+	: CDialog(CsudokuDlg::IDD, pParent), m_hasUndo(false)
+	, m_loader(MAZE_SIZE), m_data(NULL)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -68,38 +69,32 @@ void CsudokuDlg::ClearButtonValues()
 
 void CsudokuDlg::LoadFromFile(LPCTSTR file)
 {
+	InitPlayMode();
+
 	if (m_loader.load(file)) {
-		SudokuSolver solver(m_loader.data());
+		m_data = m_loader.data();
+		// UI에 데이터 표시
+		DisplayToUI(m_data);
+
+		// 해결안 구함
+		SudokuSolver solver(m_data);
+		solver.solve();
 	} else {
 		MessageBox(_T("데이터를 로드할 수 없습니다."), _T("에러"), MB_OK | MB_ICONERROR);
 	}
-
-	//std::ifstream is (file, std::ios::in);
-	//if (is)
-	//{
-	//	std::string line;
-	//	int i=0;
-	//	while(getline(is, line))
-	//	{
-	//		if (i>=MAZE_SIZE) break;	// 파일 포맷 오류 대비
-	//		CString v1,v2,v3,v4;
-	//		ParseLine(line.c_str(),v1,v2,v3,v4);
-	//		SetButtonValue(btn[i][0], v1);
-	//		SetButtonValue(btn[i][1], v2);
-	//		SetButtonValue(btn[i][2], v3);
-	//		SetButtonValue(btn[i][3], v4);
-	//		i++;
-	//	}
-	//	is.close();
-	//}
 }
 
-void CsudokuDlg::ParseLine(LPCSTR line,CString& v1,CString& v2,CString& v3,CString& v4)
+void CsudokuDlg::DisplayToUI(Sudoku *data)
 {
-	if (line[0]!='B') v1=line[0];
-	if (line[1]!='B') v2=line[1];
-	if (line[2]!='B') v3=line[2];
-	if (line[3]!='B') v4=line[3];
+	SudokuDisplayer disp(data);
+	for(int i=0; i<MAZE_SIZE; i++) {
+		for(int j=0; j<MAZE_SIZE; j++) {
+			char ch = disp.getData(i, j, ' ');
+			CString value;
+			value.Format(_T("%c"), ch);
+			SetButtonValue(btn[i][j], value);
+		}
+	}
 }
 
 void CsudokuDlg::SetButtonValue(CButton&button, const CString& value)
@@ -135,6 +130,12 @@ void CsudokuDlg::SaveToFile(LPCTSTR file)
 	}
 }
 
+void CsudokuDlg::InitPlayMode()
+{
+	((CButton *)GetDlgItem(IDC_RADIO_MODE_AUTO))->SetCheck(BST_UNCHECKED);
+	((CButton *)GetDlgItem(IDC_RADIO_MODE_PLAYER))->SetCheck(BST_CHECKED);
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 // CsudokuDlg 메시지 처리기
@@ -151,7 +152,7 @@ BOOL CsudokuDlg::OnInitDialog()
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
 	m_hAccelTable = ::LoadAccelerators(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDR_ACCELERATOR1));
 
-	((CButton *)GetDlgItem(IDC_RADIO_MODE_PLAYER))->SetCheck(BST_CHECKED);
+	InitPlayMode();
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
@@ -249,6 +250,7 @@ void CsudokuDlg::OnChangeRadioMode()
 	{
 	case IDC_RADIO_MODE_AUTO:
 		m_ButtonUndo.EnableWindow(FALSE);
+		DisplayToUI(m_data);	// for test (한번에 해결)
 		break;
 	case IDC_RADIO_MODE_PLAYER:
 		if(m_hasUndo) m_ButtonUndo.EnableWindow(TRUE);

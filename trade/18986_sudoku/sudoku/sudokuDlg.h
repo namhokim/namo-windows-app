@@ -29,13 +29,15 @@ private:
 	CButton m_ButtonUndo;	// 되돌리기 버튼
 	bool m_hasUndo;			// 되돌리기 여부
 	SudokuLoader m_loader;	// 데이터 로더
+	Sudoku *m_data;			// 데이터
 
 	// 내부용 메소드입니다.
 	void ClearButtonValues();	// 버튼 값을 초기화(새 게임 시)
 	void LoadFromFile(LPCTSTR file);	// 파일에서 데이터를 불러옴
-	void ParseLine(LPCSTR line,CString& v1,CString& v2,CString& v3,CString& v4);	// 줄 단위의 값을 가져옴
+	void DisplayToUI(Sudoku *data);		// UI에 데이터 표시
 	void SetButtonValue(CButton&button, const CString& value);	// 버튼 값을 설정
 	void SaveToFile(LPCTSTR file);	// 버튼 값을 파일로 저장
+	void InitPlayMode();			// 플레이어 모드로 초기화
 
 // 구현입니다.
 protected:
