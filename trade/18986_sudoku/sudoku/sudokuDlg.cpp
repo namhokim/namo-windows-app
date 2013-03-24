@@ -14,7 +14,7 @@
 // CsudokuDlg 대화 상자
 
 CsudokuDlg::CsudokuDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CsudokuDlg::IDD, pParent), m_hasUndo(false)
+	: CDialog(CsudokuDlg::IDD, pParent), m_hasUndo(false), m_loader(MAZE_SIZE)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -68,6 +68,8 @@ void CsudokuDlg::ClearButtonValues()
 
 void CsudokuDlg::LoadFromFile(LPCTSTR file)
 {
+	this->m_loader.load(file);
+
 	std::ifstream is (file, std::ios::in);
 	if (is)
 	{

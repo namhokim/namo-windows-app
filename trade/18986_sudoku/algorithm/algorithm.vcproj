@@ -197,7 +197,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Sudoku.cpp"
+				RelativePath=".\SudokuSolver.cpp"
 				>
 			</File>
 		</Filter>
@@ -219,7 +219,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Sudoku.h"
+				RelativePath=".\SudokuSolver.h"
 				>
 			</File>
 			<File
