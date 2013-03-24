@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="/static/jquery.mobile-1.3.0.min.css" />
+    <link rel="stylesheet" href="/static/common.css" />
+    <script src="/static/jquery-1.8.3.min.js"></script>
+	<script src="/static/jquery.mobile-1.3.0.min.js"></script>
+    <script src="/static/common.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/static/edit.js"></script>
+    </head>
+    <body>
+<div id="page">
+	<!-- 통합 캔버스 -->
+      <canvas id="layer" width="380" height="200">브라우저가 HTML5 Canvas를 지원하지 않습니다.</canvas>
+      <!-- Text -->
+      <input type="text" id="myText" size="47"  title="Please input the text here." />
+      <button id="send">Send Text</button>
+    <div class="ui-grid-a">
+        <div class="ui-block-a">
+            <input type="button" id="btn_text_submit" value="submit" />
+        </div>
+        <div class="ui-block-b">
+            <input type="button" id="btn_text_clear" value="clear" />
+        </div>
+    </div>
+    <!-- 글자 효과 지정 탭 -->
+	<div data-role="collapsible">
+    	<h3>Text Settings</h3>
+        <div>
+            <span class="collapsible_title">Size:</span><br/>
+            <input id="fontSize" type="range" min="10" max="60" step="5" value="50" />
+        </div>
+        <div>
+            <span class="collapsible_title">Font: </span>
+            <select id="fontFace">
+                <option value="Tahoma" selected>Tahoma</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Gulim">Gulim</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Symbol">Symbol</option>
+                <option value="Terminal">Terminal</option>
+            </select>
+        </div>
+        <div>
+        	<span class="collapsible_title">Color:</span>
+            <select id="fontColor">
+                <option value="White">White</option>
+                <option value="Black" selected>Black</option>
+                <option value="Blue">Blue</option>
+                <option value="Green">Green</option>
+                <option value="Silver">Silver</option>
+                <option value="Lime">Lime</option>
+                <option value="Gray">Gray</option>
+                <option value="Olive">Olive</option>
+                <option value="Yellow">Yellow</option>
+                <option value="Maroon">Maroon</option>
+                <option value="Navy">Navy</option>
+                <option value="Red">Red</option>
+                <option value="Purple">Purple</option>
+                <option value="Teal">Teal</option>
+                <option value="Fuchsia">Fuchsia</option>
+                <option value="Aqua">Aqua</option>
+            </select> 
+        </div>
+    </div>
+	<!--  배경화면 색상 지정 탭 -->
+	<div data-role="collapsible">
+		<h3>Background color</h3>
+		<select id="bgColor">
+            <option value="White" selected>White</option>
+            <option value="Black">Black</option>
+            <option value="Blue">Blue</option>
+            <option value="Green">Green</option>
+            <option value="Silver">Silver</option>
+            <option value="Lime">Lime</option>
+            <option value="Gray">Gray</option>
+            <option value="Olive">Olive</option>
+            <option value="Yellow">Yellow</option>
+            <option value="Maroon">Maroon</option>
+            <option value="Navy">Navy</option>
+            <option value="Red">Red</option>
+            <option value="Purple">Purple</option>
+            <option value="Teal">Teal</option>
+            <option value="Fuchsia">Fuchsia</option>
+            <option value="Aqua">Aqua</option>
+        </select> 
+	</div>
+	<!-- 모션 쓰기 탭 -->
+	<div data-role="collapsible">
+		<h3>Motion</h3>
+		<input type="button" id="motion-ud" value="up-down" />
+		<input type="button" id="motion-lf" value="left-right" />
+	</div>
+    <!-- 완료 -->
+	<div>
+        <a id="complete" data-role="button" data-theme="b" href="#" data-icon="star" data-iconpos="left" width="120">완료</a>
+	</div>
+ </div><!--id="page"-->
+</body>
+</html>

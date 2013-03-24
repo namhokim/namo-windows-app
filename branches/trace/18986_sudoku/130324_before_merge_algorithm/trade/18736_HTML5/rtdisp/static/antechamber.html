@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<link rel="stylesheet" href="/static/jquery.mobile-1.3.0.min.css" />
+		<link rel="stylesheet" href="/static/common.css" />
+		<script src="/static/jquery-1.8.3.min.js"></script>
+		<script src="/static/jquery.mobile-1.3.0.min.js"></script>
+        <script src="/static/common.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+			$( document ).ready( function() {
+				// jQuery
+				var canvas = $('#layer');
+				initCommon(canvas);
+				// Socket.io
+				if( typeof sock_io_addr != "undefined") {
+					var socket=io.connect(sock_io_addr);
+					socket.on('responseData', function (data) {
+						// ÷3
+						var objLen = data.draw.texts.length;
+						for (var i=0; i<objLen; i++) {
+							var aText = data.draw.texts[i];
+							aText.x = aText.x / 3;
+							aText.y = aText.y / 3;
+							aText.size = aText.size / 3;
+						}
+						refreshData(data);
+					});
+					socket.emit('requestData', {requester: 'antechamber'});
+				}	// if socket.io
+			});		// end of jQuery ready
+		</script>
+		<title>작업시작화면</title>
+    </head>
+    <body>
+        <div data-role="page" id="page1">
+			<canvas id="layer" width="380" height="200">브라우저가 HTML5 Canvas를 지원하지 않습니다.</canvas>
+            <div data-role="content">
+                <a href="edit_new" rel="external" data-role="button" data-theme="e">신규</a>
+                <a href="edit" rel="external" data-role="button" data-theme="e">불러오기</a>
+            </div>
+        </div>
+    </body>
+</html>

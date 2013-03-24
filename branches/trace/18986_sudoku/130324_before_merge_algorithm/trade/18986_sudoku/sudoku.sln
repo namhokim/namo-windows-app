@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sudoku", "sudoku\sudoku.vcproj", "{A8BFE74D-F87C-4F53-86A5-B8821A521B6D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "algorithm", "algorithm\algorithm.vcproj", "{7182A046-70E1-4227-9E4F-D48F629466D1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8BFE74D-F87C-4F53-86A5-B8821A521B6D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A8BFE74D-F87C-4F53-86A5-B8821A521B6D}.Debug|Win32.Build.0 = Debug|Win32
+		{A8BFE74D-F87C-4F53-86A5-B8821A521B6D}.Release|Win32.ActiveCfg = Release|Win32
+		{A8BFE74D-F87C-4F53-86A5-B8821A521B6D}.Release|Win32.Build.0 = Release|Win32
+		{7182A046-70E1-4227-9E4F-D48F629466D1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7182A046-70E1-4227-9E4F-D48F629466D1}.Debug|Win32.Build.0 = Debug|Win32
+		{7182A046-70E1-4227-9E4F-D48F629466D1}.Release|Win32.ActiveCfg = Release|Win32
+		{7182A046-70E1-4227-9E4F-D48F629466D1}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

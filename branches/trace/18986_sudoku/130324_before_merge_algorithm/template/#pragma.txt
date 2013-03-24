@@ -1,0 +1,23 @@
+#pragma comment(lib, "wininet.lib")
+#pragma comment(lib, "Ws2_32.lib")
+#pragma once
+
+/* push and pop long, which is #defined as __int64 by a spec2k test */
+#pragma push_macro("long")
+#undef long
+
+typedef struct {
+        /*
+         * Assume there is a long double type
+         */
+        long double x;
+} _LONGDOUBLE;
+
+#pragma pop_macro("long")
+
+#pragma warning( push )
+#pragma warning( disable : 4705 )
+#pragma warning( disable : 4706 )
+#pragma warning( disable : 4707 )
+// Some code
+#pragma warning( pop ) 
