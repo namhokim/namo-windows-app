@@ -213,6 +213,14 @@
 				RelativePath=".\sudokuDlg.cpp"
 				>
 			</File>
+			<Filter
+				Name="algorithm"
+				>
+				<File
+					RelativePath="..\algorithm\SudokuSolver.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="헤더 파일"
@@ -239,6 +247,14 @@
 				RelativePath=".\targetver.h"
 				>
 			</File>
+			<Filter
+				Name="algorithm"
+				>
+				<File
+					RelativePath="..\algorithm\SudokuSolver.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="리소스 파일"

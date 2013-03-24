@@ -4,6 +4,8 @@
 
 #pragma once
 #include "afxwin.h"
+#include "../algorithm/SudokuSolver.h"
+
 #define MAZE_SIZE 4		// 최대크기 2X2가 2개
 
 // CsudokuDlg 대화 상자
@@ -26,6 +28,7 @@ private:
 	CButton btn[MAZE_SIZE][MAZE_SIZE];	// 버튼 값 설정/가져오기 위한 객체
 	CButton m_ButtonUndo;	// 되돌리기 버튼
 	bool m_hasUndo;			// 되돌리기 여부
+	SudokuLoader m_loader;	// 데이터 로더
 
 	// 내부용 메소드입니다.
 	void ClearButtonValues();	// 버튼 값을 초기화(새 게임 시)
