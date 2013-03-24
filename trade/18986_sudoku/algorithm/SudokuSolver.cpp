@@ -115,6 +115,12 @@ public:
 			}
 		}
 	}
+	void removeData() {
+		m_curr = 0;
+		for(int row=0; row<m_size; row++) {
+			m_data.at(row).clear();
+		}
+	}
 private:
 	int m_size, m_curr;
 	vector2D_SudokuElem m_data;
@@ -135,6 +141,7 @@ SudokuLoader::~SudokuLoader(void)
 
 bool SudokuLoader::load(LPCTSTR file)
 {
+	clearData();	// 재 로딩시 데이터 클리어
 	std::ifstream is(file, std::ios::in);
 	if (is)
 	{
@@ -144,7 +151,7 @@ bool SudokuLoader::load(LPCTSTR file)
 		{
 			if (i>=m_size) return false;	// 파일 포맷 오류 대비
 
-			parseLine(line.c_str());
+			if(!parseLine(line.c_str())) return false;
 			i++;
 		}
 		is.close();	// 명시적으로 닫아주지 않아도 자동으로 닫힘
@@ -158,12 +165,23 @@ Sudoku *SudokuLoader::data()
 	return m_data;
 }
 
-void SudokuLoader::parseLine(const std::string& line)
+void SudokuLoader::clearData()
 {
+	m_data->removeData();
+}
+
+bool SudokuLoader::parseLine(const std::string& line)
+{
+	int i=0;
 	for (str_const_iter pos=line.begin(); pos!=line.end(); ++pos)
 	{
+		if (i>=m_size) return false;	// 파일 포맷 오류 대비
+
 		m_data->push_data(*pos);
+
+		i++;
 	}
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////////

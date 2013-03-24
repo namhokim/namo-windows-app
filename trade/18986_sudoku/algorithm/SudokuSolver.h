@@ -14,7 +14,8 @@ private:
 	int m_size;
 	Sudoku* m_data;
 
-	void parseLine(const std::string& line);
+	void clearData();
+	bool parseLine(const std::string& line);
 };
 
 class SudokuSolver

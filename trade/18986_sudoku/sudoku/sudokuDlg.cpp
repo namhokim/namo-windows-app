@@ -68,26 +68,30 @@ void CsudokuDlg::ClearButtonValues()
 
 void CsudokuDlg::LoadFromFile(LPCTSTR file)
 {
-	this->m_loader.load(file);
-
-	std::ifstream is (file, std::ios::in);
-	if (is)
-	{
-		std::string line;
-		int i=0;
-		while(getline(is, line))
-		{
-			if (i>=MAZE_SIZE) break;	// 파일 포맷 오류 대비
-			CString v1,v2,v3,v4;
-			ParseLine(line.c_str(),v1,v2,v3,v4);
-			SetButtonValue(btn[i][0], v1);
-			SetButtonValue(btn[i][1], v2);
-			SetButtonValue(btn[i][2], v3);
-			SetButtonValue(btn[i][3], v4);
-			i++;
-		}
-		is.close();
+	if (m_loader.load(file)) {
+		SudokuSolver solver(m_loader.data());
+	} else {
+		MessageBox(_T("데이터를 로드할 수 없습니다."), _T("에러"), MB_OK | MB_ICONERROR);
 	}
+
+	//std::ifstream is (file, std::ios::in);
+	//if (is)
+	//{
+	//	std::string line;
+	//	int i=0;
+	//	while(getline(is, line))
+	//	{
+	//		if (i>=MAZE_SIZE) break;	// 파일 포맷 오류 대비
+	//		CString v1,v2,v3,v4;
+	//		ParseLine(line.c_str(),v1,v2,v3,v4);
+	//		SetButtonValue(btn[i][0], v1);
+	//		SetButtonValue(btn[i][1], v2);
+	//		SetButtonValue(btn[i][2], v3);
+	//		SetButtonValue(btn[i][3], v4);
+	//		i++;
+	//	}
+	//	is.close();
+	//}
 }
 
 void CsudokuDlg::ParseLine(LPCSTR line,CString& v1,CString& v2,CString& v3,CString& v4)
