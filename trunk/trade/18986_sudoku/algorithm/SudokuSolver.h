@@ -27,3 +27,12 @@ public:
 private:
 	Sudoku* m_data;
 };
+
+class SudokuDisplayer
+{
+public:
+	SudokuDisplayer(Sudoku*);
+	char getData(int x, int y, char default_value);
+private:
+	Sudoku* m_data;
+};

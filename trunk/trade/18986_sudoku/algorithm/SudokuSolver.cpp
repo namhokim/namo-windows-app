@@ -121,6 +121,14 @@ public:
 			m_data.at(row).clear();
 		}
 	}
+
+	char getDataIfComplete(int x, int y, char default_value) {
+		if(m_data.at(x).at(y).isComplete()) {
+			return m_data.at(x).at(y).getFirstElement();
+		} else {
+			return default_value;
+		}
+	}
 private:
 	int m_size, m_curr;
 	vector2D_SudokuElem m_data;
@@ -214,4 +222,16 @@ bool SudokuSolver::solve()
 	}
 
 	return (remainCnt==0);	// 모든 문제가 풀려있는지 여부
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+SudokuDisplayer::SudokuDisplayer(Sudoku* data)
+{
+	m_data = data;
+}
+
+char SudokuDisplayer::getData(int x, int y, char default_value)
+{
+	return m_data->getDataIfComplete(x, y, default_value);
 }
