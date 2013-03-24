@@ -10,6 +10,8 @@
 #define new DEBUG_NEW
 #endif
 
+const char EmptyChar = ' ';
+
 
 // CsudokuDlg 대화 상자
 
@@ -57,12 +59,11 @@ END_MESSAGE_MAP()
 // private:
 void CsudokuDlg::ClearButtonValues()
 {
-	CString emptyStr;
 	for(int i=0; i<MAZE_SIZE; i++)
 	{
 		for(int j=0; j<MAZE_SIZE; j++)
 		{
-			SetButtonValue(btn[i][j], emptyStr);
+			SetButtonValue(btn[i][j], EmptyChar);
 		}
 	}
 }
@@ -73,6 +74,7 @@ void CsudokuDlg::LoadFromFile(LPCTSTR file)
 
 	if (m_loader.load(file)) {
 		m_data = m_loader.data();
+
 		// UI에 데이터 표시
 		DisplayToUI(m_data);
 
@@ -89,25 +91,21 @@ void CsudokuDlg::DisplayToUI(Sudoku *data)
 	SudokuDisplayer disp(data);
 	for(int i=0; i<MAZE_SIZE; i++) {
 		for(int j=0; j<MAZE_SIZE; j++) {
-			char ch = disp.getData(i, j, ' ');
-			CString value;
-			value.Format(_T("%c"), ch);
-			SetButtonValue(btn[i][j], value);
+			char ch = disp.getData(i, j, EmptyChar);
+			SetButtonValue(btn[i][j], ch);
 		}
 	}
 }
 
-void CsudokuDlg::SetButtonValue(CButton&button, const CString& value)
+void CsudokuDlg::SetButtonValue(CButton&button, char value)
 {
-	if (value.GetLength()!=0)
-	{
-		button.EnableWindow(FALSE);
-		button.SetWindowText(value);
-	}
-	else
-	{
+	if (value==EmptyChar) {
 		button.EnableWindow(TRUE);
 		button.SetWindowText(_T(""));
+	} else {
+		button.EnableWindow(FALSE);
+		TCHAR text[2] = {value, 0};
+		button.SetWindowText(text);
 	}
 }
 

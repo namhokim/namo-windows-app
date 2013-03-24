@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "algorithm.h"
-#include "Sudoku.h"
+#include "SudokuSolver.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

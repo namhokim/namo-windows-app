@@ -35,7 +35,7 @@ private:
 	void ClearButtonValues();	// 버튼 값을 초기화(새 게임 시)
 	void LoadFromFile(LPCTSTR file);	// 파일에서 데이터를 불러옴
 	void DisplayToUI(Sudoku *data);		// UI에 데이터 표시
-	void SetButtonValue(CButton&button, const CString& value);	// 버튼 값을 설정
+	void SetButtonValue(CButton&button, char value);	// 버튼 값을 설정
 	void SaveToFile(LPCTSTR file);	// 버튼 값을 파일로 저장
 	void InitPlayMode();			// 플레이어 모드로 초기화
 
