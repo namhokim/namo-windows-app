@@ -7,6 +7,7 @@
 #include "../algorithm/SudokuSolver.h"
 
 #define MAZE_SIZE 4		// 최대크기 2X2가 2개
+#define NOT_SELECTED	(-1)	// 좌표 선택이 되지 않았음
 
 // CsudokuDlg 대화 상자
 class CsudokuDlg : public CDialog
@@ -30,6 +31,7 @@ private:
 	bool m_hasUndo;			// 되돌리기 여부
 	SudokuLoader m_loader;	// 데이터 로더
 	Sudoku *m_data;			// 데이터
+	int m_x, m_y;			// 선택좌표 
 
 	// 내부용 메소드입니다.
 	void ClearButtonValues();	// 버튼 값을 초기화(새 게임 시)
@@ -38,6 +40,8 @@ private:
 	void SetButtonValue(CButton&button, char value);	// 버튼 값을 설정
 	void SaveToFile(LPCTSTR file);	// 버튼 값을 파일로 저장
 	void InitPlayMode();			// 플레이어 모드로 초기화
+	void SelectPosition(int x, int y);	// 좌표 선택
+	void EnableSelectButton(BOOL bEnable);	// 번호선택 활성화
 
 // 구현입니다.
 protected:
@@ -54,5 +58,33 @@ protected:
 	afx_msg void OnBnClickedButtonSave();	// 게임 저장하기
 	afx_msg void OnBnClickedButtonQuit();	// 끝내기
 
-	void OnChangeRadioMode();	// 게임모드 변경시
+	afx_msg void OnChangeRadioMode();	// 게임모드 변경시
+
+	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedButton2();
+	afx_msg void OnBnClickedButton3();
+	afx_msg void OnBnClickedButton4();
+
+	afx_msg void OnBnClickedButton11();
+	afx_msg void OnBnClickedButton12();
+	afx_msg void OnBnClickedButton13();
+	afx_msg void OnBnClickedButton14();
+	afx_msg void OnBnClickedButton21();
+	afx_msg void OnBnClickedButton22();
+	afx_msg void OnBnClickedButton23();
+	afx_msg void OnBnClickedButton24();
+	afx_msg void OnBnClickedButton31();
+	afx_msg void OnBnClickedButton32();
+	afx_msg void OnBnClickedButton33();
+	afx_msg void OnBnClickedButton34();
+	afx_msg void OnBnClickedButton41();
+	afx_msg void OnBnClickedButton42();
+	afx_msg void OnBnClickedButton43();
+	afx_msg void OnBnClickedButton44();
+public:
+	CButton m_Select1;
+	CButton m_Select2;
+	CButton m_Select3;
+	CButton m_Select4;
+	CStatic m_postion;
 };

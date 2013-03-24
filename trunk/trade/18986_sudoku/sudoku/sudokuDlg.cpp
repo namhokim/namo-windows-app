@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "sudoku.h"
 #include "sudokuDlg.h"
+#include <Strsafe.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -17,7 +18,7 @@ const char EmptyChar = ' ';
 
 CsudokuDlg::CsudokuDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CsudokuDlg::IDD, pParent), m_hasUndo(false)
-	, m_loader(MAZE_SIZE), m_data(NULL)
+	, m_loader(MAZE_SIZE), m_data(NULL), m_x(NOT_SELECTED), m_y(NOT_SELECTED)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -42,6 +43,11 @@ void CsudokuDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BUTTON43, btn[3][2]);
 	DDX_Control(pDX, IDC_BUTTON44, btn[3][3]);
 	DDX_Control(pDX, IDC_BUTTON_UNDO, m_ButtonUndo);
+	DDX_Control(pDX, IDC_BUTTON1, m_Select1);
+	DDX_Control(pDX, IDC_BUTTON2, m_Select2);
+	DDX_Control(pDX, IDC_BUTTON3, m_Select3);
+	DDX_Control(pDX, IDC_BUTTON4, m_Select4);
+	DDX_Control(pDX, IDC_STATIC_POSITION, m_postion);
 }
 
 BEGIN_MESSAGE_MAP(CsudokuDlg, CDialog)
@@ -53,6 +59,26 @@ BEGIN_MESSAGE_MAP(CsudokuDlg, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON_QUIT, &CsudokuDlg::OnBnClickedButtonQuit)
 	ON_BN_CLICKED(IDC_RADIO_MODE_AUTO, &CsudokuDlg::OnChangeRadioMode)
 	ON_BN_CLICKED(IDC_RADIO_MODE_PLAYER, &CsudokuDlg::OnChangeRadioMode)
+	ON_BN_CLICKED(IDC_BUTTON1, &CsudokuDlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON2, &CsudokuDlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON3, &CsudokuDlg::OnBnClickedButton3)
+	ON_BN_CLICKED(IDC_BUTTON4, &CsudokuDlg::OnBnClickedButton4)
+	ON_BN_CLICKED(IDC_BUTTON11, &CsudokuDlg::OnBnClickedButton11)
+	ON_BN_CLICKED(IDC_BUTTON12, &CsudokuDlg::OnBnClickedButton12)
+	ON_BN_CLICKED(IDC_BUTTON13, &CsudokuDlg::OnBnClickedButton13)
+	ON_BN_CLICKED(IDC_BUTTON14, &CsudokuDlg::OnBnClickedButton14)
+	ON_BN_CLICKED(IDC_BUTTON21, &CsudokuDlg::OnBnClickedButton21)
+	ON_BN_CLICKED(IDC_BUTTON22, &CsudokuDlg::OnBnClickedButton22)
+	ON_BN_CLICKED(IDC_BUTTON23, &CsudokuDlg::OnBnClickedButton23)
+	ON_BN_CLICKED(IDC_BUTTON24, &CsudokuDlg::OnBnClickedButton24)
+	ON_BN_CLICKED(IDC_BUTTON31, &CsudokuDlg::OnBnClickedButton31)
+	ON_BN_CLICKED(IDC_BUTTON32, &CsudokuDlg::OnBnClickedButton32)
+	ON_BN_CLICKED(IDC_BUTTON33, &CsudokuDlg::OnBnClickedButton33)
+	ON_BN_CLICKED(IDC_BUTTON34, &CsudokuDlg::OnBnClickedButton34)
+	ON_BN_CLICKED(IDC_BUTTON41, &CsudokuDlg::OnBnClickedButton41)
+	ON_BN_CLICKED(IDC_BUTTON42, &CsudokuDlg::OnBnClickedButton42)
+	ON_BN_CLICKED(IDC_BUTTON43, &CsudokuDlg::OnBnClickedButton43)
+	ON_BN_CLICKED(IDC_BUTTON44, &CsudokuDlg::OnBnClickedButton44)
 END_MESSAGE_MAP()
 
 //////////////////////////////////////////////////////////////////////////
@@ -71,6 +97,7 @@ void CsudokuDlg::ClearButtonValues()
 void CsudokuDlg::LoadFromFile(LPCTSTR file)
 {
 	InitPlayMode();
+	SelectPosition(NOT_SELECTED, NOT_SELECTED);
 
 	if (m_loader.load(file)) {
 		m_data = m_loader.data();
@@ -134,6 +161,31 @@ void CsudokuDlg::InitPlayMode()
 	((CButton *)GetDlgItem(IDC_RADIO_MODE_PLAYER))->SetCheck(BST_CHECKED);
 }
 
+void CsudokuDlg::SelectPosition(int x, int y)
+{
+	if(x==NOT_SELECTED || y==NOT_SELECTED) {
+		EnableSelectButton(FALSE);
+		m_postion.SetWindowText(_T("(x, y)"));
+	} else {
+		m_x = x;
+		m_y = y;
+
+		EnableSelectButton(TRUE);
+
+		TCHAR msg[10] = {0};
+		StringCchPrintf(msg, 10, _T("(%d, %d)"), x, y);
+		m_postion.SetWindowText(msg);
+	}
+}
+
+void CsudokuDlg::EnableSelectButton(BOOL bEnable)
+{
+	m_Select1.EnableWindow(bEnable);
+	m_Select2.EnableWindow(bEnable);
+	m_Select3.EnableWindow(bEnable);
+	m_Select4.EnableWindow(bEnable);
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 // CsudokuDlg 메시지 처리기
@@ -151,6 +203,7 @@ BOOL CsudokuDlg::OnInitDialog()
 	m_hAccelTable = ::LoadAccelerators(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDR_ACCELERATOR1));
 
 	InitPlayMode();
+	SelectPosition(NOT_SELECTED, NOT_SELECTED);
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
@@ -257,4 +310,116 @@ void CsudokuDlg::OnChangeRadioMode()
 		// you have not specified what to do when you select radio X and Y, so specify it here
 		break;
 	}
+}
+void CsudokuDlg::OnBnClickedButton1()
+{
+	if(m_x!=NOT_SELECTED || m_y!=NOT_SELECTED) {
+		SetButtonValue(btn[m_x-1][m_y-1], '1');
+		SelectPosition(NOT_SELECTED,NOT_SELECTED);
+	}
+}
+
+void CsudokuDlg::OnBnClickedButton2()
+{
+	if(m_x!=NOT_SELECTED || m_y!=NOT_SELECTED) {
+		SetButtonValue(btn[m_x-1][m_y-1], '2');
+		SelectPosition(NOT_SELECTED,NOT_SELECTED);
+	}
+}
+
+void CsudokuDlg::OnBnClickedButton3()
+{
+	if(m_x!=NOT_SELECTED || m_y!=NOT_SELECTED) {
+		SetButtonValue(btn[m_x-1][m_y-1], '3');
+		SelectPosition(NOT_SELECTED,NOT_SELECTED);
+	}
+}
+
+void CsudokuDlg::OnBnClickedButton4()
+{
+	if(m_x!=NOT_SELECTED || m_y!=NOT_SELECTED) {
+		SetButtonValue(btn[m_x-1][m_y-1], '4');
+		SelectPosition(NOT_SELECTED,NOT_SELECTED);
+	}
+}
+
+
+void CsudokuDlg::OnBnClickedButton11()
+{
+	SelectPosition(1,1);
+}
+
+void CsudokuDlg::OnBnClickedButton12()
+{
+	SelectPosition(1,2);
+}
+
+void CsudokuDlg::OnBnClickedButton13()
+{
+	SelectPosition(1,3);
+}
+
+void CsudokuDlg::OnBnClickedButton14()
+{
+	SelectPosition(1,4);
+}
+
+void CsudokuDlg::OnBnClickedButton21()
+{
+	SelectPosition(2,1);
+}
+
+void CsudokuDlg::OnBnClickedButton22()
+{
+	SelectPosition(2,2);
+}
+
+void CsudokuDlg::OnBnClickedButton23()
+{
+	SelectPosition(2,3);
+}
+
+void CsudokuDlg::OnBnClickedButton24()
+{
+	SelectPosition(2,4);
+}
+
+void CsudokuDlg::OnBnClickedButton31()
+{
+	SelectPosition(3,1);
+}
+
+void CsudokuDlg::OnBnClickedButton32()
+{
+	SelectPosition(3,2);
+}
+
+void CsudokuDlg::OnBnClickedButton33()
+{
+	SelectPosition(3,3);
+}
+
+void CsudokuDlg::OnBnClickedButton34()
+{
+	SelectPosition(3,4);
+}
+
+void CsudokuDlg::OnBnClickedButton41()
+{
+	SelectPosition(4,1);
+}
+
+void CsudokuDlg::OnBnClickedButton42()
+{
+	SelectPosition(4,2);
+}
+
+void CsudokuDlg::OnBnClickedButton43()
+{
+	SelectPosition(4,3);
+}
+
+void CsudokuDlg::OnBnClickedButton44()
+{
+	SelectPosition(4,4);
 }
