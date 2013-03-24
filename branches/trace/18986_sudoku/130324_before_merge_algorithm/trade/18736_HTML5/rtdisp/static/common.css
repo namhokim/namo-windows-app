@@ -1,9 +1,0 @@
-@charset "UTF-8";
-
-canvas#layer {
-	z-index: 1;position:static; border: 1px solid #000;margin: 12px 12px 12px 12px;
-}
-
-.collapsible_title {
-	font-family: "Arial Rounded MT Bold"; font-size:12pt;
-}
