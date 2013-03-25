@@ -5,6 +5,7 @@
 #include <vector>
 #include <set>
 #include <algorithm>	// for set_difference
+#include <iterator>		// for std::inserter (vs2010 error, if not exist)
 
 typedef std::string::size_type str_size;
 typedef std::string::iterator str_iter;
