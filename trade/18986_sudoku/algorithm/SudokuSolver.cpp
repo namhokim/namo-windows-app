@@ -218,6 +218,9 @@ bool SudokuSolver::solve()
 			set_char exist = m_data->getColSetSolved(r);
 			m_data->removeColAlreadyUsed(r, exist);
 		}
+		// TODO:
+		// 셀 안 후보들 제외
+		// for ()
 		remainCntBefore = remainCnt;
 	}
 
