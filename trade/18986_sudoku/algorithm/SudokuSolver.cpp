@@ -103,6 +103,7 @@ public:
 		return m_size;
 	}
 
+	//////////////////////////////////////////////////////////////////////////
 	set_char getRowSetSolved(int row) {
 		set_char ret_set;
 		for(int i=0; i<m_size; i++) {
@@ -111,13 +112,6 @@ public:
 			}
 		}
 		return ret_set;
-	}
-	void removeRowAlreadyUsed(int row, const set_char& used_set) {
-		for(int i=0; i<m_size; i++) {
-			if(m_data.at(row).at(i).isComplete()==false) {
-				m_data.at(row).at(i).remove(used_set);
-			}
-		}
 	}
 
 	set_char getColSetSolved(int col) {
@@ -129,25 +123,37 @@ public:
 		}
 		return ret_set;
 	}
-	void removeColAlreadyUsed(int col, const set_char& used_set) {
-		for(int i=0; i<m_size; i++) {
-			if(m_data.at(i).at(col).isComplete()==false) {
-				m_data.at(i).at(col).remove(used_set);
-			}
-		}
-	}
-	void removeData() {
-		m_curr = 0;
-		for(int row=0; row<m_size; row++) {
-			m_data.at(row).clear();
-		}
-	}
-
+	// TODO: implement
 	set_char getCellSetSolved(int x, int y) {
 		set_char ret_set;
 		int x1, x2, y1, y2;
 		getCellRange(x,y, x1, x2, y1, y2);
 		return ret_set;
+	}
+
+	//////////////////////////////////////////////////////////////////////////
+	void removeRowAlreadyUsed(int row) {
+		set_char exist = this->getRowSetSolved(row);
+		for(int i=0; i<m_size; i++) {
+			if(m_data.at(row).at(i).isComplete()==false) {
+				m_data.at(row).at(i).remove(exist);
+			}
+		}
+	}
+	void removeColAlreadyUsed(int col) {
+		set_char exist = this->getColSetSolved(col);
+		for(int i=0; i<m_size; i++) {
+			if(m_data.at(i).at(col).isComplete()==false) {
+				m_data.at(i).at(col).remove(exist);
+			}
+		}
+	}
+	//////////////////////////////////////////////////////////////////////////
+	void removeData() {
+		m_curr = 0;
+		for(int row=0; row<m_size; row++) {
+			m_data.at(row).clear();
+		}
 	}
 
 	// 해당 셀이 완료되었으면 데이터를 가져온다.
@@ -255,14 +261,12 @@ bool SudokuSolver::solve()
 		if (remainCntBefore == remainCnt) break;	// 문제해결이 되지 않으면
 
 		// 가로방향 후보들 제외
-		for (int r=0; r<size; ++r) {
-			set_char exist = m_data->getRowSetSolved(r);
-			m_data->removeRowAlreadyUsed(r, exist);
+		for (int row=0; row<size; ++row) {
+			m_data->removeRowAlreadyUsed(row);
 		}
 		// 세로방향 후보들 제외
-		for (int r=0; r<size; ++r) {
-			set_char exist = m_data->getColSetSolved(r);
-			m_data->removeColAlreadyUsed(r, exist);
+		for (int col=0; col<size; ++col) {
+			m_data->removeColAlreadyUsed(col);
 		}
 		// TODO:
 		// 셀 안 후보들 제외
