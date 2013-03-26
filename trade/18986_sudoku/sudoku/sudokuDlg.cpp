@@ -82,6 +82,7 @@ BEGIN_MESSAGE_MAP(CsudokuDlg, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON_MODE_AUTO, &CsudokuDlg::OnBnClickedButtonModeAuto)
 	ON_BN_CLICKED(IDC_BUTTON_MODE_PLAYER, &CsudokuDlg::OnBnClickedButtonModePlayer)
 	ON_BN_CLICKED(IDC_BUTTON_UNDO, &CsudokuDlg::OnBnClickedButtonUndo)
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 //////////////////////////////////////////////////////////////////////////
@@ -99,12 +100,14 @@ void CsudokuDlg::ClearButtonValues()
 
 void CsudokuDlg::LoadFromFile(LPCTSTR file)
 {
-	InitPlayMode();
+	InitPlayMode(FALSE);
 	SelectPosition(NOT_SELECTED, NOT_SELECTED);
-	m_isPlayerMode = false;
+	StopAutoPlay();
 
 	if (m_loader.load(file)) {
 		m_data = m_loader.data();
+		// 게임모드 선택 가능
+		InitPlayMode(TRUE);
 		DisplayToUI(m_data);	// UI에 데이터 표시
 	} else {
 		MessageBox(_T("데이터를 로드할 수 없습니다."), _T("에러"), MB_OK | MB_ICONERROR);
@@ -156,10 +159,12 @@ void CsudokuDlg::SaveToFile(LPCTSTR file)
 	}
 }
 
-void CsudokuDlg::InitPlayMode()
+void CsudokuDlg::InitPlayMode(BOOL bEnabled)
 {
-	m_modeAuto.EnableWindow(TRUE);
-	m_modePlayer.EnableWindow(TRUE);
+	m_modeAuto.EnableWindow(bEnabled);
+	m_modePlayer.EnableWindow(bEnabled);
+	m_isPlayerMode = false;
+	m_isAutoMode = false;
 }
 
 void CsudokuDlg::SelectPosition(int x, int y)
@@ -187,6 +192,15 @@ void CsudokuDlg::EnableSelectButton(BOOL bEnable)
 	m_Select4.EnableWindow(bEnable);
 }
 
+void CsudokuDlg::StartAutoPlay()
+{
+	SetTimer(1, 3000, 0);
+}
+void CsudokuDlg::StopAutoPlay()
+{
+	KillTimer(1);
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 // CsudokuDlg 메시지 처리기
@@ -203,7 +217,7 @@ BOOL CsudokuDlg::OnInitDialog()
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
 	m_hAccelTable = ::LoadAccelerators(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDR_ACCELERATOR1));
 
-	InitPlayMode();
+	InitPlayMode(FALSE);
 	SelectPosition(NOT_SELECTED, NOT_SELECTED);
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
@@ -277,8 +291,6 @@ void CsudokuDlg::OnBnClickedButtonNew()
 		LoadFromFile(open.m_ofn.lpstrFile);
 	}
 }
-
-
 
 void CsudokuDlg::OnBnClickedButtonSave()
 {
@@ -416,12 +428,11 @@ void CsudokuDlg::OnBnClickedButton44()
 void CsudokuDlg::OnBnClickedButtonModeAuto()
 {
 	if (m_data==NULL) return;
-
-	m_modePlayer.EnableWindow(FALSE);
-
-	SudokuPlayer player(m_data);
-	player.solveAll();
-	DisplayToUI(m_data);	// UI에 데이터 표시
+	if (!m_isAutoMode) {
+		m_isAutoMode = true;
+		m_modePlayer.EnableWindow(FALSE);
+		StartAutoPlay();
+	}
 }
 
 void CsudokuDlg::OnBnClickedButtonModePlayer()
@@ -440,3 +451,14 @@ void CsudokuDlg::OnBnClickedButtonUndo()
 	DisplayToUI(m_data);	// UI에 데이터 표시
 }
 
+// 자동게임모드시 수행
+void CsudokuDlg::OnTimer(UINT_PTR nIDEvent)
+{
+	SudokuPlayer player(m_data);
+	if(player.autoPlay()==false) {// 게임 끝
+		StopAutoPlay();
+	}
+	DisplayToUI(m_data);	// UI에 데이터 표시
+
+	CDialog::OnTimer(nIDEvent);
+}
