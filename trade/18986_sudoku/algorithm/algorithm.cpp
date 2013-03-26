@@ -9,7 +9,7 @@
 #define new DEBUG_NEW
 #endif
 
-void algorithm();
+void solveTest();
 
 // 유일한 응용 프로그램 개체입니다.
 
@@ -31,7 +31,7 @@ int _tmain(int argc, TCHAR* argv[], TCHAR* envp[])
 	else
 	{
 		// TODO: 응용 프로그램의 동작은 여기에서 코딩합니다.
-		algorithm();
+		solveTest();
 	}
 
 	return nRetCode;
@@ -40,16 +40,36 @@ int _tmain(int argc, TCHAR* argv[], TCHAR* envp[])
 
 #define SIZE_MAZE	4
 
-void algorithm()
+void displayMaze(Sudoku * sudoku)
+{
+	SudokuDisplayer disp(sudoku);
+	for (int x=0; x<SIZE_MAZE; x++)
+	{
+		for (int y=0; y<SIZE_MAZE; y++)
+		{
+			char ch = disp.getData(x, y, ' ');
+			printf("%c ", ch);
+		}
+		printf("\n");
+	}
+}
+
+void solveTest()
 {
 	SudokuLoader loader(SIZE_MAZE);
 	if (loader.load(_T("sudoku1.txt"))) {
 		Sudoku *sudoku = loader.data();
+		printf("Problem is...\n");
+		displayMaze(sudoku);
 		SudokuSolver solver(sudoku);
 		if(solver.solve()) {
-			printf("Solved it.");
+			printf("\nSolution is...\n");
+			displayMaze(sudoku);
 		} else {
 			printf("Cannot solve it.");
 		}
+	} else {
+		printf("cannot open the file.");
 	}
 }
+
