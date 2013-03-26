@@ -13,6 +13,20 @@ typedef std::string::const_iterator str_const_iter;
 typedef std::set<char> set_char;
 
 //////////////////////////////////////////////////////////////////////////
+#include <cmath>		// for sqrt
+bool IsPerfectSquare(int number)
+{
+	double d_sqrt = sqrt(double(number));
+	int i_sqrt = static_cast<int>(d_sqrt);
+	return (d_sqrt == i_sqrt);
+}
+inline int Sqrt(int number)
+{
+	return static_cast<int>(sqrt(double(number)));
+}
+const int NotSet = (-1);
+
+//////////////////////////////////////////////////////////////////////////
 
 // 스도쿠를 구성하는 셀
 class SudokuElem
@@ -54,10 +68,16 @@ typedef std::vector< vector_SudokuElem > vector2D_SudokuElem;
 class Sudoku
 {
 public:
-	Sudoku(int size) : m_size(size), m_curr(0) {
+	Sudoku(int size) : m_size(size), m_curr(0), MAX_VALUE('0'+size)
+	{
 		for (int i=0; i<size; ++i) {
 			m_data.push_back(vector_SudokuElem ());
 			m_candidates.insert('1'+i);	// '1','2','3'....
+		}
+		if (IsPerfectSquare(size)) {
+			m_cellUnit = Sqrt(size);
+		} else {
+			m_cellUnit = NotSet;
 		}
 	}
 	void push_data(char data) {
@@ -123,6 +143,15 @@ public:
 		}
 	}
 
+	set_char getCellSetSolved(int x, int y) {
+		set_char ret_set;
+		int x1, x2, y1, y2;
+		getCellRange(x,y, x1, x2, y1, y2);
+		return ret_set;
+	}
+
+	// 해당 셀이 완료되었으면 데이터를 가져온다.
+	// 미완료시에는 기본 값을 반환
 	char getDataIfComplete(int x, int y, char default_value) {
 		if(m_data.at(x).at(y).isComplete()) {
 			return m_data.at(x).at(y).getFirstElement();
@@ -130,10 +159,26 @@ public:
 			return default_value;
 		}
 	}
+
+	// 올바른 범위의 값인지 판단
+	bool isValidValue(char value) {
+		bool bRes = ( ('1'<=value) && (value<=MAX_VALUE) );
+		return bRes;
+	}
 private:
-	int m_size, m_curr;
+	int m_size, m_curr, m_cellUnit;
+	const char MAX_VALUE;
 	vector2D_SudokuElem m_data;
 	set_char m_candidates;
+
+	bool getCellRange(int x, int y, int& x1, int& x2, int& y1, int& y2)
+	{
+		if(m_cellUnit==NotSet) return false;
+
+		// TODO: implement
+
+		return true;
+	}
 };
 //////////////////////////////////////////////////////////////////////////
 
@@ -238,4 +283,46 @@ SudokuDisplayer::SudokuDisplayer(Sudoku* data)
 char SudokuDisplayer::getData(int x, int y, char default_value)
 {
 	return m_data->getDataIfComplete(x, y, default_value);
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+SudokuPlayer::SudokuPlayer(Sudoku* data)
+{
+	m_data = data;
+}
+
+bool SudokuPlayer::determinePlay(int x, int y, char value)
+{
+	const char NG = 'N';
+
+	// value가 유효한 범위의 값(1~MAX_MAZE)인가?
+	if(m_data->isValidValue(value)==false) return false;
+
+	// 이미 채워진 셀에 값을 넣으려고 하나?
+	if(m_data->getDataIfComplete(x, y, NG) != NG) return false;
+
+	// 가로열에 중복된 값이 있나?
+	set_char row_set = m_data->getRowSetSolved(x);
+	if(row_set.find(value)!=row_set.end()) return false;
+
+	// 세로열에 중복된 값이 있나?
+	set_char col_set = m_data->getColSetSolved(y);
+	if(col_set.find(value)!=col_set.end()) return false;
+
+	// 셀안에 중복된 값이 있나?
+	set_char cell_set = m_data->getCellSetSolved(x, y);
+	if(cell_set.find(value)!=cell_set.end()) return false;
+
+	// 가능하다
+	return true;
+}
+
+bool SudokuPlayer::play(int x, int y, char value)
+{
+	bool bRes = determinePlay(x,y,value);
+	if (bRes) {
+		// TODO: 값 변경
+	}
+	return bRes;
 }
