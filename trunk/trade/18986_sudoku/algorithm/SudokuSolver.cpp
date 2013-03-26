@@ -50,6 +50,10 @@ public:
 	char getFirstElement() {
 		return *(m_candidates.begin());
 	}
+	void setData(char value) {
+		m_candidates.clear();
+		m_candidates.insert(value);
+	}
 	void remove(const set_char& used_set) {
 		set_char result;
 		std::set_difference(m_candidates.begin(), m_candidates.end(),
@@ -190,6 +194,11 @@ public:
 		} else {
 			return default_value;
 		}
+	}
+
+	// 값 설정
+	void setData(int x, int y, char value) {
+		m_data.at(x).at(y).setData(value);
 	}
 
 	// 올바른 범위의 값인지 판단
@@ -359,7 +368,7 @@ bool SudokuPlayer::play(int x, int y, char value)
 {
 	bool bRes = determinePlay(x,y,value);
 	if (bRes) {
-		// TODO: 값 변경
+		m_data->setData(x, y, value);
 	}
 	return bRes;
 }
