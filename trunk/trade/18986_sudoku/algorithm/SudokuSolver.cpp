@@ -300,7 +300,7 @@ bool SudokuSolver::solve()
 		// 셀 안 후보들 제외
 		for (int i=0; i<cellUnit; ++i) {
 			for (int j=0; j<cellUnit; ++j) {
-				m_data->removeCellAlreadyUsed(i, j);
+				m_data->removeCellAlreadyUsed(i*cellUnit, j*cellUnit);
 			}
 		}
 
