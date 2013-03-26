@@ -10,6 +10,7 @@
 #endif
 
 void solveTest();
+void stepTest();
 
 // 유일한 응용 프로그램 개체입니다.
 
@@ -31,7 +32,8 @@ int _tmain(int argc, TCHAR* argv[], TCHAR* envp[])
 	else
 	{
 		// TODO: 응용 프로그램의 동작은 여기에서 코딩합니다.
-		solveTest();
+		//solveTest();
+		stepTest();
 	}
 
 	return nRetCode;
@@ -39,6 +41,7 @@ int _tmain(int argc, TCHAR* argv[], TCHAR* envp[])
 
 
 #define SIZE_MAZE	4
+LPCTSTR szFilename = _T("sudoku1.txt");
 
 void displayMaze(Sudoku * sudoku)
 {
@@ -57,7 +60,7 @@ void displayMaze(Sudoku * sudoku)
 void solveTest()
 {
 	SudokuLoader loader(SIZE_MAZE);
-	if (loader.load(_T("sudoku1.txt"))) {
+	if (loader.load(szFilename)) {
 		Sudoku *sudoku = loader.data();
 		printf("Problem is...\n");
 		displayMaze(sudoku);
@@ -73,3 +76,31 @@ void solveTest()
 	}
 }
 
+void stepTest()
+{
+	SudokuLoader loader(SIZE_MAZE);
+	if (loader.load(szFilename)) {
+		Sudoku *sudoku = loader.data();
+		cout << "Problem is..." << endl;
+		displayMaze(sudoku);
+
+		SudokuPlayer player(sudoku);
+		cout << "Position started with 0." << endl;
+		cout << "If want to quit, press Ctrl-C." << endl;
+		while (true) {
+			int x, y;
+			char value;
+			cout << "x: ";	cin >> x;
+			cout << "y: ";	cin >> y;
+			cout << "value: ";	cin >> value;
+			if(player.play(x,y,value)) {
+				cout << "OK." << endl;
+				displayMaze(sudoku);
+			} else {
+				cout << "NG." << endl;
+			}
+		}
+	} else {
+		cout << "cannot open the file." << endl;
+	}
+}

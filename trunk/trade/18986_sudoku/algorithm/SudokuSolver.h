@@ -36,3 +36,14 @@ public:
 private:
 	Sudoku* m_data;
 };
+
+class SudokuPlayer
+{
+public:
+	SudokuPlayer(Sudoku*);
+	bool determinePlay(int x, int y, char value);	// 유효하지 않은 진행 false 리턴
+	bool play(int x, int y, char value);			// 내부적으로 determinePlay 호출
+
+private:
+	Sudoku* m_data;
+};
