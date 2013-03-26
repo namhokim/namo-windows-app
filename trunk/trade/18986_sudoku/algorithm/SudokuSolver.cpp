@@ -6,7 +6,6 @@
 #include <set>
 #include <algorithm>	// for set_difference
 #include <iterator>		// for std::inserter (vs2010 error, if not exist)
-#include <iostream>
 
 typedef std::string::size_type str_size;
 typedef std::string::iterator str_iter;
@@ -103,6 +102,9 @@ public:
 	int size() const {
 		return m_size;
 	}
+	int cellUnit() const {
+		return m_cellUnit;
+	}
 
 	//////////////////////////////////////////////////////////////////////////
 	set_char getRowSetSolved(int row) {
@@ -154,6 +156,21 @@ public:
 		for(int i=0; i<m_size; i++) {
 			if(m_data.at(i).at(col).isComplete()==false) {
 				m_data.at(i).at(col).remove(exist);
+			}
+		}
+	}
+	void removeCellAlreadyUsed(int x, int y) {
+		set_char exist = this->getCellSetSolved(x, y);
+		int x1, x2, y1, y2;
+		x1 = x;
+		x2 = x + m_cellUnit;
+		y1 = y;
+		y2 = y + m_cellUnit;
+		for(int i=x1; i<x2; i++) {
+			for(int j=y1; j<y2; j++) {
+				if(m_data.at(i).at(j).isComplete()==false) {
+					m_data.at(i).at(j).remove(exist);
+				}
 			}
 		}
 	}
@@ -264,8 +281,9 @@ SudokuSolver::SudokuSolver(Sudoku* sudoku)
 
 bool SudokuSolver::solve()
 {
-	int remainCnt, remainCntBefore, size;
+	int remainCnt, remainCntBefore, size, cellUnit;
 	size = m_data->size();
+	cellUnit = m_data->cellUnit();
 
 	remainCntBefore = 0;
 	while( (remainCnt = m_data->remainToSolve()) ) {	// 해결할 개수가 0이면 종료
@@ -279,9 +297,13 @@ bool SudokuSolver::solve()
 		for (int col=0; col<size; ++col) {
 			m_data->removeColAlreadyUsed(col);
 		}
-		// TODO:
 		// 셀 안 후보들 제외
-		// for ()
+		for (int i=0; i<cellUnit; ++i) {
+			for (int j=0; j<cellUnit; ++j) {
+				m_data->removeCellAlreadyUsed(i, j);
+			}
+		}
+
 		remainCntBefore = remainCnt;
 	}
 
