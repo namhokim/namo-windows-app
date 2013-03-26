@@ -50,10 +50,9 @@ void displayMaze(Sudoku * sudoku)
 	{
 		for (int y=0; y<SIZE_MAZE; y++)
 		{
-			char ch = disp.getData(x, y, ' ');
-			printf("%c ", ch);
+			cout << disp.getData(x, y, ' ');
 		}
-		printf("\n");
+		cout << endl;
 	}
 }
 
@@ -62,17 +61,17 @@ void solveTest()
 	SudokuLoader loader(SIZE_MAZE);
 	if (loader.load(szFilename)) {
 		Sudoku *sudoku = loader.data();
-		printf("Problem is...\n");
+		cout << "Problem is..." << endl;;
 		displayMaze(sudoku);
 		SudokuSolver solver(sudoku);
 		if(solver.solve()) {
-			printf("\nSolution is...\n");
+			cout << endl << "Solution is..." << endl;
 			displayMaze(sudoku);
 		} else {
-			printf("Cannot solve it.");
+			cout << "Cannot solve it." << endl;
 		}
 	} else {
-		printf("cannot open the file.");
+		cout << "cannot open the file." << endl;
 	}
 }
 
