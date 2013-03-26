@@ -192,27 +192,43 @@ public:
 	// 열의 값 제거
 
 	// 특정행(인자)에서 설정되지 않은 칸의 중복된 값을 제거
-	void removeRowAlreadyUsed(int row) {
+	// 반환값: 확정이 된 값의 개수
+	int removeRowAlreadyUsed(int row, bool bOneStep=false) {
+		int nCompleted = 0;
 		set_char exist = this->getRowSetSolved(row);
 		for(int i=0; i<m_size; i++) {
 			if(m_data.at(row).at(i).isComplete()==false) {
 				m_data.at(row).at(i).remove(exist);
+				if(m_data.at(row).at(i).isComplete()) {
+					nCompleted++;
+				}
 			}
+			if(bOneStep && nCompleted>0) return nCompleted;
 		}
+		return nCompleted;
 	}
 
 	// 특정열(인자)에서 설정되지 않은 칸의 중복된 값을 제거
-	void removeColAlreadyUsed(int col) {
+	// 반환값: 확정이 된 값의 개수
+	int removeColAlreadyUsed(int col, bool bOneStep=false) {
+		int nCompleted = 0;
 		set_char exist = this->getColSetSolved(col);
 		for(int i=0; i<m_size; i++) {
 			if(m_data.at(i).at(col).isComplete()==false) {
 				m_data.at(i).at(col).remove(exist);
+				if(m_data.at(i).at(col).isComplete()) {
+					nCompleted++;
+				}
 			}
+			if(bOneStep && nCompleted>0) return nCompleted;
 		}
+		return nCompleted;
 	}
 
 	// 특정셀(인자:셀의 좌측상단)에서 설정되지 않은 칸의 중복된 값을 제거
-	void removeCellAlreadyUsed(int x, int y) {
+	// 반환값: 확정이 된 값의 개수
+	int removeCellAlreadyUsed(int x, int y, bool bOneStep=false) {
+		int nCompleted = 0;
 		set_char exist = this->getCellSetSolved(x, y);
 		int x1, x2, y1, y2;
 		x1 = x;
@@ -223,9 +239,14 @@ public:
 			for(int j=y1; j<y2; j++) {
 				if(m_data.at(i).at(j).isComplete()==false) {
 					m_data.at(i).at(j).remove(exist);
+					if(m_data.at(i).at(j).isComplete()) {
+						nCompleted++;
+					}
 				}
+				if(bOneStep && nCompleted>0) return nCompleted;
 			}
 		}
+		return nCompleted;
 	}
 	//////////////////////////////////////////////////////////////////////////
 
@@ -416,7 +437,31 @@ bool SudokuPlayer::play(int x, int y, char value)
 
 bool SudokuPlayer::autoPlay()
 {
-	return true;
+	if(m_data->remainToSolve()==0) return false;
+
+	int size = m_data->size();
+	int cellUnit = m_data->cellUnit();
+
+	// 가로방향 후보들 제외
+	for (int row=0; row<size; ++row) {
+		if(m_data->removeRowAlreadyUsed(row, true)) return true;
+	}
+
+	// 세로방향 후보들 제외
+	for (int col=0; col<size; ++col) {
+		if(m_data->removeColAlreadyUsed(col, true)) return true;
+	}
+
+	// 셀 안 후보들 제외
+	for (int i=0; i<cellUnit; ++i) {
+		for (int j=0; j<cellUnit; ++j) {
+			if(m_data->removeCellAlreadyUsed(i*cellUnit, j*cellUnit)) {
+				return true;
+			}
+		}
+	}
+
+	return false;
 }
 
 bool SudokuPlayer::solveAll()

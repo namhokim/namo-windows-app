@@ -33,6 +33,7 @@ private:
 	Sudoku *m_data;			// 데이터
 	int m_x, m_y;			// 선택좌표 
 	bool m_isPlayerMode;	// 플레이어 모드 여부(버튼의 Enabled 설정에 참고)
+	bool m_isAutoMode;	// 자동 모드 여부(재실행 방지 확인용)
 
 	// 내부용 메소드입니다.
 	void ClearButtonValues();	// 버튼 값을 초기화(새 게임 시)
@@ -40,9 +41,11 @@ private:
 	void DisplayToUI(Sudoku *data);		// UI에 데이터 표시
 	void SetButtonValue(CButton&button, char value);	// 버튼 값을 설정
 	void SaveToFile(LPCTSTR file);	// 버튼 값을 파일로 저장
-	void InitPlayMode();			// 플레이어 모드로 초기화
+	void InitPlayMode(BOOL bEnabled);// 플레이어 모드로 초기화
 	void SelectPosition(int x, int y);	// 좌표 선택
 	void EnableSelectButton(BOOL bEnable);	// 번호선택 활성화
+	void StartAutoPlay();
+	void StopAutoPlay();
 
 // 구현입니다.
 protected:
@@ -83,6 +86,8 @@ protected:
 	afx_msg void OnBnClickedButton44();
 	afx_msg void OnBnClickedButtonModeAuto();
 	afx_msg void OnBnClickedButtonModePlayer();
+	afx_msg void OnBnClickedButtonUndo();
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 
 	CButton m_Select1;
 	CButton m_Select2;
@@ -91,6 +96,4 @@ protected:
 	CStatic m_postion;
 	CButton m_modeAuto;
 	CButton m_modePlayer;
-public:
-	afx_msg void OnBnClickedButtonUndo();
 };
