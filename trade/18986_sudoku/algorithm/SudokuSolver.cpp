@@ -6,6 +6,7 @@
 #include <set>
 #include <algorithm>	// for set_difference
 #include <iterator>		// for std::inserter (vs2010 error, if not exist)
+#include <iostream>
 
 typedef std::string::size_type str_size;
 typedef std::string::iterator str_iter;
@@ -123,11 +124,19 @@ public:
 		}
 		return ret_set;
 	}
-	// TODO: implement
+
 	set_char getCellSetSolved(int x, int y) {
 		set_char ret_set;
 		int x1, x2, y1, y2;
-		getCellRange(x,y, x1, x2, y1, y2);
+		if(getCellRange(x,y, x1, x2, y1, y2)) {
+			for (int i=x1; i<x2; i++) {
+				for (int j=y1; j<y2; j++) {
+					if(m_data.at(i).at(j).isComplete()) {
+						ret_set.insert( m_data.at(i).at(j).getFirstElement() );
+					}
+				}
+			}
+		}
 		return ret_set;
 	}
 
@@ -181,8 +190,10 @@ private:
 	{
 		if(m_cellUnit==NotSet) return false;
 
-		// TODO: implement
-
+		x1 = (x/m_cellUnit)*m_cellUnit;
+		x2 = x1 + m_cellUnit;
+		y1 = (y/m_cellUnit)*m_cellUnit;
+		y2 = y1 + m_cellUnit;
 		return true;
 	}
 };
