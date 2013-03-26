@@ -48,6 +48,8 @@ void CsudokuDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BUTTON3, m_Select3);
 	DDX_Control(pDX, IDC_BUTTON4, m_Select4);
 	DDX_Control(pDX, IDC_STATIC_POSITION, m_postion);
+	DDX_Control(pDX, IDC_BUTTON_MODE_AUTO, m_modeAuto);
+	DDX_Control(pDX, IDC_BUTTON_MODE_PLAYER, m_modePlayer);
 }
 
 BEGIN_MESSAGE_MAP(CsudokuDlg, CDialog)
@@ -57,8 +59,6 @@ BEGIN_MESSAGE_MAP(CsudokuDlg, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON_NEW, &CsudokuDlg::OnBnClickedButtonNew)
 	ON_BN_CLICKED(IDC_BUTTON_SAVE, &CsudokuDlg::OnBnClickedButtonSave)
 	ON_BN_CLICKED(IDC_BUTTON_QUIT, &CsudokuDlg::OnBnClickedButtonQuit)
-	ON_BN_CLICKED(IDC_RADIO_MODE_AUTO, &CsudokuDlg::OnChangeRadioMode)
-	ON_BN_CLICKED(IDC_RADIO_MODE_PLAYER, &CsudokuDlg::OnChangeRadioMode)
 	ON_BN_CLICKED(IDC_BUTTON1, &CsudokuDlg::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &CsudokuDlg::OnBnClickedButton2)
 	ON_BN_CLICKED(IDC_BUTTON3, &CsudokuDlg::OnBnClickedButton3)
@@ -79,6 +79,8 @@ BEGIN_MESSAGE_MAP(CsudokuDlg, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON42, &CsudokuDlg::OnBnClickedButton42)
 	ON_BN_CLICKED(IDC_BUTTON43, &CsudokuDlg::OnBnClickedButton43)
 	ON_BN_CLICKED(IDC_BUTTON44, &CsudokuDlg::OnBnClickedButton44)
+	ON_BN_CLICKED(IDC_BUTTON_MODE_AUTO, &CsudokuDlg::OnBnClickedButtonModeAuto)
+	ON_BN_CLICKED(IDC_BUTTON_MODE_PLAYER, &CsudokuDlg::OnBnClickedButtonModePlayer)
 END_MESSAGE_MAP()
 
 //////////////////////////////////////////////////////////////////////////
@@ -98,16 +100,11 @@ void CsudokuDlg::LoadFromFile(LPCTSTR file)
 {
 	InitPlayMode();
 	SelectPosition(NOT_SELECTED, NOT_SELECTED);
+	m_isPlayerMode = false;
 
 	if (m_loader.load(file)) {
 		m_data = m_loader.data();
-
-		// UI에 데이터 표시
-		DisplayToUI(m_data);
-
-		// 해결안 구함
-		SudokuSolver solver(m_data);
-		solver.solve();
+		DisplayToUI(m_data);	// UI에 데이터 표시
 	} else {
 		MessageBox(_T("데이터를 로드할 수 없습니다."), _T("에러"), MB_OK | MB_ICONERROR);
 	}
@@ -126,7 +123,7 @@ void CsudokuDlg::DisplayToUI(Sudoku *data)
 
 void CsudokuDlg::SetButtonValue(CButton&button, char value)
 {
-	if (value==EmptyChar) {
+	if (value==EmptyChar && m_isPlayerMode) {
 		button.EnableWindow(TRUE);
 		button.SetWindowText(_T(""));
 	} else {
@@ -157,8 +154,8 @@ void CsudokuDlg::SaveToFile(LPCTSTR file)
 
 void CsudokuDlg::InitPlayMode()
 {
-	((CButton *)GetDlgItem(IDC_RADIO_MODE_AUTO))->SetCheck(BST_UNCHECKED);
-	((CButton *)GetDlgItem(IDC_RADIO_MODE_PLAYER))->SetCheck(BST_CHECKED);
+	m_modeAuto.EnableWindow(TRUE);
+	m_modePlayer.EnableWindow(TRUE);
 }
 
 void CsudokuDlg::SelectPosition(int x, int y)
@@ -295,52 +292,40 @@ void CsudokuDlg::OnBnClickedButtonQuit()
 	EndDialog(0);
 }
 
-void CsudokuDlg::OnChangeRadioMode()
-{
-	switch(GetCheckedRadioButton(IDC_RADIO_MODE_AUTO, IDC_RADIO_MODE_PLAYER))
-	{
-	case IDC_RADIO_MODE_AUTO:
-		m_ButtonUndo.EnableWindow(FALSE);
-		DisplayToUI(m_data);	// for test (한번에 해결)
-		break;
-	case IDC_RADIO_MODE_PLAYER:
-		if(m_hasUndo) m_ButtonUndo.EnableWindow(TRUE);
-		break;
-	default:
-		// you have not specified what to do when you select radio X and Y, so specify it here
-		break;
-	}
-}
-void CsudokuDlg::OnBnClickedButton1()
+
+void CsudokuDlg::OnBnClickedButton(char value)
 {
 	if(m_x!=NOT_SELECTED || m_y!=NOT_SELECTED) {
-		SetButtonValue(btn[m_x-1][m_y-1], '1');
-		SelectPosition(NOT_SELECTED,NOT_SELECTED);
+		int x = m_x-1;
+		int y = m_y-1;
+		SudokuPlayer p(m_data);
+		if(p.play(x, y, value)) {
+			SetButtonValue(btn[x][y], value);
+			SelectPosition(NOT_SELECTED,NOT_SELECTED);
+		} else {
+			MessageBox(_T("올바르지 않은 입력입니다."));
+		}
 	}
+}
+
+void CsudokuDlg::OnBnClickedButton1()
+{
+	OnBnClickedButton('1');
 }
 
 void CsudokuDlg::OnBnClickedButton2()
 {
-	if(m_x!=NOT_SELECTED || m_y!=NOT_SELECTED) {
-		SetButtonValue(btn[m_x-1][m_y-1], '2');
-		SelectPosition(NOT_SELECTED,NOT_SELECTED);
-	}
+	OnBnClickedButton('2');
 }
 
 void CsudokuDlg::OnBnClickedButton3()
 {
-	if(m_x!=NOT_SELECTED || m_y!=NOT_SELECTED) {
-		SetButtonValue(btn[m_x-1][m_y-1], '3');
-		SelectPosition(NOT_SELECTED,NOT_SELECTED);
-	}
+	OnBnClickedButton('3');
 }
 
 void CsudokuDlg::OnBnClickedButton4()
 {
-	if(m_x!=NOT_SELECTED || m_y!=NOT_SELECTED) {
-		SetButtonValue(btn[m_x-1][m_y-1], '4');
-		SelectPosition(NOT_SELECTED,NOT_SELECTED);
-	}
+	OnBnClickedButton('4');
 }
 
 
@@ -422,4 +407,24 @@ void CsudokuDlg::OnBnClickedButton43()
 void CsudokuDlg::OnBnClickedButton44()
 {
 	SelectPosition(4,4);
+}
+
+void CsudokuDlg::OnBnClickedButtonModeAuto()
+{
+	if (m_data==NULL) return;
+
+	m_modePlayer.EnableWindow(FALSE);
+
+	SudokuSolver solver(m_data);
+	solver.solve();
+	DisplayToUI(m_data);	// UI에 데이터 표시
+}
+
+void CsudokuDlg::OnBnClickedButtonModePlayer()
+{
+	if (m_data==NULL) return;
+
+	m_modeAuto.EnableWindow(FALSE);
+	m_isPlayerMode = true;
+	DisplayToUI(m_data);	// UI에 데이터 표시
 }

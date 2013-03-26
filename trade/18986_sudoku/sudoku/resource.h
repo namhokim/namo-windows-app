@@ -35,14 +35,17 @@
 #define IDC_BUTTON3                     1026
 #define IDC_BUTTON4                     1027
 #define IDC_STATIC_POSITION             1028
+#define IDC_BUTTON_MODE_AUTO            1029
+#define IDC_BUTTON_MODE_PLAYER          1030
+#define IDC_BUTTON_MODE_AUTO2           32783
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        130
-#define _APS_NEXT_COMMAND_VALUE         32783
-#define _APS_NEXT_CONTROL_VALUE         1029
+#define _APS_NEXT_COMMAND_VALUE         32784
+#define _APS_NEXT_CONTROL_VALUE         1031
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
