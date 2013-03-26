@@ -32,6 +32,7 @@ private:
 	SudokuLoader m_loader;	// 데이터 로더
 	Sudoku *m_data;			// 데이터
 	int m_x, m_y;			// 선택좌표 
+	bool m_isPlayerMode;	// 플레이어 모드 여부
 
 	// 내부용 메소드입니다.
 	void ClearButtonValues();	// 버튼 값을 초기화(새 게임 시)
@@ -58,8 +59,7 @@ protected:
 	afx_msg void OnBnClickedButtonSave();	// 게임 저장하기
 	afx_msg void OnBnClickedButtonQuit();	// 끝내기
 
-	afx_msg void OnChangeRadioMode();	// 게임모드 변경시
-
+	afx_msg void OnBnClickedButton(char value);
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedButton2();
 	afx_msg void OnBnClickedButton3();
@@ -81,10 +81,14 @@ protected:
 	afx_msg void OnBnClickedButton42();
 	afx_msg void OnBnClickedButton43();
 	afx_msg void OnBnClickedButton44();
-public:
+	afx_msg void OnBnClickedButtonModeAuto();
+	afx_msg void OnBnClickedButtonModePlayer();
+
 	CButton m_Select1;
 	CButton m_Select2;
 	CButton m_Select3;
 	CButton m_Select4;
 	CStatic m_postion;
+	CButton m_modeAuto;
+	CButton m_modePlayer;
 };
