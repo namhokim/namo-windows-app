@@ -81,6 +81,7 @@ BEGIN_MESSAGE_MAP(CsudokuDlg, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON44, &CsudokuDlg::OnBnClickedButton44)
 	ON_BN_CLICKED(IDC_BUTTON_MODE_AUTO, &CsudokuDlg::OnBnClickedButtonModeAuto)
 	ON_BN_CLICKED(IDC_BUTTON_MODE_PLAYER, &CsudokuDlg::OnBnClickedButtonModePlayer)
+	ON_BN_CLICKED(IDC_BUTTON_UNDO, &CsudokuDlg::OnBnClickedButtonUndo)
 END_MESSAGE_MAP()
 
 //////////////////////////////////////////////////////////////////////////
@@ -119,6 +120,9 @@ void CsudokuDlg::DisplayToUI(Sudoku *data)
 			SetButtonValue(btn[i][j], ch);
 		}
 	}
+	SudokuPlayer p(data);
+	if(p.hasUndoData()) m_ButtonUndo.EnableWindow(TRUE);
+	else m_ButtonUndo.EnableWindow(FALSE);
 }
 
 void CsudokuDlg::SetButtonValue(CButton&button, char value)
@@ -300,7 +304,7 @@ void CsudokuDlg::OnBnClickedButton(char value)
 		int y = m_y-1;
 		SudokuPlayer p(m_data);
 		if(p.play(x, y, value)) {
-			SetButtonValue(btn[x][y], value);
+			DisplayToUI(m_data);
 			SelectPosition(NOT_SELECTED,NOT_SELECTED);
 		} else {
 			MessageBox(_T("올바르지 않은 입력입니다."));
@@ -415,8 +419,8 @@ void CsudokuDlg::OnBnClickedButtonModeAuto()
 
 	m_modePlayer.EnableWindow(FALSE);
 
-	SudokuSolver solver(m_data);
-	solver.solve();
+	SudokuPlayer player(m_data);
+	player.solveAll();
 	DisplayToUI(m_data);	// UI에 데이터 표시
 }
 
@@ -428,3 +432,11 @@ void CsudokuDlg::OnBnClickedButtonModePlayer()
 	m_isPlayerMode = true;
 	DisplayToUI(m_data);	// UI에 데이터 표시
 }
+
+void CsudokuDlg::OnBnClickedButtonUndo()
+{
+	SudokuPlayer p(m_data);
+	p.undo();
+	DisplayToUI(m_data);	// UI에 데이터 표시
+}
+

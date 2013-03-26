@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "algorithm.h"
 #include "SudokuSolver.h"
+#include <conio.h>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -11,6 +12,7 @@
 
 void solveTest();
 void stepTest();
+void autoPlayTest();
 
 // 유일한 응용 프로그램 개체입니다.
 
@@ -33,7 +35,8 @@ int _tmain(int argc, TCHAR* argv[], TCHAR* envp[])
 	{
 		// TODO: 응용 프로그램의 동작은 여기에서 코딩합니다.
 		//solveTest();
-		stepTest();
+		//stepTest();
+		autoPlayTest();
 	}
 
 	return nRetCode;
@@ -63,8 +66,8 @@ void solveTest()
 		Sudoku *sudoku = loader.data();
 		cout << "Problem is..." << endl;;
 		displayMaze(sudoku);
-		SudokuSolver solver(sudoku);
-		if(solver.solve()) {
+		SudokuPlayer player(sudoku);
+		if(player.solveAll()) {
 			cout << endl << "Solution is..." << endl;
 			displayMaze(sudoku);
 		} else {
@@ -98,6 +101,28 @@ void stepTest()
 			} else {
 				cout << "NG." << endl;
 			}
+		}
+	} else {
+		cout << "cannot open the file." << endl;
+	}
+}
+
+void autoPlayTest()
+{
+	SudokuLoader loader(SIZE_MAZE);
+	if (loader.load(szFilename)) {
+		Sudoku *sudoku = loader.data();
+		cout << "Problem is..." << endl;
+		displayMaze(sudoku);
+
+		SudokuPlayer player(sudoku);
+		cout << "Press enter..." << endl;
+		cout << "(If want to quit, press any key except enter key.)" << endl;
+		while (player.autoPlay()) {
+			int ch = _getch();
+			if (ch != 13) break;
+			cout << endl;
+			displayMaze(sudoku);
 		}
 	} else {
 		cout << "cannot open the file." << endl;

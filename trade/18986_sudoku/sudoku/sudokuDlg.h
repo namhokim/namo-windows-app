@@ -32,7 +32,7 @@ private:
 	SudokuLoader m_loader;	// 데이터 로더
 	Sudoku *m_data;			// 데이터
 	int m_x, m_y;			// 선택좌표 
-	bool m_isPlayerMode;	// 플레이어 모드 여부
+	bool m_isPlayerMode;	// 플레이어 모드 여부(버튼의 Enabled 설정에 참고)
 
 	// 내부용 메소드입니다.
 	void ClearButtonValues();	// 버튼 값을 초기화(새 게임 시)
@@ -91,4 +91,6 @@ protected:
 	CStatic m_postion;
 	CButton m_modeAuto;
 	CButton m_modePlayer;
+public:
+	afx_msg void OnBnClickedButtonUndo();
 };
