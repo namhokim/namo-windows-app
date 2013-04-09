@@ -13,9 +13,13 @@ int _tmain(int argc, _TCHAR* argv[])
 	string input_2("abc");
 	string input_3("(1 2 MINUS)");
 
-	ToyTokenizer token;
-	token.setProg(input_1.c_str());
+	ToyTokenizer tokenizer;
+	tokenizer.setProg(input_1.c_str());
 
+	string token;
+	int type;
+	bool bSuccess;
+	bSuccess = tokenizer.getToken(token, type);
 
 	return 0;
 }
