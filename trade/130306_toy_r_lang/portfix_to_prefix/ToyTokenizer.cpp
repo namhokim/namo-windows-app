@@ -21,6 +21,21 @@ void ToyTokenizer::setProg(const char* prog)
 	m_current_position = m_prog;
 }
 
+// 외부에서 사용하는 타입으로 변환해주는 유틸리티 함수
+// 예) 한 글자의 숫자(digit) -> 숫자(number)
+// 예) 한 글자의 문자(alphabet) -> 문자열(string)
+int ConvertExternalType(int type)
+{
+	switch(type) {
+		case TOY_R_TOKEN_DIGIT:
+			return TOY_R_TOKEN_NUMBER;
+		case TOY_R_TOKEN_ALPHA:
+			return TOY_R_TOKEN_STRING;
+		default:
+			return type;
+	}
+}
+
 bool ToyTokenizer::getToken(std::string& token, int& type)
 {
 	// 초기화
@@ -40,9 +55,16 @@ bool ToyTokenizer::getToken(std::string& token, int& type)
 		type = assumeTypeByChar(curr_ch);
 		switch(type) {
 			case TOY_R_TOKEN_PARENTHESIS:
-				token.push_back(curr_ch);
-				++m_current_position;	// 다음 위치
-				return true;
+				if (type_before!=TOY_R_TOKEN_NOT_DEFINED
+					&& type_before!=TOY_R_TOKEN_PARENTHESIS)
+				{
+					type = ConvertExternalType(type_before);
+					return true;
+				} else {
+					token.push_back(curr_ch);
+					++m_current_position;	// 다음 위치
+					return true;
+				}
 			case TOY_R_TOKEN_DIGIT:
 				if (type_before==TOY_R_TOKEN_NOT_DEFINED
 					|| type_before==TOY_R_TOKEN_DIGIT)
@@ -63,6 +85,9 @@ bool ToyTokenizer::getToken(std::string& token, int& type)
 					|| type_before==TOY_R_TOKEN_ALPHA) {
 					token.push_back(curr_ch);
 					++m_current_position;	// 다음 위치
+				} else {
+					type = TOY_R_TOKEN_STRING;
+					return true;
 				}
 				break;
 			case TOY_R_TOKEN_SPACE:
@@ -78,13 +103,13 @@ bool ToyTokenizer::getToken(std::string& token, int& type)
 				} while (type_internal==TOY_R_TOKEN_SPACE);
 
 				if (type_before!=TOY_R_TOKEN_NOT_DEFINED) {	// 처음이라면
-					type = type_before;	// 이전 타입으로 반환
+					type = ConvertExternalType(type_before);
 					return true;
 				}
 				break;
 			case TOY_R_TOKEN_EOP:
 				if (type_before!=TOY_R_TOKEN_NOT_DEFINED) {
-					type = type_before;	// 이전 타입으로 반환
+					type = ConvertExternalType(type_before);
 					return true;
 				} else {
 					return false;
