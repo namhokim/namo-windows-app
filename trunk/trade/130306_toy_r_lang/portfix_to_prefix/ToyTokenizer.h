@@ -4,8 +4,9 @@
 #define TOY_R_TOKEN_EOP			0	// end of program
 #define TOY_R_TOKEN_NUMBER		1	// group
 #define TOY_R_TOKEN_DIGIT		11	// single (internal)
+#define TOY_R_TOKEN_NEGATIVE	12	// single (internal)
 #define TOY_R_TOKEN_STRING		2	// group
-#define TOY_R_TOKEN_ALPHA		12	// single (internal)
+#define TOY_R_TOKEN_ALPHA		21	// single (internal)
 #define TOY_R_TOKEN_RESERVED	3	// 예약어(IF, MINUS)
 #define TOY_R_TOKEN_PARENTHESIS	5	// '(' or ')'
 #define TOY_R_TOKEN_SPACE		7	// 공백 (internal)
