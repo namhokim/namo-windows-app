@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include <string>
+#include <iostream>
 #include "ToyTokenizer.h"
 
 using namespace std;
@@ -20,6 +21,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	int type;
 	bool bSuccess;
 	bSuccess = tokenizer.getToken(token, type);
+	if(bSuccess) {
+		cout << token << endl;
+		cout << "type : " << type << endl;
+	}
 
 	return 0;
 }
