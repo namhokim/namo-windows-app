@@ -11,7 +11,7 @@ using namespace std;
 int _tmain(int argc, _TCHAR* argv[])
 {
 	string input_1("3210123");
-	string input_2("abcdeMI added");
+	string input_2("abcdeMI added plus");
 	string input_3("(1 2 MINUS)");
 
 	ToyTokenizer tokenizer;
