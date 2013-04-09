@@ -3,11 +3,11 @@
 #define TOY_R_TOKEN_NOT_DEFINED	(-1)
 #define TOY_R_TOKEN_EOP			0	// end of program
 #define TOY_R_TOKEN_NUMBER		1	// group
-#define TOY_R_TOKEN_DIGIT		2	// single (internal)
-#define TOY_R_TOKEN_PARENTHESIS	3
-#define TOY_R_TOKEN_STRING		4	// group
-#define TOY_R_TOKEN_ALPHA		5	// single (internal)
-#define TOY_R_TOKEN_RESERVED	6	// 예약어(IF, MINUS)
+#define TOY_R_TOKEN_DIGIT		11	// single (internal)
+#define TOY_R_TOKEN_STRING		2	// group
+#define TOY_R_TOKEN_ALPHA		12	// single (internal)
+#define TOY_R_TOKEN_RESERVED	3	// 예약어(IF, MINUS)
+#define TOY_R_TOKEN_PARENTHESIS	5	// '(' or ')'
 #define TOY_R_TOKEN_SPACE		7	// 공백 (internal)
 
 #include <string>
