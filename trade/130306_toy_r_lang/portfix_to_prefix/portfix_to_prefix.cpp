@@ -18,8 +18,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	string input_4("((2 1 MINUS)3 MINUS)");
 	string input_5("((1 2 MINUS)(3 4 MINUS) IF)");
 	string input_6("((((1 2 MINUS)(3 4 MINUS) MINUS)5 MINUS) 6 MINUS)");
+	string input_7("-3210123");
+	string input_8("--3210123");
+	string input_9("-3210123-");
 
-	test(input_6);
+	test(input_9);
 
 	return 0;
 }

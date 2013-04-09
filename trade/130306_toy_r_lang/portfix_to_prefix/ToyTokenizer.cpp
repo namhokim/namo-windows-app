@@ -101,6 +101,17 @@ bool ToyTokenizer::getToken(std::string& token, int& type)
 					type = TOY_R_TOKEN_NUMBER;
 					return true;
 				}
+			case TOY_R_TOKEN_NEGATIVE:
+				if (type_before==TOY_R_TOKEN_NOT_DEFINED) {
+					type = TOY_R_TOKEN_DIGIT;	// 첫 번째 나오는 -는 음수로 간주
+					token.push_back(curr_ch);
+					++m_current_position;	// 다음 위치
+				} else {	// 에러
+					token.clear();
+					type = TOY_R_TOKEN_NOT_DEFINED;
+					return false;
+				}
+				break;
 			case TOY_R_TOKEN_ALPHA:
 				if (type_before==TOY_R_TOKEN_NOT_DEFINED
 					&& IsReservedWord(m_current_position, token)) {
@@ -177,6 +188,8 @@ int ToyTokenizer::assumeTypeByChar(char ch)
 	if (isalpha(ch)!=0) return TOY_R_TOKEN_ALPHA;
 
 	if (is_space(ch)) return TOY_R_TOKEN_SPACE;
+
+	if (ch=='-') return TOY_R_TOKEN_NEGATIVE;
 
 	return TOY_R_TOKEN_EOP;
 }
