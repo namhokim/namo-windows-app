@@ -1,6 +1,21 @@
 #include "StdAfx.h"
 #include "ToyTokenizer.h"
 
+// 외부에서 사용하는 타입으로 변환해주는 유틸리티 함수
+// 예) 한 글자의 숫자(digit) -> 숫자(number)
+// 예) 한 글자의 문자(alphabet) -> 문자열(string)
+int ConvertExternalType(int type)
+{
+	switch(type) {
+		case TOY_R_TOKEN_DIGIT:
+			return TOY_R_TOKEN_NUMBER;
+		case TOY_R_TOKEN_ALPHA:
+			return TOY_R_TOKEN_STRING;
+		default:
+			return type;
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////
 // public
 
@@ -19,21 +34,6 @@ void ToyTokenizer::setProg(const char* prog)
 	if (prog==NULL) throw new std::invalid_argument("Not allow, NULL value in prog parameter.");
 
 	m_current_position = m_prog;
-}
-
-// 외부에서 사용하는 타입으로 변환해주는 유틸리티 함수
-// 예) 한 글자의 숫자(digit) -> 숫자(number)
-// 예) 한 글자의 문자(alphabet) -> 문자열(string)
-int ConvertExternalType(int type)
-{
-	switch(type) {
-		case TOY_R_TOKEN_DIGIT:
-			return TOY_R_TOKEN_NUMBER;
-		case TOY_R_TOKEN_ALPHA:
-			return TOY_R_TOKEN_STRING;
-		default:
-			return type;
-	}
 }
 
 bool ToyTokenizer::getToken(std::string& token, int& type)
