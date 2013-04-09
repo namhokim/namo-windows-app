@@ -25,3 +25,5 @@ private:
 	const char* m_current_position;	// 파싱하는 위치(NULL이면 끝, 초기화 필요)
 	int assumeTypeByChar(char ch);	// 글자 하나를 가지고 타입을 추측
 };
+
+const char* TokenTypeToString(int type);

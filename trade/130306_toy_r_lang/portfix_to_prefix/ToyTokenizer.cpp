@@ -160,3 +160,27 @@ int ToyTokenizer::assumeTypeByChar(char ch)
 
 	return TOY_R_TOKEN_EOP;
 }
+
+
+//////////////////////////////////////////////////////////////////////////
+const char* TokenTypeToString(int type)
+{
+	switch(type) {
+		case TOY_R_TOKEN_NOT_DEFINED:
+			return "Not defined";
+		case TOY_R_TOKEN_EOP:
+			return "End of Program";
+		case TOY_R_TOKEN_NUMBER:
+			return "Number";
+		case TOY_R_TOKEN_STRING:
+			return "String";
+		case TOY_R_TOKEN_RESERVED:
+			return "Reserved";
+		case TOY_R_TOKEN_PARENTHESIS:
+			return "Parenthesis";
+		case TOY_R_TOKEN_SPACE:
+			return "Space";
+		default:
+			return "Not defined";
+	}
+}
