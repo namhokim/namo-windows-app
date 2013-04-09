@@ -23,12 +23,18 @@ void ToyTokenizer::setProg(const char* prog)
 
 bool ToyTokenizer::getToken(std::string& token, int& type)
 {
+	// 초기화
+	token.clear();
+	type = TOY_R_TOKEN_NOT_DEFINED;
+
 	if(m_current_position==NULL) {
 		type = TOY_R_TOKEN_EOP;
 		return false;
 	}
 
 	int type_before = TOY_R_TOKEN_NOT_DEFINED;
+	int type_internal;
+
 	while(m_current_position) {	// NULL이 아닐 때까지 반복
 		char curr_ch = (*m_current_position);	// 현재 문자열
 		type = assumeTypeByChar(curr_ch);
@@ -59,9 +65,30 @@ bool ToyTokenizer::getToken(std::string& token, int& type)
 					++m_current_position;	// 다음 위치
 				}
 				break;
+			case TOY_R_TOKEN_SPACE:
+				// 공백을 제거하고
+				do {
+					++m_current_position;
+					if (m_current_position==NULL) {
+						type = TOY_R_TOKEN_EOP;
+						return false;
+					}
+					char c = (*m_current_position);
+					type_internal = assumeTypeByChar(c);
+				} while (type_internal==TOY_R_TOKEN_SPACE);
+
+				if (type_before!=TOY_R_TOKEN_NOT_DEFINED) {	// 처음이라면
+					type = type_before;	// 이전 타입으로 반환
+					return true;
+				}
+				break;
 			case TOY_R_TOKEN_EOP:
-				type = type_before;	// 이전 타입으로 반환
-				return true;
+				if (type_before!=TOY_R_TOKEN_NOT_DEFINED) {
+					type = type_before;	// 이전 타입으로 반환
+					return true;
+				} else {
+					return false;
+				}
 		}
 		type_before = type;	// 현재 타입을 저장
 	}
@@ -79,6 +106,12 @@ bool is_parenthesis(char ch)
 	return (ch=='(' || ch==')');
 }
 
+// 공백인지 판단
+bool is_space(char ch)
+{
+	return (ch==' ');
+}
+
 int ToyTokenizer::assumeTypeByChar(char ch)
 {
 	if (is_parenthesis(ch)) return TOY_R_TOKEN_PARENTHESIS;
@@ -86,7 +119,10 @@ int ToyTokenizer::assumeTypeByChar(char ch)
 	// ref. http://www.cplusplus.com/reference/cctype/isdigit/
 	if (isdigit(ch)!=0) return TOY_R_TOKEN_DIGIT;
 
+	// ref. http://www.cplusplus.com/reference/cctype/isalpha/
 	if (isalpha(ch)!=0) return TOY_R_TOKEN_ALPHA;
+
+	if (is_space(ch)) return TOY_R_TOKEN_SPACE;
 
 	return TOY_R_TOKEN_EOP;
 }

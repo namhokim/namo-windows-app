@@ -8,6 +8,7 @@
 #define TOY_R_TOKEN_STRING		4	// group
 #define TOY_R_TOKEN_ALPHA		5	// single (internal)
 #define TOY_R_TOKEN_RESERVED	6	// 예약어(IF, MINUS)
+#define TOY_R_TOKEN_SPACE		7	// 공백 (internal)
 
 #include <string>
 
