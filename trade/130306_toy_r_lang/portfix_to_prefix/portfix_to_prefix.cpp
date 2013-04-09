@@ -21,8 +21,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	string input_7("-3210123");
 	string input_8("--3210123");
 	string input_9("-3210123-");
+	string input_10("((2 1MINUS)3MINUS)");
 
-	test(input_9);
+	test(input_10);
 
 	return 0;
 }
