@@ -15,7 +15,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	string input_3("(1 2 MINUS)");
 
 	ToyTokenizer tokenizer;
-	tokenizer.setProg(input_1.c_str());
+	tokenizer.setProg(input_2.c_str());
 
 	string token;
 	int type;
