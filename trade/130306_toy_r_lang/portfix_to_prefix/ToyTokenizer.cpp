@@ -1,6 +1,18 @@
 #include "StdAfx.h"
 #include "ToyTokenizer.h"
 
+namespace Toy_R_Reserved {
+	namespace IF {
+		const char* str = "IF";
+		int size = 2;
+	}
+	namespace MINUS {
+		const char* str = "MINUS";
+		int size = 5;
+	}
+}
+
+
 // 외부에서 사용하는 타입으로 변환해주는 유틸리티 함수
 // 예) 한 글자의 숫자(digit) -> 숫자(number)
 // 예) 한 글자의 문자(alphabet) -> 문자열(string)
@@ -16,8 +28,16 @@ int ConvertExternalType(int type)
 	}
 }
 
-bool IsReservedWord(const char* ptr)
+bool IsReservedWord(const char* ptr, std::string& word)
 {
+	if (strncmp(Toy_R_Reserved::IF::str, ptr, Toy_R_Reserved::IF::size)==0) {
+		word.assign(Toy_R_Reserved::IF::str);
+		return true;
+	}
+	if (strncmp(Toy_R_Reserved::MINUS::str, ptr, Toy_R_Reserved::MINUS::size)==0) {
+		word.assign(Toy_R_Reserved::MINUS::str);
+		return true;
+	}
 	return false;
 }
 
@@ -82,13 +102,11 @@ bool ToyTokenizer::getToken(std::string& token, int& type)
 					return true;
 				}
 			case TOY_R_TOKEN_ALPHA:
-				if (type_before==TOY_R_TOKEN_NOT_DEFINED) {
-					if (IsReservedWord(m_current_position)) {
-						type = TOY_R_TOKEN_RESERVED;
-						return true;
-					}
-					// 예약어인지 검사한다
-					// 예약어이면 return
+				if (type_before==TOY_R_TOKEN_NOT_DEFINED
+					&& IsReservedWord(m_current_position, token)) {
+					type = TOY_R_TOKEN_RESERVED;
+					m_current_position += token.size();
+					return true;
 				} 
 				if (type_before==TOY_R_TOKEN_NOT_DEFINED
 					|| type_before==TOY_R_TOKEN_ALPHA) {
