@@ -21,7 +21,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	int type;
 	while( tokenizer.getToken(token, type) ) {
 		cout << token << endl;
-		cout << "type : " << type << endl << endl;
+		cout << "type : " << type
+			<< " (" << TokenTypeToString(type) << ")" << endl << endl;
 	}
 
 	return 0;
