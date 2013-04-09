@@ -15,11 +15,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	string input_1("3210123");
 	string input_2("abcdeMI added plus");
 	string input_3("(1 2 MINUS)");
-	string input_4("((2  1  MINUS) 3  MINUS)");
+	string input_4("((2 1 MINUS)3 MINUS)");
 	string input_5("((1 2 MINUS)(3 4 MINUS) IF)");
 	string input_6("((((1 2 MINUS)(3 4 MINUS) MINUS)5 MINUS) 6 MINUS)");
 
-	test(input_4);
+	test(input_6);
 
 	return 0;
 }
