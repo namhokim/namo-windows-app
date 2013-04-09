@@ -129,9 +129,11 @@ bool ToyTokenizer::getToken(std::string& token, int& type)
 					type_internal = assumeTypeByChar(c);
 				} while (type_internal==TOY_R_TOKEN_SPACE);
 
-				if (type_before!=TOY_R_TOKEN_NOT_DEFINED) {	// 처음이라면
+				if (type_before!=TOY_R_TOKEN_NOT_DEFINED) {	// 처음이 아니라면
 					type = ConvertExternalType(type_before);
 					return true;
+				} else {
+					type = TOY_R_TOKEN_NOT_DEFINED;	// 처음이라면
 				}
 				break;
 			case TOY_R_TOKEN_EOP:
