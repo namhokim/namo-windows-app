@@ -1,5 +1,6 @@
 #pragma once
 
+#define TOY_R_TOKEN_NOT_DEFINED	(-1)
 #define TOY_R_TOKEN_EOP			0	// end of program
 #define TOY_R_TOKEN_NUMBER		1
 #define TOY_R_TOKEN_DIGIT		2
