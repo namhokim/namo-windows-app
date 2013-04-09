@@ -43,16 +43,27 @@ bool ToyTokenizer::getToken(std::string& token, int& type)
 				{
 					token.push_back(curr_ch);
 					++m_current_position;	// 다음 위치
-					type_before = type;
 					break;
 				} else {
 					type = TOY_R_TOKEN_NUMBER;
 					return true;
 				}
+			case TOY_R_TOKEN_ALPHA:
+				if (type_before==TOY_R_TOKEN_NOT_DEFINED) {
+					// 예약어인지 검사한다
+					// 예약어이면 return
+				} 
+				if (type_before==TOY_R_TOKEN_NOT_DEFINED
+					|| type_before==TOY_R_TOKEN_ALPHA) {
+					token.push_back(curr_ch);
+					++m_current_position;	// 다음 위치
+				}
+				break;
 			case TOY_R_TOKEN_EOP:
-				type = type_before;
+				type = type_before;	// 이전 타입으로 반환
 				return true;
 		}
+		type_before = type;	// 현재 타입을 저장
 	}
 
 	return false;
@@ -74,6 +85,8 @@ int ToyTokenizer::assumeTypeByChar(char ch)
 
 	// ref. http://www.cplusplus.com/reference/cctype/isdigit/
 	if (isdigit(ch)!=0) return TOY_R_TOKEN_DIGIT;
+
+	if (isalpha(ch)!=0) return TOY_R_TOKEN_ALPHA;
 
 	return TOY_R_TOKEN_EOP;
 }
