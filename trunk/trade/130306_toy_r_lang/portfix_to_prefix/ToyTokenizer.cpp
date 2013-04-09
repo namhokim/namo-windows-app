@@ -16,6 +16,11 @@ int ConvertExternalType(int type)
 	}
 }
 
+bool IsReservedWord(const char* ptr)
+{
+	return false;
+}
+
 //////////////////////////////////////////////////////////////////////////
 // public
 
@@ -78,6 +83,10 @@ bool ToyTokenizer::getToken(std::string& token, int& type)
 				}
 			case TOY_R_TOKEN_ALPHA:
 				if (type_before==TOY_R_TOKEN_NOT_DEFINED) {
+					if (IsReservedWord(m_current_position)) {
+						type = TOY_R_TOKEN_RESERVED;
+						return true;
+					}
 					// 예약어인지 검사한다
 					// 예약어이면 return
 				} 
