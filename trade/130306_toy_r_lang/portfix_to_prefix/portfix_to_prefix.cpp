@@ -10,7 +10,7 @@ using namespace std;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	string input_1("32");
+	string input_1("3210123");
 	string input_2("abc");
 	string input_3("(1 2 MINUS)");
 
