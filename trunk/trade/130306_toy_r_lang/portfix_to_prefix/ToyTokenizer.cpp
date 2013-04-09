@@ -28,17 +28,31 @@ bool ToyTokenizer::getToken(std::string& token, int& type)
 		return false;
 	}
 
-	char curr_ch = (*m_current_position);	// 현재 문자열
-	type = assumeTypeByChar(curr_ch);
-	switch(type) {
-		case TOY_R_TOKEN_PARENTHESIS:
-			token.push_back(curr_ch);
-			++m_current_position;	// 다음 위치
-			return true;
-		case TOY_R_TOKEN_DIGIT:
-			token.push_back(curr_ch);
-			++m_current_position;	// 다음 위치
-			return true;
+	int type_before = TOY_R_TOKEN_NOT_DEFINED;
+	while(m_current_position) {	// NULL이 아닐 때까지 반복
+		char curr_ch = (*m_current_position);	// 현재 문자열
+		type = assumeTypeByChar(curr_ch);
+		switch(type) {
+			case TOY_R_TOKEN_PARENTHESIS:
+				token.push_back(curr_ch);
+				++m_current_position;	// 다음 위치
+				return true;
+			case TOY_R_TOKEN_DIGIT:
+				if (type_before==TOY_R_TOKEN_NOT_DEFINED
+					|| type_before==TOY_R_TOKEN_DIGIT)
+				{
+					token.push_back(curr_ch);
+					++m_current_position;	// 다음 위치
+					type_before = type;
+					break;
+				} else {
+					type = TOY_R_TOKEN_NUMBER;
+					return true;
+				}
+			case TOY_R_TOKEN_EOP:
+				type = type_before;
+				return true;
+		}
 	}
 
 	return false;
