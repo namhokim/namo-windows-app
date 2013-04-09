@@ -15,13 +15,13 @@ int _tmain(int argc, _TCHAR* argv[])
 	string input_3("(1 2 MINUS)");
 
 	ToyTokenizer tokenizer;
-	tokenizer.setProg(input_2.c_str());
+	tokenizer.setProg(input_3.c_str());
 
 	string token;
 	int type;
 	while( tokenizer.getToken(token, type) ) {
 		cout << token << endl;
-		cout << "type : " << type << endl;
+		cout << "type : " << type << endl << endl;
 	}
 
 	return 0;
