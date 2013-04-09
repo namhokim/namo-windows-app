@@ -1,5 +1,10 @@
 #pragma once
 
+#define TOY_R_TOKEN_EOP			0	// end of program
+#define TOY_R_TOKEN_NUMBER		1
+#define TOY_R_TOKEN_DIGIT		2
+#define TOY_R_TOKEN_PARENTHESIS	3
+
 #include <string>
 
 class ToyTokenizer
@@ -13,4 +18,5 @@ public:
 private:
 	const char* m_prog;			// 프로그램을 가리키는 문자열 포인터(NULL 종료)
 	const char* m_current_position;	// 파싱하는 위치(NULL이면 끝, 초기화 필요)
+	int assumeTypeByChar(char ch);	// 글자 하나를 가지고 타입을 추측
 };
