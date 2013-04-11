@@ -119,7 +119,10 @@ bool ToyTokenizer::getToken(std::string& token, int& type)
 					type = TOKEN_RESERVED;
 					m_curr_pos += token.size();
 					return true;
-				} 
+				} else if (tb==TOKEN_DIGIT) {
+					type = ConvertExternalType(tb);
+					return true;
+				}
 				if (tb==TOKEN_NOT_DEFINED || tb==TOKEN_ALPHA) {
 					token.push_back(curr_ch);
 					++m_curr_pos;	// 다음 위치
