@@ -4,6 +4,8 @@
 #include "stdafx.h"
 #include <string>
 #include <iostream>
+#include <algorithm>	// for copy
+#include <iterator>		// for ostream_iterator
 #include "ToyTokenizer.h"
 
 using namespace std;
@@ -30,16 +32,25 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	string in(input_12);
 
-	// for parse
-	int errorPosition;
-	cout << in << endl;
-	bool res = parse(in.c_str(), &errorPosition);
-	if(!res) {
-		for (int i=1; i<errorPosition; ++i) cout << " ";
-		cout << "*" << endl;
-//		cout << "position : " << errorPosition << endl;
+	// for intermediate code
+	std::vector<std::string> out;
+	if(make_im_code("((((1 2 MINUS)(3 4 MINUS) MINUS)5 MINUS) 6 MINUS)", out)) {
+		copy(out.begin(), out.end(), ostream_iterator<string>(cout, "\n"));
+		return 0;
+	} else {
+		cout << "failed..." << endl;
 	}
-	cout << (res ? "success" : "false") << endl;
+
+	// for parse
+//	int errorPosition;
+//	cout << in << endl;
+//	bool res = parse(in.c_str(), &errorPosition);
+//	if(!res) {
+//		for (int i=1; i<errorPosition; ++i) cout << " ";
+//		cout << "*" << endl;
+////		cout << "position : " << errorPosition << endl;
+//	}
+//	cout << (res ? "success" : "false") << endl;
 
 	// for test
 	//test(in);

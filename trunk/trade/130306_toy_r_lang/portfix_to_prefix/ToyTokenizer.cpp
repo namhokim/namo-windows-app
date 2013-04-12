@@ -385,3 +385,33 @@ bool parse(const char* prog, int* error_pos)
 	}
 	return res;
 }
+
+bool make_im_code(const char* prog, std::vector<std::string>& out)
+{
+	out.clear();
+
+	if(!parse(prog)) return false;
+	
+	// 중간코드로 변경
+	ToyTokenizer tokenizer;
+	tokenizer.setProg(prog);
+
+	std::string token;
+	int type;
+
+	out.push_back("begin");
+	while( tokenizer.getToken(token, type) ) {
+		switch(type) {
+			case TOKEN_NUMBER:
+			case TOKEN_STRING:
+				out.push_back("push " + token);
+				break;
+			case TOKEN_RESERVED:
+				out.push_back(token);
+				break;
+		}
+	}
+	out.push_back("end");
+
+	return true;
+}
