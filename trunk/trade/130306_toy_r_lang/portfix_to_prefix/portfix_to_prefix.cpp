@@ -25,13 +25,15 @@ int _tmain(int argc, _TCHAR* argv[])
 	string input_8("--3210123");
 	string input_9("-3210123-");
 	string input_10("((2 2 MINUS)3MINUS)");
+	string input_11("abd");
+	string input_12("(abd)");
 
-	string in(input_31);
+	string in(input_12);
 
 	// for parse
 	int errorPosition;
 	cout << in << endl;
-	bool res = parse(in, &errorPosition);
+	bool res = parse(in.c_str(), &errorPosition);
 	if(!res) {
 		for (int i=1; i<errorPosition; ++i) cout << " ";
 		cout << "*" << endl;

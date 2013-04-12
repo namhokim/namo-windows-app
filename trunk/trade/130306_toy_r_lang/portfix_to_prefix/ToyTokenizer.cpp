@@ -288,10 +288,15 @@ enum parsing_state {
 	need_operator,	// IF, MINUS 필요 상태
 };
 
-bool parse(const std::string& prog, int* error_pos)
+bool parse(const char* prog, int* error_pos)
 {
+	if (prog==NULL) {
+		if (error_pos!=NULL) (*error_pos) = 0;
+		return false;
+	}
+
 	ToyTokenizer tokenizer;
-	tokenizer.setProg(prog.c_str());
+	tokenizer.setProg(prog);
 
 	parsing_state state = normal;
 	std::string innerProg;
@@ -314,7 +319,7 @@ bool parse(const std::string& prog, int* error_pos)
 			case TOKEN_PARENTHESIS:
 				pb = tokenizer.getCurrentIndex();	// position of before (이전 토큰 위치)
 				if (token=="(" && tokenizer.getInnerProg(innerProg)) {
-					if(!parse(innerProg, &innerErrPos)) {
+					if(!parse(innerProg.c_str(), &innerErrPos)) {
 #ifdef VERBOSE
 						std::cout << "error pos : " << innerErrPos << std::endl;
 #endif
@@ -340,7 +345,7 @@ bool parse(const std::string& prog, int* error_pos)
 				break;
 			case TOKEN_PARENTHESIS:
 				if (token=="(" && tokenizer.getInnerProg(innerProg)) {
-					if(!parse(innerProg, &innerErrPos)) {
+					if(!parse(innerProg.c_str(), &innerErrPos)) {
 						if (error_pos!=NULL) {
 							*error_pos = pb + innerErrPos;
 						}
