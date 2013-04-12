@@ -150,6 +150,11 @@ bool ToyTokenizer::getToken(std::string& token, int& type)
 					return true;
 				}
 				break;
+			case TOKEN_NOT_DEFINED:
+				token.clear();
+				token.push_back(curr_ch);
+				m_curr_pos = NULL;
+				return false;
 			case TOKEN_EOP:
 				if (tb!=TOKEN_NOT_DEFINED) {
 					type = ConvertExternalType(tb);
@@ -196,7 +201,9 @@ int ToyTokenizer::assumeTypeByChar(char ch)
 
 	if (ch=='-') return TOKEN_NEGATIVE;
 
-	return TOKEN_EOP;
+	if (ch=='\0') return TOKEN_EOP;
+
+	return TOKEN_NOT_DEFINED;
 }
 
 
