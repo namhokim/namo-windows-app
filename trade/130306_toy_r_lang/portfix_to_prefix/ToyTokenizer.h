@@ -12,6 +12,7 @@
 #define TOKEN_SPACE			7	// 공백 (internal)
 
 #include <string>
+#include <vector>
 
 class ToyTokenizer
 {
@@ -31,3 +32,4 @@ private:
 
 const char* TokenTypeToString(int type);
 bool parse(const char* prog, int* error_pos = NULL);	// 파싱을 수행(문법 체크)
+bool make_im_code(const char* prog, std::vector<std::string>& out);
