@@ -33,3 +33,5 @@ private:
 const char* TokenTypeToString(int type);
 bool parse(const char* prog, int* error_pos = NULL);	// 파싱을 수행(문법 체크)
 bool make_im_code(const char* prog, std::vector<std::string>& out);
+
+bool postfix_to_prefix(const char* prog, std::string& out);

@@ -32,14 +32,21 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	string in(input_12);
 
-	// for intermediate code
-	std::vector<std::string> out;
-	if(make_im_code("(3 A IF)", out)) {
-		copy(out.begin(), out.end(), ostream_iterator<string>(cout, "\n"));
-		return 0;
-	} else {
-		cout << "failed..." << endl;
+	// for prefix
+	string out;
+	if(postfix_to_prefix(in.c_str(), out)) {
+		cout << "in  : " << in << endl;
+		cout << "out : " << out << endl;
 	}
+
+	// for intermediate code
+	//std::vector<std::string> out;
+	//if(make_im_code("(3 A IF)", out)) {
+	//	copy(out.begin(), out.end(), ostream_iterator<string>(cout, "\n"));
+	//	return 0;
+	//} else {
+	//	cout << "failed..." << endl;
+	//}
 
 	// for parse
 //	int errorPosition;

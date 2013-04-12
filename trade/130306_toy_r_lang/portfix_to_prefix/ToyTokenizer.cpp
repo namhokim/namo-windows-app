@@ -312,64 +312,64 @@ bool parse(const char* prog, int* error_pos)
 		switch (state) {
 			case normal:	// (, string, number
 				switch(type) {
-			case TOKEN_STRING:
-			case TOKEN_NUMBER:
-				state = terminal;
-				break;
-			case TOKEN_PARENTHESIS:
-				pb = tokenizer.getCurrentIndex();	// position of before (이전 토큰 위치)
-				if (token=="(" && tokenizer.getInnerProg(innerProg)) {
-					if(!parse(innerProg.c_str(), &innerErrPos)) {
-#ifdef VERBOSE
-						std::cout << "error pos : " << innerErrPos << std::endl;
-#endif
-						if (error_pos!=NULL) {
-							*error_pos = pb + innerErrPos;
+					case TOKEN_STRING:
+					case TOKEN_NUMBER:
+						state = terminal;
+						break;
+					case TOKEN_PARENTHESIS:
+						pb = tokenizer.getCurrentIndex();	// position of before (이전 토큰 위치)
+						if (token=="(" && tokenizer.getInnerProg(innerProg)) {
+							if(!parse(innerProg.c_str(), &innerErrPos)) {
+		#ifdef VERBOSE
+								std::cout << "error pos : " << innerErrPos << std::endl;
+		#endif
+								if (error_pos!=NULL) {
+									*error_pos = pb + innerErrPos;
+								}
+								return false;
+							}
+							state = terminal;
+						} else {
+							state = error;
 						}
-						return false;
-					}
-					state = terminal;
-				} else {
-					state = error;
-				}
-				break;
-			default:
-				state = error;
-				break;
+						break;
+					default:
+						state = error;
+						break;
 				}
 				break;
 			case terminal:
 				switch(type) {
-			case TOKEN_STRING:
-			case TOKEN_NUMBER:
-				state = need_operator;
-				break;
-			case TOKEN_PARENTHESIS:
-				if (token=="(" && tokenizer.getInnerProg(innerProg)) {
-					if(!parse(innerProg.c_str(), &innerErrPos)) {
-						if (error_pos!=NULL) {
-							*error_pos = pb + innerErrPos;
+					case TOKEN_STRING:
+					case TOKEN_NUMBER:
+						state = need_operator;
+						break;
+					case TOKEN_PARENTHESIS:
+						if (token=="(" && tokenizer.getInnerProg(innerProg)) {
+							if(!parse(innerProg.c_str(), &innerErrPos)) {
+								if (error_pos!=NULL) {
+									*error_pos = pb + innerErrPos;
+								}
+								return false;
+							}
+							state = need_operator;
+						} else {
+							state = error;
 						}
-						return false;
-					}
-					state = need_operator;
-				} else {
-					state = error;
-				}
-				break;
-			default:
-				state = error;
-				break;
+						break;
+					default:
+						state = error;
+						break;
 				}
 				break;
 			case need_operator:
 				switch(type) {
-			case TOKEN_RESERVED:
-				state = terminal;
-				break;
-			default:
-				state = error;
-				break;
+					case TOKEN_RESERVED:
+						state = terminal;
+						break;
+					default:
+						state = error;
+						break;
 				}
 				break;
 		}
@@ -415,4 +415,98 @@ bool make_im_code(const char* prog, std::vector<std::string>& out)
 	out.push_back("end");
 
 	return true;
+}
+
+#include <stack>
+
+bool postfix_to_prefix(const char* prog, std::string& out)
+{
+	if (prog==NULL) {
+		return false;
+	}
+
+	ToyTokenizer tokenizer;
+	tokenizer.setProg(prog);
+	parsing_state state = normal;
+	std::stack<std::string> stck;
+	std::string op1, op2;
+	std::string innerProg;
+
+	std::string token;
+	int type;
+	while( state != error && tokenizer.getToken(token, type) ) {
+		switch (state) {
+			case normal:	// (, string, number
+				switch(type) {
+					case TOKEN_STRING:
+					case TOKEN_NUMBER:
+						stck.push(token);
+						state = terminal;
+						break;
+					case TOKEN_PARENTHESIS:
+						if (token=="(" && tokenizer.getInnerProg(innerProg)) {
+#ifdef VERBOSE
+							std::cout << innerProg << std::endl;
+#endif
+							std::string tmp;
+							if (postfix_to_prefix(innerProg.c_str(), tmp)) {
+								stck.push("(" + tmp + ")");
+								state = terminal;
+							} else {
+								state = error;
+							}
+						}
+						break;
+				}
+				break;
+			case terminal:
+				switch(type) {
+					case TOKEN_STRING:
+					case TOKEN_NUMBER:
+						stck.push(token);
+						state = need_operator;
+						break;
+					case TOKEN_PARENTHESIS:
+						if (token=="(" && tokenizer.getInnerProg(innerProg)) {
+#ifdef VERBOSE
+							std::cout << innerProg << std::endl;
+#endif
+							std::string tmp;
+							if (postfix_to_prefix(innerProg.c_str(), tmp)) {
+								stck.push("(" + tmp + ")");
+								state = need_operator;
+							} else {
+								state = error;
+							}
+						}
+						break;
+				}
+				break;
+			case need_operator:
+				switch(type) {
+					case TOKEN_RESERVED:
+						out.append(token);
+						out.push_back(' ');
+						op2 = stck.top();
+						stck.pop();
+						out.append(stck.top());
+						stck.pop();
+						out.push_back(' ');
+						out.append(op2);
+						state = terminal;
+						break;
+				}
+				break;
+		}
+	}
+
+	bool res = (state==terminal);
+	if(res && !stck.empty()) {
+		while(!stck.empty()) {
+			out.append(stck.top());
+			stck.pop();
+		}
+	}
+
+	return res;
 }
