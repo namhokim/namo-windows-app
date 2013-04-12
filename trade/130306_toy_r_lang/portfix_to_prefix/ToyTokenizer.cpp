@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "ToyTokenizer.h"
 
+#define VERBOSE
+
 // 예약어 목록
 namespace Toy_R_Reserved {
 	namespace IF {
@@ -134,11 +136,10 @@ bool ToyTokenizer::getToken(std::string& token, int& type)
 				break;
 			case TOKEN_SPACE:
 				do {
-					// 공백을 통과
-					++m_curr_pos;
+					++m_curr_pos;	// 공백을 통과
 
 					// 프로그램의 끝을 만나면
-					if (m_curr_pos==NULL) {
+					if ( (*m_curr_pos) == '\0' ) {
 						type = TOKEN_EOP;
 						return false;
 					}
@@ -267,4 +268,86 @@ const char* TokenTypeToString(int type)
 		default:
 			return "Not defined";
 	}
+}
+
+//////////////////////////////////////////////////////////////////////////
+// 파싱을 수행
+#ifdef VERBOSE
+#include <iostream>
+#endif
+
+enum parsing_state {
+	normal,		// 기본상태
+	terminal,	// 종료상태
+	error,		// 파싱에러
+	need_operator,	// IF, MINUS 필요 상태
+};
+
+bool parse(const std::string& prog)
+{
+	ToyTokenizer tokenizer;
+	tokenizer.setProg(prog.c_str());
+
+	parsing_state state = normal;
+	std::string innerProg;
+
+	std::string token;
+	int type;
+	while( state != error && tokenizer.getToken(token, type) ) {
+#ifdef VERBOSE
+		std::cout << token << std::endl;
+#endif
+		switch (state) {
+			case normal:	// (, string, number
+				switch(type) {
+			case TOKEN_STRING:
+			case TOKEN_NUMBER:
+				state = terminal;
+				break;
+			case TOKEN_PARENTHESIS:
+				if (token=="(" && tokenizer.getInnerProg(innerProg) && parse(innerProg)) {
+					state = terminal;
+				} else {
+					state = error;
+				}
+				break;
+			default:
+				state = error;
+				break;
+				}
+				break;
+			case terminal:
+				switch(type) {
+			case TOKEN_NUMBER:
+				state = need_operator;
+				break;
+			case TOKEN_PARENTHESIS:
+				if (token=="(" && tokenizer.getInnerProg(innerProg) && parse(innerProg)) {
+					state = need_operator;
+				} else {
+					state = error;
+				}
+				break;
+			default:
+				state = error;
+				break;
+				}
+				break;
+			case need_operator:
+				switch(type) {
+			case TOKEN_RESERVED:
+				state = terminal;
+				break;
+			default:
+				state = error;
+				break;
+				}
+				break;
+		}
+	}
+
+#ifdef VERBOSE
+	std::cout << "final state : " << state << std::endl;
+#endif
+	return (state==terminal);
 }

@@ -25,7 +25,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	string input_7("-3210123");
 	string input_8("--3210123");
 	string input_9("-3210123-");
-	string input_10("((2 1MINUS)3MINUS)");
+	string input_10("((2 1MINUS)3MINUS))");
 
 	string in(input_10);
 	//test(input_10);
@@ -49,88 +49,4 @@ void test(const string& prog)
 		cout << "type : " << type
 			<< " (" << TokenTypeToString(type) << ")" << endl << endl;
 	}
-}
-
-enum parsing_state {
-	normal,		// 기본상태
-	terminal,	// 종료상태
-	error,		// 파싱에러
-	need_operator,	// IF, MINUS 필요 상태
-};
-
-bool parse(const string& prog)
-{
-	ToyTokenizer tokenizer;
-	tokenizer.setProg(prog.c_str());
-
-	parsing_state state = normal;
-	string buffer;
-
-	string token;
-	int type;
-	while( state != error && tokenizer.getToken(token, type) ) {
-		cout << token << endl;
-		switch (state) {
-			case normal:	// (, string, number
-				switch(type) {
-					case TOKEN_STRING:
-					case TOKEN_NUMBER:
-						state = terminal;
-						break;
-					case TOKEN_PARENTHESIS:
-						if (token=="(") {
-							string innerProg;
-							if (tokenizer.getInnerProg(innerProg)) {
-								cout << "> " << innerProg << endl;
-								if(parse(innerProg)) {
-									state = terminal;
-									cout << "< true" << endl;
-									break;
-								}
-								
-							}
-						}
-						state = error;
-						break;
-					default:
-						state = error;
-				}
-				break;
-			case terminal:
-				switch(type) {
-					case TOKEN_NUMBER:
-						state = need_operator;
-						break;
-					case TOKEN_PARENTHESIS:
-						if (token=="(") {
-							string innerProg;
-							if (tokenizer.getInnerProg(innerProg)) {
-								cout << "> " << innerProg << endl;
-								if(parse(innerProg)) {
-									state = need_operator;
-									cout << "< true" << endl;
-									break;
-								}
-
-							}
-						}
-						state = error;
-						break;
-					default:
-						state = error;
-				}
-				break;
-			case need_operator:
-				switch(type) {
-					case TOKEN_RESERVED:
-						state = terminal;
-						break;
-					default:
-						state = error;
-						}
-				break;
-		}
-	}
-
-	return (state==terminal);
 }

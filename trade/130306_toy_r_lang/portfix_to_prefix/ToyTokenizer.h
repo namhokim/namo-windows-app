@@ -29,3 +29,4 @@ private:
 };
 
 const char* TokenTypeToString(int type);
+bool parse(const std::string& prog);	// 파싱을 수행(문법 체크)
