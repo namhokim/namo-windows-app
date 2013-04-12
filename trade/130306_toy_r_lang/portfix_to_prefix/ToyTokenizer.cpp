@@ -76,9 +76,10 @@ bool ToyTokenizer::getToken(std::string& token, int& type)
 	type = TOKEN_NOT_DEFINED;
 
 	int tb = TOKEN_NOT_DEFINED;	// type of berfore(이전 상태를 저장)
+	char curr_ch = (*m_curr_pos);	// 현재 문자열
 
-	while(m_curr_pos) {	// NULL이 아닐 때까지 반복
-		char curr_ch = (*m_curr_pos);	// 현재 문자열
+	while(curr_ch!='\0') {	// NULL이 아닐 때까지 반복
+		
 		type = assumeTypeByChar(curr_ch);
 		switch(type) {
 			case TOKEN_PARENTHESIS:
@@ -164,11 +165,49 @@ bool ToyTokenizer::getToken(std::string& token, int& type)
 				}
 		}
 		tb = type;	// 현재 타입을 저장
+		curr_ch = (*m_curr_pos);	// 현재 문자열
 	}
 
-	// 프로그램이 끝났다
-	type = TOKEN_EOP;
-	return false;
+	if (tb!=TOKEN_NOT_DEFINED) {
+		type = ConvertExternalType(tb);
+		return true;	// 토근 획득 완료(성공)
+	} else {	// 토큰없이 프로그램이 끝났다
+		type = TOKEN_EOP;
+		return false;
+	}
+}
+
+bool ToyTokenizer::getInnerProg(std::string& subProg)
+{
+	subProg.clear();
+
+	char curr_ch = (*m_curr_pos);	// 현재 문자열
+	int paren_count = 1;
+
+	while(curr_ch!='\0' && paren_count>0) {	// NULL이 아닐 때까지 반복
+		if (curr_ch=='(') {
+			paren_count++;
+			if (paren_count>1) {	// 중첩된 괄호시
+				subProg.push_back(curr_ch);
+			}
+		} else if (curr_ch==')') {
+			if (paren_count>1) {	// 중첩된 괄호시
+				subProg.push_back(curr_ch);
+			}
+			paren_count--;
+		} else {
+			subProg.push_back(curr_ch);
+		}
+
+		m_curr_pos++;
+		curr_ch = (*m_curr_pos);	// 현재 문자열
+	}
+
+	if (paren_count==0) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 

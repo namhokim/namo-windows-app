@@ -20,6 +20,7 @@ public:
 	~ToyTokenizer(void);
 	void setProg(const char* prog);	// 프로그램(문자열)을 지정한다
 	bool getToken(std::string& token, int& type);	// 토큰을 가져온다
+	bool getInnerProg(std::string& subProg);	// 다음 닫는 괄호를 찾을 때까지 문장을 획득
 
 private:
 	const char* m_prog;			// 프로그램을 가리키는 문자열 포인터(NULL 종료)
