@@ -340,6 +340,7 @@ bool parse(const char* prog, int* error_pos)
 				break;
 			case terminal:
 				switch(type) {
+			case TOKEN_STRING:
 			case TOKEN_NUMBER:
 				state = need_operator;
 				break;

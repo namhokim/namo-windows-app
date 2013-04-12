@@ -34,7 +34,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	// for intermediate code
 	std::vector<std::string> out;
-	if(make_im_code("((((1 2 MINUS)(3 4 MINUS) MINUS)5 MINUS) 6 MINUS)", out)) {
+	if(make_im_code("(3 a IF)", out)) {
 		copy(out.begin(), out.end(), ostream_iterator<string>(cout, "\n"));
 		return 0;
 	} else {
