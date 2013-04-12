@@ -30,7 +30,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	string input_11("abd");
 	string input_12("(abd)");
 
-	string in(input_12);
+	string in(input_6);
 
 	// for prefix
 	string out;

@@ -480,6 +480,9 @@ bool postfix_to_prefix(const char* prog, std::string& out)
 							}
 						}
 						break;
+					default:
+						state = error;
+						break;
 				}
 				break;
 			case need_operator:
