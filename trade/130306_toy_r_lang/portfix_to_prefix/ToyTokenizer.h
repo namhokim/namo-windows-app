@@ -30,4 +30,4 @@ private:
 };
 
 const char* TokenTypeToString(int type);
-bool parse(const std::string& prog, int* error_pos = NULL);	// 파싱을 수행(문법 체크)
+bool parse(const char* prog, int* error_pos = NULL);	// 파싱을 수행(문법 체크)
