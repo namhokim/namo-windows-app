@@ -9,7 +9,6 @@
 using namespace std;
 
 void test(const string& prog);
-bool parse(const string& prog);
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -19,18 +18,29 @@ int _tmain(int argc, _TCHAR* argv[])
 	string input_32("1 2 IF");
 	string input_33e("1 2 3");
 	string input_34("(1 2 MINUS)");
-	string input_4("((2 1 MINUS)3 MINUS)");
+	string input_4("((2 1 IF)3 MINUS)");
 	string input_5("((1 2 MINUS)(3 4 MINUS) IF)");
 	string input_6("((((1 2 MINUS)(3 4 MINUS) MINUS)5 MINUS) 6 MINUS)");
 	string input_7("-3210123");
 	string input_8("--3210123");
 	string input_9("-3210123-");
-	string input_10("((2 1MINUS)3MINUS))");
+	string input_10("((2 2 MINUS)3MINUS)");
 
-	string in(input_10);
-	//test(input_10);
-	cout << "original : " << in << endl << endl;
-	cout << (parse(in) ? "sucess" : "false") << endl;
+	string in(input_31);
+
+	// for parse
+	int errorPosition;
+	cout << in << endl;
+	bool res = parse(in, &errorPosition);
+	if(!res) {
+		for (int i=1; i<errorPosition; ++i) cout << " ";
+		cout << "*" << endl;
+//		cout << "position : " << errorPosition << endl;
+	}
+	cout << (res ? "success" : "false") << endl;
+
+	// for test
+	//test(in);
 
 	return 0;
 }
