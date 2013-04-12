@@ -32,7 +32,6 @@ private:
 
 const char* TokenTypeToString(int type);
 bool parse(const char* prog, int* error_pos = NULL);	// 파싱을 수행(문법 체크)
-bool make_im_code(const char* prog, std::vector<std::string>& out);
-
-bool postfix_to_prefix(const char* prog, std::string& out);
-bool evaluation(const std::vector<std::string>& in, int& out);
+bool make_im_code(const char* prog, std::vector<std::string>& out);	// 중간코드 생성
+bool postfix_to_prefix(const char* prog, std::string& out);		// 후위->전위식 변환
+bool evaluation(const std::vector<std::string>& in, int& out);	// 중간코드를 평가하는 함수

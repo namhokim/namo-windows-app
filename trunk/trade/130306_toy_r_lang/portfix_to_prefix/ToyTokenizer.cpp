@@ -514,8 +514,6 @@ bool postfix_to_prefix(const char* prog, std::string& out)
 	return res;
 }
 
-#include <iostream>
-using namespace std;
 bool evaluation(const std::vector<std::string>& in, int& out)
 {
 	size_t ps = in.size();	// program size
@@ -529,9 +527,9 @@ bool evaluation(const std::vector<std::string>& in, int& out)
 	int result;				// result of operation
 	size_t pc;				// program counter
 	for (pc=1; pc<(ps-1); ++pc) {	// begin < ~~ < end
-
+#ifdef VERBOSE
 		cout << in[pc] << endl;
-
+#endif
 		if (in[pc]=="MINUS") {
 			if (stck.size()<2) return false;	// 두 개 이상이 스택에 있어야 함
 
@@ -548,11 +546,11 @@ bool evaluation(const std::vector<std::string>& in, int& out)
 			stck.pop();
 			op1 = stck.top();
 			stck.pop();
-			result = (op1 > 0 ? op1 : op2);	// TODO: 문법확인 필요!
+			result = (op1 > 0 ? op2 : 0);
 			stck.push(result);
 		} else {	// push
 			if (in[pc].find_first_of("push ") != std::string::npos) {
-				string num = in[pc].substr(5);
+				std::string num = in[pc].substr(5);
 				int i = atoi(num.c_str());
 				stck.push(i);
 			} else {
