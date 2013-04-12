@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "ToyTokenizer.h"
 
-#define VERBOSE
+//#define VERBOSE
 
 // 예약어 목록
 namespace Toy_R_Reserved {
@@ -211,6 +211,11 @@ bool ToyTokenizer::getInnerProg(std::string& subProg)
 	}
 }
 
+int ToyTokenizer::getCurrentIndex() const
+{
+	int position = m_curr_pos - m_prog;
+	return position;
+}
 
 //////////////////////////////////////////////////////////////////////////
 // private
@@ -283,13 +288,15 @@ enum parsing_state {
 	need_operator,	// IF, MINUS 필요 상태
 };
 
-bool parse(const std::string& prog)
+bool parse(const std::string& prog, int* error_pos)
 {
 	ToyTokenizer tokenizer;
 	tokenizer.setProg(prog.c_str());
 
 	parsing_state state = normal;
 	std::string innerProg;
+	int innerErrPos;
+	int pb = tokenizer.getCurrentIndex();	// position of before (이전 토큰 위치)
 
 	std::string token;
 	int type;
@@ -305,7 +312,17 @@ bool parse(const std::string& prog)
 				state = terminal;
 				break;
 			case TOKEN_PARENTHESIS:
-				if (token=="(" && tokenizer.getInnerProg(innerProg) && parse(innerProg)) {
+				pb = tokenizer.getCurrentIndex();	// position of before (이전 토큰 위치)
+				if (token=="(" && tokenizer.getInnerProg(innerProg)) {
+					if(!parse(innerProg, &innerErrPos)) {
+#ifdef VERBOSE
+						std::cout << "error pos : " << innerErrPos << std::endl;
+#endif
+						if (error_pos!=NULL) {
+							*error_pos = pb + innerErrPos;
+						}
+						return false;
+					}
 					state = terminal;
 				} else {
 					state = error;
@@ -322,7 +339,13 @@ bool parse(const std::string& prog)
 				state = need_operator;
 				break;
 			case TOKEN_PARENTHESIS:
-				if (token=="(" && tokenizer.getInnerProg(innerProg) && parse(innerProg)) {
+				if (token=="(" && tokenizer.getInnerProg(innerProg)) {
+					if(!parse(innerProg, &innerErrPos)) {
+						if (error_pos!=NULL) {
+							*error_pos = pb + innerErrPos;
+						}
+						return false;
+					}
 					state = need_operator;
 				} else {
 					state = error;
@@ -344,10 +367,16 @@ bool parse(const std::string& prog)
 				}
 				break;
 		}
+
+		pb = tokenizer.getCurrentIndex();	// position of before (이전 토큰 위치)
 	}
 
 #ifdef VERBOSE
 	std::cout << "final state : " << state << std::endl;
 #endif
-	return (state==terminal);
+	bool res = (state==terminal);
+	if(!res && error_pos) {
+		(*error_pos) = pb;
+	}
+	return res;
 }
