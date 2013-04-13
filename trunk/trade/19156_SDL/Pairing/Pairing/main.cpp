@@ -6,14 +6,18 @@
 #pragma comment(lib, "SDL_image.lib")
 #pragma comment(lib, "SDLmain.lib")
 
-int main(int argc, char *argv[]){
+// Global variations
+SDL_Surface *screen;
 
-	//Initialize SDL
-	SDL_Init(SDL_INIT_EVERYTHING);
-	//Create Title
-	SDL_WM_SetCaption("Paring Game", "Paring");
-	//Create Window
-	SDL_Surface *screen = SDL_SetVideoMode(640,480,0,0);
+// Function declare
+bool initialize(const char* title, int width, int height);
+bool load_files();
+
+int main(int argc, char *argv[])
+{
+	if(!initialize("Paring Game", 640, 480)) {
+		return 1;
+	}
 
 	//We will display bitmap
 	SDL_Surface *image;
@@ -31,7 +35,9 @@ int main(int argc, char *argv[]){
 	dest.x = 0;
 	dest.y = 0;
 
-	SDL_FillRect(screen , NULL , 0);
+	SDL_Rect imageRect = {0, 0, 402, 227};
+
+	SDL_FillRect(screen , &imageRect , 0);
 	SDL_BlitSurface(image,NULL, screen, &dest);
 	SDL_Flip(screen);
 
@@ -54,6 +60,9 @@ int main(int argc, char *argv[]){
 				case SDLK_q:
 					gameOn=false;
 					break;
+				case SDLK_d:
+					printf("pressed d");
+					break;
 				}
 				SDL_FillRect(screen , NULL , 0);
 				SDL_BlitSurface(image,NULL, screen, &dest);
@@ -65,4 +74,39 @@ int main(int argc, char *argv[]){
 	SDL_Quit();
 
 	return 0;
+}
+
+bool initialize(const char* title, int width, int height)
+{
+	//Initialize SDL
+	if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
+	{
+		return false;
+	}
+
+	//Create Title
+	SDL_WM_SetCaption(title, NULL);
+
+	//Create Window
+	screen = SDL_SetVideoMode(width, height, 0, SDL_SWSURFACE);
+
+	// load images
+	if(!load_files())
+	{
+		return false;
+	}
+
+	// Set Background Color
+	SDL_Rect screenRect = {0, 0, screen->w, screen->h};
+
+	Uint32 clearColor;
+	clearColor = SDL_MapRGB(screen->format, 255, 255, 255);
+	SDL_FillRect(screen, &screenRect, clearColor);
+
+	return true;
+}
+
+bool load_files()
+{
+	return true;
 }
