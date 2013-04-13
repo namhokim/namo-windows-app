@@ -1,17 +1,8 @@
-#include <SDL.h>
-#include <SDL_image.h>	// for imange
-#include <SDL_ttf.h>	// for text
-
-#pragma comment(lib, "SDL.lib")
-#pragma comment(lib, "SDL_image.lib")
-#pragma comment(lib, "SDLmain.lib")
+#include "main.h"
 
 // Global variations
 SDL_Surface *screen;
 
-// Function declare
-bool initialize(const char* title, int width, int height);
-bool load_files();
 
 int main(int argc, char *argv[])
 {
