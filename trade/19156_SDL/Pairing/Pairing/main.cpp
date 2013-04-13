@@ -89,10 +89,7 @@ bool initialize(const char* title, int width, int height)
 
 	// Set Background Color
 	SDL_Rect screenRect = {0, 0, screen->w, screen->h};
-
-	Uint32 clearColor;
-	clearColor = SDL_MapRGB(screen->format, 255, 255, 255);
-	SDL_FillRect(screen, &screenRect, clearColor);
+	SDL_FillRect(screen, &screenRect, SDL_BG_COLOR_WHILTE);
 
 	return true;
 }
