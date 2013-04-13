@@ -15,4 +15,7 @@
 bool initialize(const char* title, int width, int height);
 bool load_files();
 
+// Background Colre Pre-define
+#define SDL_BG_COLOR_WHILTE	0x00FFFFFF
+
 #endif	/*_MAIN_H_*/
