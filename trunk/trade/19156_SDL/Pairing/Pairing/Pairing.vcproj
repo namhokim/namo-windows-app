@@ -86,7 +86,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="dll 복사"
-				CommandLine="copy &quot;$(SolutionDir)*.dll&quot; &quot;$(OutDir)&quot;"
+				CommandLine="copy &quot;$(SolutionDir)*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\images&quot;&#x0D;&#x0A;copy &quot;$(InputDir)images\*.jpg&quot; &quot;$(OutDir)\images&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -162,7 +162,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="dll 복사"
-				CommandLine="copy &quot;$(SolutionDir)*.dll&quot; &quot;$(OutDir)&quot;"
+				CommandLine="copy &quot;$(SolutionDir)*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\images&quot;&#x0D;&#x0A;copy &quot;$(InputDir)images\*.jpg&quot; &quot;$(OutDir)\images&quot;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -191,6 +191,10 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
+				RelativePath="..\libjpeg-8.dll"
+				>
+			</File>
+			<File
 				RelativePath="..\SDL.dll"
 				>
 			</File>
@@ -202,6 +206,14 @@
 				RelativePath="..\SDL_ttf.dll"
 				>
 			</File>
+			<Filter
+				Name="images"
+				>
+				<File
+					RelativePath=".\images\Title.jpg"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
