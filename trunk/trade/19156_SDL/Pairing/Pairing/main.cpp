@@ -6,7 +6,7 @@ SDL_Surface *screen;
 
 int main(int argc, char *argv[])
 {
-	if(!initialize("Paring Game", 640, 480)) {
+	if(!initialize("Pairing Game", 640, 480)) {
 		return 1;
 	}
 
