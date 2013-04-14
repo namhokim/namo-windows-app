@@ -5,7 +5,7 @@ const int Selection_ID = 1;
 const int Size = 3;
 const int IndexMin = 0;
 const int IndexMax = (Size-1);
-const int SolveCount = ( (Size*Size)%2==0 ? (Size*Size) : (Size*Size-1) );
+const int SolveCount = ( (Size*Size)/2 );
 
 GameLv1::GameLv1(SDL_Window* win, int pageID, int pageMenu)
 {
