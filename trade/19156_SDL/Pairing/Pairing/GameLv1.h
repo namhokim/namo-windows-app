@@ -14,7 +14,7 @@ public:
 	void CursorDown();
 	void CursorLeft();
 	void CursorRight();
-	void SpaceDown();
+	void SpaceDown();	// 스페이스바
 
 private:
 	typedef enum {
@@ -23,7 +23,7 @@ private:
 	SDL_Window* win;
 	int pageID, pageMenu, x, y;
 
-	int openCount;
+	int openCount, remainedCount;
 	g_status stat;
 	int firstX, firstY, secondX, secondY;
 
@@ -33,4 +33,6 @@ private:
 	bool IsFlipped(int x, int y);
 	void Flip(int x, int y);
 	void ResetFlips();
+	bool IsSameImage(int x, int y);
+	const char* GetImageName(int x, int y);
 };
