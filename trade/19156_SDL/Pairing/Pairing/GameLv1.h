@@ -24,6 +24,8 @@ public:
 	void CursorRight();
 	void SpaceDown();	// 스페이스바
 
+	bool IsCleared();	// 게임이 클리어되었다.
+
 private:
 	typedef enum {first, second, need_reset,} g_status;	// 게임상태
 

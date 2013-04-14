@@ -260,6 +260,8 @@ inline void check_skip_postion(int& x, int& y, int skip_pos, bool bChangeX, bool
 // 레벨1 게임 컨트롤 핸들러
 void lv1KeydownHandler(GameLv1* game, SDLKey key, game_state& state)
 {
+	if (game->IsCleared()) key = SDLK_ESCAPE;	// 게임 클리어시 아무키나
+
 	switch(key) {
 		case SDLK_ESCAPE:
 			state = menu;		// 메뉴 상태로 전환
