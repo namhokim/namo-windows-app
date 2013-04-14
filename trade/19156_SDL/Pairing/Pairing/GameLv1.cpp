@@ -8,6 +8,8 @@ const int IndexMin = 0;
 const int IndexMax = (Size-1);
 const int SolveCount = ( (Size*Size)/2 );
 const int CounterID = 4;
+const int ClearedID = 5;
+const int PreesAnyKeyID = 6;
 const int CandidateMax = 25;
 
 const char* ImagePrefix = "images\\";
@@ -32,6 +34,7 @@ void GameLv1::Reset()
 	this->x = 0;
 	this->y = 0;
 	updateSelection();
+	displayClearedGame(false);
 
 	openCount = 0;
 	remainedCount = SolveCount;
@@ -102,7 +105,12 @@ void GameLv1::SpaceDown()
 				if (IsSameImage(x,y)) {
 					firstX = firstY = secondX = secondY = -1;
 					--remainedCount;
-					stat = first;
+					if (IsCleared()) {
+						displayClearedGame(true);
+						stat = cleared;
+					} else {
+						stat = first;
+					}
 				} else {
 					secondX = x;
 					secondY = y;
@@ -253,6 +261,22 @@ void GameLv1::Shuffle()
 				ImagePrefix, gen.next(), ImageSuffix);
 			pI->file = img_file[id];// 파일 이름 설정
 			pI->bFlip = true;		// 그림을 뒤집는다
+		}
+	}
+}
+
+void GameLv1::displayClearedGame(bool bVisible)
+{
+	SDL_Page* page = GetPage();
+	if(page!=NULL)
+	{
+		TEXT_INFO* pI = page->GetTextInfo(ClearedID);
+		if (pI!=NULL) {
+			pI->bDisplay = bVisible;
+		}
+		pI = page->GetTextInfo(PreesAnyKeyID);
+		if (pI!=NULL) {
+			pI->bDisplay = bVisible;
 		}
 	}
 }

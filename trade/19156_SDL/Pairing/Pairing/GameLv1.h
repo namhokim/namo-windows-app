@@ -27,7 +27,7 @@ public:
 	bool IsCleared();	// 게임이 클리어되었다.
 
 private:
-	typedef enum {first, second, need_reset,} g_status;	// 게임상태
+	typedef enum {first, second, need_reset,cleared} g_status;	// 게임상태
 
 	SDL_Window* win;			// 윈도우
 	int pageID, pageMenu, x, y;	// 현재 페이지ID, 메인 페이지ID, 커서(x,y)
@@ -48,4 +48,5 @@ private:
 	const char* GetImageName(int x, int y);	// 이미지 이름 확인
 	void updateTryOpenCounter(int count);	// 시도한 횟수 화면에 반영
 	void Shuffle();		// 이미지를 섞기
+	void displayClearedGame(bool bVisible);	// clear 여부 화면에 표시
 };
