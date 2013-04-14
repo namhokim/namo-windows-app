@@ -5,10 +5,17 @@
 
 #define DEFAULT_FONT	"fonts\\MALGUN.TTF"
 
+typedef struct _RECT_INFO {
+	int x, y, width, height;
+	Uint8 r, g, b;
+	bool bDisplay;
+} RECT_INFO;
+
 typedef struct _IMAGE_INFO {
 	const char* file;
 	int x, y;
 	bool bDisplay;
+	bool bFlip;		// 뒤집기
 } IMAGE_INFO;
 
 typedef struct _TEXT_INFO {
@@ -29,10 +36,17 @@ public:
 	void SetBgColor(const Uint8 r, const Uint8 g, const Uint8 b);	// 배경색 지정
 	Uint32 GetBgColor(SDL_Surface *screen);	// 배경색 가져오기(SDL_Window에서 호출)
 
+	// 사각형
+	int AddFillRect(int x, int y, int width, int height,
+		Uint8 r=0x00, Uint8 g=0x00, Uint8 b=0x00);	// 채워진 사각형 추가
+	int GetRectsNumber();								// 페이지의 지정된 이미지 개수를 구함
+	RECT_INFO* GetRectInfo(int id);				// 사각형 정보 획득
+
+
 	// 이미지
 	int AddImage(const char* file, int x, int y);		// 이미지 추가
 	int GetImagesNumber();								// 페이지의 지정된 이미지 개수를 구함
-	bool GetImageInfo(int imageID, IMAGE_INFO* imageInfo);// 이미지 정보 획득
+	IMAGE_INFO* GetImageInfo(int imageID);				// 이미지 정보 획득
 
 	// 텍스트
 	int AddText(const char* text, int x, int y, int size,
@@ -44,6 +58,9 @@ public:
 private:
 	// 배경색
 	Uint8 bg_r, bg_g, bg_b;
+
+	// 사각형
+	std::vector<RECT_INFO> rects;	// 사각형들
 
 	// 이미지
 	std::vector<IMAGE_INFO> imgs;	// 이미지들

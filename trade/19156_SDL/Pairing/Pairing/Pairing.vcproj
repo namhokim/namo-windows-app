@@ -86,7 +86,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="dll 복사"
-				CommandLine="copy &quot;$(SolutionDir)*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\images&quot;&#x0D;&#x0A;copy &quot;$(InputDir)images\*.jpg&quot; &quot;$(OutDir)\images&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\fonts&quot;&#x0D;&#x0A;copy &quot;$(InputDir)fonts\*.ttf&quot; &quot;$(OutDir)\fonts&quot;"
+				CommandLine="copy &quot;$(SolutionDir)*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\images&quot;&#x0D;&#x0A;copy &quot;$(InputDir)images\*.jpg&quot; &quot;$(OutDir)\images&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\fonts&quot;&#x0D;&#x0A;copy &quot;$(InputDir)fonts\*.ttf&quot; &quot;$(OutDir)\fonts&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -162,7 +162,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="dll 복사"
-				CommandLine="copy &quot;$(SolutionDir)*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\images&quot;&#x0D;&#x0A;copy &quot;$(InputDir)images\*.jpg&quot; &quot;$(OutDir)\images&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\fonts&quot;&#x0D;&#x0A;copy &quot;$(InputDir)fonts\*.ttf&quot; &quot;$(OutDir)\fonts&quot;"
+				CommandLine="copy &quot;$(SolutionDir)*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\images&quot;&#x0D;&#x0A;copy &quot;$(InputDir)images\*.jpg&quot; &quot;$(OutDir)\images&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\fonts&quot;&#x0D;&#x0A;copy &quot;$(InputDir)fonts\*.ttf&quot; &quot;$(OutDir)\fonts&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -210,7 +210,111 @@
 				Name="images"
 				>
 				<File
+					RelativePath=".\images\1.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\10.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\11.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\12.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\13.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\14.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\15.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\16.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\17.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\18.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\19.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\2.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\20.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\21.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\22.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\23.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\24.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\25.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\3.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\4.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\5.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\6.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\7.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\8.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\9.jpg"
+					>
+				</File>
+				<File
 					RelativePath=".\images\Jace.jpg"
+					>
+				</File>
+				<File
+					RelativePath=".\images\LOL_Logo.jpg"
 					>
 				</File>
 				<File
