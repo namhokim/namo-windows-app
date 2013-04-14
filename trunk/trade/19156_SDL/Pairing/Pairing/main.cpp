@@ -24,6 +24,13 @@ game_state MenuIdToState(int menuID);	// 메뉴 선택시 화면 전환할 게임 상태 획득
 void menuKeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageIDs,
 						SDLKey key, int& menu_sel, game_state& state);
 
+void lv1KeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageIDs,
+						SDLKey key, int& x, int& y, game_state& state);
+void lv2KeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageIDs,
+					   SDLKey key, int& x, int& y, game_state& state);
+void lv3KeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageIDs,
+					   SDLKey key, int& x, int& y, game_state& state);
+
 int main(int argc, char *argv[])
 {
 	SDL_Window win("Pairing Game", 640, 640);
@@ -65,44 +72,22 @@ int main(int argc, char *argv[])
 					printf("%d\n", evt.key.keysym.sym);	// TODO: remove
 
 					switch (state) {
-				case init:
-					state = menu;					// 메뉴 상태로 전환
-					win.SelectPage(pageIDs[state]);	// 메뉴 페이지로 전환
-					break;
-				case menu:
-					menuKeydownHandler(win, pageMenu, pageIDs, evt.key.keysym.sym, menu_sel, state);
-					break;
-				case level1:
-				case level2:
-				case level3:
-					switch(evt.key.keysym.sym) {
-						case SDLK_ESCAPE:
-							state = menu;		// 메뉴 상태로 전환
+						case init:
+							state = menu;					// 메뉴 상태로 전환
 							win.SelectPage(pageIDs[state]);	// 메뉴 페이지로 전환
 							break;
-						case SDLK_UP:
-							sel_y--;
-							if (sel_y==1) sel_y++;	// 가운데는 선택이 불가능 하므로 건너뛴다
-							if (sel_y<0) sel_y = 2;
+						case menu:
+							menuKeydownHandler(win, pageMenu, pageIDs, evt.key.keysym.sym, menu_sel, state);
 							break;
-						case SDLK_DOWN:
-							sel_y++;
-							if (sel_y==1) sel_y++;
-							if (sel_y>2) sel_y = 0;
+						case level1:
+							lv1KeydownHandler(win, pageLv1, pageIDs, evt.key.keysym.sym, sel_x, sel_y, state);
+							printf("cursor position : (%d, %d)\n", sel_x, sel_y);
 							break;
-						case SDLK_LEFT:
-							sel_x--;
-							if (sel_x==1) sel_x++;
-							if (sel_x<0) sel_x = 2;
+						case level2:
+							lv1KeydownHandler(win, pageLv1, pageIDs, evt.key.keysym.sym, sel_x, sel_y, state);
+						case level3:
+							lv1KeydownHandler(win, pageLv1, pageIDs, evt.key.keysym.sym, sel_x, sel_y, state);
 							break;
-						case SDLK_RIGHT:
-							sel_x++;
-							if (sel_x==1) sel_x++;
-							if (sel_x>2) sel_x = 0;
-							break;
-					}
-					printf("cursor position : (%d, %d)\n", sel_x, sel_y);
-					break;
 					}
 					win.Refresh();
 
@@ -251,3 +236,62 @@ void menuKeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageI
 
 //////////////////////////////////////////////////////////////////////////
 // 레벨1 게임 화면
+
+void lv1KeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageIDs,
+					   SDLKey key, int& x, int& y, game_state& state)
+{
+	int MIN_POS = 0;
+	int MAX_POS = 2;	// depend on size
+	int SKIP_POS = 1;	// depend on size
+
+	switch(key) {
+		case SDLK_ESCAPE:
+			state = menu;		// 메뉴 상태로 전환
+			window.SelectPage(pageIDs[state]);	// 메뉴 페이지로 전환
+			break;
+		case SDLK_UP:
+			y--;
+			if (y==SKIP_POS) y++;	// 가운데는 선택이 불가능 하므로 건너뛴다
+			if (y<MIN_POS) y = MAX_POS;
+			break;
+		case SDLK_DOWN:
+			y++;
+			if (y==SKIP_POS) y++;
+			if (y>MAX_POS) y = MIN_POS;
+			break;
+		case SDLK_LEFT:
+			x--;
+			if (x==SKIP_POS) x++;
+			if (x<MIN_POS) x = MAX_POS;
+			break;
+		case SDLK_RIGHT:
+			x++;
+			if (x==SKIP_POS) x++;
+			if (x>MAX_POS) x = MIN_POS;
+			break;
+		case SDLK_SPACE:	// 선택
+			break;
+	}
+}
+
+void lv2KeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageIDs,
+					   SDLKey key, int& x, int& y, game_state& state)
+{
+	switch(key) {
+		case SDLK_ESCAPE:
+			state = menu;		// 메뉴 상태로 전환
+			window.SelectPage(pageIDs[state]);	// 메뉴 페이지로 전환
+			break;
+	}
+}
+
+void lv3KeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageIDs,
+					   SDLKey key, int& x, int& y, game_state& state)
+{
+	switch(key) {
+		case SDLK_ESCAPE:
+			state = menu;		// 메뉴 상태로 전환
+			window.SelectPage(pageIDs[state]);	// 메뉴 페이지로 전환
+			break;
+	}
+}
