@@ -95,6 +95,18 @@ bool SDL_Window::SelectPage(int pageID)
 	}
 }
 
+SDL_Page* SDL_Window::GetPage(int pageID)
+{
+	if ( pageID > int(pages.size()-1) )	// 잛못된 Page ID 지정시
+	{
+		return NULL;
+	}
+	else
+	{
+		return pages[pageID];
+	}
+}
+
 void SDL_Window::Refresh()
 {
 	int pageId = curr_page;
