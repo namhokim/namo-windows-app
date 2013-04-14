@@ -2,6 +2,8 @@
 
 #include "SDL_Window.h"
 
+#define BUF_SIZE 10
+
 class GameLv1
 {
 public:
@@ -35,4 +37,6 @@ private:
 	void ResetFlips();
 	bool IsSameImage(int x, int y);
 	const char* GetImageName(int x, int y);
+	void updateTryOpenCounter(int count);
+	char buffer_counter[BUF_SIZE];
 };
