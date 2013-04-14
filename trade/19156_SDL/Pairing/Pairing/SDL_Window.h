@@ -32,4 +32,7 @@ private:
 	std::vector<SDL_Page*> pages;	// 페이지들
 	int curr_page;					// 선택된 페이지(시작은 0부터)
 
+	// draws
+	void drawBackground(SDL_Page* page);	// 배경을 그린다
+
 };

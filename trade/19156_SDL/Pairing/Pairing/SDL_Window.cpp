@@ -72,9 +72,7 @@ void SDL_Window::Refresh()
 	SDL_Page* page = pages[pageId];
 
 	// 배경색 그린다.
-	SDL_Rect screenRect = {0, 0, screen->w, screen->h};
-	Uint32 bgColor = page->GetBgColor(screen);
- 	SDL_FillRect(screen, &screenRect, bgColor);
+	drawBackground(page);
 
 	// 이미지 그린다.
 	//SDL_BlitSurface(image,NULL, screen, &dest);
@@ -82,4 +80,15 @@ void SDL_Window::Refresh()
 	// 텍스트 그린다.
 
 	SDL_Flip(screen);	// 스크린 영역 전체를 새로고침
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+// private methods
+
+void SDL_Window::drawBackground(SDL_Page* page)
+{
+	SDL_Rect screenRect = {0, 0, screen->w, screen->h};
+	Uint32 bgColor = page->GetBgColor(screen);
+	SDL_FillRect(screen, &screenRect, bgColor);
 }
