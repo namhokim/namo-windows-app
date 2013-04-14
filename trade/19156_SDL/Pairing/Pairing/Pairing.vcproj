@@ -206,26 +206,6 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
-			<File
-				RelativePath="..\libfreetype-6.dll"
-				>
-			</File>
-			<File
-				RelativePath="..\libjpeg-8.dll"
-				>
-			</File>
-			<File
-				RelativePath="..\SDL.dll"
-				>
-			</File>
-			<File
-				RelativePath="..\SDL_image.dll"
-				>
-			</File>
-			<File
-				RelativePath="..\SDL_ttf.dll"
-				>
-			</File>
 			<Filter
 				Name="images"
 				>
@@ -239,6 +219,30 @@
 				>
 				<File
 					RelativePath=".\fonts\MALGUN.TTF"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="dlls"
+				>
+				<File
+					RelativePath="..\libfreetype-6.dll"
+					>
+				</File>
+				<File
+					RelativePath="..\libjpeg-8.dll"
+					>
+				</File>
+				<File
+					RelativePath="..\SDL.dll"
+					>
+				</File>
+				<File
+					RelativePath="..\SDL_image.dll"
+					>
+				</File>
+				<File
+					RelativePath="..\SDL_ttf.dll"
 					>
 				</File>
 			</Filter>
