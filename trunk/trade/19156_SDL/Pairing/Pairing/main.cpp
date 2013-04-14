@@ -1,29 +1,26 @@
 #include "SDL_Window.h"
 
+#include <windows.h>
 #include <iostream>
 using namespace std;
 
+void makeInitPage(SDL_Page& page);
+
 int main(int argc, char *argv[])
 {
-	SDL_Window w("Pairing Game", 640, 640);
+	SDL_Window win("Pairing Game", 640, 640);
+	SDL_Page pageInit, pageMenu;
 
-	SDL_Page pageInit;
-	pageInit.SetBgColor(255, 255, 255);	// white
-	pageInit.AddImage("images\\Title.jpg", 125, 0);
-	pageInit.AddImage("images\\Jace.jpg", 75, 227);
-	pageInit.AddText("Press Any Key To Start", 200, 520, 21,  0, 112, 192);
-	pageInit.AddText("Made by SJS", 500, 600, 21, 112, 48, 160);
-
-	SDL_Page pageMenu;
+	makeInitPage(pageInit);
 	pageMenu.SetBgColor(0, 0, 0);		// black
 
-	int idInit = w.AddPage(&pageInit);
-	int idMenu = w.AddPage(&pageMenu);
+	int idInit = win.AddPage(&pageInit);
+	int idMenu = win.AddPage(&pageMenu);
 
-	if(!w.Initialize()) {
+	if(!win.Initialize()) {
 		return 1;
 	} else {
-		w.Refresh();
+		win.Refresh();
 	}
 
 	bool bRunning = true;	
@@ -38,10 +35,10 @@ int main(int argc, char *argv[])
 					bRunning=false;
 					break;
 				case SDLK_1:
-					w.SelectPage(idInit);
+					win.SelectPage(idInit);
 					break;
 				case SDLK_2:
-					w.SelectPage(idMenu);
+					win.SelectPage(idMenu);
 					break;
 				case SDLK_LEFT:
 					printf("<-\n");
@@ -50,62 +47,21 @@ int main(int argc, char *argv[])
 					printf("->\n");
 					break;
 				}
-				w.Refresh();
+				win.Refresh();
 			}
 		}
+		Sleep(1);	// for save the CPU usage (yield)
 	}
 
-	////We will display bitmap
-	//SDL_Surface *image;
-	//SDL_Surface *image2;   //Using *SDL_image.h
-	//image2 = IMG_Load("images\\Title.jpg"); //Using *SDL_image.h
-	//if(image2==NULL){
-	//	printf("Unable to load PNG: %s\n", IMG_GetError());
-	//	return 1;
-	//}
-	//image = SDL_DisplayFormat(image2);
-	//SDL_FreeSurface(image2);
-
-	////Positioning and Display
-	//SDL_Rect dest;
-	//dest.x = 0;
-	//dest.y = 0;
-
-	//SDL_Rect imageRect = {0, 0, 402, 227};
-
-	//SDL_FillRect(screen , &imageRect , 0);
-	//SDL_BlitSurface(image,NULL, screen, &dest);
-	//SDL_Flip(screen);
-
-	//bool gameOn = true;
-	//SDL_Event evt;
-	//while(gameOn){
-	//	while(SDL_PollEvent(&evt)){
-	//		if(evt.type==SDL_KEYDOWN){
-	//			switch(evt.key.keysym.sym)
-	//			{
-	//			case SDLK_a:
-	//				printf("Pressing a");
-	//				break;
-	//			case SDLK_LEFT:
-	//				dest.x -= 25;
-	//				break;
-	//			case SDLK_RIGHT:
-	//				dest.x += 25;  
-	//				break;
-	//			case SDLK_q:
-	//				gameOn=false;
-	//				break;
-	//			case SDLK_d:
-	//				printf("pressed d");
-	//				break;
-	//			}
-	//			SDL_FillRect(screen , NULL , 0);
-	//			SDL_BlitSurface(image,NULL, screen, &dest);
-	//			SDL_Flip(screen);
-	//		}
-	//	}
-	//}
-
 	return 0;
+}
+
+
+void makeInitPage(SDL_Page& page)
+{
+	page.SetBgColor(255, 255, 255);	// white
+	page.AddImage("images\\Title.jpg", 125, 0);
+	page.AddImage("images\\Jace.jpg", 75, 227);
+	page.AddText("Press Any Key To Start", 200, 520, 21,  0, 112, 192);
+	page.AddText("Made by SJS", 500, 600, 21, 112, 48, 160);
 }
