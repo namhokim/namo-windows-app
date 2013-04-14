@@ -44,7 +44,7 @@ bool SDL_Window::Initialize()
 	return bInitialized;
 }
 
-bool SDL_Window::IsInitialized()
+void SDL_Window::AddPage(int page_id, SDL_Page& page)
 {
-	return false;
+
 }
