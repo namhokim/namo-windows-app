@@ -86,7 +86,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="dll 복사"
-				CommandLine="copy &quot;$(SolutionDir)*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\images&quot;&#x0D;&#x0A;copy &quot;$(InputDir)images\*.jpg&quot; &quot;$(OutDir)\images&quot;&#x0D;&#x0A;"
+				CommandLine="copy &quot;$(SolutionDir)*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\images&quot;&#x0D;&#x0A;copy &quot;$(InputDir)images\*.jpg&quot; &quot;$(OutDir)\images&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\fonts&quot;&#x0D;&#x0A;copy &quot;$(InputDir)fonts\*.ttf&quot; &quot;$(OutDir)\fonts&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -162,7 +162,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="dll 복사"
-				CommandLine="copy &quot;$(SolutionDir)*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\images&quot;&#x0D;&#x0A;copy &quot;$(InputDir)images\*.jpg&quot; &quot;$(OutDir)\images&quot;&#x0D;&#x0A;"
+				CommandLine="copy &quot;$(SolutionDir)*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\images&quot;&#x0D;&#x0A;copy &quot;$(InputDir)images\*.jpg&quot; &quot;$(OutDir)\images&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\fonts&quot;&#x0D;&#x0A;copy &quot;$(InputDir)fonts\*.ttf&quot; &quot;$(OutDir)\fonts&quot;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -207,6 +207,10 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
+				RelativePath="..\libfreetype-6.dll"
+				>
+			</File>
+			<File
 				RelativePath="..\libjpeg-8.dll"
 				>
 			</File>
@@ -227,6 +231,14 @@
 				>
 				<File
 					RelativePath=".\images\Title.jpg"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="fonts"
+				>
+				<File
+					RelativePath=".\fonts\MALGUN.TTF"
 					>
 				</File>
 			</Filter>

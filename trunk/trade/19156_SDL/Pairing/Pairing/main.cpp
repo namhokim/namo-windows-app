@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
 	SDL_Page pageInit;
 	pageInit.SetBgColor(255, 255, 255);	// white
 	pageInit.AddImage("images\\Title.jpg", 30, 10);
+	pageInit.AddText("Press Any Key To Start", 130, 280, 21,  255);	// red
 
 	SDL_Page pageMenu;
 	pageMenu.SetBgColor(0, 0, 0);		// black
