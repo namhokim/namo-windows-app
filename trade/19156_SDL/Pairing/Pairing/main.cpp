@@ -140,14 +140,14 @@ void makeLevel1(SDL_Page& page)
 	page.AddFillRect(167, 167, 103, 103, 0xff, 0x00, 0x00);	// red (always 2nd)
 
 	fg_b = page.AddImage("images\\1.jpg", 170, 170);
-	page.AddImage("images\\2.jpg", 270, 170);
-	page.AddImage("images\\3.jpg", 370, 170);
-	page.AddImage("images\\4.jpg", 170, 270);
+	page.AddImage("images\\1.jpg", 270, 170);
+	page.AddImage("images\\2.jpg", 370, 170);
+	page.AddImage("images\\2.jpg", 170, 270);
 	not_flip_id = page.AddImage("images\\LOL_Logo.jpg", 270, 270);	// logo
-	page.AddImage("images\\6.jpg", 370, 270);
-	page.AddImage("images\\7.jpg", 170, 370);
-	page.AddImage("images\\8.jpg", 270, 370);
-	fg_e = page.AddImage("images\\9.jpg", 370, 370);
+	page.AddImage("images\\3.jpg", 370, 270);
+	page.AddImage("images\\3.jpg", 170, 370);
+	page.AddImage("images\\4.jpg", 270, 370);
+	fg_e = page.AddImage("images\\4.jpg", 370, 370);
 
 	for (int id=fg_b; id<=fg_e; ++id) {
 		if(id!=not_flip_id)
