@@ -27,11 +27,6 @@ game_state MenuIdToState(int menuID);	// 메뉴 선택시 화면 전환할 게임 상태 획득
 void menuKeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageIDs,
 						SDLKey key, int& menu_sel, game_state& state);
 
-void lv2KeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageIDs,
-					   SDLKey key, int& x, int& y, game_state& state);
-void lv3KeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageIDs,
-					   SDLKey key, int& x, int& y, game_state& state);
-
 void lv1KeydownHandler(GameLv1* game, SDLKey key, game_state& state);
 void lv2KeydownHandler(GameLv2* game, SDLKey key, game_state& state);
 void lv3KeydownHandler(GameLv3* game, SDLKey key, game_state& state);
@@ -296,9 +291,43 @@ void lv1KeydownHandler(GameLv1* game, SDLKey key, game_state& state)
 
 void lv2KeydownHandler(GameLv2* game, SDLKey key, game_state& state)
 {
+	//if (game->IsCleared()) key = SDLK_ESCAPE;	// 게임 클리어시 아무키나
 
+	//switch(key) {
+	//	case SDLK_ESCAPE:
+	//		state = menu;		// 메뉴 상태로 전환
+	//		game->Endgame();
+	//		game->GoMenuPage();	// 메뉴 페이지로 전환
+	//		break;
+	//	case SDLK_UP:
+	//	case SDLK_DOWN:
+	//	case SDLK_LEFT:
+	//	case SDLK_RIGHT:
+	//		game->CursorMove(key);
+	//		break;
+	//	case SDLK_SPACE:	// 선택
+	//		game->SpaceDown();
+	//		break;
+	//}
 }
 void lv3KeydownHandler(GameLv3* game, SDLKey key, game_state& state)
 {
+	//if (game->IsCleared()) key = SDLK_ESCAPE;	// 게임 클리어시 아무키나
 
+	//switch(key) {
+	//	case SDLK_ESCAPE:
+	//		state = menu;		// 메뉴 상태로 전환
+	//		game->Endgame();
+	//		game->GoMenuPage();	// 메뉴 페이지로 전환
+	//		break;
+	//	case SDLK_UP:
+	//	case SDLK_DOWN:
+	//	case SDLK_LEFT:
+	//	case SDLK_RIGHT:
+	//		game->CursorMove(key);
+	//		break;
+	//	case SDLK_SPACE:	// 선택
+	//		game->SpaceDown();
+	//		break;
+	//}
 }

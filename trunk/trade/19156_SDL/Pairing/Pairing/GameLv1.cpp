@@ -1,17 +1,19 @@
 #include "GameLv1.h"
 #include "RndGen.h"
 
-const int Distance = 100;
-const int Selection_ID = 1;
-const int Size = 3;
-const int IndexMin = 0;
-const int IndexMax = (Size-1);
-const int SolveCount = ( (Size*Size)/2 );
-const int ElapTimeID = 3;
-const int CounterID = 4;
-const int ClearedID = 5;
-const int PreesAnyKeyID = 6;
-const int CandidateMax = 25;
+namespace lv1 {
+	const int Distance = 100;
+	const int Selection_ID = 1;
+	const int Size = 3;
+	const int IndexMin = 0;
+	const int IndexMax = (Size-1);
+	const int SolveCount = ( (Size*Size)/2 );
+	const int ElapTimeID = 3;
+	const int CounterID = 4;
+	const int ClearedID = 5;
+	const int PreesAnyKeyID = 6;
+	const int CandidateMax = 25;
+}
 
 const char* ImagePrefix = "images\\";
 const char* ImageSuffix = ".jpg";
@@ -129,7 +131,7 @@ void GameLv1::UpdateElapTime()
 	SDL_Page* page = GetPage();
 	if(page!=NULL)
 	{
-		TEXT_INFO* pI = page->GetTextInfo(ElapTimeID);
+		TEXT_INFO* pI = page->GetTextInfo(lv1::ElapTimeID);
 		if (pI!=NULL) {
 			int t = (SDL_GetTicks() - startTime)/1000;
 			sprintf_s(buffer_time, 20, "%d", t);
@@ -152,7 +154,7 @@ RECT_INFO* GameLv1::GetSelRect()
 {
 	SDL_Page* page = GetPage();
 	if(page==NULL) return NULL;
-	else return page->GetRectInfo(Selection_ID);
+	else return page->GetRectInfo(lv1::Selection_ID);
 }
 
 void GameLv1::updateSelection()
@@ -160,8 +162,8 @@ void GameLv1::updateSelection()
 	RECT_INFO* sel = GetSelRect();
 	if(sel==NULL) return;
 
-	sel->x = sel->x_ori + (x*Distance);
-	sel->y = sel->y_ori + (y*Distance);
+	sel->x = sel->x_ori + (x*lv1::Distance);
+	sel->y = sel->y_ori + (y*lv1::Distance);
 
 	printf("(%d,%d)\n", sel->x, sel->y);
 }
@@ -171,7 +173,7 @@ bool GameLv1::IsFlipped(int x, int y)
 	SDL_Page* page = GetPage();
 	if(page!=NULL)
 	{
-		IMAGE_INFO* pI = page->GetImageInfo(x + (y * Size));
+		IMAGE_INFO* pI = page->GetImageInfo(x + (y * lv1::Size));
 		if (pI!=NULL)
 		{
 			return (pI->bFlip);
@@ -185,7 +187,7 @@ void GameLv1::Flip(int x, int y)
 	SDL_Page* page = GetPage();
 	if(page==NULL) return;
 
-	IMAGE_INFO* pI = page->GetImageInfo(x + (y * Size));
+	IMAGE_INFO* pI = page->GetImageInfo(x + (y * lv1::Size));
 	if (pI!=NULL) {
 		pI->bFlip = !(pI->bFlip);
 	}
@@ -224,7 +226,7 @@ const char* GameLv1::GetImageName(int x, int y)
 	SDL_Page* page = GetPage();
 	if(page!=NULL)
 	{
-		IMAGE_INFO* pI = page->GetImageInfo(x + (y * Size));
+		IMAGE_INFO* pI = page->GetImageInfo(x + (y * lv1::Size));
 		if (pI!=NULL) {
 			return pI->file;
 		}
@@ -237,7 +239,7 @@ void GameLv1::updateTryOpenCounter(int count)
 	SDL_Page* page = GetPage();
 	if(page!=NULL)
 	{
-		TEXT_INFO* pI = page->GetTextInfo(CounterID);
+		TEXT_INFO* pI = page->GetTextInfo(lv1::CounterID);
 		if (pI!=NULL) {
 			_itoa_s(openCount, buffer_counter, BUF_SIZE, 10);
 			pI->text = buffer_counter;
@@ -251,7 +253,7 @@ void GameLv1::Shuffle()
 	if(page!=NULL)
 	{
 		// Generate
-		RndGen gen(CandidateMax, SolveCount*2);
+		RndGen gen(lv1::CandidateMax, lv1::SolveCount*2);
 		gen.generate();
 
 		int nums = page->GetImagesNumber();
@@ -277,11 +279,11 @@ void GameLv1::displayClearedGame(bool bVisible)
 	SDL_Page* page = GetPage();
 	if(page!=NULL)
 	{
-		TEXT_INFO* pI = page->GetTextInfo(ClearedID);
+		TEXT_INFO* pI = page->GetTextInfo(lv1::ClearedID);
 		if (pI!=NULL) {
 			pI->bDisplay = bVisible;
 		}
-		pI = page->GetTextInfo(PreesAnyKeyID);
+		pI = page->GetTextInfo(lv1::PreesAnyKeyID);
 		if (pI!=NULL) {
 			pI->bDisplay = bVisible;
 		}
@@ -298,7 +300,7 @@ void GameLv1::initGame()
 	updateSelection();
 	displayClearedGame(false);
 	openCount = 0;
-	remainedCount = SolveCount;
+	remainedCount = lv1::SolveCount;
 	stat = first;
 	firstX = firstY = secondX = secondY = -1;
 	updateTryOpenCounter(openCount);
@@ -323,22 +325,22 @@ void GameLv1::stopTimer()
 void GameLv1::CursorUP()
 {
 	y--;
-	if (y<IndexMin) y = IndexMax;
+	if (y<lv1::IndexMin) y = lv1::IndexMax;
 }
 void GameLv1::CursorDown()
 {
 	y++;
-	if (y>IndexMax) y = IndexMin;
+	if (y>lv1::IndexMax) y = lv1::IndexMin;
 }
 void GameLv1::CursorLeft()
 {
 	x--;
-	if (x<IndexMin) x = IndexMax;
+	if (x<lv1::IndexMin) x = lv1::IndexMax;
 }
 void GameLv1::CursorRight()
 {
 	x++;
-	if (x>IndexMax) x = IndexMin;
+	if (x>lv1::IndexMax) x = lv1::IndexMin;
 }
 
 Uint32 GameLv1::callbackTimeUpdate(Uint32 interval, void *param)
