@@ -132,27 +132,26 @@ void makeMenuPage(SDL_Page& page)
 
 void makeLevel1(SDL_Page& page)
 {
-	int tileBegin, tileEnd;
+	int not_flip_id, fg_b, fg_e;
 
 	page.SetBgColor(0xff, 0xff, 0xff);	// white
 	page.AddText("Level 1", 100, 30, 21);
 	page.AddFillRect(160, 160, 315, 315, 0x00, 0x00, 0xff);	// blue
 	page.AddFillRect(167, 167, 103, 103, 0xff, 0x00, 0x00);	// red (always 2nd)
 
-	page.AddImage("images\\LOL_Logo.jpg", 270, 270);
-
-	tileBegin = page.AddImage("images\\1.jpg", 170, 170);
+	fg_b = page.AddImage("images\\1.jpg", 170, 170);
 	page.AddImage("images\\2.jpg", 270, 170);
 	page.AddImage("images\\3.jpg", 370, 170);
 	page.AddImage("images\\4.jpg", 170, 270);
-	// logo
+	not_flip_id = page.AddImage("images\\LOL_Logo.jpg", 270, 270);	// logo
 	page.AddImage("images\\6.jpg", 370, 270);
 	page.AddImage("images\\7.jpg", 170, 370);
 	page.AddImage("images\\8.jpg", 270, 370);
-	tileEnd = page.AddImage("images\\9.jpg", 370, 370);
+	fg_e = page.AddImage("images\\9.jpg", 370, 370);
 
-	for (int id=tileBegin; id<=tileEnd; ++id) {
-		page.GetImageInfo(id)->bFlip = true;
+	for (int id=fg_b; id<=fg_e; ++id) {
+		if(id!=not_flip_id)
+			page.GetImageInfo(id)->bFlip = true;
 	}
 }
 void makeLevel2(SDL_Page& page)
