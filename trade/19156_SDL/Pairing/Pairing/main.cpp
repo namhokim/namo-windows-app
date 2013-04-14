@@ -17,11 +17,16 @@ typedef enum {
 void makeInitPage(SDL_Page& page);	// 최초 화면 초기화
 void makeMenuPage(SDL_Page& page);	// 최초 화면 초기화
 void changeMenuSel(SDL_Page& page, int menu_sel);	// 메뉴 선택 화면 변경
+game_state MenuIdToState(int menuID);	// 메뉴 선택시 화면 전환할 게임 상태 획득
+
+void makeLevel1(SDL_Page& page);	// 게임 레벨 1 화면 초기화
+void makeLevel2(SDL_Page& page);	// 게임 레벨 2 화면 초기화
+void makeLevel3(SDL_Page& page);	// 게임 레벨 3 화면 초기화
 
 int main(int argc, char *argv[])
 {
 	SDL_Window win("Pairing Game", 640, 640);
-	SDL_Page pageInit, pageMenu;
+	SDL_Page pageInit, pageMenu, pageLv1, pageLv2, pageLv3;
 	int pageIDs[quit];
 
 	if(!win.Initialize()) {
@@ -30,10 +35,16 @@ int main(int argc, char *argv[])
 		// init pages
 		makeInitPage(pageInit);
 		makeMenuPage(pageMenu);
+		makeLevel1(pageLv1);
+		makeLevel2(pageLv2);
+		makeLevel3(pageLv3);
 
 		// page add
 		pageIDs[init] = win.AddPage(&pageInit);
 		pageIDs[menu] = win.AddPage(&pageMenu);
+		pageIDs[level1] = win.AddPage(&pageLv1);
+		pageIDs[level2] = win.AddPage(&pageLv2);
+		pageIDs[level3] = win.AddPage(&pageLv3);
 
 		// first refresh
 		win.Refresh();
@@ -52,7 +63,7 @@ int main(int argc, char *argv[])
 			switch (state) {
 				case init:
 					state = menu;					// 메뉴 상태로 전환
-					win.SelectPage(pageIDs[menu]);	// 메뉴 페이지로 전환
+					win.SelectPage(pageIDs[state]);	// 메뉴 페이지로 전환
 					break;
 				case menu:
 					switch(evt.key.keysym.sym) {
@@ -69,6 +80,10 @@ int main(int argc, char *argv[])
 							if (menu_sel>SEL_LV3) menu_sel = SEL_LV1;
 							changeMenuSel(pageMenu, menu_sel);
 							break;
+						case SDLK_RETURN:
+							state = MenuIdToState(menu_sel);
+							win.SelectPage(pageIDs[state]);
+							break;
 					}
 					break;
 				case level1:
@@ -77,7 +92,7 @@ int main(int argc, char *argv[])
 					switch(evt.key.keysym.sym) {
 						case SDLK_ESCAPE:
 							state = menu;		// 메뉴 상태로 전환
-							win.SelectPage(pageIDs[menu]);	// 메뉴 페이지로 전환
+							win.SelectPage(pageIDs[state]);	// 메뉴 페이지로 전환
 							break;
 					}
 					break;
@@ -134,4 +149,31 @@ void changeMenuSel(SDL_Page& page, int menu_sel)
 			page.GetTextInfo(3)->bDisplay = true;
 			break;
 	}
+}
+
+game_state MenuIdToState(int menuID)
+{
+	switch(menuID) {
+		case SEL_LV1:
+			return level1;
+		case SEL_LV2:
+			return level2;
+		case SEL_LV3:
+			return level3;
+		default:
+			return menu;
+	}
+}
+
+void makeLevel1(SDL_Page& page)
+{
+	page.SetBgColor(0x00, 0xff, 0x00);	// green
+}
+void makeLevel2(SDL_Page& page)
+{
+	page.SetBgColor(0x00, 0x00, 0xff);	// blue
+}
+void makeLevel3(SDL_Page& page)
+{
+	page.SetBgColor(0xff, 0x00, 0x00);	// red
 }
