@@ -7,6 +7,7 @@ const int Size = 3;
 const int IndexMin = 0;
 const int IndexMax = (Size-1);
 const int SolveCount = ( (Size*Size)/2 );
+const int ElapTimeID = 3;
 const int CounterID = 4;
 const int ClearedID = 5;
 const int PreesAnyKeyID = 6;
@@ -21,28 +22,28 @@ GameLv1::GameLv1(SDL_Window* win, int pageID, int pageMenu)
 	this->win = win;
 	this->pageID = pageID;
 	this->pageMenu = pageMenu;
-
-	Reset();
+	tID = NULL;
 }
 
 GameLv1::~GameLv1(void)
 {
 }
 
-void GameLv1::Reset()
+void GameLv1::StartGame()
 {
-	this->x = 0;
-	this->y = 0;
-	updateSelection();
-	displayClearedGame(false);
+	// 초기화
+	initGame();
 
-	openCount = 0;
-	remainedCount = SolveCount;
-	stat = first;
-	firstX = firstY = secondX = secondY = -1;
-
-	updateTryOpenCounter(openCount);
+	// 그림 섞기
 	Shuffle();
+
+	// 타이머 시작
+	startTimer();
+}
+void GameLv1::Endgame()
+{
+	// 타이머 정지
+	stopTimer();
 }
 
 void GameLv1::GoMenuPage()
@@ -50,32 +51,23 @@ void GameLv1::GoMenuPage()
 	win->SelectPage(pageMenu);
 }
 
-void GameLv1::CursorUP()
+void GameLv1::CursorMove(SDLKey key)
 {
 	ResetFlips();
-	y--;
-	if (y<IndexMin) y = IndexMax;
-	updateSelection();
-}
-void GameLv1::CursorDown()
-{
-	ResetFlips();
-	y++;
-	if (y>IndexMax) y = IndexMin;
-	updateSelection();
-}
-void GameLv1::CursorLeft()
-{
-	ResetFlips();
-	x--;
-	if (x<IndexMin) x = IndexMax;
-	updateSelection();
-}
-void GameLv1::CursorRight()
-{
-	ResetFlips();
-	x++;
-	if (x>IndexMax) x = IndexMin;
+	switch(key) {
+		case SDLK_UP:
+			CursorUP();
+			break;
+		case SDLK_DOWN:
+			CursorDown();
+			break;
+		case SDLK_LEFT:
+			CursorLeft();
+			break;
+		case SDLK_RIGHT:
+			CursorRight();
+			break;
+	}
 	updateSelection();
 }
 
@@ -130,6 +122,21 @@ void GameLv1::SpaceDown()
 bool GameLv1::IsCleared()
 {
 	return (remainedCount==0);	// 남은 그림이 없을 때 완료
+}
+
+void GameLv1::UpdateElapTime()
+{
+	SDL_Page* page = GetPage();
+	if(page!=NULL)
+	{
+		TEXT_INFO* pI = page->GetTextInfo(ElapTimeID);
+		if (pI!=NULL) {
+			int t = (SDL_GetTicks() - startTime)/1000;
+			sprintf_s(buffer_time, 20, "%d", t);
+			pI->text = buffer_time;
+			win->Refresh();
+		}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -279,4 +286,67 @@ void GameLv1::displayClearedGame(bool bVisible)
 			pI->bDisplay = bVisible;
 		}
 	}
+
+	// 타이머 중지
+	stopTimer();
+}
+
+void GameLv1::initGame()
+{
+	this->x = 0;
+	this->y = 0;
+	updateSelection();
+	displayClearedGame(false);
+	openCount = 0;
+	remainedCount = SolveCount;
+	stat = first;
+	firstX = firstY = secondX = secondY = -1;
+	updateTryOpenCounter(openCount);
+}
+
+void GameLv1::startTimer()
+{
+	startTime = SDL_GetTicks();
+	stopTimer();
+	tID = SDL_AddTimer(1000, GameLv1::callbackTimeUpdate, this);
+
+}
+
+void GameLv1::stopTimer()
+{
+	if(tID!=NULL) {
+		SDL_RemoveTimer(tID);
+		tID = NULL;
+	}
+}
+
+void GameLv1::CursorUP()
+{
+	y--;
+	if (y<IndexMin) y = IndexMax;
+}
+void GameLv1::CursorDown()
+{
+	y++;
+	if (y>IndexMax) y = IndexMin;
+}
+void GameLv1::CursorLeft()
+{
+	x--;
+	if (x<IndexMin) x = IndexMax;
+}
+void GameLv1::CursorRight()
+{
+	x++;
+	if (x>IndexMax) x = IndexMin;
+}
+
+Uint32 GameLv1::callbackTimeUpdate(Uint32 interval, void *param)
+{
+	printf("callback\n");
+
+	GameLv1* game = (GameLv1*)param;
+	game->UpdateElapTime();
+
+	return(interval);	// re-do
 }
