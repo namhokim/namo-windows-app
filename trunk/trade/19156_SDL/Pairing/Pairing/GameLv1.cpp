@@ -119,6 +119,11 @@ void GameLv1::SpaceDown()
 		x, y, openCount, stat, remainedCount);
 }
 
+bool GameLv1::IsCleared()
+{
+	return (remainedCount==0);	// 남은 그림이 없을 때 완료
+}
+
 //////////////////////////////////////////////////////////////////////////
 // private
 
