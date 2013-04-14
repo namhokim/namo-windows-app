@@ -86,7 +86,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="dll 복사"
-				CommandLine="copy &quot;$(SolutionDir)*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\images&quot;&#x0D;&#x0A;copy &quot;$(InputDir)images\*.jpg&quot; &quot;$(OutDir)\images&quot;"
+				CommandLine="copy &quot;$(SolutionDir)*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\images&quot;&#x0D;&#x0A;copy &quot;$(InputDir)images\*.jpg&quot; &quot;$(OutDir)\images&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -162,7 +162,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="dll 복사"
-				CommandLine="copy &quot;$(SolutionDir)*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\images&quot;&#x0D;&#x0A;copy &quot;$(InputDir)images\*.jpg&quot; &quot;$(OutDir)\images&quot;"
+				CommandLine="copy &quot;$(SolutionDir)*.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;mkdir &quot;$(OutDir)\images&quot;&#x0D;&#x0A;copy &quot;$(InputDir)images\*.jpg&quot; &quot;$(OutDir)\images&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -178,6 +178,10 @@
 				RelativePath=".\main.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\SDL_Window.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="헤더 파일"
@@ -185,7 +189,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\main.h"
+				RelativePath=".\SDL_Window.h"
 				>
 			</File>
 		</Filter>
