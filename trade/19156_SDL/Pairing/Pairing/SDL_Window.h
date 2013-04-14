@@ -18,6 +18,7 @@ public:
 
 	int AddPage(SDL_Page* page);	// 페이지 추가, 반환 값(페이지 id)
 	bool SelectPage(int pageID);	// 페이지 선택(전환)
+	SDL_Page* GetPage(int pageID);	// 페이지 레퍼런스 획득
 
 	void Refresh();					// 화면 새로고침
 

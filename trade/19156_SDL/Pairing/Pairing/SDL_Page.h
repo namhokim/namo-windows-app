@@ -6,7 +6,7 @@
 #define DEFAULT_FONT	"fonts\\MALGUN.TTF"
 
 typedef struct _RECT_INFO {
-	int x, y, width, height;
+	int x, y, width, height, x_ori, y_ori;
 	Uint8 r, g, b;
 	bool bDisplay;
 } RECT_INFO;

@@ -22,7 +22,7 @@ void makeLevel3(SDL_Page& page);	// 게임 레벨 3 화면 초기화
 void changeMenuSel(SDL_Page& page, int menu_sel);	// 메뉴 선택 화면 변경
 game_state MenuIdToState(int menuID);	// 메뉴 선택시 화면 전환할 게임 상태 획득
 void menuKeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageIDs,
-						SDLKey key, int& menu_sel, game_state& state);
+						SDLKey key, int& menu_sel, int& x, int& y, game_state& state);
 
 void lv1KeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageIDs,
 						SDLKey key, int& x, int& y, game_state& state);
@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 							win.SelectPage(pageIDs[state]);	// 메뉴 페이지로 전환
 							break;
 						case menu:
-							menuKeydownHandler(win, pageMenu, pageIDs, evt.key.keysym.sym, menu_sel, state);
+							menuKeydownHandler(win, pageMenu, pageIDs, evt.key.keysym.sym, menu_sel, sel_x, sel_y, state);
 							break;
 						case level1:
 							lv1KeydownHandler(win, pageLv1, pageIDs, evt.key.keysym.sym, sel_x, sel_y, state);
@@ -139,7 +139,7 @@ void makeLevel1(SDL_Page& page)
 	page.SetBgColor(0xff, 0xff, 0xff);	// white
 	page.AddText("Level 1", 100, 30, 21);
 	page.AddFillRect(160, 160, 315, 315, 0x00, 0x00, 0xff);	// blue
-	page.AddFillRect(167, 167, 103, 103, 0xff, 0x00, 0x00);	// red
+	page.AddFillRect(167, 167, 103, 103, 0xff, 0x00, 0x00);	// red (ID: 1)
 
 	page.AddImage("images\\LOL_Logo.jpg", 270, 270);
 
@@ -211,8 +211,11 @@ game_state MenuIdToState(int menuID)
 
 // 메뉴 선택 핸들러
 void menuKeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageIDs,
-						SDLKey key, int& menu_sel, game_state& state)
+						SDLKey key, int& menu_sel, int& x, int& y, game_state& state)
 {
+	RECT_INFO *rect_sel;
+	int pageID;
+
 	switch(key) {
 		case SDLK_ESCAPE:
 			state = quit;
@@ -228,8 +231,18 @@ void menuKeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageI
 			changeMenuSel(pageMenu, menu_sel);
 			break;
 		case SDLK_RETURN:
-			state = MenuIdToState(menu_sel);
-			window.SelectPage(pageIDs[state]);
+			state = MenuIdToState(menu_sel);	// ID에 맞는 상태 획득
+			pageID = pageIDs[state];			// 상태 -> 페이지 ID 획득
+			window.SelectPage(pageID);			// 페이지 ID -> 화면(Page) 선택
+
+			// 선택좌표 초기화
+			// 1. 논리좌표 초기화
+			x = y = 0;
+			// 2. 화면좌표 초기화
+			rect_sel = window.GetPage(pageID)->GetRectInfo(1);	// TODO: MAGIC NUMBER
+			rect_sel->x = rect_sel->x_ori;
+			rect_sel->y = rect_sel->y_ori;
+
 			break;
 	}
 }

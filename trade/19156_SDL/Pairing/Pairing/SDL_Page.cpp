@@ -40,6 +40,8 @@ int SDL_Page::AddFillRect(int x, int y, int width, int height,
 	ri.g = g;
 	ri.b = b;
 	ri.bDisplay = true;
+	ri.x_ori = x;	// for re-initilize
+	ri.y_ori = y;	// for re-initilize
 
 	rects.push_back(ri);
 	return (rects.size()-1);
