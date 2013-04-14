@@ -31,6 +31,7 @@ void GameLv1::Reset()
 {
 	this->x = 0;
 	this->y = 0;
+	updateSelection();
 
 	openCount = 0;
 	remainedCount = SolveCount;
@@ -85,6 +86,7 @@ void GameLv1::SpaceDown()
 			if (!IsFlipped(x, y)) return;
 			else {
 				Flip(x, y);
+				openCount++;
 				firstX = x;
 				firstY = y;
 				stat = second;
@@ -244,8 +246,8 @@ void GameLv1::Shuffle()
 
 			sprintf_s(img_file[id], _MAX_PATH, "%s%d%s",
 				ImagePrefix, gen.next(), ImageSuffix);
-			pI->file = img_file[id];
-			pI->bFlip = true;
+			pI->file = img_file[id];// 파일 이름 설정
+			pI->bFlip = true;		// 그림을 뒤집는다
 		}
 	}
 }
