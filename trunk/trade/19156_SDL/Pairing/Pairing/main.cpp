@@ -132,7 +132,7 @@ void makeMenuPage(SDL_Page& page)
 
 void makeLevel1(SDL_Page& page)
 {
-	int not_flip_id, fg_b, fg_e;
+	int id, not_flip_id, fg_b, fg_e;
 
 	page.SetBgColor(0xff, 0xff, 0xff);	// white
 	page.AddText("Level 1", 100, 30, 21);
@@ -140,6 +140,10 @@ void makeLevel1(SDL_Page& page)
 	page.AddText("Try Counter     : ", 100, 565, 21);
 	page.AddText("5", 300, 530, 21);
 	page.AddText("1", 300, 565, 21);
+	id = page.AddText("Clear~ !!", 450, 30, 21, 0xff);	// red
+	page.GetTextInfo(id)->bDisplay = false;
+	id = page.AddText("Press Any Key.", 450, 530, 21);		// black
+	page.GetTextInfo(id)->bDisplay = false;
 
 	page.AddFillRect(160, 160, 315, 315, 0x00, 0x00, 0xff);	// blue
 	page.AddFillRect(167, 167, 103, 103, 0xff, 0x00, 0x00);	// red (always 2nd)
