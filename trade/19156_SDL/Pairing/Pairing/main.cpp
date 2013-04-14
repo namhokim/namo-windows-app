@@ -1,8 +1,15 @@
 #include "SDL_Window.h"
 
+#define PAGE_INIT	1
+#define PAGE_MENU	2
+
 int main(int argc, char *argv[])
 {
 	SDL_Window w("Pairing Game", 640, 480);
+	SDL_Page pageInit ,paageMenu;
+	w.AddPage(PAGE_INIT, pageInit);
+	w.AddPage(PAGE_MENU, paageMenu);
+
 	if(!w.Initialize()) {
 		return 1;
 	}
