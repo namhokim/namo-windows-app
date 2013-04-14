@@ -210,6 +210,10 @@
 				Name="images"
 				>
 				<File
+					RelativePath=".\images\Jace.jpg"
+					>
+				</File>
+				<File
 					RelativePath=".\images\Title.jpg"
 					>
 				</File>
