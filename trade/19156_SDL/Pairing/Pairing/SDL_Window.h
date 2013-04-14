@@ -34,5 +34,7 @@ private:
 
 	// draws
 	void drawBackground(SDL_Page* page);	// 배경을 그린다
+	void drawImages(SDL_Page* page);		// 이미지를 그린다
+	void drawImage(const IMAGE_INFO& image_info);// 이미지를 그림
 
 };

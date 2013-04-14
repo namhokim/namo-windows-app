@@ -53,12 +53,12 @@ bool SDL_Window::IsInitialized() const
 int SDL_Window::AddPage(SDL_Page* page)
 {
 	pages.push_back(page);
-	return pages.size()-1;
+	return (pages.size()-1);
 }
 
 bool SDL_Window::SelectPage(int pageID)
 {
-	if (pageID+1 > (int)pages.size())	// 잛못된 Page ID 지정시
+	if ( pageID > int(pages.size()-1) )	// 잛못된 Page ID 지정시
 	{
 		return false;
 	}
@@ -85,6 +85,7 @@ void SDL_Window::Refresh()
 	drawBackground(page);
 
 	// 이미지 그린다.
+	drawImages(page);
 	//SDL_BlitSurface(image,NULL, screen, &dest);
 
 	// 텍스트 그린다.
@@ -101,4 +102,45 @@ void SDL_Window::drawBackground(SDL_Page* page)
 	SDL_Rect screenRect = {0, 0, screen->w, screen->h};
 	Uint32 bgColor = page->GetBgColor(screen);
 	SDL_FillRect(screen, &screenRect, bgColor);
+}
+
+void SDL_Window::drawImages(SDL_Page* page)
+{
+	int nums = page->GetImagesNumber();
+	for (int i=0; i<nums; i++)
+	{
+		IMAGE_INFO img;
+		if(!page->GetImageInfo(i, &img)) continue;
+
+		if(!img.bDisplay) continue;
+		else drawImage(img);
+	}
+}
+
+void SDL_Window::drawImage(const IMAGE_INFO& image_info)
+{
+	//We will display bitmap
+	SDL_Surface *image;
+	SDL_Surface *imageTmp;
+
+	// Image Loading
+	imageTmp = IMG_Load(image_info.file);
+	if(imageTmp==NULL)	// 이미지 로드 실패
+	{
+		printf("%s - %s", IMG_GetError(), image_info.file);
+		return;
+	}
+
+	// Get Image Info
+	int w = imageTmp->w;
+	int h = imageTmp->h;
+
+	// Convert a surface to the display format
+	image = SDL_DisplayFormat(imageTmp);
+	SDL_FreeSurface(imageTmp);
+
+	// Positioning and Display
+	SDL_Rect dest = {image_info.x, image_info.y, };
+	SDL_BlitSurface(image, NULL, screen, &dest);
+	SDL_FreeSurface(image);
 }
