@@ -13,8 +13,8 @@ public:
 	SDL_Window(const char* title, int width, int height);
 	~SDL_Window(void);
 
-	bool Initialize();		// 초기화
-	bool IsInitialized() const { return bInitialized; };// 초기화 여부 확인 함수
+	bool Initialize();				// 초기화
+	bool IsInitialized() const;		// 초기화 여부 확인 함수
 
 	int AddPage(SDL_Page* page);	// 페이지 추가, 반환 값(페이지 id)
 	bool SelectPage(int pageID);	// 페이지 선택(전환)
