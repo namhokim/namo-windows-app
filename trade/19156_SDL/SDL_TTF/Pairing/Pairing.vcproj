@@ -210,6 +210,10 @@
 				RelativePath="..\SDL_ttf.dll"
 				>
 			</File>
+			<File
+				RelativePath="..\zlib1.dll"
+				>
+			</File>
 			<Filter
 				Name="images"
 				>
