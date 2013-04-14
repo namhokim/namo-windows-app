@@ -83,15 +83,27 @@ int SDL_Page::GetTextsNumber()
 	return txts.size();
 }
 
-bool SDL_Page::GetTextInfo(int textID, TEXT_INFO* textInfo)
+TEXT_INFO* SDL_Page::GetTextInfo(int textID)
 {
 	if ( textID > int(txts.size()-1) )
 	{
-		return false;
+		return NULL;
 	}
 	else
 	{
-		(*textInfo) = txts[textID];
-		return true;
+		return &(txts[textID]);
 	}
+
 }
+//bool SDL_Page::GetTextInfo(int textID, TEXT_INFO* textInfo)
+//{
+//	if ( textID > int(txts.size()-1) )
+//	{
+//		return false;
+//	}
+//	else
+//	{
+//		textInfo = &(txts[textID]);
+//		return true;
+//	}
+//}

@@ -176,22 +176,20 @@ void SDL_Window::drawTexts(SDL_Page* page)
 	int nums = page->GetTextsNumber();
 	for (int i=0; i<nums; i++)
 	{
-		TEXT_INFO txt;
-		if(!page->GetTextInfo(i, &txt)) continue;
-
-		if(!txt.bDisplay) continue;
-		else drawText(txt);
+		TEXT_INFO* pTxt = page->GetTextInfo(i);
+		if(pTxt==NULL || (pTxt->bDisplay==false)) continue;
+		else drawText(pTxt);
 	}
 }
 
-void SDL_Window::drawText(const TEXT_INFO& text_info)
+void SDL_Window::drawText(const TEXT_INFO* text_info)
 {
-	TTF_Font* font = loadfont(text_info.font, text_info.size);
+	TTF_Font* font = loadfont(text_info->font, text_info->size);
 	if(font==NULL) return;	// 폰트 로드 실패
 
-	SDL_Color color = {text_info.fg_r, text_info.fg_g, text_info.fg_b,};
-	SDL_Surface* text = TTF_RenderText_Solid(font, text_info.text, color);
-	SDL_Rect dest = {text_info.x, text_info.y, };
+	SDL_Color color = {text_info->fg_r, text_info->fg_g, text_info->fg_b,};
+	SDL_Surface* text = TTF_RenderText_Solid(font, text_info->text, color);
+	SDL_Rect dest = {text_info->x, text_info->y, };
 	SDL_BlitSurface(text, NULL, screen, &dest);
 
 	SDL_FreeSurface(text);

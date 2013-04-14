@@ -37,6 +37,6 @@ private:
 	void drawImages(SDL_Page* page);			// 이미지를 그린다
 	void drawImage(const IMAGE_INFO& image_info);// 이미지를 그림
 	void drawTexts(SDL_Page* page);				// 텍스트를 그린다
-	void drawText(const TEXT_INFO& text_info);// 텍스트를 그림
+	void drawText(const TEXT_INFO* text_info);// 텍스트를 그림
 
 };
