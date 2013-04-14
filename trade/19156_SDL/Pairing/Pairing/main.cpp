@@ -178,6 +178,8 @@ void makeLevel1(SDL_Page& page)
 	page.SetBgColor(0xff, 0xff, 0xff);	// white
 	page.AddText("Level 1", 100, 30, 21);
 	page.AddFillRect(160, 160, 315, 315, 0x00, 0x00, 0xff);	// blue
+	page.AddFillRect(167, 167, 103, 103, 0xff, 0x00, 0x00);	// red
+
 	page.AddImage("images\\LOL_Logo.jpg", 270, 270);
 
 	tileBegin = page.AddImage("images\\1.jpg", 170, 170);
