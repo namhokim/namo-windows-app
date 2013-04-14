@@ -1,5 +1,7 @@
 #include "SDL_Window.h"
 #include "GameLv1.h"
+#include "GameLv2.h"
+#include "GameLv3.h"
 
 #include <iostream>
 using namespace std;
@@ -31,6 +33,8 @@ void lv3KeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageID
 					   SDLKey key, int& x, int& y, game_state& state);
 
 void lv1KeydownHandler(GameLv1* game, SDLKey key, game_state& state);
+void lv2KeydownHandler(GameLv2* game, SDLKey key, game_state& state);
+void lv3KeydownHandler(GameLv3* game, SDLKey key, game_state& state);
 
 int main(int argc, char *argv[])
 {
@@ -60,6 +64,8 @@ int main(int argc, char *argv[])
 	}
 
 	GameLv1 lv1(&win, pageIDs[level1], pageIDs[menu]);
+	GameLv2 lv2(&win, pageIDs[level2], pageIDs[menu]);
+	GameLv3 lv3(&win, pageIDs[level3], pageIDs[menu]);
 
 	game_state state = init;
 	int menu_sel = SEL_LV1;
@@ -88,11 +94,11 @@ int main(int argc, char *argv[])
 						case level1:
 							lv1KeydownHandler(&lv1, evt.key.keysym.sym, state);
 							break;
-						/*case level2:
-							lv1KeydownHandler(win, pageLv1, pageIDs, evt.key.keysym.sym, sel_x, sel_y, state);
+						case level2:
+							lv2KeydownHandler(&lv2, evt.key.keysym.sym, state);
 						case level3:
-							lv1KeydownHandler(win, pageLv1, pageIDs, evt.key.keysym.sym, sel_x, sel_y, state);
-							break;*/
+							lv3KeydownHandler(&lv3, evt.key.keysym.sym, state);
+							break;
 					}
 					win.Refresh();
 
@@ -288,24 +294,11 @@ void lv1KeydownHandler(GameLv1* game, SDLKey key, game_state& state)
 	}
 }
 
-void lv2KeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageIDs,
-					   SDLKey key, int& x, int& y, game_state& state)
+void lv2KeydownHandler(GameLv2* game, SDLKey key, game_state& state)
 {
-	switch(key) {
-		case SDLK_ESCAPE:
-			state = menu;		// 메뉴 상태로 전환
-			window.SelectPage(pageIDs[state]);	// 메뉴 페이지로 전환
-			break;
-	}
-}
 
-void lv3KeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageIDs,
-					   SDLKey key, int& x, int& y, game_state& state)
+}
+void lv3KeydownHandler(GameLv3* game, SDLKey key, game_state& state)
 {
-	switch(key) {
-		case SDLK_ESCAPE:
-			state = menu;		// 메뉴 상태로 전환
-			window.SelectPage(pageIDs[state]);	// 메뉴 페이지로 전환
-			break;
-	}
+
 }

@@ -179,6 +179,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GameLv2.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\GameLv3.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\main.cpp"
 				>
 			</File>
@@ -202,6 +210,14 @@
 			>
 			<File
 				RelativePath=".\GameLv1.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GameLv2.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GameLv3.h"
 				>
 			</File>
 			<File
