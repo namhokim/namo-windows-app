@@ -51,6 +51,8 @@ int main(int argc, char *argv[])
 
 	game_state state = init;
 	int menu_sel = SEL_LV1;
+	int sel_x = 0;
+	int sel_y = 0;
 	changeMenuSel(pageMenu, menu_sel);
 
 	while(state!=quit){
@@ -94,7 +96,28 @@ int main(int argc, char *argv[])
 							state = menu;		// 메뉴 상태로 전환
 							win.SelectPage(pageIDs[state]);	// 메뉴 페이지로 전환
 							break;
+						case SDLK_UP:
+							sel_y--;
+							if (sel_y==1) sel_y++;	// 가운데는 선택이 불가능 하므로 건너뛴다
+							if (sel_y<0) sel_y = 2;
+							break;
+						case SDLK_DOWN:
+							sel_y++;
+							if (sel_y==1) sel_y++;
+							if (sel_y>2) sel_y = 0;
+							break;
+						case SDLK_LEFT:
+							sel_x--;
+							if (sel_x==1) sel_x++;
+							if (sel_x<0) sel_x = 2;
+							break;
+						case SDLK_RIGHT:
+							sel_x++;
+							if (sel_x==1) sel_x++;
+							if (sel_x>2) sel_x = 0;
+							break;
 					}
+					printf("cursor position : (%d, %d)\n", sel_x, sel_y);
 					break;
 					}
 					win.Refresh();
@@ -178,7 +201,8 @@ void makeLevel1(SDL_Page& page)
 	page.SetBgColor(0xff, 0xff, 0xff);	// white
 	page.AddText("Level 1", 100, 30, 21);
 	page.AddFillRect(160, 160, 315, 315, 0x00, 0x00, 0xff);	// blue
-	page.AddFillRect(167, 167, 103, 103, 0xff, 0x00, 0x00);	// red
+	//page.AddFillRect(167, 167, 103, 103, 0xff, 0x00, 0x00);	// red
+	page.AddFillRect(267, 167, 103, 103, 0xff, 0x00, 0x00);	// red
 
 	page.AddImage("images\\LOL_Logo.jpg", 270, 270);
 
