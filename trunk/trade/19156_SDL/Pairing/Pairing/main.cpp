@@ -79,6 +79,11 @@ int main(int argc, char *argv[])
 							break;
 						case menu:
 							menuKeydownHandler(win, pageMenu, pageIDs, evt.key.keysym.sym, menu_sel, state);
+							switch(state) {
+								case level1:
+									lv1.StartGame();
+									break;
+							}
 							break;
 						case level1:
 							lv1KeydownHandler(&lv1, evt.key.keysym.sym, state);
@@ -138,8 +143,8 @@ void makeLevel1(SDL_Page& page)
 	page.AddText("Level 1", 100, 30, 21);
 	page.AddText("Elapsed Time(s) : ", 100, 530, 21);
 	page.AddText("Try Counter     : ", 100, 565, 21);
-	page.AddText("5", 300, 530, 21);
-	page.AddText("1", 300, 565, 21);
+	page.AddText("5", 300, 530, 21);					// time value
+	page.AddText("1", 300, 565, 21);					// counter value
 	id = page.AddText("Clear~ !!", 450, 30, 21, 0xff);	// red
 	page.GetTextInfo(id)->bDisplay = false;
 	id = page.AddText("Press Any Key.", 450, 530, 21);		// black
@@ -239,7 +244,6 @@ void menuKeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageI
 			state = MenuIdToState(menu_sel);	// ID에 맞는 상태 획득
 			pageID = pageIDs[state];			// 상태 -> 페이지 ID 획득
 			window.SelectPage(pageID);			// 페이지 ID -> 화면(Page) 선택
-
 			break;
 	}
 }
@@ -269,20 +273,14 @@ void lv1KeydownHandler(GameLv1* game, SDLKey key, game_state& state)
 	switch(key) {
 		case SDLK_ESCAPE:
 			state = menu;		// 메뉴 상태로 전환
-			game->Reset();
+			game->Endgame();
 			game->GoMenuPage();	// 메뉴 페이지로 전환
 			break;
 		case SDLK_UP:
-			game->CursorUP();
-			break;
 		case SDLK_DOWN:
-			game->CursorDown();
-			break;
 		case SDLK_LEFT:
-			game->CursorLeft();
-			break;
 		case SDLK_RIGHT:
-			game->CursorRight();
+			game->CursorMove(key);
 			break;
 		case SDLK_SPACE:	// 선택
 			game->SpaceDown();
