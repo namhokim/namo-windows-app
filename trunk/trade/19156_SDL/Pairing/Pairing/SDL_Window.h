@@ -34,9 +34,11 @@ private:
 
 	// draws
 	void drawBackground(SDL_Page* page);		// 배경을 그린다
+	void drawRects(SDL_Page* page);				// 사각형을 그린다
+	void drawRect(const RECT_INFO* obj);		// 사각형을 그림
 	void drawImages(SDL_Page* page);			// 이미지를 그린다
-	void drawImage(const IMAGE_INFO& image_info);// 이미지를 그림
+	void drawImage(const IMAGE_INFO* obj);// 이미지를 그림
 	void drawTexts(SDL_Page* page);				// 텍스트를 그린다
-	void drawText(const TEXT_INFO* text_info);// 텍스트를 그림
+	void drawText(const TEXT_INFO* obj);// 텍스트를 그림
 
 };

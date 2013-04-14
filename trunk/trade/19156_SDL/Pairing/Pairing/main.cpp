@@ -1,6 +1,5 @@
 #include "SDL_Window.h"
 
-#include <windows.h>
 #include <iostream>
 using namespace std;
 
@@ -51,16 +50,17 @@ int main(int argc, char *argv[])
 	}
 
 	game_state state = init;
-	INT menu_sel = SEL_LV1;
+	int menu_sel = SEL_LV1;
 	changeMenuSel(pageMenu, menu_sel);
 
 	while(state!=quit){
 		SDL_Event evt;
-		while( SDL_PollEvent(&evt) && (evt.type==SDL_KEYDOWN) ){
+		while( SDL_PollEvent(&evt) ){
+			switch( evt.type) {
+				case SDL_KEYDOWN:
+					printf("%d\n", evt.key.keysym.sym);	// TODO: remove
 
-			printf("%d\n", evt.key.keysym.sym);	// TODO: remove
-
-			switch (state) {
+					switch (state) {
 				case init:
 					state = menu;					// 메뉴 상태로 전환
 					win.SelectPage(pageIDs[state]);	// 메뉴 페이지로 전환
@@ -96,10 +96,16 @@ int main(int argc, char *argv[])
 							break;
 					}
 					break;
-			}
-			win.Refresh();
+					}
+					win.Refresh();
+
+					break;
+				case SDL_QUIT:
+					state = quit;
+					break;
+			}	// while( SDL_PollEvent(&evt) )
 		}
-		Sleep(1);	// for save the CPU usage (thread yield)
+		SDL_Delay(1);	// for save the CPU usage (thread yield)
 	}
 
 	return 0;
@@ -167,13 +173,35 @@ game_state MenuIdToState(int menuID)
 
 void makeLevel1(SDL_Page& page)
 {
-	page.SetBgColor(0x00, 0xff, 0x00);	// green
+	int tileBegin, tileEnd;
+
+	page.SetBgColor(0xff, 0xff, 0xff);	// white
+	page.AddText("Level 1", 100, 30, 21);
+	page.AddFillRect(160, 160, 315, 315, 0x00, 0x00, 0xff);	// blue
+	page.AddImage("images\\LOL_Logo.jpg", 270, 270);
+
+	tileBegin = page.AddImage("images\\1.jpg", 170, 170);
+	page.AddImage("images\\2.jpg", 270, 170);
+	page.AddImage("images\\3.jpg", 370, 170);
+	page.AddImage("images\\4.jpg", 170, 270);
+	// logo
+	page.AddImage("images\\6.jpg", 370, 270);
+	page.AddImage("images\\7.jpg", 170, 370);
+	page.AddImage("images\\8.jpg", 270, 370);
+	tileEnd = page.AddImage("images\\9.jpg", 370, 370);
+
+	for (int id=tileBegin; id<=tileEnd; ++id) {
+		page.GetImageInfo(id)->bFlip = true;
+	}
 }
 void makeLevel2(SDL_Page& page)
 {
-	page.SetBgColor(0x00, 0x00, 0xff);	// blue
+	page.SetBgColor(0xff, 0xff, 0xff);	// image
+	page.AddText("Level 2", 100, 30, 21);
 }
 void makeLevel3(SDL_Page& page)
 {
-	page.SetBgColor(0xff, 0x00, 0x00);	// red
+	page.SetBgColor(0xff, 0xff, 0xff);	// image
+	page.AddText("Level 3", 100, 30, 21);
+	page.AddImage("images\\LOL_Logo.jpg", 270, 270);
 }

@@ -12,7 +12,7 @@ SDL_Page::~SDL_Page(void)
 {
 }
 
-
+//////////////////////////////////////////////////////////////////////////
 void SDL_Page::SetBgColor(const Uint8 r, const Uint8 g, const Uint8 b)
 {
 	bg_r = r;
@@ -27,7 +27,42 @@ Uint32 SDL_Page::GetBgColor(SDL_Surface *screen)
 	return clearColor;
 }
 
+//////////////////////////////////////////////////////////////////////////
+int SDL_Page::AddFillRect(int x, int y, int width, int height,
+				Uint8 r, Uint8 g, Uint8 b)
+{
+	RECT_INFO ri;
+	ri.x = x;
+	ri.y = y;
+	ri.width = width;
+	ri.height = height;
+	ri.r = r;
+	ri.g = g;
+	ri.b = b;
+	ri.bDisplay = true;
 
+	rects.push_back(ri);
+	return (rects.size()-1);
+}
+
+int SDL_Page::GetRectsNumber()
+{
+	return rects.size();
+}
+RECT_INFO* SDL_Page::GetRectInfo(int id)
+{
+	if ( id > int(rects.size()-1) )
+	{
+		return NULL;
+	}
+	else
+	{
+		return &(rects[id]);
+	}
+}
+
+
+//////////////////////////////////////////////////////////////////////////
 int SDL_Page::AddImage(const char* file, int x, int y)
 {
 	IMAGE_INFO image;
@@ -35,6 +70,7 @@ int SDL_Page::AddImage(const char* file, int x, int y)
 	image.x = x;
 	image.y = y;
 	image.bDisplay = true;	// 기본적으로 화면에 표시
+	image.bFlip = false;	// 기본적으로 이미지를 표시(true시 흰색 뒤집기)
 
 	imgs.push_back(image);
 	return (imgs.size()-1);
@@ -45,20 +81,19 @@ int SDL_Page::GetImagesNumber()
 	return imgs.size();
 }
 
-bool SDL_Page::GetImageInfo(int imageID, IMAGE_INFO* imageInfo)
+IMAGE_INFO* SDL_Page::GetImageInfo(int imageID)
 {
 	if ( imageID > int(imgs.size()-1) )
 	{
-		return false;
+		return NULL;
 	}
 	else
 	{
-		(*imageInfo) = imgs[imageID];
-		return true;
+		return &(imgs[imageID]);
 	}
 }
 
-
+//////////////////////////////////////////////////////////////////////////
 int SDL_Page::AddText(const char* text, int x, int y, int size,
 					  Uint8 fg_r, Uint8 fg_g, Uint8 fg_b,
 					  const char* font)
@@ -93,17 +128,4 @@ TEXT_INFO* SDL_Page::GetTextInfo(int textID)
 	{
 		return &(txts[textID]);
 	}
-
 }
-//bool SDL_Page::GetTextInfo(int textID, TEXT_INFO* textInfo)
-//{
-//	if ( textID > int(txts.size()-1) )
-//	{
-//		return false;
-//	}
-//	else
-//	{
-//		textInfo = &(txts[textID]);
-//		return true;
-//	}
-//}

@@ -110,6 +110,9 @@ void SDL_Window::Refresh()
 	// 배경색 그린다.
 	drawBackground(page);
 
+	// 사각형 그린다.
+	drawRects(page);
+
 	// 이미지 그린다.
 	drawImages(page);
 
@@ -130,45 +133,70 @@ void SDL_Window::drawBackground(SDL_Page* page)
 	SDL_FillRect(screen, &screenRect, bgColor);
 }
 
+void SDL_Window::drawRects(SDL_Page* page)
+{
+	int nums = page->GetRectsNumber();
+	for (int id=0; id<nums; id++)
+	{
+		RECT_INFO* info = page->GetRectInfo(id);
+		if (info==NULL || (info->bDisplay==false)) continue;
+		else {
+			drawRect(info);
+		}
+	}
+
+}
+void SDL_Window::drawRect(const RECT_INFO* obj)
+{
+	SDL_Rect dest = {obj->x, obj->y, obj->width, obj->height};
+	Uint32 color = SDL_MapRGB(screen->format, obj->r, obj->g, obj->b);
+	SDL_FillRect(screen, &dest, color);
+}
+
 void SDL_Window::drawImages(SDL_Page* page)
 {
 	int nums = page->GetImagesNumber();
 	for (int i=0; i<nums; i++)
 	{
-		IMAGE_INFO img;
-		if(!page->GetImageInfo(i, &img)) continue;
-
-		if(!img.bDisplay) continue;
+		IMAGE_INFO* img = page->GetImageInfo(i);
+		if(img==NULL || (img->bDisplay==false)) continue;
 		else drawImage(img);
 	}
 }
 
-void SDL_Window::drawImage(const IMAGE_INFO& image_info)
+void SDL_Window::drawImage(const IMAGE_INFO* obj)
 {
 	//We will display bitmap
 	SDL_Surface *image;
 	SDL_Surface *imageTmp;
 
 	// Image Loading
-	imageTmp = IMG_Load(image_info.file);
+	imageTmp = IMG_Load(obj->file);
 	if(imageTmp==NULL)	// 이미지 로드 실패
 	{
-		printf("%s - %s", IMG_GetError(), image_info.file);
+		printf("%s - %s", IMG_GetError(), obj->file);
 		return;
 	}
 
 	// Get Image Info
 	int w = imageTmp->w;
 	int h = imageTmp->h;
+	
+	if (obj->bFlip) {	// FLIP check
+		SDL_Rect dest = {obj->x, obj->y, w, h};
+		Uint32 colorWhite = SDL_MapRGB(screen->format, 0xff, 0xff, 0xff);
+		SDL_FillRect(screen, &dest, colorWhite);
+	} else {			// normal image
+		// Convert a surface to the display format
+		image = SDL_DisplayFormat(imageTmp);
 
-	// Convert a surface to the display format
-	image = SDL_DisplayFormat(imageTmp);
+		// Positioning and Display
+		SDL_Rect dest = {obj->x, obj->y, };
+		SDL_BlitSurface(image, NULL, screen, &dest);
+		SDL_FreeSurface(image);
+	}
+	
 	SDL_FreeSurface(imageTmp);
-
-	// Positioning and Display
-	SDL_Rect dest = {image_info.x, image_info.y, };
-	SDL_BlitSurface(image, NULL, screen, &dest);
-	SDL_FreeSurface(image);
 }
 
 void SDL_Window::drawTexts(SDL_Page* page)
@@ -182,14 +210,14 @@ void SDL_Window::drawTexts(SDL_Page* page)
 	}
 }
 
-void SDL_Window::drawText(const TEXT_INFO* text_info)
+void SDL_Window::drawText(const TEXT_INFO* obj)
 {
-	TTF_Font* font = loadfont(text_info->font, text_info->size);
+	TTF_Font* font = loadfont(obj->font, obj->size);
 	if(font==NULL) return;	// 폰트 로드 실패
 
-	SDL_Color color = {text_info->fg_r, text_info->fg_g, text_info->fg_b,};
-	SDL_Surface* text = TTF_RenderText_Solid(font, text_info->text, color);
-	SDL_Rect dest = {text_info->x, text_info->y, };
+	SDL_Color color = {obj->fg_r, obj->fg_g, obj->fg_b,};
+	SDL_Surface* text = TTF_RenderText_Solid(font, obj->text, color);
+	SDL_Rect dest = {obj->x, obj->y, };
 	SDL_BlitSurface(text, NULL, screen, &dest);
 
 	SDL_FreeSurface(text);
