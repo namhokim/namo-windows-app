@@ -148,7 +148,7 @@ void makeLevel1(SDL_Page& page)
 	page.AddImage("images\\1.jpg", 270, 170);
 	page.AddImage("images\\2.jpg", 370, 170);
 	page.AddImage("images\\2.jpg", 170, 270);
-	not_flip_id = page.AddImage("images\\LOL_Logo.jpg", 270, 270);	// logo
+	not_flip_id = page.AddImage(LogoImage, 270, 270);	// logo
 	page.AddImage("images\\3.jpg", 370, 270);
 	page.AddImage("images\\3.jpg", 170, 370);
 	page.AddImage("images\\4.jpg", 270, 370);

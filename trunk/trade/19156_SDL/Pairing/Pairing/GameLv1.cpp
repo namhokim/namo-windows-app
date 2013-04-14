@@ -1,4 +1,5 @@
 #include "GameLv1.h"
+#include "RndGen.h"
 
 const int Distance = 100;
 const int Selection_ID = 1;
@@ -7,6 +8,11 @@ const int IndexMin = 0;
 const int IndexMax = (Size-1);
 const int SolveCount = ( (Size*Size)/2 );
 const int CounterID = 4;
+const int CandidateMax = 25;
+
+const char* ImagePrefix = "images\\";
+const char* ImageSuffix = ".jpg";
+const char* LogoImage = "images\\LOL_Logo.jpg";
 
 GameLv1::GameLv1(SDL_Window* win, int pageID, int pageMenu)
 {
@@ -32,6 +38,7 @@ void GameLv1::Reset()
 	firstX = firstY = secondX = secondY = -1;
 
 	updateTryOpenCounter(openCount);
+	Shuffle();
 }
 
 void GameLv1::GoMenuPage()
@@ -212,6 +219,33 @@ void GameLv1::updateTryOpenCounter(int count)
 		if (pI!=NULL) {
 			_itoa_s(openCount, buffer_counter, BUF_SIZE, 10);
 			pI->text = buffer_counter;
+		}
+	}
+}
+
+void GameLv1::Shuffle()
+{
+	SDL_Page* page = GetPage();
+	if(page!=NULL)
+	{
+		// Generate
+		RndGen gen(CandidateMax, SolveCount*2);
+		gen.generate();
+
+		int nums = page->GetImagesNumber();
+		for(int id=0; id<nums; ++id)
+		{
+			IMAGE_INFO* pI = page->GetImageInfo(id);
+
+			// 에러처리
+			if (pI==NULL
+				|| strncmp(pI->file, ImagePrefix, strlen(ImagePrefix))!=0
+				|| strcmp(pI->file, LogoImage)==0) continue;
+
+			sprintf_s(img_file[id], _MAX_PATH, "%s%d%s",
+				ImagePrefix, gen.next(), ImageSuffix);
+			pI->file = img_file[id];
+			pI->bFlip = true;
 		}
 	}
 }

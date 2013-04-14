@@ -183,6 +183,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\RndGen.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SDL_Page.cpp"
 				>
 			</File>
@@ -198,6 +202,10 @@
 			>
 			<File
 				RelativePath=".\GameLv1.h"
+				>
+			</File>
+			<File
+				RelativePath=".\RndGen.h"
 				>
 			</File>
 			<File
