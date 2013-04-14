@@ -39,7 +39,7 @@ public:
 		Uint8 fg_r=0x00, Uint8 fg_g=0x00, Uint8 fg_b=0x00,
 		const char* font = DEFAULT_FONT);				// 텍스트 추가
 	int GetTextsNumber();								// 페이지의 지정된 텍스트 개수를 구함
-	bool GetTextInfo(int textID, TEXT_INFO* textInfo);	// 텍스트 정보 획득
+	TEXT_INFO* GetTextInfo(int textID);					// 텍스트 정보 획득
 
 private:
 	// 배경색
