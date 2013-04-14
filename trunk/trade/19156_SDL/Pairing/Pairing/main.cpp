@@ -14,13 +14,15 @@ typedef enum {
 #define SEL_LV3		3
 
 void makeInitPage(SDL_Page& page);	// 최초 화면 초기화
-void makeMenuPage(SDL_Page& page);	// 최초 화면 초기화
-void changeMenuSel(SDL_Page& page, int menu_sel);	// 메뉴 선택 화면 변경
-game_state MenuIdToState(int menuID);	// 메뉴 선택시 화면 전환할 게임 상태 획득
-
+void makeMenuPage(SDL_Page& page);	// 메뉴 화면 초기화
 void makeLevel1(SDL_Page& page);	// 게임 레벨 1 화면 초기화
 void makeLevel2(SDL_Page& page);	// 게임 레벨 2 화면 초기화
 void makeLevel3(SDL_Page& page);	// 게임 레벨 3 화면 초기화
+
+void changeMenuSel(SDL_Page& page, int menu_sel);	// 메뉴 선택 화면 변경
+game_state MenuIdToState(int menuID);	// 메뉴 선택시 화면 전환할 게임 상태 획득
+void menuKeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageIDs,
+						SDLKey key, int& menu_sel, game_state& state);
 
 int main(int argc, char *argv[])
 {
@@ -68,25 +70,7 @@ int main(int argc, char *argv[])
 					win.SelectPage(pageIDs[state]);	// 메뉴 페이지로 전환
 					break;
 				case menu:
-					switch(evt.key.keysym.sym) {
-						case SDLK_ESCAPE:
-							state = quit;
-							break;
-						case SDLK_UP:
-							--menu_sel;
-							if (menu_sel<SEL_LV1) menu_sel = SEL_LV3;
-							changeMenuSel(pageMenu, menu_sel);
-							break;
-						case SDLK_DOWN:
-							++menu_sel;
-							if (menu_sel>SEL_LV3) menu_sel = SEL_LV1;
-							changeMenuSel(pageMenu, menu_sel);
-							break;
-						case SDLK_RETURN:
-							state = MenuIdToState(menu_sel);
-							win.SelectPage(pageIDs[state]);
-							break;
-					}
+					menuKeydownHandler(win, pageMenu, pageIDs, evt.key.keysym.sym, menu_sel, state);
 					break;
 				case level1:
 				case level2:
@@ -134,6 +118,8 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
+//////////////////////////////////////////////////////////////////////////
+// 화면 구성
 
 void makeInitPage(SDL_Page& page)
 {
@@ -158,6 +144,49 @@ void makeMenuPage(SDL_Page& page)
 	page.AddText("Level 3   :   5 x 5", 210, 340, 25);
 	page.AddText("ESC : go back or exit game", 330, 570, 23);
 }
+
+void makeLevel1(SDL_Page& page)
+{
+	int tileBegin, tileEnd;
+
+	page.SetBgColor(0xff, 0xff, 0xff);	// white
+	page.AddText("Level 1", 100, 30, 21);
+	page.AddFillRect(160, 160, 315, 315, 0x00, 0x00, 0xff);	// blue
+
+	//page.AddFillRect(167, 167, 103, 103, 0xff, 0x00, 0x00);	// red
+	page.AddFillRect(267, 167, 103, 103, 0xff, 0x00, 0x00);	// red
+
+	page.AddImage("images\\LOL_Logo.jpg", 270, 270);
+
+	tileBegin = page.AddImage("images\\1.jpg", 170, 170);
+	page.AddImage("images\\2.jpg", 270, 170);
+	page.AddImage("images\\3.jpg", 370, 170);
+	page.AddImage("images\\4.jpg", 170, 270);
+	// logo
+	page.AddImage("images\\6.jpg", 370, 270);
+	page.AddImage("images\\7.jpg", 170, 370);
+	page.AddImage("images\\8.jpg", 270, 370);
+	tileEnd = page.AddImage("images\\9.jpg", 370, 370);
+
+	for (int id=tileBegin; id<=tileEnd; ++id) {
+		page.GetImageInfo(id)->bFlip = true;
+	}
+}
+void makeLevel2(SDL_Page& page)
+{
+	page.SetBgColor(0xff, 0xff, 0xff);	// image
+	page.AddText("Level 2", 100, 30, 21);
+}
+void makeLevel3(SDL_Page& page)
+{
+	page.SetBgColor(0xff, 0xff, 0xff);	// image
+	page.AddText("Level 3", 100, 30, 21);
+	page.AddImage("images\\LOL_Logo.jpg", 270, 270);
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+// 메뉴 선택 화면
 
 void changeMenuSel(SDL_Page& page, int menu_sel)
 {
@@ -194,40 +223,31 @@ game_state MenuIdToState(int menuID)
 	}
 }
 
-void makeLevel1(SDL_Page& page)
+
+// 메뉴 선택 핸들러
+void menuKeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageIDs,
+						SDLKey key, int& menu_sel, game_state& state)
 {
-	int tileBegin, tileEnd;
-
-	page.SetBgColor(0xff, 0xff, 0xff);	// white
-	page.AddText("Level 1", 100, 30, 21);
-	page.AddFillRect(160, 160, 315, 315, 0x00, 0x00, 0xff);	// blue
-	//page.AddFillRect(167, 167, 103, 103, 0xff, 0x00, 0x00);	// red
-	page.AddFillRect(267, 167, 103, 103, 0xff, 0x00, 0x00);	// red
-
-	page.AddImage("images\\LOL_Logo.jpg", 270, 270);
-
-	tileBegin = page.AddImage("images\\1.jpg", 170, 170);
-	page.AddImage("images\\2.jpg", 270, 170);
-	page.AddImage("images\\3.jpg", 370, 170);
-	page.AddImage("images\\4.jpg", 170, 270);
-	// logo
-	page.AddImage("images\\6.jpg", 370, 270);
-	page.AddImage("images\\7.jpg", 170, 370);
-	page.AddImage("images\\8.jpg", 270, 370);
-	tileEnd = page.AddImage("images\\9.jpg", 370, 370);
-
-	for (int id=tileBegin; id<=tileEnd; ++id) {
-		page.GetImageInfo(id)->bFlip = true;
+	switch(key) {
+		case SDLK_ESCAPE:
+			state = quit;
+			break;
+		case SDLK_UP:
+			--menu_sel;
+			if (menu_sel<SEL_LV1) menu_sel = SEL_LV3;
+			changeMenuSel(pageMenu, menu_sel);
+			break;
+		case SDLK_DOWN:
+			++menu_sel;
+			if (menu_sel>SEL_LV3) menu_sel = SEL_LV1;
+			changeMenuSel(pageMenu, menu_sel);
+			break;
+		case SDLK_RETURN:
+			state = MenuIdToState(menu_sel);
+			window.SelectPage(pageIDs[state]);
+			break;
 	}
 }
-void makeLevel2(SDL_Page& page)
-{
-	page.SetBgColor(0xff, 0xff, 0xff);	// image
-	page.AddText("Level 2", 100, 30, 21);
-}
-void makeLevel3(SDL_Page& page)
-{
-	page.SetBgColor(0xff, 0xff, 0xff);	// image
-	page.AddText("Level 3", 100, 30, 21);
-	page.AddImage("images\\LOL_Logo.jpg", 270, 270);
-}
+
+//////////////////////////////////////////////////////////////////////////
+// 레벨1 게임 화면
