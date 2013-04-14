@@ -5,12 +5,14 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-	SDL_Window w("Pairing Game", 640, 480);
+	SDL_Window w("Pairing Game", 640, 640);
 
 	SDL_Page pageInit;
 	pageInit.SetBgColor(255, 255, 255);	// white
-	pageInit.AddImage("images\\Title.jpg", 30, 10);
-	pageInit.AddText("Press Any Key To Start", 130, 280, 21,  255);	// red
+	pageInit.AddImage("images\\Title.jpg", 125, 0);
+	pageInit.AddImage("images\\Jace.jpg", 75, 227);
+	pageInit.AddText("Press Any Key To Start", 200, 520, 21,  0, 112, 192);
+	pageInit.AddText("Made by SJS", 500, 600, 21, 112, 48, 160);
 
 	SDL_Page pageMenu;
 	pageMenu.SetBgColor(0, 0, 0);		// black
