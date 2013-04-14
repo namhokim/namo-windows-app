@@ -3,11 +3,21 @@
 #include <SDL.h>
 #include <vector>	// for keep images, texts
 
+#define DEFAULT_FONT	"fonts\\MALGUN.TTF"
+
 typedef struct _IMAGE_INFO {
 	const char* file;
 	int x, y;
 	bool bDisplay;
 } IMAGE_INFO;
+
+typedef struct _TEXT_INFO {
+	const char* text;
+	int x, y, size;
+	const char* font;
+	Uint8 fg_r, fg_g, fg_b;
+	bool bDisplay;
+} TEXT_INFO;
 
 class SDL_Page
 {
@@ -20,9 +30,16 @@ public:
 	Uint32 GetBgColor(SDL_Surface *screen);	// 배경색 가져오기(SDL_Window에서 호출)
 
 	// 이미지
-	int AddImage(const char* file, int x, int y);	// 이미지 추가
+	int AddImage(const char* file, int x, int y);		// 이미지 추가
 	int GetImagesNumber();								// 페이지의 지정된 이미지 개수를 구함
-	bool GetImageInfo(int imageID, IMAGE_INFO* imageInfo);
+	bool GetImageInfo(int imageID, IMAGE_INFO* imageInfo);// 이미지 정보 획득
+
+	// 텍스트
+	int AddText(const char* text, int x, int y, int size,
+		Uint8 fg_r=0x00, Uint8 fg_g=0x00, Uint8 fg_b=0x00,
+		const char* font = DEFAULT_FONT);				// 텍스트 추가
+	int GetTextsNumber();								// 페이지의 지정된 텍스트 개수를 구함
+	bool GetTextInfo(int textID, TEXT_INFO* textInfo);	// 텍스트 정보 획득
 
 private:
 	// 배경색
@@ -30,4 +47,7 @@ private:
 
 	// 이미지
 	std::vector<IMAGE_INFO> imgs;	// 이미지들
+
+	// 텍스트
+	std::vector<TEXT_INFO> txts;	// 텍스트들
 };
