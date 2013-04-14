@@ -6,6 +6,7 @@ const int Size = 3;
 const int IndexMin = 0;
 const int IndexMax = (Size-1);
 const int SolveCount = ( (Size*Size)/2 );
+const int CounterID = 4;
 
 GameLv1::GameLv1(SDL_Window* win, int pageID, int pageMenu)
 {
@@ -29,6 +30,8 @@ void GameLv1::Reset()
 	remainedCount = SolveCount;
 	stat = first;
 	firstX = firstY = secondX = secondY = -1;
+
+	updateTryOpenCounter(openCount);
 }
 
 void GameLv1::GoMenuPage()
@@ -85,6 +88,7 @@ void GameLv1::SpaceDown()
 			else {
 				Flip(x, y);
 				openCount++;
+				updateTryOpenCounter(openCount);
 
 				if (IsSameImage(x,y)) {
 					firstX = firstY = secondX = secondY = -1;
@@ -197,4 +201,17 @@ const char* GameLv1::GetImageName(int x, int y)
 		}
 	}
 	return NULL;
+}
+
+void GameLv1::updateTryOpenCounter(int count)
+{
+	SDL_Page* page = GetPage();
+	if(page!=NULL)
+	{
+		TEXT_INFO* pI = page->GetTextInfo(CounterID);
+		if (pI!=NULL) {
+			_itoa_s(openCount, buffer_counter, BUF_SIZE, 10);
+			pI->text = buffer_counter;
+		}
+	}
 }

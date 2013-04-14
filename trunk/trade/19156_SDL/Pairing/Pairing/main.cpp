@@ -136,6 +136,11 @@ void makeLevel1(SDL_Page& page)
 
 	page.SetBgColor(0xff, 0xff, 0xff);	// white
 	page.AddText("Level 1", 100, 30, 21);
+	page.AddText("Elapsed Time(s) : ", 100, 530, 21);
+	page.AddText("Try Counter     : ", 100, 565, 21);
+	page.AddText("5", 300, 530, 21);
+	page.AddText("1", 300, 565, 21);
+
 	page.AddFillRect(160, 160, 315, 315, 0x00, 0x00, 0xff);	// blue
 	page.AddFillRect(167, 167, 103, 103, 0xff, 0x00, 0x00);	// red (always 2nd)
 
