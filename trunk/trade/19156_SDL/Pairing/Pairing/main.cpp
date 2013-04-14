@@ -1,17 +1,25 @@
 #include "SDL_Window.h"
 
-#define PAGE_INIT	1
-#define PAGE_MENU	2
+#include <iostream>
+using namespace std;
 
 int main(int argc, char *argv[])
 {
 	SDL_Window w("Pairing Game", 640, 480);
-	SDL_Page pageInit ,paageMenu;
-	w.AddPage(PAGE_INIT, pageInit);
-	w.AddPage(PAGE_MENU, paageMenu);
+
+	SDL_Page pageInit;
+	pageInit.SetBgColor(255, 255, 255);	// white
+
+	SDL_Page pageMenu;
+	pageMenu.SetBgColor(0, 0, 0);		// black
+
+	int idInit = w.AddPage(&pageInit);
+	int idMenu = w.AddPage(&pageMenu);
 
 	if(!w.Initialize()) {
 		return 1;
+	} else {
+		w.Refresh();
 	}
 
 	bool bRunning = true;	
@@ -19,10 +27,17 @@ int main(int argc, char *argv[])
 		SDL_Event evt;
 		while(SDL_PollEvent(&evt)){
 			if(evt.type==SDL_KEYDOWN){
+				printf("%d\n", evt.key.keysym.sym);	// TODO: remove
 				switch(evt.key.keysym.sym)
 				{
 				case SDLK_ESCAPE:	// when ESC key pressed
 					bRunning=false;
+					break;
+				case SDLK_1:
+					w.SelectPage(idInit);
+					break;
+				case SDLK_2:
+					w.SelectPage(idMenu);
 					break;
 				case SDLK_LEFT:
 					printf("<-\n");
@@ -31,6 +46,7 @@ int main(int argc, char *argv[])
 					printf("->\n");
 					break;
 				}
+				w.Refresh();
 			}
 		}
 	}
