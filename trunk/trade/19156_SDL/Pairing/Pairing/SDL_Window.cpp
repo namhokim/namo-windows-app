@@ -31,7 +31,8 @@ bool SDL_Window::Initialize()
 	{
 		bInitialized = false;
 	}
-	else {
+	else
+	{
 		//Create Title
 		SDL_WM_SetCaption(title, NULL);
 
@@ -44,6 +45,11 @@ bool SDL_Window::Initialize()
 	return bInitialized;
 }
 
+bool SDL_Window::IsInitialized() const
+{
+	return bInitialized;
+};
+
 int SDL_Window::AddPage(SDL_Page* page)
 {
 	pages.push_back(page);
@@ -52,9 +58,12 @@ int SDL_Window::AddPage(SDL_Page* page)
 
 bool SDL_Window::SelectPage(int pageID)
 {
-	if (pageID+1 > (int)pages.size()) {	// 잛못된 Page ID 지정
+	if (pageID+1 > (int)pages.size())	// 잛못된 Page ID 지정시
+	{
 		return false;
-	} else {
+	}
+	else
+	{
 		curr_page = pageID;
 		return true;
 	}
@@ -63,7 +72,8 @@ bool SDL_Window::SelectPage(int pageID)
 void SDL_Window::Refresh()
 {
 	int pageId = curr_page;
-	if (pageId==PAGE_NOT_SELECTED) {// 페이지가 선택이 되지 않았으면
+	if (pageId==PAGE_NOT_SELECTED)	// 페이지가 선택이 되지 않았으면
+	{
 		if (pages.empty()) return;	// 페이지가 없다
 		else pageId = DEFAULT_PAGE;	// 기본페이지(첫 페이지)
 	}
