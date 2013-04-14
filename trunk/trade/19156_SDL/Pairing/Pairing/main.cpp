@@ -31,6 +31,8 @@ void lv2KeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageID
 void lv3KeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageIDs,
 					   SDLKey key, int& x, int& y, game_state& state);
 
+void changeLv1SelPos(RECT_INFO *sel_rect, int x, int y);	// 레벨 1 선택 영역 변경
+
 int main(int argc, char *argv[])
 {
 	SDL_Window win("Pairing Game", 640, 640);
@@ -235,6 +237,22 @@ void menuKeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageI
 }
 
 //////////////////////////////////////////////////////////////////////////
+
+// 홀수인 경우 건너띄는 처리
+inline void check_skip_postion(int& x, int& y, int skip_pos, bool bChangeX, bool bIncrease)
+{
+	if (x==skip_pos && y==skip_pos) {
+		if(bChangeX) {
+			if (bIncrease) x++;
+			else x--;
+		} else {
+			if (bIncrease) y++;
+			else y--;
+		}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////
 // 레벨1 게임 화면
 
 void lv1KeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageIDs,
@@ -243,6 +261,7 @@ void lv1KeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageID
 	int MIN_POS = 0;
 	int MAX_POS = 2;	// depend on size
 	int SKIP_POS = 1;	// depend on size
+	int RECT_ID_SEL = 1;
 
 	switch(key) {
 		case SDLK_ESCAPE:
@@ -251,25 +270,36 @@ void lv1KeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageID
 			break;
 		case SDLK_UP:
 			y--;
-			if (y==SKIP_POS) y++;	// 가운데는 선택이 불가능 하므로 건너뛴다
+			// 가운데는 선택이 불가능 하므로 건너뛴다
+			check_skip_postion(x, y, SKIP_POS, false, false);
 			if (y<MIN_POS) y = MAX_POS;
 			break;
 		case SDLK_DOWN:
 			y++;
-			if (y==SKIP_POS) y++;
+			check_skip_postion(x, y, SKIP_POS, false, true);
 			if (y>MAX_POS) y = MIN_POS;
 			break;
 		case SDLK_LEFT:
 			x--;
-			if (x==SKIP_POS) x++;
+			check_skip_postion(x, y, SKIP_POS, true, false);
 			if (x<MIN_POS) x = MAX_POS;
 			break;
 		case SDLK_RIGHT:
 			x++;
-			if (x==SKIP_POS) x++;
+			check_skip_postion(x, y, SKIP_POS, true, true);
 			if (x>MAX_POS) x = MIN_POS;
 			break;
 		case SDLK_SPACE:	// 선택
+			break;
+	}
+
+	// reaction
+	switch(key) {
+		case SDLK_UP:
+		case SDLK_DOWN:
+		case SDLK_LEFT:
+		case SDLK_RIGHT:
+			changeLv1SelPos( pageMenu.GetRectInfo(RECT_ID_SEL) , x, y);
 			break;
 	}
 }
@@ -294,4 +324,15 @@ void lv3KeydownHandler(SDL_Window& window, SDL_Page& pageMenu, const int* pageID
 			window.SelectPage(pageIDs[state]);	// 메뉴 페이지로 전환
 			break;
 	}
+}
+
+
+void changeLv1SelPos(RECT_INFO *sel_rect, int x, int y)
+{
+	const int offset_x = 167;
+	const int offset_y = 167;
+	const int distance = 100;
+
+	sel_rect->x = offset_x + (x*distance);
+	sel_rect->y = offset_y + (y*distance);
 }
