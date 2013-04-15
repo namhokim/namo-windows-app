@@ -81,6 +81,7 @@ void GameLv2::SpaceDown()
 			else {
 				Flip(x, y);
 				openCount++;
+				updateTryOpenCounter(openCount);
 				firstX = x;
 				firstY = y;
 				stat = second;
