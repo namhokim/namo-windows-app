@@ -25,6 +25,9 @@ private:
 	void LoadFromFile();		// 파일 불러오기
 	void ConvertToPrefix();		// 표기법 변환(to prefix)
 	void CreateIMCode();		// 중간코드 생성
+	void SaveTheIMCode();		// 중간코드 저장(m_imc)
+	void LoadTheIMCode();		// 중간코드 불러오기(m_imc)
+	void Evaluation();			// 연산하기(m_imc)
 
 // 구현입니다.
 protected:
@@ -48,5 +51,5 @@ public:
 	CEdit m_convert;
 	CEdit m_result;
 	CString m_convert_content;
-	std::vector<std::string> out_imc;
+	std::vector<std::string> m_imc;
 };

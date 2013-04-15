@@ -115,9 +115,9 @@ void CTOYRDlg::CreateIMCode()
 	}
 
 	// 중간코드를 생성한다 (out_imc)
-	if(make_im_code((CStringA)prog, out_imc)) {
+	if(make_im_code((CStringA)prog, m_imc)) {
 		stringstream ss;
-		copy(out_imc.begin(), out_imc.end(), ostream_iterator<string>(ss, "\r\n"));
+		copy(m_imc.begin(), m_imc.end(), ostream_iterator<string>(ss, "\r\n"));
 
 		// 화면 출력
 		m_convert_content.Append((CString)ss.str().c_str());
@@ -127,6 +127,102 @@ void CTOYRDlg::CreateIMCode()
 		m_convert.SetWindowText(m_convert_content);
 	} else {
 		MessageBox(_T("중간코드 생성 실패"));
+	}
+}
+
+void CTOYRDlg::SaveTheIMCode()
+{
+	if (m_imc.empty())
+	{
+		MessageBox(_T("저장할 중간코드가 없습니다."));
+		return;
+	}
+
+	// 파일로 저장 다이얼로그
+	TCHAR szFilter[] = _T("텍스트 문서(*.txt)|*.txt| All Files(*.*)|*.*||");
+	CFileDialog open(FALSE, _T("txt"), _T("save.txt"), OFN_OVERWRITEPROMPT,
+		szFilter);
+	if(open.DoModal() == IDOK)
+	{
+		// 문자열로 변환
+		stringstream ss;
+		copy(m_imc.begin(), m_imc.end(), ostream_iterator<string>(ss, "\r\n"));
+		CString data = (CString)ss.str().c_str();
+
+		// 파일에 기록
+		CStdioFile fp;
+		CString m_Buffer;
+		CString m_TempBuffer;
+
+		if(!fp.Open(open.m_ofn.lpstrFile, CFile::modeCreate | CFile::modeWrite)) {
+			MessageBox(_T("파일 열기에 실패"));
+			return;
+		} else {
+			fp.WriteString(data);
+		}
+
+		fp.Close();
+	}
+}
+
+void CTOYRDlg::LoadTheIMCode()
+{
+	TCHAR szFilter[] = _T("텍스트 문서(*.txt)|*.txt| All Files(*.*)|*.*||");
+	CFileDialog open(TRUE, _T("txt"), _T("*.txt"), OFN_HIDEREADONLY,
+		szFilter);
+	if(open.DoModal() == IDOK)
+	{
+		CStdioFile fp;
+		CString line;
+
+		if(!fp.Open(open.m_ofn.lpstrFile, CFile::modeRead)) {
+			MessageBox(_T("파일 열기에 실패"));
+			return;
+		}
+
+		m_imc.clear();
+		while (!feof (fp.m_pStream))
+		{
+			if(fp.ReadString( line ))
+			{
+				string l( (CStringA)line );
+
+				// remove line-feed
+				string::size_type pos = 0; // Must initialize
+				while ( ( pos = l.find ("\r",pos) ) != string::npos )
+				{
+					l.erase ( pos, 1 );
+				}
+				m_imc.push_back(l);
+			}
+		}
+
+		fp.Close();
+
+		// 문자열로 변환
+		stringstream ss;
+		copy(m_imc.begin(), m_imc.end(), ostream_iterator<string>(ss, "\r\n"));
+		CString data = (CString)ss.str().c_str();
+
+		// 화면에 추가
+		m_convert_content.Append(data);
+		m_convert.SetWindowText(m_convert_content);
+	}
+}
+
+void CTOYRDlg::Evaluation()
+{
+	if (m_imc.empty())
+	{
+		MessageBox(_T("중간 코드가 없습니다."));
+		return;
+	}
+
+	int ev;
+	if(evaluation(m_imc, ev)) {
+		CString r;
+		r.Format(_T("%d"), ev);
+		m_result.SetWindowText(r);
 	}
 }
 
@@ -222,17 +318,17 @@ void CTOYRDlg::OnBnClickedButtonConvert()
 
 void CTOYRDlg::OnBnClickedButtonSave()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	SaveTheIMCode();
 }
 
 void CTOYRDlg::OnBnClickedButtonLoadIc()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	LoadTheIMCode();
 }
 
 void CTOYRDlg::OnBnClickedButtonCalc()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	Evaluation();
 }
 
 void CTOYRDlg::OnBnClickedButtonQuit()
