@@ -40,6 +40,35 @@ void CTOYRDlg::ClearEditControl()
 	m_result.SetWindowText(_T(""));
 }
 
+void CTOYRDlg::LoadFromFile()
+{
+	TCHAR szFilter[] = _T("텍스트 문서(*.txt)|*.txt| All Files(*.*)|*.*||");
+	CFileDialog open(TRUE, _T("txt"), _T("*.txt"), OFN_HIDEREADONLY,
+		szFilter);
+	if(open.DoModal() == IDOK)
+	{
+		CStdioFile fp;
+		CString m_Buffer;
+		CString m_TempBuffer;
+
+		if(!fp.Open(open.m_ofn.lpstrFile, CFile::modeRead)) {
+			MessageBox(_T("파일 열기에 실패"));
+			return;
+		}
+
+		while (!feof (fp.m_pStream))
+		{
+			fp.ReadString( m_TempBuffer );
+			m_Buffer += m_TempBuffer;
+			m_Buffer += "\r\n";
+		}
+
+		fp.Close();
+
+		m_program.SetWindowText(m_Buffer);
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 BEGIN_MESSAGE_MAP(CTOYRDlg, CDialog)
@@ -117,7 +146,7 @@ void CTOYRDlg::OnBnClickedButtonClear()
 
 void CTOYRDlg::OnBnClickedButtonLoadProg()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	LoadFromFile();
 }
 
 void CTOYRDlg::OnBnClickedButtonPrefix()

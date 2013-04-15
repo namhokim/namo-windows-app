@@ -21,6 +21,7 @@ public:
 
 private:
 	void ClearEditControl();	// 화면지우기
+	void LoadFromFile();		// 파일 불러오기
 
 // 구현입니다.
 protected:
