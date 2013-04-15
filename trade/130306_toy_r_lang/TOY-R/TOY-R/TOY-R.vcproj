@@ -213,6 +213,14 @@
 				RelativePath=".\TOY-RDlg.cpp"
 				>
 			</File>
+			<Filter
+				Name="ext"
+				>
+				<File
+					RelativePath="..\..\portfix_to_prefix\ToyTokenizer.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="헤더 파일"
@@ -239,6 +247,14 @@
 				RelativePath=".\TOY-RDlg.h"
 				>
 			</File>
+			<Filter
+				Name="ext"
+				>
+				<File
+					RelativePath="..\..\portfix_to_prefix\ToyTokenizer.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="리소스 파일"

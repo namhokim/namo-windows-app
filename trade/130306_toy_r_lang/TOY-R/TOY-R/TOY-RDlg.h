@@ -22,6 +22,7 @@ public:
 private:
 	void ClearEditControl();	// 화면지우기
 	void LoadFromFile();		// 파일 불러오기
+	void ConvertToPrefix();		// 표기법 변환(to prefix)
 
 // 구현입니다.
 protected:
@@ -44,4 +45,5 @@ public:
 	CEdit m_program;
 	CEdit m_convert;
 	CEdit m_result;
+	CString m_convert_content;
 };

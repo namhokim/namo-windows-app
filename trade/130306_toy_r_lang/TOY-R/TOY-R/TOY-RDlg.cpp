@@ -5,6 +5,9 @@
 #include "stdafx.h"
 #include "TOY-R.h"
 #include "TOY-RDlg.h"
+#include "../../portfix_to_prefix/ToyTokenizer.h"
+
+using namespace std;
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -37,6 +40,7 @@ void CTOYRDlg::ClearEditControl()
 {
 	m_program.SetWindowText(_T(""));
 	m_convert.SetWindowText(_T(""));
+	m_convert_content.Empty();
 	m_result.SetWindowText(_T(""));
 }
 
@@ -66,6 +70,31 @@ void CTOYRDlg::LoadFromFile()
 		fp.Close();
 
 		m_program.SetWindowText(m_Buffer);
+	}
+}
+
+void CTOYRDlg::ConvertToPrefix()
+{
+	// 프로그램 읽어와서
+	CString prog;
+	m_program.GetWindowText(prog);
+	if (prog.GetLength()==0)
+	{
+		MessageBox(_T("수식이 없습니다."));
+		m_program.SetFocus();
+		return;
+	}
+
+	// 변환하여
+	string prefix;
+	if(postfix_to_prefix((CStringA)prog, prefix))
+	{
+		// 기본 문자열에 붙여서
+		m_convert_content.Append((CString)prefix.c_str());
+		m_convert_content.Append(_T("\r\n"));
+
+		// 화면에 반영한다
+		m_convert.SetWindowText(m_convert_content);
 	}
 }
 
@@ -151,7 +180,7 @@ void CTOYRDlg::OnBnClickedButtonLoadProg()
 
 void CTOYRDlg::OnBnClickedButtonPrefix()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	ConvertToPrefix();
 }
 
 void CTOYRDlg::OnBnClickedButtonConvert()
