@@ -84,6 +84,12 @@ int main(int argc, char *argv[])
 								case level1:
 									lv1.StartGame();
 									break;
+								case level2:
+									lv2.StartGame();
+									break;
+								case level3:
+									lv3.StartGame();
+									break;
 							}
 							break;
 						case level1:
@@ -171,14 +177,95 @@ void makeLevel1(SDL_Page& page)
 }
 void makeLevel2(SDL_Page& page)
 {
-	page.SetBgColor(0xff, 0xff, 0xff);	// image
+	int id, fg_b, fg_e;
+
+	page.SetBgColor(0xff, 0xff, 0xff);	// white
 	page.AddText("Level 2", 100, 30, 21);
+	page.AddText("Elapsed Time(s) : ", 100, 530, 21);
+	page.AddText("Try Counter     : ", 100, 565, 21);
+	page.AddText("5", 300, 530, 21);					// time value
+	page.AddText("1", 300, 565, 21);					// counter value
+	id = page.AddText("Clear~ !!", 450, 30, 21, 0xff);	// red
+	page.GetTextInfo(id)->bDisplay = false;
+	id = page.AddText("Press Any Key.", 450, 530, 21);		// black
+	page.GetTextInfo(id)->bDisplay = false;
+
+	page.AddFillRect(110, 110, 417, 417, 0x00, 0x00, 0xff);	// blue
+	page.AddFillRect(117, 117, 103, 103, 0xff, 0x00, 0x00);	// red (always 2nd)
+
+	fg_b = page.AddImage("images\\1.jpg", 120, 120);
+	page.AddImage("images\\1.jpg", 220, 120);
+	page.AddImage("images\\2.jpg", 320, 120);
+	page.AddImage("images\\2.jpg", 420, 120);
+	page.AddImage("images\\3.jpg", 120, 220);
+	page.AddImage("images\\3.jpg", 220, 220);
+	page.AddImage("images\\4.jpg", 320, 220);
+	page.AddImage("images\\4.jpg", 420, 220);
+	page.AddImage("images\\5.jpg", 120, 320);
+	page.AddImage("images\\5.jpg", 220, 320);
+	page.AddImage("images\\6.jpg", 320, 320);
+	page.AddImage("images\\6.jpg", 420, 320);
+	page.AddImage("images\\7.jpg", 120, 420);
+	page.AddImage("images\\7.jpg", 220, 420);
+	page.AddImage("images\\8.jpg", 320, 420);
+	fg_e = page.AddImage("images\\8.jpg", 420, 420);
+
+	/*for (int id=fg_b; id<=fg_e; ++id) {
+		page.GetImageInfo(id)->bFlip = true;
+	}*/
 }
 void makeLevel3(SDL_Page& page)
 {
-	page.SetBgColor(0xff, 0xff, 0xff);	// image
+	int id, not_flip_id, fg_b, fg_e;
+
+	page.SetBgColor(0xff, 0xff, 0xff);	// white
 	page.AddText("Level 3", 100, 30, 21);
-	page.AddImage("images\\LOL_Logo.jpg", 270, 270);
+	page.AddText("Elapsed Time(s) : ", 100, 530, 21);
+	page.AddText("Try Counter     : ", 100, 565, 21);
+	page.AddText("5", 300, 530, 21);					// time value
+	page.AddText("1", 300, 565, 21);					// counter value
+	id = page.AddText("Clear~ !!", 450, 30, 21, 0xff);	// red
+	page.GetTextInfo(id)->bDisplay = false;
+	id = page.AddText("Press Any Key.", 450, 530, 21);		// black
+	page.GetTextInfo(id)->bDisplay = false;
+
+	page.AddFillRect(60, 60, 515, 515, 0x00, 0x00, 0xff);	// blue
+	page.AddFillRect(68, 68, 103, 103, 0xff, 0x00, 0x00);	// red (always 2nd)
+
+	fg_b = page.AddImage("images\\1.jpg", 70, 70);
+	page.AddImage("images\\1.jpg", 70, 170);
+	page.AddImage("images\\2.jpg", 70, 270);
+	page.AddImage("images\\2.jpg", 70, 370);
+	page.AddImage("images\\3.jpg", 70, 470);
+
+	page.AddImage("images\\3.jpg", 170, 70);
+	page.AddImage("images\\4.jpg", 170, 170);
+	page.AddImage("images\\4.jpg", 170, 270);
+	page.AddImage("images\\5.jpg", 170, 370);
+	page.AddImage("images\\5.jpg", 170, 470);
+
+	page.AddImage("images\\3.jpg", 270, 70);
+	page.AddImage("images\\4.jpg", 270, 170);
+	not_flip_id = page.AddImage(LogoImage, 270, 270);	// logo
+	page.AddImage("images\\5.jpg", 270, 370);
+	page.AddImage("images\\5.jpg", 270, 470);
+
+	page.AddImage("images\\3.jpg", 370, 70);
+	page.AddImage("images\\4.jpg", 370, 170);
+	page.AddImage("images\\4.jpg", 370, 270);
+	page.AddImage("images\\5.jpg", 370, 370);
+	page.AddImage("images\\5.jpg", 370, 470);
+
+	page.AddImage("images\\3.jpg", 470, 70);
+	page.AddImage("images\\4.jpg", 470, 170);
+	page.AddImage("images\\4.jpg", 470, 270);
+	page.AddImage("images\\5.jpg", 470, 370);
+	fg_e = page.AddImage("images\\5.jpg", 470, 470);
+
+	for (int id=fg_b; id<=fg_e; ++id) {
+		if(id!=not_flip_id)
+			page.GetImageInfo(id)->bFlip = true;
+	}
 }
 
 
@@ -291,43 +378,43 @@ void lv1KeydownHandler(GameLv1* game, SDLKey key, game_state& state)
 
 void lv2KeydownHandler(GameLv2* game, SDLKey key, game_state& state)
 {
-	//if (game->IsCleared()) key = SDLK_ESCAPE;	// 게임 클리어시 아무키나
+	if (game->IsCleared()) key = SDLK_ESCAPE;	// 게임 클리어시 아무키나
 
-	//switch(key) {
-	//	case SDLK_ESCAPE:
-	//		state = menu;		// 메뉴 상태로 전환
-	//		game->Endgame();
-	//		game->GoMenuPage();	// 메뉴 페이지로 전환
-	//		break;
-	//	case SDLK_UP:
-	//	case SDLK_DOWN:
-	//	case SDLK_LEFT:
-	//	case SDLK_RIGHT:
-	//		game->CursorMove(key);
-	//		break;
-	//	case SDLK_SPACE:	// 선택
-	//		game->SpaceDown();
-	//		break;
-	//}
+	switch(key) {
+		case SDLK_ESCAPE:
+			state = menu;		// 메뉴 상태로 전환
+			game->Endgame();
+			game->GoMenuPage();	// 메뉴 페이지로 전환
+			break;
+		case SDLK_UP:
+		case SDLK_DOWN:
+		case SDLK_LEFT:
+		case SDLK_RIGHT:
+			game->CursorMove(key);
+			break;
+		case SDLK_SPACE:	// 선택
+			game->SpaceDown();
+			break;
+	}
 }
 void lv3KeydownHandler(GameLv3* game, SDLKey key, game_state& state)
 {
-	//if (game->IsCleared()) key = SDLK_ESCAPE;	// 게임 클리어시 아무키나
+	if (game->IsCleared()) key = SDLK_ESCAPE;	// 게임 클리어시 아무키나
 
-	//switch(key) {
-	//	case SDLK_ESCAPE:
-	//		state = menu;		// 메뉴 상태로 전환
-	//		game->Endgame();
-	//		game->GoMenuPage();	// 메뉴 페이지로 전환
-	//		break;
-	//	case SDLK_UP:
-	//	case SDLK_DOWN:
-	//	case SDLK_LEFT:
-	//	case SDLK_RIGHT:
-	//		game->CursorMove(key);
-	//		break;
-	//	case SDLK_SPACE:	// 선택
-	//		game->SpaceDown();
-	//		break;
-	//}
+	switch(key) {
+		case SDLK_ESCAPE:
+			state = menu;		// 메뉴 상태로 전환
+			game->Endgame();
+			game->GoMenuPage();	// 메뉴 페이지로 전환
+			break;
+		case SDLK_UP:
+		case SDLK_DOWN:
+		case SDLK_LEFT:
+		case SDLK_RIGHT:
+			game->CursorMove(key);
+			break;
+		case SDLK_SPACE:	// 선택
+			game->SpaceDown();
+			break;
+	}
 }
