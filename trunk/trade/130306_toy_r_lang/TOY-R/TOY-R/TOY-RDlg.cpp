@@ -6,6 +6,10 @@
 #include "TOY-R.h"
 #include "TOY-RDlg.h"
 #include "../../portfix_to_prefix/ToyTokenizer.h"
+#include <sstream>
+#include <vector>
+#include <string>
+#include <iterator>
 
 using namespace std;
 
@@ -98,6 +102,34 @@ void CTOYRDlg::ConvertToPrefix()
 	}
 }
 
+void CTOYRDlg::CreateIMCode()
+{
+	// 프로그램 읽어와서
+	CString prog;
+	m_program.GetWindowText(prog);
+	if (prog.GetLength()==0)
+	{
+		MessageBox(_T("수식이 없습니다."));
+		m_program.SetFocus();
+		return;
+	}
+
+	// 중간코드를 생성한다 (out_imc)
+	if(make_im_code((CStringA)prog, out_imc)) {
+		stringstream ss;
+		copy(out_imc.begin(), out_imc.end(), ostream_iterator<string>(ss, "\r\n"));
+
+		// 화면 출력
+		m_convert_content.Append((CString)ss.str().c_str());
+		m_convert_content.Append(_T("\r\n"));
+
+		// 화면에 반영한다
+		m_convert.SetWindowText(m_convert_content);
+	} else {
+		MessageBox(_T("중간코드 생성 실패"));
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 BEGIN_MESSAGE_MAP(CTOYRDlg, CDialog)
@@ -185,7 +217,7 @@ void CTOYRDlg::OnBnClickedButtonPrefix()
 
 void CTOYRDlg::OnBnClickedButtonConvert()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CreateIMCode();
 }
 
 void CTOYRDlg::OnBnClickedButtonSave()

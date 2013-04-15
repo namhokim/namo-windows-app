@@ -4,7 +4,8 @@
 
 #pragma once
 #include "afxwin.h"
-
+#include <string>		// 중간코드
+#include <vector>		// 중간코드
 
 // CTOYRDlg 대화 상자
 class CTOYRDlg : public CDialog
@@ -23,6 +24,7 @@ private:
 	void ClearEditControl();	// 화면지우기
 	void LoadFromFile();		// 파일 불러오기
 	void ConvertToPrefix();		// 표기법 변환(to prefix)
+	void CreateIMCode();		// 중간코드 생성
 
 // 구현입니다.
 protected:
@@ -46,4 +48,5 @@ public:
 	CEdit m_convert;
 	CEdit m_result;
 	CString m_convert_content;
+	std::vector<std::string> out_imc;
 };
