@@ -3,7 +3,6 @@
 #include "SDL_Window.h"
 
 #define IMAGE_MAX_LV3	25
-#define BUF_SIZE		10
 
 namespace lv3 {
 	extern const int Size;

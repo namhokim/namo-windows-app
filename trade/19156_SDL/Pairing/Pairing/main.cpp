@@ -220,10 +220,10 @@ void makeLevel3(SDL_Page& page)
 
 	page.SetBgColor(0xff, 0xff, 0xff);	// white
 	page.AddText("Level 3", 100, 30, 21);
-	page.AddText("Elapsed Time(s) : ", 100, 530, 21);
-	page.AddText("Try Counter     : ", 100, 565, 21);
-	page.AddText("5", 300, 530, 21);					// time value
-	page.AddText("1", 300, 565, 21);					// counter value
+	page.AddText("Elapsed Time(s) : ", 100, 600, 21);
+	page.AddText("Try Counter : ", 400, 600, 21);
+	page.AddText("5", 300, 600, 21);					// time value
+	page.AddText("1", 520, 600, 21);					// counter value
 	id = page.AddText("Clear~ !!", 450, 30, 21, 0xff);	// red
 	page.GetTextInfo(id)->bDisplay = false;
 	id = page.AddText("Press Any Key.", 450, 530, 21);		// black
@@ -233,33 +233,33 @@ void makeLevel3(SDL_Page& page)
 	page.AddFillRect(68, 68, 103, 103, 0xff, 0x00, 0x00);	// red (always 2nd)
 
 	fg_b = page.AddImage("images\\1.jpg", 70, 70);
-	page.AddImage("images\\1.jpg", 70, 170);
-	page.AddImage("images\\2.jpg", 70, 270);
-	page.AddImage("images\\2.jpg", 70, 370);
-	page.AddImage("images\\3.jpg", 70, 470);
-
-	page.AddImage("images\\3.jpg", 170, 70);
-	page.AddImage("images\\4.jpg", 170, 170);
-	page.AddImage("images\\4.jpg", 170, 270);
-	page.AddImage("images\\5.jpg", 170, 370);
-	page.AddImage("images\\5.jpg", 170, 470);
-
-	page.AddImage("images\\3.jpg", 270, 70);
-	page.AddImage("images\\4.jpg", 270, 170);
-	not_flip_id = page.AddImage(LogoImage, 270, 270);	// logo
-	page.AddImage("images\\5.jpg", 270, 370);
-	page.AddImage("images\\5.jpg", 270, 470);
-
-	page.AddImage("images\\3.jpg", 370, 70);
-	page.AddImage("images\\4.jpg", 370, 170);
-	page.AddImage("images\\4.jpg", 370, 270);
-	page.AddImage("images\\5.jpg", 370, 370);
-	page.AddImage("images\\5.jpg", 370, 470);
-
+	page.AddImage("images\\1.jpg", 170, 70);
+	page.AddImage("images\\2.jpg", 270, 70);
+	page.AddImage("images\\2.jpg", 370, 70);
 	page.AddImage("images\\3.jpg", 470, 70);
-	page.AddImage("images\\4.jpg", 470, 170);
-	page.AddImage("images\\4.jpg", 470, 270);
+
+	page.AddImage("images\\3.jpg", 70, 170);
+	page.AddImage("images\\4.jpg", 170, 170);
+	page.AddImage("images\\4.jpg", 270, 170);
+	page.AddImage("images\\5.jpg", 370, 170);
+	page.AddImage("images\\5.jpg", 470, 170);
+
+	page.AddImage("images\\3.jpg", 70, 270);
+	page.AddImage("images\\4.jpg", 170, 270);
+	not_flip_id = page.AddImage(LogoImage, 270, 270);	// logo
+	page.AddImage("images\\5.jpg", 370, 270);
+	page.AddImage("images\\5.jpg", 470, 270);
+
+	page.AddImage("images\\3.jpg", 70, 370);
+	page.AddImage("images\\4.jpg", 170, 370);
+	page.AddImage("images\\4.jpg", 270, 370);
+	page.AddImage("images\\5.jpg", 370, 370);
 	page.AddImage("images\\5.jpg", 470, 370);
+
+	page.AddImage("images\\3.jpg", 70, 470);
+	page.AddImage("images\\4.jpg", 170, 470);
+	page.AddImage("images\\4.jpg", 270, 470);
+	page.AddImage("images\\5.jpg", 370, 470);
 	fg_e = page.AddImage("images\\5.jpg", 470, 470);
 
 	for (int id=fg_b; id<=fg_e; ++id) {

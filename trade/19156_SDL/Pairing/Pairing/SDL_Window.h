@@ -5,6 +5,7 @@
 
 #define PAGE_NOT_SELECTED	(-1)
 #define DEFAULT_PAGE		0		// FIRST PAGE
+#define BUF_SIZE		256
 
 // implement for SDL functions wrapping
 class SDL_Window
