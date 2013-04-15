@@ -2,15 +2,16 @@
 
 #include "SDL_Window.h"
 
-#define IMAGE_MAX	9
-#define BUF_SIZE 10
+#define IMAGE_MAX_LV1	9
+#define BUF_SIZE		10
 
 namespace lv1 {
 	extern const int Size;
-	extern const char* ImagePrefix;
-	extern const char* ImageSuffix;
-	extern const char* LogoImage;	// 홀수개로 만들기 위한 타일
 }
+
+extern const char* ImagePrefix;
+extern const char* ImageSuffix;
+extern const char* LogoImage;	// 홀수개로 만들기 위한 타일
 
 class GameLv1
 {
@@ -37,7 +38,7 @@ private:
 	g_status stat;					// 게임상태
 	int firstX, firstY, secondX, secondY;	// 열어본 이미지 좌표
 	char buffer_counter[BUF_SIZE];			// 시도한 횟수 문자열 담을 버퍼
-	char img_file[IMAGE_MAX][_MAX_PATH];	// 이미지 파일 경로 버퍼
+	char img_file[IMAGE_MAX_LV1][_MAX_PATH];	// 이미지 파일 경로 버퍼
 	char buffer_time[20];					// 시간(문자열)
 	Uint32 startTime;						// 시작 시간
 	SDL_TimerID tID;						// 타이머 ID
