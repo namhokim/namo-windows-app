@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include "afxwin.h"
 
 
 // CTOYRDlg 대화 상자
@@ -18,6 +19,8 @@ public:
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 지원입니다.
 
+private:
+	void ClearEditControl();	// 화면지우기
 
 // 구현입니다.
 protected:
@@ -37,4 +40,7 @@ public:
 	afx_msg void OnBnClickedButtonLoadIc();
 	afx_msg void OnBnClickedButtonCalc();
 	afx_msg void OnBnClickedButtonQuit();
+	CEdit m_program;
+	CEdit m_convert;
+	CEdit m_result;
 };

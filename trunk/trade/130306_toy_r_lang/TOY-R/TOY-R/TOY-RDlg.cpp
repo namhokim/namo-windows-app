@@ -25,7 +25,22 @@ CTOYRDlg::CTOYRDlg(CWnd* pParent /*=NULL*/)
 void CTOYRDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_EDIT_PROG, m_program);
+	DDX_Control(pDX, IDC_EDIT_CONVERT, m_convert);
+	DDX_Control(pDX, IDC_EDIT_RESULT, m_result);
 }
+
+//////////////////////////////////////////////////////////////////////////
+// private
+
+void CTOYRDlg::ClearEditControl()
+{
+	m_program.SetWindowText(_T(""));
+	m_convert.SetWindowText(_T(""));
+	m_result.SetWindowText(_T(""));
+}
+
+//////////////////////////////////////////////////////////////////////////
 
 BEGIN_MESSAGE_MAP(CTOYRDlg, CDialog)
 	ON_WM_PAINT()
@@ -97,7 +112,7 @@ HCURSOR CTOYRDlg::OnQueryDragIcon()
 
 void CTOYRDlg::OnBnClickedButtonClear()
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	ClearEditControl();
 }
 
 void CTOYRDlg::OnBnClickedButtonLoadProg()
