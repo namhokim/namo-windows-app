@@ -100,6 +100,8 @@ void CTOYRDlg::ConvertToPrefix()
 
 		// 화면에 반영한다
 		m_convert.SetWindowText(m_convert_content);
+	} else {
+		MessageBox(_T("실패"));
 	}
 }
 
@@ -224,6 +226,8 @@ void CTOYRDlg::Evaluation()
 		CString r;
 		r.Format(_T("%d"), ev);
 		m_result.SetWindowText(r);
+	} else {
+		m_result.SetWindowText(_T("Undefined"));
 	}
 }
 

@@ -102,13 +102,33 @@ bool ToyTokenizer::getToken(std::string& token, int& type)
 					token.push_back(curr_ch);
 					++m_curr_pos;	// 다음 위치
 					break;
-				} else {
-					type = TOKEN_NUMBER;
-					return true;
+				} else if(tb==TOKEN_DOT) {	// 소수
+					token.push_back(curr_ch);
+					++m_curr_pos;	// 다음 위치
+					curr_ch = (*m_curr_pos);	// 현재 문자열
+					continue;		// 이전 타입(tb)는 계속 유지
+				} else {		// 토큰이 바뀔때
+					if (tb==TOKEN_DOT) {
+						type = TOKEN_DOT;
+						return true;
+					} else {
+						type = TOKEN_NUMBER;
+						return true;
+					}
 				}
 			case TOKEN_NEGATIVE:
 				if (tb==TOKEN_NOT_DEFINED) {
 					type = TOKEN_DIGIT;	// 첫 번째 나오는 -는 음수로 간주
+					token.push_back(curr_ch);
+					++m_curr_pos;	// 다음 위치
+				} else {	// 에러
+					token.clear();
+					type = TOKEN_NOT_DEFINED;
+					return false;
+				}
+				break;
+			case TOKEN_DOT:
+				if (tb==TOKEN_DIGIT || tb==TOKEN_NOT_DEFINED) {	// 숫자|처음 점(.)이 나옴
 					token.push_back(curr_ch);
 					++m_curr_pos;	// 다음 위치
 				} else {	// 에러
@@ -247,6 +267,8 @@ int ToyTokenizer::assumeTypeByChar(char ch)
 	if (ch=='-') return TOKEN_NEGATIVE;
 
 	if (ch=='\0') return TOKEN_EOP;
+
+	if (ch=='.') return TOKEN_DOT;
 
 	return TOKEN_NOT_DEFINED;
 }
@@ -452,10 +474,16 @@ bool postfix_to_prefix(const char* prog, std::string& out)
 							if (postfix_to_prefix(innerProg.c_str(), tmp)) {
 								stck.push("(" + tmp + ")");
 								state = terminal;
-							} else {
-								state = error;
+							} else {	// 내부 괄호 안에서 에러 발생
+								state = error;	// 더 이상 진행할 필요 없음
 							}
 						}
+						else {	// 처음부터 괄호를 닫을 수는 없다.
+							state = error;
+						}
+						break;
+					default:
+						state = error;
 						break;
 				}
 				break;
@@ -479,6 +507,7 @@ bool postfix_to_prefix(const char* prog, std::string& out)
 								state = error;
 							}
 						}
+						else if (token==")") state = error;
 						break;
 					default:
 						state = error;
@@ -498,15 +527,18 @@ bool postfix_to_prefix(const char* prog, std::string& out)
 						out.append(op2);
 						state = terminal;
 						break;
+					default:	// 연산자 오류
+						state = error;
+						break;
 				}
 				break;
 		}
 	}
 
-	bool res = (state==terminal);
+	bool res = (state==terminal && type!=TOKEN_NOT_DEFINED);
 	if(res && !stck.empty()) {
 		while(!stck.empty()) {
-			out.append(stck.top());
+			out.append(stck.top()); 
 			stck.pop();
 		}
 	}
@@ -552,6 +584,7 @@ bool evaluation(const std::vector<std::string>& in, int& out)
 			if (in[pc].find_first_of("push ") != std::string::npos) {
 				std::string num = in[pc].substr(5);
 				int i = atoi(num.c_str());
+				if (i==0 && num!="0") return false;	// 피연산자로 문자가 들어왔다
 				stck.push(i);
 			} else {
 				return false;
