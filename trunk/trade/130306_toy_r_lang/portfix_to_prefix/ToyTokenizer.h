@@ -6,10 +6,12 @@
 #define TOKEN_DIGIT			11	// single (internal)
 #define TOKEN_NEGATIVE		12	// single (internal)
 #define TOKEN_STRING		2	// group
-#define TOKEN_ALPHA			21	// single (internal)
+#define TOKEN_ALPHA			13	// single (internal)
 #define TOKEN_RESERVED		3	// 예약어(IF, MINUS)
-#define TOKEN_PARENTHESIS	5	// '(' or ')'
-#define TOKEN_SPACE			7	// 공백 (internal)
+#define TOKEN_PARENTHESIS	4	// '(' or ')'
+#define TOKEN_SPACE			5	// 공백 (internal)
+#define TOKEN_FLOAT_PTR		6	// 소수
+#define TOKEN_DOT			14	// 점 (internal)
 
 #include <string>
 #include <vector>

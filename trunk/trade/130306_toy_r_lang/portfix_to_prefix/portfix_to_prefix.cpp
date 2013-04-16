@@ -27,8 +27,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	string input_10("((2 2 MINUS)3MINUS)");
 	string input_11("abd");
 	string input_12("(abd)");
+	string input_13("(1 2 MINUS))");
 
-	string in(input_4);		// 여기를 변경(위의 문자열 중에 하나로)
+	string in(input_13);		// 여기를 변경(위의 문자열 중에 하나로)
 
 	// 1. 전위표기법 변경
 	string out;
