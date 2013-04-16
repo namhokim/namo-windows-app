@@ -47,9 +47,9 @@ public:
 	afx_msg void OnBnClickedButtonLoadIc();
 	afx_msg void OnBnClickedButtonCalc();
 	afx_msg void OnBnClickedButtonQuit();
-	CEdit m_program;
-	CEdit m_convert;
-	CEdit m_result;
-	CString m_convert_content;
-	std::vector<std::string> m_imc;
+	CEdit m_program;				// 프로그램 에디트 컨트롤
+	CEdit m_convert;				// 중간코드 에디트 컨트롤
+	CEdit m_result;					// 연산결과 에디트 컨트롤
+	CString m_convert_content;		// 전위로 전환한 데이터
+	std::vector<std::string> m_imc;	// 중간코드 저장할 벡터
 };
