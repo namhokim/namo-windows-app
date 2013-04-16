@@ -46,6 +46,7 @@ void CTOYRDlg::ClearEditControl()
 	m_convert.SetWindowText(_T(""));
 	m_convert_content.Empty();
 	m_result.SetWindowText(_T(""));
+	m_imc.clear();
 }
 
 void CTOYRDlg::LoadFromFile()
