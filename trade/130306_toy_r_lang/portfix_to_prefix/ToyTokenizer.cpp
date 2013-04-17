@@ -512,9 +512,13 @@ int postfix_to_prefix(const char* prog, std::string& out)
 
 bool SameUnitOfDigit(const std::string& str, int num)
 {
-	int digit = int(log10(double(num))) +1; 
-	size_t len = str.length();
-	return (digit==len);
+	if (num==0) {
+		return ("0"==str);
+	} else {
+		int digit = int(log10(double(num))) +1; 
+		size_t len = str.length();
+		return (digit==len);
+	}
 }
 
 // Á¤»ó: NON_ERROR
