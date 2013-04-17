@@ -67,9 +67,6 @@ ToyTokenizer::~ToyTokenizer(void)
 void ToyTokenizer::setProg(const char* prog)
 {
 	m_prog = prog;
-	if (prog==NULL)
-		throw new std::invalid_argument("Not allow, NULL value in prog parameter.");
-
 	m_curr_pos = m_prog;
 }
 
