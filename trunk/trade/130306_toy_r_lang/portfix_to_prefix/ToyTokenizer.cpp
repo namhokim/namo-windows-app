@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "ToyTokenizer.h"
+#include <cmath>	// log
 
 //#define VERBOSE
 
@@ -26,6 +27,8 @@ int ConvertExternalType(int type)
 			return TOKEN_NUMBER;
 		case TOKEN_ALPHA:
 			return TOKEN_STRING;
+		case TOKEN_DOT:
+			return TOKEN_FLOAT_PTR;
 		default:
 			return type;
 	}
@@ -71,7 +74,7 @@ void ToyTokenizer::setProg(const char* prog)
 	m_curr_pos = m_prog;
 }
 
-bool ToyTokenizer::getToken(std::string& token, int& type)
+int ToyTokenizer::getToken(std::string& token, int& type)
 {
 	// 출력 인자 초기화
 	token.clear();
@@ -88,34 +91,28 @@ bool ToyTokenizer::getToken(std::string& token, int& type)
 				// 다른 타입에서 괄호를 만났을 때
 				if (tb!=TOKEN_NOT_DEFINED && tb!=TOKEN_PARENTHESIS) {
 					type = ConvertExternalType(tb);
-					return true;	// 토근 획득 완료(성공)
+					return NON_ERROR;	// 토근 획득 완료(성공)
 				}
 				// 처음 괄호를 만났을 때
 				else {
 					token.push_back(curr_ch);
 					++m_curr_pos;	// 다음 위치 수정
-					return true;
+					return NON_ERROR;
 				}
 			case TOKEN_DIGIT:
-				// 처음 숫자하나
-				if (tb==TOKEN_NOT_DEFINED || tb==TOKEN_DIGIT) {
-					token.push_back(curr_ch);
-					++m_curr_pos;	// 다음 위치
-					break;
-				} else if(tb==TOKEN_DOT) {	// 소수
-					token.push_back(curr_ch);
-					++m_curr_pos;	// 다음 위치
-					curr_ch = (*m_curr_pos);	// 현재 문자열
-					continue;		// 이전 타입(tb)는 계속 유지
-				} else {		// 토큰이 바뀔때
-					if (tb==TOKEN_DOT) {
-						type = TOKEN_DOT;
-						return true;
-					} else {
-						type = TOKEN_NUMBER;
-						return true;
-					}
+				switch(tb) {
+					case TOKEN_STRING:		// 문자다음 숫자
+						type = TOKEN_STRING;	// 타입을 문자로 간주
+					case TOKEN_NOT_DEFINED:	// 처음 숫자하나
+					case TOKEN_DIGIT:		// 숫자다음 숫자
+					case TOKEN_DOT:			// 점(.)다음 숫자
+						token.push_back(curr_ch);
+						++m_curr_pos;	// 다음 위치
+						break;
+					default:
+						break;
 				}
+				break;
 			case TOKEN_NEGATIVE:
 				if (tb==TOKEN_NOT_DEFINED) {
 					type = TOKEN_DIGIT;	// 첫 번째 나오는 -는 음수로 간주
@@ -124,34 +121,41 @@ bool ToyTokenizer::getToken(std::string& token, int& type)
 				} else {	// 에러
 					token.clear();
 					type = TOKEN_NOT_DEFINED;
-					return false;
+					return NON_ERROR;
 				}
 				break;
 			case TOKEN_DOT:
 				if (tb==TOKEN_DIGIT || tb==TOKEN_NOT_DEFINED) {	// 숫자|처음 점(.)이 나옴
 					token.push_back(curr_ch);
 					++m_curr_pos;	// 다음 위치
-				} else {	// 에러
+				} else {			// 숫자|처음이외에 점(.)이 나옴
 					token.clear();
 					type = TOKEN_NOT_DEFINED;
-					return false;
+					return SYMBOL_ERROR;
 				}
 				break;
 			case TOKEN_ALPHA:
-				if (tb==TOKEN_NOT_DEFINED && IsReservedWord(m_curr_pos, token)) {
-					type = TOKEN_RESERVED;
-					m_curr_pos += token.size();
-					return true;
-				} else if (tb==TOKEN_DIGIT) {
-					type = ConvertExternalType(tb);
-					return true;
-				}
-				if (tb==TOKEN_NOT_DEFINED || tb==TOKEN_ALPHA) {
-					token.push_back(curr_ch);
-					++m_curr_pos;	// 다음 위치
-				} else {
-					type = TOKEN_STRING;
-					return true;
+				switch(tb) {
+					case TOKEN_DOT:
+						type = TOKEN_NOT_DEFINED;
+						return SYMBOL_ERROR;
+					case TOKEN_NOT_DEFINED:
+						if(IsReservedWord(m_curr_pos, token)) {
+							type = TOKEN_RESERVED;
+							m_curr_pos += token.size();
+							return NON_ERROR;
+						} else {
+							token.push_back(curr_ch);
+							++m_curr_pos;	// 다음 위치
+						}
+						break;
+					case TOKEN_ALPHA:	// 문자다음에 문자
+					case TOKEN_DIGIT:	// 숫자다음에 문자
+						token.push_back(curr_ch);
+						++m_curr_pos;	// 다음 위치
+						break;
+					default:
+						break;
 				}
 				break;
 			case TOKEN_SPACE:
@@ -160,8 +164,13 @@ bool ToyTokenizer::getToken(std::string& token, int& type)
 
 					// 프로그램의 끝을 만나면
 					if ( (*m_curr_pos) == '\0' ) {
-						type = TOKEN_EOP;
-						return false;
+						if (tb==TOKEN_NOT_DEFINED) {
+							type = TOKEN_EOP;
+							return EOP_ERROR;
+						} else {
+							type = ConvertExternalType(tb);
+							return NON_ERROR;
+						}
 					}
 				} while (assumeTypeByChar(*m_curr_pos)==TOKEN_SPACE);
 
@@ -169,36 +178,37 @@ bool ToyTokenizer::getToken(std::string& token, int& type)
 					type = TOKEN_NOT_DEFINED;	// 공백이 앞에 있는 경우
 				} else {						// 뒤에 공백 있는 경우
 					type = ConvertExternalType(tb);
-					return true;
+					return NON_ERROR;
 				}
 				break;
 			case TOKEN_NOT_DEFINED:
 				token.clear();
 				token.push_back(curr_ch);
 				m_curr_pos = NULL;
-				return false;
+				return SYMBOL_ERROR;
 			case TOKEN_EOP:
 				if (tb!=TOKEN_NOT_DEFINED) {
 					type = ConvertExternalType(tb);
-					return true;
+					return NON_ERROR;
 				} else {
-					return false;
+					return EOP_ERROR;
 				}
 		}
-		tb = type;	// 현재 타입을 저장
-		curr_ch = (*m_curr_pos);	// 현재 문자열
+
+		if (tb!=TOKEN_DOT) tb = type;	// 현재 타입을 저장
+		curr_ch = (*m_curr_pos);		// 현재 문자열
 	}
 
 	if (tb!=TOKEN_NOT_DEFINED) {
 		type = ConvertExternalType(tb);
-		return true;	// 토근 획득 완료(성공)
+		return NON_ERROR;	// 토근 획득 완료(성공)
 	} else {	// 토큰없이 프로그램이 끝났다
 		type = TOKEN_EOP;
-		return false;
+		return EOP_ERROR;
 	}
 }
 
-bool ToyTokenizer::getInnerProg(std::string& subProg)
+int ToyTokenizer::getInnerProg(std::string& subProg)
 {
 	subProg.clear();
 
@@ -224,10 +234,12 @@ bool ToyTokenizer::getInnerProg(std::string& subProg)
 		curr_ch = (*m_curr_pos);	// 현재 문자열
 	}
 
-	if (paren_count==0) {
-		return true;
-	} else {
-		return false;
+	if (paren_count<0) {	// (가 많다
+		return L_PAREN_ERROR;
+	} else if (paren_count==0) {
+		return NON_ERROR;
+	} else {				// )가 많다
+		return R_PAREN_ERROR;
 	}
 }
 
@@ -310,110 +322,16 @@ enum parsing_state {
 	need_operator,	// IF, MINUS 필요 상태
 };
 
-bool parse(const char* prog, int* error_pos)
+int make_im_code(const char* prog, std::vector<std::string>& out)
 {
-	if (prog==NULL) {
-		if (error_pos!=NULL) (*error_pos) = 0;
-		return false;
+	out.clear();	// 입력을 정리한다
+
+	// 문법체크
+	std::string prefix;
+	int res = postfix_to_prefix(prog, prefix);
+	if(res!=NON_ERROR) {
+		return res;
 	}
-
-	ToyTokenizer tokenizer;
-	tokenizer.setProg(prog);
-
-	parsing_state state = normal;
-	std::string innerProg;
-	int innerErrPos;
-	int pb = tokenizer.getCurrentIndex();	// position of before (이전 토큰 위치)
-
-	std::string token;
-	int type;
-	while( state != error && tokenizer.getToken(token, type) ) {
-#ifdef VERBOSE
-		std::cout << token << std::endl;
-#endif
-		switch (state) {
-			case normal:	// (, string, number
-				switch(type) {
-					case TOKEN_STRING:
-					case TOKEN_NUMBER:
-						state = terminal;
-						break;
-					case TOKEN_PARENTHESIS:
-						pb = tokenizer.getCurrentIndex();	// position of before (이전 토큰 위치)
-						if (token=="(" && tokenizer.getInnerProg(innerProg)) {
-							if(!parse(innerProg.c_str(), &innerErrPos)) {
-		#ifdef VERBOSE
-								std::cout << "error pos : " << innerErrPos << std::endl;
-		#endif
-								if (error_pos!=NULL) {
-									*error_pos = pb + innerErrPos;
-								}
-								return false;
-							}
-							state = terminal;
-						} else {
-							state = error;
-						}
-						break;
-					default:
-						state = error;
-						break;
-				}
-				break;
-			case terminal:
-				switch(type) {
-					case TOKEN_STRING:
-					case TOKEN_NUMBER:
-						state = need_operator;
-						break;
-					case TOKEN_PARENTHESIS:
-						if (token=="(" && tokenizer.getInnerProg(innerProg)) {
-							if(!parse(innerProg.c_str(), &innerErrPos)) {
-								if (error_pos!=NULL) {
-									*error_pos = pb + innerErrPos;
-								}
-								return false;
-							}
-							state = need_operator;
-						} else {
-							state = error;
-						}
-						break;
-					default:
-						state = error;
-						break;
-				}
-				break;
-			case need_operator:
-				switch(type) {
-					case TOKEN_RESERVED:
-						state = terminal;
-						break;
-					default:
-						state = error;
-						break;
-				}
-				break;
-		}
-
-		pb = tokenizer.getCurrentIndex();	// position of before (이전 토큰 위치)
-	}
-
-#ifdef VERBOSE
-	std::cout << "final state : " << state << std::endl;
-#endif
-	bool res = (state==terminal);
-	if(!res && error_pos) {
-		(*error_pos) = pb;
-	}
-	return res;
-}
-
-bool make_im_code(const char* prog, std::vector<std::string>& out)
-{
-	out.clear();
-
-	if(!parse(prog)) return false;
 	
 	// 중간코드로 변경
 	ToyTokenizer tokenizer;
@@ -421,9 +339,10 @@ bool make_im_code(const char* prog, std::vector<std::string>& out)
 
 	std::string token;
 	int type;
+	bool bCont = true;	// continue
 
 	out.push_back("begin");
-	while( tokenizer.getToken(token, type) ) {
+	while( bCont && tokenizer.getToken(token, type)==NON_ERROR ) {
 		switch(type) {
 			case TOKEN_NUMBER:
 			case TOKEN_STRING:
@@ -432,20 +351,21 @@ bool make_im_code(const char* prog, std::vector<std::string>& out)
 			case TOKEN_RESERVED:
 				out.push_back(token);
 				break;
+			case TOKEN_EOP:
+				bCont = false;
+				break;
 		}
 	}
 	out.push_back("end");
 
-	return true;
+	return NON_ERROR;
 }
 
 #include <stack>
 
-bool postfix_to_prefix(const char* prog, std::string& out)
+int postfix_to_prefix(const char* prog, std::string& out)
 {
-	if (prog==NULL) {
-		return false;
-	}
+	if (prog==NULL) return NO_PROG_ERROR;
 
 	ToyTokenizer tokenizer;
 	tokenizer.setProg(prog);
@@ -455,8 +375,20 @@ bool postfix_to_prefix(const char* prog, std::string& out)
 	std::string innerProg;
 
 	std::string token;
-	int type;
-	while( state != error && tokenizer.getToken(token, type) ) {
+	int tok_res, type;
+	bool bCont = true;	// continue
+	while( bCont && state != error && (tok_res=tokenizer.getToken(token, type))==NON_ERROR) {
+		switch(type) {
+			case TOKEN_FLOAT_PTR:	// 실수는 토큰으로 보지만, 문법상 허용안함
+				tok_res = FLOAT_P_ERROR;
+				state = error;
+				break;
+			case TOKEN_NOT_DEFINED:
+				state = error;
+				tok_res = SYMBOL_ERROR;
+				break;
+		}
+
 		switch (state) {
 			case normal:	// (, string, number
 				switch(type) {
@@ -466,24 +398,35 @@ bool postfix_to_prefix(const char* prog, std::string& out)
 						state = terminal;
 						break;
 					case TOKEN_PARENTHESIS:
-						if (token=="(" && tokenizer.getInnerProg(innerProg)) {
+						if (token=="(") {
+							int inner_res = tokenizer.getInnerProg(innerProg);
+							if (inner_res!=NON_ERROR) {
+								tok_res = inner_res;
+								state = error;
+							} else {
 #ifdef VERBOSE
-							std::cout << innerProg << std::endl;
+								std::cout << innerProg << std::endl;
 #endif
-							std::string tmp;
-							if (postfix_to_prefix(innerProg.c_str(), tmp)) {
-								stck.push("(" + tmp + ")");
-								state = terminal;
-							} else {	// 내부 괄호 안에서 에러 발생
-								state = error;	// 더 이상 진행할 필요 없음
+								std::string tmp;
+								inner_res = postfix_to_prefix(innerProg.c_str(), tmp);
+								if (inner_res==NON_ERROR) {
+									stck.push("(" + tmp + ")");
+									state = terminal;
+									innerProg.clear();
+								} else {	// 내부 괄호 안에서 에러 발생
+									state = error;	// 더 이상 진행할 필요 없음
+									tok_res = inner_res;
+								}
 							}
 						}
 						else {	// 처음부터 괄호를 닫을 수는 없다.
 							state = error;
+							tok_res = R_PAREN_ERROR;
 						}
 						break;
 					default:
 						state = error;
+						tok_res = UNDEFINED_ERROR;
 						break;
 				}
 				break;
@@ -495,22 +438,43 @@ bool postfix_to_prefix(const char* prog, std::string& out)
 						state = need_operator;
 						break;
 					case TOKEN_PARENTHESIS:
-						if (token=="(" && tokenizer.getInnerProg(innerProg)) {
-#ifdef VERBOSE
-							std::cout << innerProg << std::endl;
-#endif
-							std::string tmp;
-							if (postfix_to_prefix(innerProg.c_str(), tmp)) {
-								stck.push("(" + tmp + ")");
-								state = need_operator;
-							} else {
+						if (token=="(") {
+							int inner_res = tokenizer.getInnerProg(innerProg);
+							if (inner_res!=NON_ERROR) {
+								tok_res = inner_res;
 								state = error;
+							} else {
+#ifdef VERBOSE
+								std::cout << innerProg << std::endl;
+#endif
+								std::string tmp;
+								inner_res = postfix_to_prefix(innerProg.c_str(), tmp);
+								if (inner_res==NON_ERROR) {
+									stck.push("(" + tmp + ")");
+									state = need_operator;
+									innerProg.clear();
+								} else {	// 내부 괄호 안에서 에러 발생
+									state = error;	// 더 이상 진행할 필요 없음
+									tok_res = inner_res;
+								}
 							}
 						}
-						else if (token==")") state = error;
+						else {	// 처음부터 괄호를 닫을 수는 없다.
+							state = error;
+							tok_res = L_PAREN_ERROR;
+						}
+						break;
+					case TOKEN_RESERVED:	// eg. (1 MINUS)
+						state = error;
+						tok_res = OPERAND_ERRPR;
+						break;
+					case TOKEN_EOP:			// 잘 끝났다
+						tok_res = NON_ERROR;
+						bCont = false;
 						break;
 					default:
 						state = error;
+						tok_res = UNDEFINED_ERROR;
 						break;
 				}
 				break;
@@ -527,16 +491,27 @@ bool postfix_to_prefix(const char* prog, std::string& out)
 						out.append(op2);
 						state = terminal;
 						break;
+					case TOKEN_STRING:
+						state = error;
+						tok_res = UNDEFINED_ERROR;
+						break;
 					default:	// 연산자 오류
 						state = error;
+						tok_res = OPERATOR_ERROR;
 						break;
 				}
 				break;
 		}
 	}
 
-	bool res = (state==terminal && type!=TOKEN_NOT_DEFINED);
-	if(res && !stck.empty()) {
+	int res;
+	if (state==terminal && tok_res==EOP_ERROR) {
+		res = NON_ERROR;
+	} else {
+		res = tok_res;
+	}
+
+	if(res==NON_ERROR && !stck.empty()) {	// 성공이면
 		while(!stck.empty()) {
 			out.append(stck.top()); 
 			stck.pop();
@@ -546,13 +521,20 @@ bool postfix_to_prefix(const char* prog, std::string& out)
 	return res;
 }
 
-bool evaluation(const std::vector<std::string>& in, int& out)
+bool SameUnitOfDigit(const std::string& str, int num)
+{
+	int digit = int(log(double(num))) + 1;
+	size_t len = str.length();
+	return (digit==len);
+}
+
+int evaluation(const std::vector<std::string>& in, int& out)
 {
 	size_t ps = in.size();	// program size
 	if (ps<2) return false;
 
-	if (in[0]!="begin") return false;
-	if (in[ps-1]!="end") return false;
+	if (in[0]!="begin") return NO_BEGIN_ERROR;
+	if (in[ps-1]!="end") return NO_END_ERROR;
 
 	std::stack<int> stck;
 	int op1, op2;			// operand
@@ -563,7 +545,7 @@ bool evaluation(const std::vector<std::string>& in, int& out)
 		cout << in[pc] << endl;
 #endif
 		if (in[pc]=="MINUS") {
-			if (stck.size()<2) return false;	// 두 개 이상이 스택에 있어야 함
+			if (stck.size()<2) return OPERAND_ERRPR;	// 두 개 이상이 스택에 있어야 함
 
 			op2 = stck.top();
 			stck.pop();
@@ -572,7 +554,7 @@ bool evaluation(const std::vector<std::string>& in, int& out)
 			result = op1-op2;
 			stck.push(result);
 		} else if (in[pc]=="IF") {
-			if (stck.size()<2) return false;	// 두 개 이상이 스택에 있어야 함
+			if (stck.size()<2) return OPERAND_ERRPR;	// 두 개 이상이 스택에 있어야 함
 
 			op2 = stck.top();
 			stck.pop();
@@ -584,10 +566,10 @@ bool evaluation(const std::vector<std::string>& in, int& out)
 			if (in[pc].find_first_of("push ") != std::string::npos) {
 				std::string num = in[pc].substr(5);
 				int i = atoi(num.c_str());
-				if (i==0 && num!="0") return false;	// 피연산자로 문자가 들어왔다
+				if (!SameUnitOfDigit(num, i)) return UNDEFINED_ERROR;	// 피연산자로 문자가 들어왔다
 				stck.push(i);
 			} else {
-				return false;
+				return UNDEFINED_ERROR;
 			}
 
 		}
@@ -595,8 +577,72 @@ bool evaluation(const std::vector<std::string>& in, int& out)
 
 	if (stck.size()==1) {
 		out = stck.top();
-		return true;
+		return NON_ERROR;
 	} else {
 		return false;
+	}
+}
+
+const char* ErrorCodeToStringA(int code)
+{
+	switch(code) {
+		case NON_ERROR:
+			return "작업을 완료했습니다.";
+		case L_PAREN_ERROR:
+			return "'('괄호의 사용이 잘못되었습니다.";
+		case R_PAREN_ERROR:
+			return "')'괄호의 사용이 잘못되었습니다.";
+		case OPERATOR_ERROR:
+			return "연산자오류입니다.";
+		case OPERAND_ERRPR:
+			return "피연산자오류입니다.";
+		case FLOAT_P_ERROR:
+			return "실수를 입력하셨습니다.";
+		case SYMBOL_ERROR:
+			return "잘못된 기호가 입력되었습니다.";
+		case UNDEFINED_ERROR:
+			return "Undefined";
+		case NO_PROG_ERROR:
+			return "프로그램이 없습니다.";
+		case NO_BEGIN_ERROR:
+			return "중간코드가 begin으로 시작하지 않습니다.";
+		case NO_END_ERROR:
+			return "중간코드가 end로 끝나지 않습니다.";
+		case BAD_IC_ERROR:
+			return "잘못된 중간코드입니다.";
+		default:
+			return "알 수 없는 에러코드입니다.";
+	}
+}
+
+const wchar_t* ErrorCodeToStringW(int code)
+{
+	switch(code) {
+		case NON_ERROR:
+			return L"작업을 완료했습니다.";
+		case L_PAREN_ERROR:
+			return L"'('괄호의 사용이 잘못되었습니다.";
+		case R_PAREN_ERROR:
+			return L"')'괄호의 사용이 잘못되었습니다.";
+		case OPERATOR_ERROR:
+			return L"연산자오류입니다.";
+		case OPERAND_ERRPR:
+			return L"피연산자오류입니다.";
+		case FLOAT_P_ERROR:
+			return L"실수를 입력하셨습니다.";
+		case SYMBOL_ERROR:
+			return L"잘못된 기호가 입력되었습니다.";
+		case UNDEFINED_ERROR:
+			return L"Undefined";
+		case NO_PROG_ERROR:
+			return L"프로그램이 없습니다.";
+		case NO_BEGIN_ERROR:
+			return L"중간코드가 begin으로 시작하지 않습니다.";
+		case NO_END_ERROR:
+			return L"중간코드가 end로 끝나지 않습니다.";
+		case BAD_IC_ERROR:
+			return L"잘못된 중간코드입니다.";
+		default:
+			return L"알 수 없는 에러코드입니다.";
 	}
 }
