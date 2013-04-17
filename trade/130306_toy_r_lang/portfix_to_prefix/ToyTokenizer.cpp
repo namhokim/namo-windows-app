@@ -557,7 +557,7 @@ int operate(int op, std::stack<int>& stck, int& result)
 int evaluation(const std::vector<std::string>& in, int& out)
 {
 	size_t ps = in.size();	// program size
-	if (ps<2) return false;
+	if (ps<2) return BAD_IC_ERROR;
 
 	if (in[0]!="begin") return NO_BEGIN_ERROR;
 	if (in[ps-1]!="end") return NO_END_ERROR;
