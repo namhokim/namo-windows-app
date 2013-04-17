@@ -1,8 +1,7 @@
 #include "StdAfx.h"
 #include "ToyTokenizer.h"
+#include <stack>	// 표기법 변환시 사용
 #include <cmath>	// log
-
-//#define VERBOSE
 
 // 예약어 목록
 namespace Toy_R_Reserved {
@@ -74,6 +73,7 @@ void ToyTokenizer::setProg(const char* prog)
 	m_curr_pos = m_prog;
 }
 
+// 토큰 획득 : 핵심1
 int ToyTokenizer::getToken(std::string& token, int& type)
 {
 	// 출력 인자 초기화
@@ -310,11 +310,9 @@ const char* TokenTypeToString(int type)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// 파싱을 수행
-#ifdef VERBOSE
-#include <iostream>
-#endif
+// 파싱관련
 
+// 파싱시 상태
 enum parsing_state {
 	normal,		// 기본상태
 	terminal,	// 종료상태
@@ -322,6 +320,7 @@ enum parsing_state {
 	need_operator,	// IF, MINUS 필요 상태
 };
 
+// 중간코드 생성
 int make_im_code(const char* prog, std::vector<std::string>& out)
 {
 	out.clear();	// 입력을 정리한다
@@ -361,8 +360,7 @@ int make_im_code(const char* prog, std::vector<std::string>& out)
 	return NON_ERROR;
 }
 
-#include <stack>
-
+// 문법체크 : 핵심2
 int postfix_to_prefix(const char* prog, std::string& out)
 {
 	if (prog==NULL) return NO_PROG_ERROR;
@@ -384,8 +382,8 @@ int postfix_to_prefix(const char* prog, std::string& out)
 				state = error;
 				break;
 			case TOKEN_NOT_DEFINED:
-				state = error;
 				tok_res = SYMBOL_ERROR;
+				state = error;
 				break;
 		}
 
@@ -404,9 +402,6 @@ int postfix_to_prefix(const char* prog, std::string& out)
 								tok_res = inner_res;
 								state = error;
 							} else {
-#ifdef VERBOSE
-								std::cout << innerProg << std::endl;
-#endif
 								std::string tmp;
 								inner_res = postfix_to_prefix(innerProg.c_str(), tmp);
 								if (inner_res==NON_ERROR) {
@@ -444,9 +439,6 @@ int postfix_to_prefix(const char* prog, std::string& out)
 								tok_res = inner_res;
 								state = error;
 							} else {
-#ifdef VERBOSE
-								std::cout << innerProg << std::endl;
-#endif
 								std::string tmp;
 								inner_res = postfix_to_prefix(innerProg.c_str(), tmp);
 								if (inner_res==NON_ERROR) {
@@ -528,6 +520,33 @@ bool SameUnitOfDigit(const std::string& str, int num)
 	return (digit==len);
 }
 
+// 정상: NON_ERROR
+// 연산을 수행(MINUS, IF)
+int operate(int op, std::stack<int>& stck, int& result)
+{
+	if (stck.size()<2) return OPERAND_ERRPR;	// 두 개 이상이 스택에 있어야 함
+
+	int op1, op2;			// operands
+	op2 = stck.top();
+	stck.pop();
+	op1 = stck.top();
+	stck.pop();
+	result = op1-op2;
+
+	switch(op) {
+		case OP_MINUS:
+			result = op1 - op2;
+			break;
+		case OP_IF:
+			result = (op1 > 0 ? op2 : 0);
+			break;
+		default:
+			return OPERATOR_ERROR;
+	}
+
+	return NON_ERROR;
+}
+
 int evaluation(const std::vector<std::string>& in, int& out)
 {
 	size_t ps = in.size();	// program size
@@ -537,31 +556,19 @@ int evaluation(const std::vector<std::string>& in, int& out)
 	if (in[ps-1]!="end") return NO_END_ERROR;
 
 	std::stack<int> stck;
-	int op1, op2;			// operand
 	int result;				// result of operation
+	int op_res;				// success or fail of operation
 	size_t pc;				// program counter
+
 	for (pc=1; pc<(ps-1); ++pc) {	// begin < ~~ < end
-#ifdef VERBOSE
-		cout << in[pc] << endl;
-#endif
 		if (in[pc]=="MINUS") {
-			if (stck.size()<2) return OPERAND_ERRPR;	// 두 개 이상이 스택에 있어야 함
-
-			op2 = stck.top();
-			stck.pop();
-			op1 = stck.top();
-			stck.pop();
-			result = op1-op2;
-			stck.push(result);
+			op_res = operate(OP_MINUS, stck, result);
+			if (op_res==NON_ERROR) stck.push(result);
+			else return op_res;
 		} else if (in[pc]=="IF") {
-			if (stck.size()<2) return OPERAND_ERRPR;	// 두 개 이상이 스택에 있어야 함
-
-			op2 = stck.top();
-			stck.pop();
-			op1 = stck.top();
-			stck.pop();
-			result = (op1 > 0 ? op2 : 0);
-			stck.push(result);
+			op_res = operate(OP_IF, stck, result);
+			if (op_res==NON_ERROR) stck.push(result);
+			else return op_res;
 		} else {	// push
 			if (in[pc].find_first_of("push ") != std::string::npos) {
 				std::string num = in[pc].substr(5);

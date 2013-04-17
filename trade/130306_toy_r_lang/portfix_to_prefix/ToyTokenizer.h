@@ -27,6 +27,9 @@
 #define NO_END_ERROR	10	// 중간코드가 end로 끝나지 않음
 #define BAD_IC_ERROR	11	// 잘못된 중간코드
 
+#define OP_MINUS	0	// MINUS 연산
+#define OP_IF		1	// IF 연산
+
 #include <string>
 #include <vector>
 
