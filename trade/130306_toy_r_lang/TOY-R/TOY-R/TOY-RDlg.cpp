@@ -92,7 +92,8 @@ void CTOYRDlg::ConvertToPrefix()
 
 	// 변환하여
 	string prefix;
-	if(postfix_to_prefix((CStringA)prog, prefix))
+	int res = postfix_to_prefix((CStringA)prog, prefix);
+	if(res==NON_ERROR)
 	{
 		// 기본 문자열에 붙여서
 		m_convert_content.Append((CString)prefix.c_str());
@@ -101,7 +102,9 @@ void CTOYRDlg::ConvertToPrefix()
 		// 화면에 반영한다
 		m_convert.SetWindowText(m_convert_content);
 	} else {
-		MessageBox(_T("실패"));
+		CString msg;
+		msg.Format(_T("실패: %s"), ErrorCodeToString(res));
+		MessageBox(msg);
 	}
 }
 
@@ -118,7 +121,8 @@ void CTOYRDlg::CreateIMCode()
 	}
 
 	// 중간코드를 생성한다 (out_imc)
-	if(make_im_code((CStringA)prog, m_imc)) {
+	int res = make_im_code((CStringA)prog, m_imc);
+	if(res==NON_ERROR) {
 		stringstream ss;
 		copy(m_imc.begin(), m_imc.end(), ostream_iterator<string>(ss, "\r\n"));
 
@@ -129,7 +133,9 @@ void CTOYRDlg::CreateIMCode()
 		// 화면에 반영한다
 		m_convert.SetWindowText(m_convert_content);
 	} else {
-		MessageBox(_T("중간코드 생성 실패"));
+		CString msg;
+		msg.Format(_T("중간코드 생성 실패: %s"), ErrorCodeToString(res));
+		MessageBox(msg);
 	}
 }
 
@@ -221,13 +227,16 @@ void CTOYRDlg::Evaluation()
 		return;
 	}
 
-	int ev;
-	if(evaluation(m_imc, ev)) {
+	int res, ev;
+	res = evaluation(m_imc, ev);
+	if(res==NON_ERROR) {
 		CString r;
 		r.Format(_T("%d"), ev);
 		m_result.SetWindowText(r);
 	} else {
-		m_result.SetWindowText(_T("Undefined"));
+		CString msg;
+		msg.Format(_T("에러: %s"), ErrorCodeToString(res));
+		MessageBox(msg);
 	}
 }
 

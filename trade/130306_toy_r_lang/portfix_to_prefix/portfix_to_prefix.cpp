@@ -27,31 +27,37 @@ int _tmain(int argc, _TCHAR* argv[])
 	string input_10("((2 2 MINUS)3MINUS)");
 	string input_11("abd");
 	string input_12("(abd)");
-	string input_13("(1 2 MINUS))");
+	string input_13("(1A 2 MINUS)");
 
 	string in(input_13);		// 여기를 변경(위의 문자열 중에 하나로)
 
 	// 1. 전위표기법 변경
 	string out;
-	if(postfix_to_prefix(in.c_str(), out)) {
-		cout << "in(postfix) : " << in << endl;
+	int res = postfix_to_prefix(in.c_str(), out);
+	cout << "in(postfix) : " << in << endl;
+	if(res==NON_ERROR) {
 		cout << "out(prefix) : " << out << endl << endl;
+	} else {
+		cout << "failed : " << ErrorCodeToStringA(res) << endl;
 	}
 
 	// 2. 중간코드 생성
 	std::vector<std::string> out_imc;
-	if(make_im_code(in.c_str(), out_imc)) {
+	if(make_im_code(in.c_str(), out_imc)==NON_ERROR) {
 		copy(out_imc.begin(), out_imc.end(), ostream_iterator<string>(cout, "\n"));
 
 		cout << endl;
 		int ev;
 		// 3. 평가
-		if(evaluation(out_imc, ev)) {
+		res = evaluation(out_imc, ev);
+		if(res==NON_ERROR) {
 			cout << "eval : " << ev << endl;
+		} else {
+			cout << "Undefined" << endl;
 		}
 		return 0;
 	} else {
-		cout << "failed..." << endl;
+		cout << "failed : " << ErrorCodeToStringA(res) << endl;
 	}
 
 	return 0;
