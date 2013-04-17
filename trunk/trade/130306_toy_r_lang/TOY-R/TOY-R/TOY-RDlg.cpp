@@ -240,6 +240,13 @@ void CTOYRDlg::Evaluation()
 	}
 }
 
+void CTOYRDlg::ScrollToLastLine(CEdit& edit)
+{
+	int nLength = edit.GetWindowTextLength();
+	edit.SetSel(nLength, nLength);
+	edit.UpdateData(FALSE);
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 BEGIN_MESSAGE_MAP(CTOYRDlg, CDialog)
@@ -323,11 +330,13 @@ void CTOYRDlg::OnBnClickedButtonLoadProg()
 void CTOYRDlg::OnBnClickedButtonPrefix()
 {
 	ConvertToPrefix();
+	ScrollToLastLine(m_convert);
 }
 
 void CTOYRDlg::OnBnClickedButtonConvert()
 {
 	CreateIMCode();
+	ScrollToLastLine(m_convert);
 }
 
 void CTOYRDlg::OnBnClickedButtonSave()

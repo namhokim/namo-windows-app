@@ -29,6 +29,8 @@ private:
 	void LoadTheIMCode();		// 중간코드 불러오기(m_imc)
 	void Evaluation();			// 연산하기(m_imc)
 
+	void ScrollToLastLine(CEdit& edit);	// 스크롤 아래로 내리기(중간과정)
+
 // 구현입니다.
 protected:
 	HICON m_hIcon;
