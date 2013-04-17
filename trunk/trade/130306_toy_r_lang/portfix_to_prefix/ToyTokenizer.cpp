@@ -514,8 +514,14 @@ bool SameUnitOfDigit(const std::string& str, int num)
 {
 	if (num==0) {
 		return ("0"==str);
-	} else {
+	} else if (num>0) {
 		int digit = int(log10(double(num))) +1; 
+		size_t len = str.length();
+		return (digit==len);
+	} else {	// 음수
+		// 상용로그는 양수로만 취할 수 있으므로
+		// 양수로 변환하고, '-'의 길이를 고려해 +2를 추가함
+		int digit = int(log10(double(-num))) +2;
 		size_t len = str.length();
 		return (digit==len);
 	}
