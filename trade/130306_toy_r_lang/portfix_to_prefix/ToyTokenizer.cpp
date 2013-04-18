@@ -258,7 +258,7 @@ bool is_parenthesis(char ch)
 // 공백인지 판단
 bool is_space(char ch)
 {
-	return (ch==' ');
+	return (ch==' ' || ch=='\r' || ch=='\n');
 }
 
 int ToyTokenizer::assumeTypeByChar(char ch)
