@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #define		FOR_LOOP_TEMPLATE(x)	for(int x=1; x<=9; ++x)
 #define		FILTER_PASS(x)	if(x==1 || x==6 || x==9) continue;
@@ -52,5 +53,8 @@ int main(int argc, char* argv[])
 			}
 		}
 	}
+
+	system("pause");
+
 	return 0;
 }
