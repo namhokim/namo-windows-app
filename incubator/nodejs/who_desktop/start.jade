@@ -1,10 +1,29 @@
-html
+doctype 5
+html(lang="ko")
 	head
 		meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
 		title 원격 데스트탑 접속자
+	body
+		h1 아래의 사용자가 접속해있습니다
+		if number < 1
+			ul
+				li 사용자가 없습니다
+		else
+			ol
+				each d in data
+					li
+						input(type="checkbox", id=d.SessionId, class="session_user")
+						check #{d.address} : #{d.host} [#{d.rdp}]
+					
+		h2(id="chat") 대화
+		input(id="name")
+		input(id="message")
+		button(id="send") Send
+		ul(id="content")
+
 		script(src='/jquery-1.7.2.min.js')
 		script(src='/socket.io/socket.io.js')
-		script(type='text/javascript')
+		script.
 			function pad2(number) {  
 				return (number < 10 ? '0' : '') + number
 			}
@@ -62,20 +81,3 @@ html
 					$(this).select();
 				});
 			});
-	body
-		h1 아래의 사용자가 접속해있습니다
-		if number < 1
-			ul
-				li 사용자가 없습니다
-		else
-			ol
-				each d in data
-					li
-						input(type="checkbox", id=d.SessionId, class="session_user")
-						check #{d.address} : #{d.host} [#{d.rdp}]
-					
-		h2(id="chat") 대화
-		input(id="name")
-		input(id="message")
-		button(id="send") Send
-		ul(id="content")
