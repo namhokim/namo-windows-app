@@ -1,9 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
-#pragma warning(disable : 4251)	// Prevent warning message "node::ObjectWrap::handle_"
-								// It's not important, because we just provide functions
 #include <node.h>
 #include <v8.h>
+
 using namespace v8;	// internal included <v8.h>
 
 #ifdef _M_X64
@@ -58,7 +57,7 @@ Handle<Value> MsgHandler(const Arguments& args)
 	// get the param
 	// refs. http://stackoverflow.com/questions/7476145/converting-from-v8arguments-to-c-types
 	uint32_t		sid = args[0]->Uint32Value();
-	String::Value	msg( args[1]->ToString() );
+	Local<String>	msg( args[1]->ToString() );
 
 	// execute C++ user function
 	wts::SendMessageToSesstionID(sid, reinterpret_cast<wchar_t *>(*msg));
@@ -68,10 +67,12 @@ Handle<Value> MsgHandler(const Arguments& args)
 
 ///////////////////////////////////////////////////////////////////////////////
 
-void init(Handle<Object> target)
+void init(Handle<Object> exports)
 {
-	NODE_SET_METHOD(target, "enumerate", EnumHandler);
-	NODE_SET_METHOD(target, "message", MsgHandler);
+	exports->Set(String::NewSymbol("enumerate"),
+		FunctionTemplate::New(EnumHandler)->GetFunction());
+	exports->Set(String::NewSymbol("message"),
+		FunctionTemplate::New(MsgHandler)->GetFunction());
 }
 
 NODE_MODULE(wts, init)
