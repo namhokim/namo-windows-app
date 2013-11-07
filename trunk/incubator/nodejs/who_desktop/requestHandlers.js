@@ -7,8 +7,8 @@ var fs = require("fs"),
 var jadefile = fs.readFileSync(__dirname + '/start.jade');
 var fn = jade.compile(jadefile.toString('utf8'));
 
-function start(response) {
-    console.log("Request handler 'start' was called.");
+function start(response) {
+    console.log("Request handler 'start' was called.");
     var data = wts.enumerate();
     var json_data = eval('(' + data + ')');
     var html = fn(json_data);
