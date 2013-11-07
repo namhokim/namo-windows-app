@@ -57,7 +57,7 @@ Handle<Value> MsgHandler(const Arguments& args)
 	// get the param
 	// refs. http://stackoverflow.com/questions/7476145/converting-from-v8arguments-to-c-types
 	uint32_t		sid = args[0]->Uint32Value();
-	Local<String>	msg( args[1]->ToString() );
+	String::Value	msg( args[1]->ToString() );
 
 	// execute C++ user function
 	wts::SendMessageToSesstionID(sid, reinterpret_cast<wchar_t *>(*msg));
