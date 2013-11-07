@@ -1,0 +1,12 @@
+{
+   "name": "wts",
+   "version": "0.0.1",
+   "private": true,
+   "dependencies": {
+      "socket.io" : "~0.9.16",
+      "jade"      : "~0.35.0"
+   },
+   "engines": {
+      "node": "0.10.x"
+   }
+}
