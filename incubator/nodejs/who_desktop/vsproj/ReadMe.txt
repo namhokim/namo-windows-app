@@ -1,3 +1,13 @@
+빌드시 주의
+"포함 파일을 열 수 없습니다. 'node.h': No such file or directory"
+라는 메시지가 나오는데 추가 include 디렉토리를 VS2008이 인식을 못해서 발생하는 것으로 보임
+두 번째 빌드시에는 제대로 수행되므로 무시.
+
+[test]
+node
+var r = require("./wts");
+.exit
+
 [wts]
 > cd Release
 Release> node
