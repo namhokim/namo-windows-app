@@ -23,6 +23,9 @@ function start(route, handle) {
 	  ]);
     io.sockets.on('connection', function(socket) {
         ++clients;
+
+        var clientIP = socket.handshake.address.address + ':' + socket.handshake.address.port;
+
         socket.broadcast.emit('users_count', { number: clients });
 
         // message event
@@ -35,7 +38,7 @@ function start(route, handle) {
             socket.broadcast.emit('users_count', { number: clients });  // except for self
         });
 
-        io.sockets.sockets[socket.id].emit('users_count', { number: clients, id: socket.id }); // to self
+        io.sockets.sockets[socket.id].emit('users_count', { number: clients, id: clientIP }); // to self
     });
 
 }
