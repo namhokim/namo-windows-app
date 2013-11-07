@@ -19,13 +19,13 @@ const char* JSON_NO_DATA = "{\"number\":0,\"data\":null}";
 
 ///////////////////////////////////////////////////////////////////////////////
 
-void GetDetailInfo(DWORD SessionId, Json::Value& item_out);
-void GetAddressInfo(PWTS_CLIENT_ADDRESS address, std::string& address_str);
-int GetMessageTitle(LPWSTR title);
+static void GetDetailInfo(DWORD SessionId, Json::Value& item_out);
+static void GetAddressInfo(PWTS_CLIENT_ADDRESS address, std::string& address_str);
+static int GetMessageTitle(LPWSTR title);
 
 namespace convert {
-	std::wstring UTF82W(const std::string& utf8);
-	std::string W2UTF8(const std::wstring& utf16le);
+	static std::wstring UTF82W(const std::string& utf8);
+	static std::string W2UTF8(const std::wstring& utf16le);
 } // end of namespace convert
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -97,7 +97,7 @@ int SendMessageToSesstionID(unsigned int SessionId, const wchar_t* message)
 
 ///////////////////////////////////////////////////////////////////////////////
 
-void GetDetailInfo(DWORD SessionId, Json::Value& item_out)
+static void GetDetailInfo(DWORD SessionId, Json::Value& item_out)
 {
 	LPWSTR pBuffer;
 	DWORD dwBytesReturned;
@@ -127,7 +127,7 @@ void GetDetailInfo(DWORD SessionId, Json::Value& item_out)
 	}
 }
 
-void GetAddressInfo(PWTS_CLIENT_ADDRESS address, std::string& address_str)
+static void GetAddressInfo(PWTS_CLIENT_ADDRESS address, std::string& address_str)
 {
 	std::stringstream ss;
 	PBYTE ad = address->Address;
@@ -155,7 +155,7 @@ void GetAddressInfo(PWTS_CLIENT_ADDRESS address, std::string& address_str)
 
 ///////////////////////////////////////////////////////////////////////////////
 
-int GetMessageTitle(LPWSTR title)
+static int GetMessageTitle(LPWSTR title)
 {
 	SYSTEMTIME st;
 	LPCWSTR MessageFormat = L"8282 서비스 - %s의 메시지";
@@ -182,7 +182,7 @@ namespace convert {
 	const wchar_t Pow2_6 = 64;
 	const wchar_t Pow2_12 = 4096;
 
-	std::wstring UTF82W(const std::string& utf8)
+	static std::wstring UTF82W(const std::string& utf8)
 	{
 		std::wstring out;
 
@@ -213,7 +213,7 @@ namespace convert {
 		return out;
 	}
 
-	std::string W2UTF8(const std::wstring& utf16le)
+	static std::string W2UTF8(const std::wstring& utf16le)
 	{	
 		std::string out;
 
