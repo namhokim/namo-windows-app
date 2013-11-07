@@ -34,7 +34,7 @@ function favicon(response) {
 
 function jquery(response) {
   console.log("Request handler 'favicon' was called.");
-  fs.readFile("jquery-1.7.2.min.js", "utf8", function(error, file) {
+  fs.readFile("jquery-1.10.2.min.js", "utf8", function(error, file) {
     if(error) {
       response.writeHead(500, {"Content-Type": "text/plain"});
       response.write(error + "\n");
