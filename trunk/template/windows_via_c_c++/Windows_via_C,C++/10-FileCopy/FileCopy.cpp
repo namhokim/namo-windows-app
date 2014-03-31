@@ -198,11 +198,33 @@ BOOL Dlg_OnInitDialog(HWND hWnd, HWND hWndFocus, LPARAM lParam) {
 
 
 ///////////////////////////////////////////////////////////////////////////////
+#include <Strsafe.h>
+void ShowResultAndElapedTime(HWND hWnd, BOOL bResult, const SYSTEMTIME& st1, const SYSTEMTIME& st2) {
+	FILETIME ft1, ft2;
+	LARGE_INTEGER li1, li2;
+	char msg[125];
 
+	SystemTimeToFileTime(&st1, &ft1);
+	SystemTimeToFileTime(&st2, &ft2);
+
+	li1.HighPart = ft1.dwHighDateTime;
+	li1.LowPart = ft1.dwLowDateTime;
+
+	li2.HighPart = ft2.dwHighDateTime;
+	li2.LowPart = ft2.dwLowDateTime;
+
+	LONGLONG diff = li2.QuadPart - li1.QuadPart;
+	double second = diff / (double)10000000;	// 100 nano-second : 10^7
+	StringCbPrintfA(msg, 125,
+		(bResult ? "File Copy Successful %f seconds" : "File Copy Failed %f seconds"), second);
+	chMB(msg);
+}
 
 void Dlg_OnCommand(HWND hWnd, int id, HWND hWndCtl, UINT codeNotify) {
    
    TCHAR szPathname[_MAX_PATH];
+   SYSTEMTIME st1, st2;
+   BOOL bResult;
 
    switch (id) {
    case IDCANCEL:
@@ -214,8 +236,10 @@ void Dlg_OnCommand(HWND hWnd, int id, HWND hWndCtl, UINT codeNotify) {
       Static_GetText(GetDlgItem(hWnd, IDC_SRCFILE), 
          szPathname, _countof(szPathname));
       SetCursor(LoadCursor(NULL, IDC_WAIT));
-      chMB(FileCopy(szPathname, TEXT("FileCopy.cpy")) 
-         ? "File Copy Successful" : "File Copy Failed");
+	  GetSystemTime(&st1);
+	  bResult = FileCopy(szPathname, TEXT("FileCopy.cpy"));
+	  GetSystemTime(&st2);
+	  ShowResultAndElapedTime(hWnd, bResult, st1, st2);
       break;
 
    case IDC_PATHNAME:
