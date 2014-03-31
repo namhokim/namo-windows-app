@@ -202,7 +202,7 @@ BOOL Dlg_OnInitDialog(HWND hWnd, HWND hWndFocus, LPARAM lParam) {
 void ShowResultAndElapedTime(HWND hWnd, BOOL bResult, const SYSTEMTIME& st1, const SYSTEMTIME& st2) {
 	FILETIME ft1, ft2;
 	LARGE_INTEGER li1, li2;
-	char msg[125];
+	char msg[MAX_PATH];
 
 	SystemTimeToFileTime(&st1, &ft1);
 	SystemTimeToFileTime(&st2, &ft2);
@@ -214,9 +214,14 @@ void ShowResultAndElapedTime(HWND hWnd, BOOL bResult, const SYSTEMTIME& st1, con
 	li2.LowPart = ft2.dwLowDateTime;
 
 	LONGLONG diff = li2.QuadPart - li1.QuadPart;
-	double second = diff / (double)10000000;	// 100 nano-second : 10^7
-	StringCbPrintfA(msg, 125,
-		(bResult ? "File Copy Successful %f seconds" : "File Copy Failed %f seconds"), second);
+	double seconds = diff / (double)10000000;	// 100 nano-second : 10^7
+
+	if (bResult) {
+		StringCbPrintfA(msg, MAX_PATH, "File Copy Successful %f seconds", seconds);
+	} else {
+		StringCbPrintfA(msg, MAX_PATH, "File Copy Failed");
+	}
+	
 	chMB(msg);
 }
 
