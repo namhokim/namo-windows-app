@@ -49,6 +49,7 @@
     <Compile Include="FileInfoExtentionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenameTests.cs" />
+    <Compile Include="System\StringTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RenameToDropbox\RenameToDropbox.csproj">
