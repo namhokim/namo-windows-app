@@ -15,5 +15,12 @@ namespace DeviceTracer
         {
             InitializeComponent();
         }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            var search = new FormSearch();
+            DialogResult result = search.ShowDialog();
+            labelForTest.Text = result.ToString() + " : " + search.IPAddress;
+        }
     }
 }

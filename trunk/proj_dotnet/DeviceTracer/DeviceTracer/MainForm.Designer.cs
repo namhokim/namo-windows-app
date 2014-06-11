@@ -29,21 +29,48 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.buttonSearch = new System.Windows.Forms.Button();
+            this.labelForTest = new System.Windows.Forms.Label();
             this.SuspendLayout();
+            // 
+            // buttonSearch
+            // 
+            this.buttonSearch.Location = new System.Drawing.Point(27, 25);
+            this.buttonSearch.Name = "buttonSearch";
+            this.buttonSearch.Size = new System.Drawing.Size(75, 23);
+            this.buttonSearch.TabIndex = 0;
+            this.buttonSearch.Text = "&Search";
+            this.buttonSearch.UseVisualStyleBackColor = true;
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
+            // 
+            // labelForTest
+            // 
+            this.labelForTest.AutoSize = true;
+            this.labelForTest.Location = new System.Drawing.Point(40, 238);
+            this.labelForTest.Name = "labelForTest";
+            this.labelForTest.Size = new System.Drawing.Size(75, 12);
+            this.labelForTest.TabIndex = 1;
+            this.labelForTest.Text = "labelForTest";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(597, 308);
+            this.Controls.Add(this.labelForTest);
+            this.Controls.Add(this.buttonSearch);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "Device Tracer";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Button buttonSearch;
+        private System.Windows.Forms.Label labelForTest;
     }
 }
 
