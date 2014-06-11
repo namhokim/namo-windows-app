@@ -3,6 +3,26 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceTracer", "DeviceTracer\DeviceTracer.csproj", "{98526586-4AA7-45DB-9EC5-1759F520ABB5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceTracer.Tests.Integration", "DeviceTracer.Tests.Integration\DeviceTracer.Tests.Integration.csproj", "{FC3BC927-AFB4-4AD4-AB6B-FFAB5EBD0AF9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CommonLib", "CommonLib", "{9365C3A7-74A9-4BDD-A51D-FDB3A449F252}"
+	ProjectSection(SolutionItems) = preProject
+		CommonLib\Iesi.Collections.dll = CommonLib\Iesi.Collections.dll
+		CommonLib\NHibernate.dll = CommonLib\NHibernate.dll
+		CommonLib\nunit.framework.dll = CommonLib\nunit.framework.dll
+		CommonLib\System.Data.SQLite.dll = CommonLib\System.Data.SQLite.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "x64", "x64", "{815B32F8-4C9E-412A-9587-A06BBBE5381C}"
+	ProjectSection(SolutionItems) = preProject
+		CommonLib\x64\SQLite.Interop.dll = CommonLib\x64\SQLite.Interop.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "x86", "x86", "{12EE0304-B3AF-4945-BBFE-5C2F8402D7A0}"
+	ProjectSection(SolutionItems) = preProject
+		CommonLib\x86\SQLite.Interop.dll = CommonLib\x86\SQLite.Interop.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,8 +33,16 @@ Global
 		{98526586-4AA7-45DB-9EC5-1759F520ABB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98526586-4AA7-45DB-9EC5-1759F520ABB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98526586-4AA7-45DB-9EC5-1759F520ABB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC3BC927-AFB4-4AD4-AB6B-FFAB5EBD0AF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC3BC927-AFB4-4AD4-AB6B-FFAB5EBD0AF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC3BC927-AFB4-4AD4-AB6B-FFAB5EBD0AF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC3BC927-AFB4-4AD4-AB6B-FFAB5EBD0AF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{815B32F8-4C9E-412A-9587-A06BBBE5381C} = {9365C3A7-74A9-4BDD-A51D-FDB3A449F252}
+		{12EE0304-B3AF-4945-BBFE-5C2F8402D7A0} = {9365C3A7-74A9-4BDD-A51D-FDB3A449F252}
 	EndGlobalSection
 EndGlobal

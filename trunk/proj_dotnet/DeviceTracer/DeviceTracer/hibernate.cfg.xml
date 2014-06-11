@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-configuration xmlns="urn:nhibernate-configuration-2.2">
+  <session-factory name="DeviceTracer.Persistence">
+    <property name="connection.driver_class">NHibernate.Driver.SQLite20Driver</property>
+    <property name="connection.connection_string">Data Source=data.db;Version=3</property>
+    <property name="dialect">NHibernate.Dialect.SQLiteDialect</property>
+    <property name="query.substitutions">true=1;false=0</property>
+    <property name="show_sql">true</property>
+
+    <!-- 테이블이 없을 경우 자동 생성-->
+    <property name="hbm2ddl.auto">create</property>
+      
+  </session-factory>
+</hibernate-configuration>
