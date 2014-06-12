@@ -11,7 +11,7 @@ namespace DeviceTracer.Interop
     class IphlpapiTests
     {
         [Test]
-        public void TestIphlpapi()
+        public void TestGetIpNetTable()
         {
             IEnumerable<MibIpRow> entries = Iphlpapi.GetIpNetTable();
             Assert.AreNotEqual(0, entries.Count());
