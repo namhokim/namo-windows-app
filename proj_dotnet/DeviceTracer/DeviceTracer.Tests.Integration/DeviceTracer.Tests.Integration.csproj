@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interop\IphlpapiTests.cs" />
     <Compile Include="Util\ConsoleUtilTests.cs" />
     <Compile Include="Persistence\Domain\DeviceTests.cs" />
     <Compile Include="Persistence\Domain\IPHistoryTests.cs" />
