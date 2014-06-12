@@ -31,17 +31,17 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSearch));
             this.buttonRecord = new System.Windows.Forms.Button();
             this.groupBoxAdded = new System.Windows.Forms.GroupBox();
+            this.labelAddedCountValue = new System.Windows.Forms.Label();
+            this.labelAddedCount = new System.Windows.Forms.Label();
+            this.listBoxAdded = new System.Windows.Forms.ListBox();
             this.groupBoxRemoved = new System.Windows.Forms.GroupBox();
+            this.labelRemovedCountValue = new System.Windows.Forms.Label();
+            this.labelRemovedCount = new System.Windows.Forms.Label();
+            this.listBoxRemoved = new System.Windows.Forms.ListBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.textBoxIPAddress = new System.Windows.Forms.TextBox();
             this.labelIPAddress = new System.Windows.Forms.Label();
-            this.listBoxAdded = new System.Windows.Forms.ListBox();
-            this.labelAddedCount = new System.Windows.Forms.Label();
-            this.listBoxRemoved = new System.Windows.Forms.ListBox();
-            this.labelRemovedCount = new System.Windows.Forms.Label();
-            this.labelAddedCountValue = new System.Windows.Forms.Label();
-            this.labelRemovedCountValue = new System.Windows.Forms.Label();
             this.groupBoxAdded.SuspendLayout();
             this.groupBoxRemoved.SuspendLayout();
             this.SuspendLayout();
@@ -55,6 +55,7 @@
             this.buttonRecord.TabIndex = 0;
             this.buttonRecord.Text = "&Record";
             this.buttonRecord.UseVisualStyleBackColor = true;
+            this.buttonRecord.Click += new System.EventHandler(this.buttonRecord_Click);
             // 
             // groupBoxAdded
             // 
@@ -69,6 +70,37 @@
             this.groupBoxAdded.TabStop = false;
             this.groupBoxAdded.Text = "Added";
             // 
+            // labelAddedCountValue
+            // 
+            this.labelAddedCountValue.AutoSize = true;
+            this.labelAddedCountValue.Location = new System.Drawing.Point(65, 24);
+            this.labelAddedCountValue.Name = "labelAddedCountValue";
+            this.labelAddedCountValue.Size = new System.Drawing.Size(11, 12);
+            this.labelAddedCountValue.TabIndex = 1000;
+            this.labelAddedCountValue.Text = "0";
+            // 
+            // labelAddedCount
+            // 
+            this.labelAddedCount.AutoSize = true;
+            this.labelAddedCount.Location = new System.Drawing.Point(16, 24);
+            this.labelAddedCount.Name = "labelAddedCount";
+            this.labelAddedCount.Size = new System.Drawing.Size(42, 12);
+            this.labelAddedCount.TabIndex = 1;
+            this.labelAddedCount.Text = "Count:";
+            // 
+            // listBoxAdded
+            // 
+            this.listBoxAdded.FormattingEnabled = true;
+            this.listBoxAdded.ItemHeight = 12;
+            this.listBoxAdded.Items.AddRange(new object[] {
+            "10.17.1.23",
+            "10.17.1.33"});
+            this.listBoxAdded.Location = new System.Drawing.Point(16, 42);
+            this.listBoxAdded.Name = "listBoxAdded";
+            this.listBoxAdded.Size = new System.Drawing.Size(166, 280);
+            this.listBoxAdded.TabIndex = 1;
+            this.listBoxAdded.SelectedIndexChanged += new System.EventHandler(this.listBoxAdded_SelectedIndexChanged);
+            // 
             // groupBoxRemoved
             // 
             this.groupBoxRemoved.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
@@ -81,6 +113,37 @@
             this.groupBoxRemoved.TabIndex = 2;
             this.groupBoxRemoved.TabStop = false;
             this.groupBoxRemoved.Text = "Removed";
+            // 
+            // labelRemovedCountValue
+            // 
+            this.labelRemovedCountValue.AutoSize = true;
+            this.labelRemovedCountValue.Location = new System.Drawing.Point(64, 23);
+            this.labelRemovedCountValue.Name = "labelRemovedCountValue";
+            this.labelRemovedCountValue.Size = new System.Drawing.Size(11, 12);
+            this.labelRemovedCountValue.TabIndex = 1000;
+            this.labelRemovedCountValue.Text = "0";
+            // 
+            // labelRemovedCount
+            // 
+            this.labelRemovedCount.AutoSize = true;
+            this.labelRemovedCount.Location = new System.Drawing.Point(16, 22);
+            this.labelRemovedCount.Name = "labelRemovedCount";
+            this.labelRemovedCount.Size = new System.Drawing.Size(42, 12);
+            this.labelRemovedCount.TabIndex = 1;
+            this.labelRemovedCount.Text = "Count:";
+            // 
+            // listBoxRemoved
+            // 
+            this.listBoxRemoved.FormattingEnabled = true;
+            this.listBoxRemoved.ItemHeight = 12;
+            this.listBoxRemoved.Items.AddRange(new object[] {
+            "10.17.1.23",
+            "10.17.1.33"});
+            this.listBoxRemoved.Location = new System.Drawing.Point(16, 41);
+            this.listBoxRemoved.Name = "listBoxRemoved";
+            this.listBoxRemoved.Size = new System.Drawing.Size(165, 280);
+            this.listBoxRemoved.TabIndex = 2;
+            this.listBoxRemoved.SelectedIndexChanged += new System.EventHandler(this.listBoxRemoved_SelectedIndexChanged);
             // 
             // buttonOK
             // 
@@ -120,68 +183,6 @@
             this.labelIPAddress.Size = new System.Drawing.Size(75, 12);
             this.labelIPAddress.TabIndex = 4;
             this.labelIPAddress.Text = "Choosen IP:";
-            // 
-            // listBoxAdded
-            // 
-            this.listBoxAdded.FormattingEnabled = true;
-            this.listBoxAdded.ItemHeight = 12;
-            this.listBoxAdded.Items.AddRange(new object[] {
-            "10.17.1.23",
-            "10.17.1.33"});
-            this.listBoxAdded.Location = new System.Drawing.Point(16, 42);
-            this.listBoxAdded.Name = "listBoxAdded";
-            this.listBoxAdded.Size = new System.Drawing.Size(166, 280);
-            this.listBoxAdded.TabIndex = 1;
-            this.listBoxAdded.SelectedIndexChanged += new System.EventHandler(this.listBoxAdded_SelectedIndexChanged);
-            // 
-            // labelAddedCount
-            // 
-            this.labelAddedCount.AutoSize = true;
-            this.labelAddedCount.Location = new System.Drawing.Point(16, 24);
-            this.labelAddedCount.Name = "labelAddedCount";
-            this.labelAddedCount.Size = new System.Drawing.Size(42, 12);
-            this.labelAddedCount.TabIndex = 1;
-            this.labelAddedCount.Text = "Count:";
-            // 
-            // listBoxRemoved
-            // 
-            this.listBoxRemoved.FormattingEnabled = true;
-            this.listBoxRemoved.ItemHeight = 12;
-            this.listBoxRemoved.Items.AddRange(new object[] {
-            "10.17.1.23",
-            "10.17.1.33"});
-            this.listBoxRemoved.Location = new System.Drawing.Point(16, 41);
-            this.listBoxRemoved.Name = "listBoxRemoved";
-            this.listBoxRemoved.Size = new System.Drawing.Size(165, 280);
-            this.listBoxRemoved.TabIndex = 2;
-            this.listBoxRemoved.SelectedIndexChanged += new System.EventHandler(this.listBoxRemoved_SelectedIndexChanged);
-            // 
-            // labelRemovedCount
-            // 
-            this.labelRemovedCount.AutoSize = true;
-            this.labelRemovedCount.Location = new System.Drawing.Point(16, 22);
-            this.labelRemovedCount.Name = "labelRemovedCount";
-            this.labelRemovedCount.Size = new System.Drawing.Size(42, 12);
-            this.labelRemovedCount.TabIndex = 1;
-            this.labelRemovedCount.Text = "Count:";
-            // 
-            // labelAddedCountValue
-            // 
-            this.labelAddedCountValue.AutoSize = true;
-            this.labelAddedCountValue.Location = new System.Drawing.Point(65, 24);
-            this.labelAddedCountValue.Name = "labelAddedCountValue";
-            this.labelAddedCountValue.Size = new System.Drawing.Size(11, 12);
-            this.labelAddedCountValue.TabIndex = 1000;
-            this.labelAddedCountValue.Text = "0";
-            // 
-            // labelRemovedCountValue
-            // 
-            this.labelRemovedCountValue.AutoSize = true;
-            this.labelRemovedCountValue.Location = new System.Drawing.Point(64, 23);
-            this.labelRemovedCountValue.Name = "labelRemovedCountValue";
-            this.labelRemovedCountValue.Size = new System.Drawing.Size(11, 12);
-            this.labelRemovedCountValue.TabIndex = 1000;
-            this.labelRemovedCountValue.Text = "0";
             // 
             // FormSearch
             // 

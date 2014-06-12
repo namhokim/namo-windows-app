@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Util\ConsoleUtil.cs" />
     <Compile Include="FormSearch.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -55,5 +55,12 @@ namespace DeviceTracer
             }
         }
 
+        private void buttonRecord_Click(object sender, EventArgs e)
+        {
+            // 기록
+
+            // 이전 기록 내용이 있다면 변화 UI에 반영
+        }
+
     }
 }
