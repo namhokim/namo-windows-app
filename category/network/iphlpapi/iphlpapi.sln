@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NotifyAddrChange", "NotifyA
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GetAdaptersInfo", "GetAdaptersInfo\GetAdaptersInfo.vcproj", "{E1575D5E-E7E5-4E0B-B20A-AF61FB964CED}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GetIpNetTable", "GetIpNetTable\GetIpNetTable.vcproj", "{05BD56FC-1EEE-46EE-B3EF-9029396ED4D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -43,6 +45,10 @@ Global
 		{E1575D5E-E7E5-4E0B-B20A-AF61FB964CED}.Debug|Win32.Build.0 = Debug|Win32
 		{E1575D5E-E7E5-4E0B-B20A-AF61FB964CED}.Release|Win32.ActiveCfg = Release|Win32
 		{E1575D5E-E7E5-4E0B-B20A-AF61FB964CED}.Release|Win32.Build.0 = Release|Win32
+		{05BD56FC-1EEE-46EE-B3EF-9029396ED4D1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{05BD56FC-1EEE-46EE-B3EF-9029396ED4D1}.Debug|Win32.Build.0 = Debug|Win32
+		{05BD56FC-1EEE-46EE-B3EF-9029396ED4D1}.Release|Win32.ActiveCfg = Release|Win32
+		{05BD56FC-1EEE-46EE-B3EF-9029396ED4D1}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
