@@ -17,7 +17,7 @@ int main()
 {
 	MIB_IPNETTABLE table;
 	ULONG dwSize = sizeof(table);
-	BOOL bSorted = TRUE;
+	BOOL bSorted = FALSE;
 
 	// TRY FIRST (size: 28)
 	// http://msdn.microsoft.com/en-us/library/windows/desktop/aa365956(v=vs.85).aspx
@@ -63,7 +63,7 @@ const char* GetType(MIB_IPNET_TYPE type)
 }
 void PrintIpRow(PMIB_IPNETROW_LH pIpNetRow)
 {
-	if (MIB_IPNET_TYPE_DYNAMIC!=pIpNetRow->Type) return;
+	//if (MIB_IPNET_TYPE_DYNAMIC!=pIpNetRow->Type) return;
 
 	// 인터페이스 인덱스
 	printf("0x%x\t", pIpNetRow->dwIndex);
