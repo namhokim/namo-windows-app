@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Util\ConsoleUtilTests.cs" />
     <Compile Include="Persistence\Domain\DeviceTests.cs" />
     <Compile Include="Persistence\Domain\IPHistoryTests.cs" />
     <Compile Include="Persistence\NHibernateHelperTests.cs" />
