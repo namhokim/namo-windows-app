@@ -107,5 +107,45 @@ namespace DeviceTracer.Interop
         }
         #endregion
         #endregion
+
+        #region "FlushIpNetTable wrapper"
+        public static int FlushIpNetTable(int index)
+        {
+            int result = IPHelper.FlushIpNetTable(index);
+            if (result != IPHelper.NO_ERROR)
+            {
+                // Throw an exception.
+                throw new Win32Exception(result);
+            }
+            else
+            {
+                return result;
+            }
+        }
+
+        public static int FlushIpNetTable()
+        {
+            IEnumerable<Int32> interfaces = FlushIpNetTable_GetInterfaceIndexs();
+            foreach (int idx in interfaces)
+            {
+                FlushIpNetTable(idx);
+            }
+            return IPHelper.NO_ERROR;
+        }
+
+        #region "GetIpNetTable sub-method"
+        private static IEnumerable<Int32> FlushIpNetTable_GetInterfaceIndexs()
+        {
+            var ifSet = new HashSet<int>();
+            var list = GetIpNetTable();
+            foreach (var item in list)
+            {
+                ifSet.Add(item.Index);
+            }
+            return ifSet;
+        }
+        #endregion
+        #endregion
+
     }
 }

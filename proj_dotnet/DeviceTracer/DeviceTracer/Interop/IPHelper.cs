@@ -8,7 +8,7 @@ using System.Text;
 
 namespace DeviceTracer.Interop
 {
-    internal class IPHelper
+    public class IPHelper
     {
         public const int NO_ERROR = 0;
 
@@ -52,5 +52,8 @@ namespace DeviceTracer.Interop
         /// </returns>
         [DllImport("Iphlpapi.dll", EntryPoint = "GetIpNetTable")]
         internal static extern int GetIpNetTable(IntPtr pIpNetTable, ref int pdwSize, bool bOrder);
+
+        [DllImport("Iphlpapi.dll", EntryPoint = "FlushIpNetTable")]
+        internal static extern int FlushIpNetTable(int dwIfIndex);
     }
 }
