@@ -57,6 +57,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interop\IPHelper.cs" />
+    <Compile Include="Interop\Iphlpapi.cs" />
+    <Compile Include="Interop\MibIpNetType.cs" />
+    <Compile Include="Interop\MibIpRow.cs" />
+    <Compile Include="Interop\MIB_IPNETROW.cs" />
     <Compile Include="Util\ConsoleUtil.cs" />
     <Compile Include="FormSearch.cs">
       <SubType>Form</SubType>
