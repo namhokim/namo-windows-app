@@ -96,9 +96,9 @@ namespace DeviceTracer.Interop
             {
                 list.Add(new MibIpRow
                 {
-                    Addr = new IPAddress(BitConverter.GetBytes(table[index].dwAddr)),
+                    Addr = UInt32ToIPAddress(table[index].dwAddr),
                     Index = table[index].dwIndex,
-                    PhysAddr = new PhysicalAddress(table[index].bPhysAddr),
+                    PhysAddr = BytesToPhysicalAddress(table[index].bPhysAddr, table[index].dwPhysAddrLen),
                     Type = (MibIpNetType)table[index].dwType,
                 });
             }
@@ -147,5 +147,49 @@ namespace DeviceTracer.Interop
         #endregion
         #endregion
 
+        #region"SendARP wrapper"
+        public static int SendARP(IPAddress address, out PhysicalAddress PhysAddr)
+        {
+            byte[] macAddr = new byte[IPHelper.MAXLEN_PHYSADDR];
+            int macAddrLen = macAddr.Length;
+            uint intAddress = IPAddressToUInt32(address);
+            int retValue = IPHelper.SendARP(intAddress, 0, macAddr, ref macAddrLen);
+            if (retValue != IPHelper.NO_ERROR)
+            {
+                throw new Win32Exception(retValue);
+            }
+            else
+            {
+                PhysAddr = BytesToPhysicalAddress(macAddr, macAddrLen);
+                return retValue;
+            }
+        }
+        #endregion
+
+        #region "Utility Private methods"
+        private static IPAddress UInt32ToIPAddress(UInt32 ipv4)
+        {
+            byte[] byteAddress = BitConverter.GetBytes(ipv4);
+            return new IPAddress(byteAddress);
+        }
+
+        private static uint IPAddressToUInt32(IPAddress ipv4)
+        {
+            byte[] byteAddress = ipv4.GetAddressBytes();
+            return BitConverter.ToUInt32(byteAddress, 0);
+        }
+
+        private static PhysicalAddress BytesToPhysicalAddress(byte[] raw, int length)
+        {
+            if (raw.Length < length)
+            {
+                throw new ArithmeticException("lenght 인자는 raw 데이터보다 작거나 같아야 합니다.");
+            }
+
+            byte[] substractedBytes = new byte[length];
+            Buffer.BlockCopy(raw, 0, substractedBytes, 0, length);
+            return new PhysicalAddress(substractedBytes);
+        }
+        #endregion
     }
 }
