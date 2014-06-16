@@ -50,5 +50,8 @@ namespace DeviceTracer.Interop
 
         [DllImport("Iphlpapi.dll", EntryPoint = "FlushIpNetTable")]
         internal static extern int FlushIpNetTable(int dwIfIndex);
+
+        [DllImport("iphlpapi.dll", ExactSpelling = true)]
+        public static extern int SendARP(uint DestIP, uint SrcIP, byte[] pMacAddr, ref int PhyAddrLen);
     }
 }

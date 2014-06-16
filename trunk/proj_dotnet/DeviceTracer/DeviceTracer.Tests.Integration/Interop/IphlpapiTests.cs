@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 
 namespace DeviceTracer.Interop
@@ -39,6 +40,22 @@ namespace DeviceTracer.Interop
             try
             {
                 Assert.AreEqual(IPHelper.NO_ERROR, Iphlpapi.FlushIpNetTable());
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail("{0}. 작업을 수행할 권한(관리자)이 없습니다.", ex.Message);
+            }
+        }
+
+        [Test]
+        public void TestSendARP()
+        {
+            try
+            {
+                string ipAddress = "10.17.1.23";
+                System.Net.NetworkInformation.PhysicalAddress phyAddr;
+                Assert.AreEqual(IPHelper.NO_ERROR, Iphlpapi.SendARP(IPAddress.Parse(ipAddress), out phyAddr));
+                Console.WriteLine("IP: {0} -> MAC: {1}", ipAddress, phyAddr);
             }
             catch (Exception ex)
             {

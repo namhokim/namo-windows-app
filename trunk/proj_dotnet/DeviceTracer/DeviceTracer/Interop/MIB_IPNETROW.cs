@@ -21,7 +21,7 @@ namespace DeviceTracer.Interop
         /// <summary>
         /// The IPv4 address.
         /// </summary>
-        public int dwAddr;
+        public uint dwAddr;
         /// <summary>
         /// The type of ARP entry. This type can be one of the following values.
         /// </summary>
