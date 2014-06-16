@@ -51,6 +51,14 @@ namespace DeviceTracer.Interop
         [DllImport("Iphlpapi.dll", EntryPoint = "FlushIpNetTable")]
         internal static extern int FlushIpNetTable(int dwIfIndex);
 
+        /// <summary>
+        /// http://msdn.microsoft.com/en-us/library/windows/desktop/aa366358(v=vs.85).aspx
+        /// </summary>
+        /// <param name="DestIP">The destination IPv4 address, in the form of an IPAddr structure. The ARP request attempts to obtain the physical address that corresponds to this IPv4 address.</param>
+        /// <param name="SrcIP">The source IPv4 address of the sender, in the form of an IPAddr structure. This parameter is optional and is used to select the interface to send the request on for the ARP entry. The caller may specify zero corresponding to the INADDR_ANY IPv4 address for this parameter.</param>
+        /// <param name="pMacAddr">A pointer to an array of ULONG variables. This array must have at least two ULONG elements to hold an Ethernet or token ring physical address. The first six bytes of this array receive the physical address that corresponds to the IPv4 address specified by the DestIP parameter.</param>
+        /// <param name="PhyAddrLen">On input, a pointer to a ULONG value that specifies the maximum buffer size, in bytes, the application has set aside to receive the physical address or MAC address. The buffer size should be at least 6 bytes for an Ethernet or token ring physical address</param>
+        /// <returns>If the function succeeds, the return value is NO_ERROR.</returns>
         [DllImport("iphlpapi.dll", ExactSpelling = true)]
         public static extern int SendARP(uint DestIP, uint SrcIP, byte[] pMacAddr, ref int PhyAddrLen);
     }
