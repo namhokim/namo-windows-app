@@ -35,8 +35,8 @@
             this.buttonRename = new System.Windows.Forms.Button();
             this.textBoxOutput = new System.Windows.Forms.TextBox();
             this.gbType = new System.Windows.Forms.GroupBox();
-            this.rbTypeOruxmap = new System.Windows.Forms.RadioButton();
             this.rbTypePhoto = new System.Windows.Forms.RadioButton();
+            this.rbTypeOruxmap = new System.Windows.Forms.RadioButton();
             this.gbType.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -105,6 +105,16 @@
             this.gbType.TabStop = false;
             this.gbType.Text = "타입";
             // 
+            // rbTypePhoto
+            // 
+            this.rbTypePhoto.AutoSize = true;
+            this.rbTypePhoto.Location = new System.Drawing.Point(98, 16);
+            this.rbTypePhoto.Name = "rbTypePhoto";
+            this.rbTypePhoto.Size = new System.Drawing.Size(55, 16);
+            this.rbTypePhoto.TabIndex = 1;
+            this.rbTypePhoto.Text = "Photo";
+            this.rbTypePhoto.UseVisualStyleBackColor = true;
+            // 
             // rbTypeOruxmap
             // 
             this.rbTypeOruxmap.AutoSize = true;
@@ -117,18 +127,9 @@
             this.rbTypeOruxmap.Text = "Oruxmap";
             this.rbTypeOruxmap.UseVisualStyleBackColor = true;
             // 
-            // rbTypePhoto
-            // 
-            this.rbTypePhoto.AutoSize = true;
-            this.rbTypePhoto.Location = new System.Drawing.Point(98, 16);
-            this.rbTypePhoto.Name = "rbTypePhoto";
-            this.rbTypePhoto.Size = new System.Drawing.Size(55, 16);
-            this.rbTypePhoto.TabIndex = 1;
-            this.rbTypePhoto.Text = "Photo";
-            this.rbTypePhoto.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(509, 219);
@@ -141,6 +142,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "Rename";
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
             this.gbType.ResumeLayout(false);
             this.gbType.PerformLayout();
             this.ResumeLayout(false);
