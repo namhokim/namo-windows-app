@@ -43,20 +43,45 @@ namespace RenameToDropbox
         #region "buttonRename_Click"
         private void buttonRename_Click(object sender, EventArgs e)
         {
-            textBoxOutput.Text = string.Empty;
+            textBoxOutput.Clear();
 
             string rootFolder = this.textBoxTargetDir.Text;
             if (rootFolder != string.Empty) 
             {
-                ProcessRename(rootFolder);
+                ProcessRename(rootFolder, GetProcessor(SelectedType));
             }
         }
 
-        private void ProcessRename(string path)
+        private IRenameProcessor GetProcessor(ProcessingType type)
+        {
+            IRenameProcessor instance;
+            if (type == ProcessingType.Undefined)
+            {
+                throw new ArgumentException("선택한 타입이 잘못되었습니다.");
+            }
+            else
+            {
+                switch (type)
+                {
+                    default:
+                    case ProcessingType.Oruxmap:
+                        instance = new RenameOruxmap();
+                        break;
+                    case ProcessingType.Photo:
+                        var photo = new RenamePhoto();
+                        photo.TextBoxOutput = this.textBoxOutput;
+                        instance = photo;
+                        break;
+                }
+            }
+            return instance;
+        }
+
+        private void ProcessRename(string path, IRenameProcessor processor)
         {
             foreach (string file in Directory.GetFiles(path))
             {
-                ProcessEachFile(file);
+                processor.Process(file);
             }
         }
 
@@ -77,5 +102,30 @@ namespace RenameToDropbox
         }
         #endregion
 
+        #region "Processing Type"
+        enum ProcessingType
+        {
+            Undefined, Oruxmap, Photo
+        }
+
+        private ProcessingType SelectedType
+        {
+            get
+            {
+                if (rbTypeOruxmap.Checked)
+                {
+                    return ProcessingType.Oruxmap;
+                }
+                else if (rbTypePhoto.Checked)
+                {
+                    return ProcessingType.Photo;
+                }
+                else
+                {
+                    return ProcessingType.Undefined;
+                }
+            }
+        }
+        #endregion
     }
 }
