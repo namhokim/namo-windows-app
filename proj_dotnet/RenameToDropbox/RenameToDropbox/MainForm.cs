@@ -13,10 +13,12 @@ namespace RenameToDropbox
 {
     public partial class MainForm : Form
     {
+        #region "MainForm > InitializeComponent"
         public MainForm()
         {
             InitializeComponent();
         }
+        #endregion
 
         #region "buttonTargetDir_Click"
         private void buttonTargetDir_Click(object sender, EventArgs e)
@@ -125,6 +127,32 @@ namespace RenameToDropbox
                     return ProcessingType.Undefined;
                 }
             }
+        }
+        #endregion
+
+        #region "Drag & Drop"
+        private void MainForm_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+        }
+
+        private void MainForm_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string file in files)
+            {
+                if (IsDirectory(file))
+                {
+                    textBoxTargetDir.Text = file;
+                    break;
+                }
+            }
+        }
+
+        private bool IsDirectory(string path)
+        {
+            FileAttributes attr = File.GetAttributes(path);
+            return ((attr & FileAttributes.Directory) == FileAttributes.Directory);
         }
         #endregion
     }
