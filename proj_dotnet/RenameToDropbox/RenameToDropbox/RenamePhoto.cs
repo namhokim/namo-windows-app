@@ -12,21 +12,52 @@ namespace RenameToDropbox
 
         public void Process(string filename)
         {
-            FileInfo fi = new FileInfo(filename);
-            if (Rename.IsTargetExtension(fi.Extension))
+            string fullFilename, onlyFilename, dirName;
+            if (IsTarget(filename, out fullFilename, out onlyFilename, out dirName))
             {
-                string onlyFilename = fi.ExtractOnlyFilename();
-                if (Rename.IsTargetPattern(onlyFilename))
+                string newFullName = GetNewFileName(fullFilename, onlyFilename);
+
+                File.Move(fullFilename, newFullName);
+                if (TextBoxOutput != null)
                 {
-                    string newName = Rename.GetNewName(onlyFilename);
-                    File.Move(fi.FullName, fi.FullName.Replace(onlyFilename, newName));
-                    if (TextBoxOutput != null)
-                    {
-                        TextBoxOutput.AppendText(fi.Name + " => " + newName);
-                        TextBoxOutput.AppendText(Environment.NewLine);
-                    }
+                    string removePrefix = dirName + Path.DirectorySeparatorChar;
+                    TextBoxOutput.AppendText(fullFilename.Replace(removePrefix, string.Empty) + " => " + newFullName.Replace(removePrefix, string.Empty));
+                    TextBoxOutput.AppendText(Environment.NewLine);
                 }
             }
+        }
+
+        private bool IsTarget(string filename, out string fullFilename, out string onlyFilename, out string dirName)
+        {
+            FileInfo fi = new FileInfo(filename);
+
+            if (Rename.IsTargetExtension(fi.Extension))
+            {
+                fullFilename = fi.FullName;
+                onlyFilename = fi.ExtractOnlyFilename();
+                dirName = fi.DirectoryName;
+                return Rename.IsTargetPattern(onlyFilename);
+            }
+            else
+            {
+                fullFilename = string.Empty;
+                onlyFilename = string.Empty;
+                dirName = string.Empty;
+                return false;
+            }
+        }
+
+        private string GetNewFileName(string fullFilename, string onlyFilename)
+        {
+            string newName = Rename.GetNewName(onlyFilename);
+            string newFullName = fullFilename.Replace(onlyFilename, newName);
+            int postfix = 0;
+            while (File.Exists(newFullName))
+            {
+                postfix++;
+                newFullName = fullFilename.Replace(onlyFilename, newName + "-" + postfix);
+            }
+            return newFullName;
         }
     }
 }
