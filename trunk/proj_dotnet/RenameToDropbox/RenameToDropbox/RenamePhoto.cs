@@ -15,15 +15,9 @@ namespace RenameToDropbox
             string fullFilename, onlyFilename, dirName;
             if (IsTarget(filename, out fullFilename, out onlyFilename, out dirName))
             {
-                string newFullName = GetNewFileName(fullFilename, onlyFilename);
+                string newFullName = GetRenameFile(fullFilename, onlyFilename);
 
-                File.Move(fullFilename, newFullName);
-                if (TextBoxOutput != null)
-                {
-                    string removePrefix = dirName + Path.DirectorySeparatorChar;
-                    TextBoxOutput.AppendText(fullFilename.Replace(removePrefix, string.Empty) + " => " + newFullName.Replace(removePrefix, string.Empty));
-                    TextBoxOutput.AppendText(Environment.NewLine);
-                }
+                RenameIt(fullFilename, newFullName, dirName);
             }
         }
 
@@ -47,7 +41,7 @@ namespace RenameToDropbox
             }
         }
 
-        private string GetNewFileName(string fullFilename, string onlyFilename)
+        private string GetRenameFile(string fullFilename, string onlyFilename)
         {
             string newName = Rename.GetNewName(onlyFilename);
             string newFullName = fullFilename.Replace(onlyFilename, newName);
@@ -59,5 +53,18 @@ namespace RenameToDropbox
             }
             return newFullName;
         }
+
+        private void RenameIt(string filename, string renameFile, string dirName)
+        {
+            File.Move(filename, renameFile);
+
+            if (TextBoxOutput != null)
+            {
+                string removePrefix = dirName + Path.DirectorySeparatorChar;
+                TextBoxOutput.AppendText(filename.Replace(removePrefix, string.Empty) + " => " + renameFile.Replace(removePrefix, string.Empty));
+                TextBoxOutput.AppendText(Environment.NewLine);
+            }
+        }
+
     }
 }

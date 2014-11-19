@@ -19,31 +19,33 @@ namespace RenameToDropbox
 
         public void Process(string filename)
         {
-            string renameFile;
-            if (IsTarget(filename, out renameFile))
+            string renameFile, dir;
+            if (IsTarget(filename, out renameFile, out dir))
             {
-                RenameIt(filename, renameFile);
+                RenameIt(filename, renameFile, dir);
             }
         }
 
-        private bool IsTarget(string filename, out string renameFile)
+        private bool IsTarget(string filename, out string renameFile, out string directory)
         {
             renameFile = string.Empty;
             FileInfo fi = new FileInfo(filename);
             if (IsExension(fi.Extension) && IsPattern(fi.Name))
             {
                 renameFile = GetRenameFile(filename);
+                directory = fi.DirectoryName;
                 return true;
             }
             else
             {
+                directory = string.Empty;
                 return false;
             }
         }
 
         private bool IsExension(string extension)
         {
-            return (extension == ".gpx" || extension == ".kmz");
+            return (extension == ".gpx" || extension == ".kmz" || extension == ".kml");
         }
 
         public bool IsPattern(string name)
@@ -72,12 +74,28 @@ namespace RenameToDropbox
             string onlyName = filename.Substring(0, separated);
             string onlyExt = filename.Substring(separated);
             string extract = onlyName.Substring(0, onlyName.Length - PostfixSample.Length);
-            return extract + onlyExt;
+            string fullName = extract + onlyExt;
+
+            int postfix = 0;
+            while (File.Exists(fullName))
+            {
+                postfix++;
+                fullName = extract + "-" + postfix + onlyExt;
+            }
+
+            return fullName;
         }
 
-        private void RenameIt(string filename, string renameFile)
+        private void RenameIt(string filename, string renameFile, string dirName)
         {
             File.Move(filename, renameFile);
+
+            if (TextBoxOutput != null)
+            {
+                string removePrefix = dirName + Path.DirectorySeparatorChar;
+                TextBoxOutput.AppendText(filename.Replace(removePrefix, string.Empty) + " => " + renameFile.Replace(removePrefix, string.Empty));
+                TextBoxOutput.AppendText(Environment.NewLine);
+            }
         }
 
     }

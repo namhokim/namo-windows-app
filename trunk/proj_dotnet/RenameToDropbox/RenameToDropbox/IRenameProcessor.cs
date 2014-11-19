@@ -7,6 +7,8 @@ namespace RenameToDropbox
 {
     interface IRenameProcessor
     {
+        System.Windows.Forms.TextBox TextBoxOutput { get; set; }
+
         void Process(string filename);
     }
 }
