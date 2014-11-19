@@ -71,10 +71,10 @@ namespace RenameToDropbox
                         break;
                     case ProcessingType.Photo:
                         var photo = new RenamePhoto();
-                        photo.TextBoxOutput = this.textBoxOutput;
                         instance = photo;
                         break;
                 }
+                instance.TextBoxOutput = this.textBoxOutput;
             }
             return instance;
         }
@@ -84,22 +84,6 @@ namespace RenameToDropbox
             foreach (string file in Directory.GetFiles(path))
             {
                 processor.Process(file);
-            }
-        }
-
-        private void ProcessEachFile(string filename)
-        {
-            FileInfo fi = new FileInfo(filename);
-            if (Rename.IsTargetExtension(fi.Extension))
-            {
-                string onlyFilename = fi.ExtractOnlyFilename();
-                if (Rename.IsTargetPattern(onlyFilename))
-                {
-                    string newName = Rename.GetNewName(onlyFilename);
-                    File.Move(fi.FullName, fi.FullName.Replace(onlyFilename, newName));
-                    textBoxOutput.AppendText(fi.Name + " => " + newName);
-                    textBoxOutput.AppendText(Environment.NewLine);
-                }
             }
         }
         #endregion
