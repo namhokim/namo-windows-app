@@ -7,7 +7,7 @@ namespace RenameToDropbox
     public class Rename
     {
         #region "static field"
-        static readonly HashSet<String> extensions = new HashSet<String> { ".jpg", ".mp4" };
+        static readonly HashSet<String> extensions = new HashSet<String> { ".jpg", ".mp4", ".gif" };
         static readonly Regex MatchRule1 = new Regex(
             @"(?<YYYY>\d{4}?)(?<MM>\d{2}?)(?<DD>\d{2}?)_"
             + @"(?<hh>\d{2}?)(?<mm>\d{2}?)(?<ss>\d{2}?)\((?<seq>(\d+)?)\)");
