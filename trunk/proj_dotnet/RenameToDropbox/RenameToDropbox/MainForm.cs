@@ -29,7 +29,7 @@ namespace RenameToDropbox
             {
                 folder.Description = "Select the target directory";
                 folder.ShowNewFolderButton = false;
-                if (File.Exists(rootFolder))
+                if (Directory.Exists(rootFolder))
                 {
                     folder.SelectedPath = rootFolder;
                 }
