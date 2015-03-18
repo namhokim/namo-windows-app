@@ -183,7 +183,7 @@ namespace DeviceTracer.Interop
         {
             if (raw.Length < length)
             {
-                throw new ArithmeticException("lenght 인자는 raw 데이터보다 작거나 같아야 합니다.");
+                throw new ArithmeticException("length 인자는 raw 데이터보다 작거나 같아야 합니다.");
             }
 
             byte[] substractedBytes = new byte[length];

@@ -62,6 +62,7 @@
     <Compile Include="Interop\MibIpNetType.cs" />
     <Compile Include="Interop\MibIpRow.cs" />
     <Compile Include="Interop\MIB_IPNETROW.cs" />
+    <Compile Include="Net\AliveChecker.cs" />
     <Compile Include="Util\ConsoleUtil.cs" />
     <Compile Include="FormSearch.cs">
       <SubType>Form</SubType>
