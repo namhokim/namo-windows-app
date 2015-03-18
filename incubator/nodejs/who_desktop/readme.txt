@@ -21,3 +21,5 @@
   Download : http://nssm.cc/download/?page=download
  > nssm install whoDesktop C:\who_desktop\node.exe C:\who_desktop\app.js
  > net start whoDesktop
+
+ > nssm install whoDesktop C:\whoDesktop\node.exe C:\whoDesktop\index.js
